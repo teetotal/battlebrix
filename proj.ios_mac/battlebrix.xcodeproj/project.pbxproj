@@ -29,8 +29,26 @@
 		46880B8219C43A67006E1F66 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = 46880B7A19C43A67006E1F66 /* HelloWorld.png */; };
 		46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
 		46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
-		46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */; };
-		46880B8B19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */; };
+		46880B8A19C43A87006E1F66 /* Scenes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8619C43A87006E1F66 /* Scenes.cpp */; };
+		46880B8B19C43A87006E1F66 /* Scenes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8619C43A87006E1F66 /* Scenes.cpp */; };
+		4D480991227A9E370046472F /* ui_cultivation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D48098A227A9E360046472F /* ui_cultivation.cpp */; };
+		4D480992227A9E370046472F /* ui_wizard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D48098B227A9E370046472F /* ui_wizard.cpp */; };
+		4D480993227A9E370046472F /* ui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D48098C227A9E370046472F /* ui.cpp */; };
+		4D480994227A9E370046472F /* ui_bgText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D48098D227A9E370046472F /* ui_bgText.cpp */; };
+		4D480995227A9E370046472F /* ui_deco.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D48098E227A9E370046472F /* ui_deco.cpp */; };
+		4D480996227A9E370046472F /* ui_color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D48098F227A9E370046472F /* ui_color.cpp */; };
+		4D480997227A9E370046472F /* ui_gacha.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D480990227A9E370046472F /* ui_gacha.cpp */; };
+		4D4809A9227A9E9F0046472F /* trade.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D4809A1227A9E9F0046472F /* trade.cpp */; };
+		4D4809AA227A9E9F0046472F /* quest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D4809A2227A9E9F0046472F /* quest.cpp */; };
+		4D4809AB227A9E9F0046472F /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D4809A3227A9E9F0046472F /* util.cpp */; };
+		4D4809AC227A9E9F0046472F /* achievement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D4809A4227A9E9F0046472F /* achievement.cpp */; };
+		4D4809AD227A9E9F0046472F /* sql.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D4809A5227A9E9F0046472F /* sql.cpp */; };
+		4D4809AE227A9E9F0046472F /* farming.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D4809A6227A9E9F0046472F /* farming.cpp */; };
+		4D4809AF227A9E9F0046472F /* PhysicsScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D4809A7227A9E9F0046472F /* PhysicsScene.cpp */; };
+		4D4809B0227A9E9F0046472F /* inventory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D4809A8227A9E9F0046472F /* inventory.cpp */; };
+		4D4809B3227AA4070046472F /* roulette.json in Resources */ = {isa = PBXBuildFile; fileRef = 4D4809B1227AA4070046472F /* roulette.json */; };
+		4D4809B4227AA4070046472F /* main.json in Resources */ = {isa = PBXBuildFile; fileRef = 4D4809B2227AA4070046472F /* main.json */; };
+		4D807217227ABE210099B6A4 /* coin.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D807215227ABE200099B6A4 /* coin.png */; };
 		503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 503AE0F617EB97AB00D1A890 /* Icon.icns */; };
 		503AE10517EB98FF00D1A890 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 503AE10317EB98FF00D1A890 /* main.cpp */; };
 		503AE11B17EB9C5A00D1A890 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503AE11A17EB9C5A00D1A890 /* IOKit.framework */; };
@@ -119,8 +137,26 @@
 		46880B7A19C43A67006E1F66 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
 		46880B8419C43A87006E1F66 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		46880B8519C43A87006E1F66 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloWorldScene.cpp; sourceTree = "<group>"; };
-		46880B8719C43A87006E1F66 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldScene.h; sourceTree = "<group>"; };
+		46880B8619C43A87006E1F66 /* Scenes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Scenes.cpp; sourceTree = "<group>"; };
+		46880B8719C43A87006E1F66 /* Scenes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scenes.h; sourceTree = "<group>"; };
+		4D48098A227A9E360046472F /* ui_cultivation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ui_cultivation.cpp; path = ../../library/ui/ui_cultivation.cpp; sourceTree = "<group>"; };
+		4D48098B227A9E370046472F /* ui_wizard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ui_wizard.cpp; path = ../../library/ui/ui_wizard.cpp; sourceTree = "<group>"; };
+		4D48098C227A9E370046472F /* ui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ui.cpp; path = ../../library/ui/ui.cpp; sourceTree = "<group>"; };
+		4D48098D227A9E370046472F /* ui_bgText.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ui_bgText.cpp; path = ../../library/ui/ui_bgText.cpp; sourceTree = "<group>"; };
+		4D48098E227A9E370046472F /* ui_deco.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ui_deco.cpp; path = ../../library/ui/ui_deco.cpp; sourceTree = "<group>"; };
+		4D48098F227A9E370046472F /* ui_color.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ui_color.cpp; path = ../../library/ui/ui_color.cpp; sourceTree = "<group>"; };
+		4D480990227A9E370046472F /* ui_gacha.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ui_gacha.cpp; path = ../../library/ui/ui_gacha.cpp; sourceTree = "<group>"; };
+		4D4809A1227A9E9F0046472F /* trade.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = trade.cpp; path = ../../library/library/trade.cpp; sourceTree = "<group>"; };
+		4D4809A2227A9E9F0046472F /* quest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = quest.cpp; path = ../../library/library/quest.cpp; sourceTree = "<group>"; };
+		4D4809A3227A9E9F0046472F /* util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = util.cpp; path = ../../library/library/util.cpp; sourceTree = "<group>"; };
+		4D4809A4227A9E9F0046472F /* achievement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = achievement.cpp; path = ../../library/library/achievement.cpp; sourceTree = "<group>"; };
+		4D4809A5227A9E9F0046472F /* sql.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sql.cpp; path = ../../library/library/sql.cpp; sourceTree = "<group>"; };
+		4D4809A6227A9E9F0046472F /* farming.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = farming.cpp; path = ../../library/library/farming.cpp; sourceTree = "<group>"; };
+		4D4809A7227A9E9F0046472F /* PhysicsScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PhysicsScene.cpp; path = ../../library/library/PhysicsScene.cpp; sourceTree = "<group>"; };
+		4D4809A8227A9E9F0046472F /* inventory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = inventory.cpp; path = ../../library/library/inventory.cpp; sourceTree = "<group>"; };
+		4D4809B1227AA4070046472F /* roulette.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = roulette.json; sourceTree = "<group>"; };
+		4D4809B2227AA4070046472F /* main.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = main.json; sourceTree = "<group>"; };
+		4D807215227ABE200099B6A4 /* coin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coin.png; sourceTree = "<group>"; };
 		503AE0F617EB97AB00D1A890 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		503AE0F717EB97AB00D1A890 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		503AE10317EB98FF00D1A890 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = mac/main.cpp; sourceTree = "<group>"; };
@@ -227,6 +263,8 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				4D4809A0227A9E800046472F /* library */,
+				4D480989227A9DFC0046472F /* ui */,
 				46880B8319C43A87006E1F66 /* Classes */,
 				46880B7519C43A67006E1F66 /* Resources */,
 				1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */,
@@ -268,6 +306,9 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4D807215227ABE200099B6A4 /* coin.png */,
+				4D4809B1227AA4070046472F /* roulette.json */,
+				4D4809B2227AA4070046472F /* main.json */,
 				521A8EA819F11F5000D177D7 /* fonts */,
 				3EACC98E19EE6D4300EB3C5E /* res */,
 				46880B7619C43A67006E1F66 /* CloseNormal.png */,
@@ -283,11 +324,40 @@
 			children = (
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
-				46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */,
-				46880B8719C43A87006E1F66 /* HelloWorldScene.h */,
+				46880B8619C43A87006E1F66 /* Scenes.cpp */,
+				46880B8719C43A87006E1F66 /* Scenes.h */,
 			);
 			name = Classes;
 			path = ../Classes;
+			sourceTree = "<group>";
+		};
+		4D480989227A9DFC0046472F /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				4D48098D227A9E370046472F /* ui_bgText.cpp */,
+				4D48098F227A9E370046472F /* ui_color.cpp */,
+				4D48098A227A9E360046472F /* ui_cultivation.cpp */,
+				4D48098E227A9E370046472F /* ui_deco.cpp */,
+				4D480990227A9E370046472F /* ui_gacha.cpp */,
+				4D48098B227A9E370046472F /* ui_wizard.cpp */,
+				4D48098C227A9E370046472F /* ui.cpp */,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
+		4D4809A0227A9E800046472F /* library */ = {
+			isa = PBXGroup;
+			children = (
+				4D4809A4227A9E9F0046472F /* achievement.cpp */,
+				4D4809A6227A9E9F0046472F /* farming.cpp */,
+				4D4809A8227A9E9F0046472F /* inventory.cpp */,
+				4D4809A7227A9E9F0046472F /* PhysicsScene.cpp */,
+				4D4809A2227A9E9F0046472F /* quest.cpp */,
+				4D4809A5227A9E9F0046472F /* sql.cpp */,
+				4D4809A1227A9E9F0046472F /* trade.cpp */,
+				4D4809A3227A9E9F0046472F /* util.cpp */,
+			);
+			name = library;
 			sourceTree = "<group>";
 		};
 		503AE0F517EB97AB00D1A890 /* Icons */ = {
@@ -356,6 +426,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0500;
+				TargetAttributes = {
+					1D6058900D05DD3D006BFB54 = {
+						DevelopmentTeam = B282C9JGLY;
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "battlebrix" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -413,12 +488,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				46880B8119C43A67006E1F66 /* HelloWorld.png in Resources */,
+				4D807217227ABE210099B6A4 /* coin.png in Resources */,
 				1A88B2641FC3D9C9005C14AE /* Images.xcassets in Resources */,
+				4D4809B3227AA4070046472F /* roulette.json in Resources */,
 				46880B7D19C43A67006E1F66 /* CloseSelected.png in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
 				1AF87B891F6F781D007BE51C /* LaunchScreenBackground.png in Resources */,
 				46880B7B19C43A67006E1F66 /* CloseNormal.png in Resources */,
+				4D4809B4227AA4070046472F /* main.json in Resources */,
 				1AF87B881F6F781D007BE51C /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -443,11 +521,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D480995227A9E370046472F /* ui_deco.cpp in Sources */,
+				4D480994227A9E370046472F /* ui_bgText.cpp in Sources */,
+				4D4809AD227A9E9F0046472F /* sql.cpp in Sources */,
+				4D480991227A9E370046472F /* ui_cultivation.cpp in Sources */,
+				4D4809B0227A9E9F0046472F /* inventory.cpp in Sources */,
+				4D480996227A9E370046472F /* ui_color.cpp in Sources */,
 				1AF87B781F6F77F7007BE51C /* AppController.mm in Sources */,
 				1AF87B8B1F6F782A007BE51C /* RootViewController.mm in Sources */,
+				4D4809AF227A9E9F0046472F /* PhysicsScene.cpp in Sources */,
+				4D4809AA227A9E9F0046472F /* quest.cpp in Sources */,
+				4D480997227A9E370046472F /* ui_gacha.cpp in Sources */,
+				4D4809AB227A9E9F0046472F /* util.cpp in Sources */,
+				4D4809AE227A9E9F0046472F /* farming.cpp in Sources */,
+				4D4809AC227A9E9F0046472F /* achievement.cpp in Sources */,
+				4D4809A9227A9E9F0046472F /* trade.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				1AF87B8A1F6F7822007BE51C /* main.m in Sources */,
-				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
+				4D480993227A9E370046472F /* ui.cpp in Sources */,
+				4D480992227A9E370046472F /* ui_wizard.cpp in Sources */,
+				46880B8A19C43A87006E1F66 /* Scenes.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -457,7 +550,7 @@
 			files = (
 				46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
-				46880B8B19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
+				46880B8B19C43A87006E1F66 /* Scenes.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -484,6 +577,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
+				DEVELOPMENT_TEAM = B282C9JGLY;
 				ENABLE_BITCODE = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -506,7 +600,7 @@
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(_COCOS_HEADER_IOS_BEGIN) $(_COCOS_HEADER_IOS_END)";
+				USER_HEADER_SEARCH_PATHS = "$(_COCOS_HEADER_IOS_BEGIN) $(_COCOS_HEADER_IOS_END) /Users/daejung/work/cocos/library";
 				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
@@ -518,6 +612,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
+				DEVELOPMENT_TEAM = B282C9JGLY;
 				ENABLE_BITCODE = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -539,7 +634,7 @@
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(_COCOS_HEADER_IOS_BEGIN) $(_COCOS_HEADER_IOS_END)";
+				USER_HEADER_SEARCH_PATHS = "$(_COCOS_HEADER_IOS_BEGIN) $(_COCOS_HEADER_IOS_END) /Users/daejung/work/cocos/library";
 				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Release;

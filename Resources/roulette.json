@@ -1,0 +1,146 @@
+{
+  "background": {
+    "img": "bg_temp.png",
+    "bgColor": [ 156, 126, 65, 255 ]
+  },
+  "nodes": [
+    {
+      "id": 0,
+      "dimension": [ 0, 0, 9, 1 ],
+      "margin": [ 5, 5 ],
+      "gridSize": [ 5, 1 ],
+      "img": null,
+      "color": [ 118, 123, 165 ],
+      "objects": [
+        {
+          "id": 1,
+          "position": [ 0, 0 ],
+          "alignment": "none",
+          "type": "label",
+          "link": null,
+          "img": null,
+          "bgColor": null,
+          "color": null,
+          "text": "teetotal lv.16",
+          "fontSize": 20
+        },
+        {
+          "id": 2,
+          "position": [ 4, 0 ],
+          "alignment": "center",
+          "type": "button",
+          "link": 1,
+          "img": null,
+          "bgColor": null,
+          "color": null,
+          "text": "575,211",
+          "fontSize": 24
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "dimension": [ 0, 2, 9, 5 ],
+      "margin": [ 30, 30 ],
+      "gridSize": [ 1, 1 ],
+      "img": null,
+      "color": [ 95, 75, 139 ],
+      "objects": [
+        {
+          "id": 11,
+          "position": [ 0, 0 ],
+          "alignment": "center",
+          "type": "sprite_button",
+          "link": 10,
+          "img": "roulette.png",
+          "bgColor": null,
+          "color": [ 255, 255, 255],
+          "text": "",
+          "fontSize": 0
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "dimension": [ 0, 6, 9, 7 ],
+      "margin": [ 5, 5 ],
+      "gridSize": [ 6, 1 ],
+      "img": null,
+      "color": [ 118, 123, 165 ],
+      "objects": [
+        {
+          "id": 21,
+          "position": [ 0, 0 ],
+          "alignment": "center",
+          "type": "button",
+          "link": 10,
+          "img": null,
+          "bgColor": null,
+          "color": [ 255, 255, 255],
+          "text": "NOTICE",
+          "fontSize": 20
+        },
+        {
+          "id": 22,
+          "position": [ 1, 0 ],
+          "alignment": "center",
+          "type": "button",
+          "link": 11,
+          "img": null,
+          "bgColor": null,
+          "color": [ 255, 255, 255],
+          "text": "PLAY",
+          "fontSize": 20
+        },
+        {
+          "id": 23,
+          "position": [ 2, 0 ],
+          "alignment": "center",
+          "type": "button",
+          "link": 12,
+          "img": null,
+          "bgColor": null,
+          "color": [ 255, 255, 255],
+          "text": "SHOP",
+          "fontSize": 20
+        },
+        {
+          "id": 24,
+          "position": [ 3, 0 ],
+          "alignment": "center",
+          "type": "label",
+          "link": 13,
+          "img": null,
+          "bgColor": null,
+          "color": [ 156, 126, 65],
+          "text": "ROULETTE",
+          "fontSize": 20
+        },
+        {
+          "id": 25,
+          "position": [ 4, 0 ],
+          "alignment": "center",
+          "type": "button",
+          "link": 14,
+          "img": null,
+          "bgColor": null,
+          "color": [ 255, 255, 255],
+          "text": "BAG",
+          "fontSize": 20
+        },
+        {
+          "id": 26,
+          "position": [ 5, 0 ],
+          "alignment": "center",
+          "type": "button",
+          "link": 15,
+          "img": null,
+          "bgColor": null,
+          "color": [ 255, 255, 255],
+          "text": "SETUP",
+          "fontSize": 20
+        }
+      ]
+    }
+  ]
+}

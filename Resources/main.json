@@ -1,0 +1,183 @@
+{
+  "background": {
+    "img": null,
+    "bgColor": [ 156, 126, 65, 255 ],
+    "isDrawGrid": false
+  },
+  "nodes": [
+    {
+      "id": 0,
+      "dimension": [ 0, 0, 9, 1 ],
+      "margin": [ 5, 5 ],
+      "gridSize": [ 5, 1 ],
+      "img": null,
+      "color": [ 118, 123, 165 ],
+      "objects": [
+        {
+          "id": 1,
+          "position": [ 0, 0 ],
+          "alignment": "none",
+          "type": "label",
+          "link": null,
+          "img": null,
+          "bgColor": null,
+          "color": null,
+          "text": "teetotal lv.16",
+          "fontSize": 0
+        },
+        {
+          "id": 2,
+          "position": [ 4, 0 ],
+          "alignment": "center",
+          "type": "button_sprite",
+          "link": 1,
+          "img": "coin.png",
+          "bgColor": null,
+          "color": null,
+          "text": " 575,211",
+          "fontSize": 0
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "dimension": [ 1, 2, 8, 5 ],
+      "margin": [ 15, 5 ],
+      "gridSize": [ 3, 5 ],
+      "img": null,
+      "color": [ 95, 75, 139 ],
+      "objects": [
+        {
+          "id": 11,
+          "position": [ 0, 0 ],
+          "alignment": "none",
+          "type": "label",
+          "link": null,
+          "img": null,
+          "bgColor": null,
+          "color": [ 158, 182, 184 ],
+          "text": "Semi Pro",
+          "fontSize": 16
+        },
+        {
+          "id": 12,
+          "position": [ 0, 1 ],
+          "alignment": "none",
+          "type": "label",
+          "link": null,
+          "img": null,
+          "bgColor": null,
+          "color": [ 255, 255, 255 ],
+          "text": "3 win / 2 draw / 3 lose 48%",
+          "fontSize": 10
+        },
+        {
+          "id": 13,
+          "position": [ 0, 4 ],
+          "alignment": "none",
+          "type": "label",
+          "link": null,
+          "img": null,
+          "bgColor": null,
+          "color": [ 158, 182, 184 ],
+          "text": "1613th",
+          "fontSize": 16
+        },
+        {
+          "id": 14,
+          "position": [ 2, 2 ],
+          "alignment": "center",
+          "type": "button",
+          "link": 2,
+          "img": null,
+          "bgColor": null,
+          "color": [ 240, 161, 191],
+          "text": "SEMI\n PRO",
+          "fontSize": 24
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "dimension": [ 0, 6, 9, 7 ],
+      "margin": [ 5, 5 ],
+      "gridSize": [ 6, 1 ],
+      "img": null,
+      "color": [ 118, 123, 165 ],
+      "objects": [
+        {
+          "id": 21,
+          "position": [ 0, 0 ],
+          "alignment": "center",
+          "type": "button",
+          "link": 10,
+          "img": null,
+          "bgColor": null,
+          "color": [ 255, 255, 255],
+          "text": "NOTICE",
+          "fontSize": 16
+        },
+        {
+          "id": 22,
+          "position": [ 1, 0 ],
+          "alignment": "center",
+          "type": "label",
+          "link": 11,
+          "img": null,
+          "bgColor": null,
+          "color": [ 156, 126, 65],
+          "text": "PLAY",
+          "fontSize": 16
+        },
+        {
+          "id": 23,
+          "position": [ 2, 0 ],
+          "alignment": "center",
+          "type": "button",
+          "link": 12,
+          "img": null,
+          "bgColor": null,
+          "color": [ 255, 255, 255],
+          "text": "SHOP",
+          "fontSize": 16
+        },
+        {
+          "id": 24,
+          "position": [ 3, 0 ],
+          "alignment": "center",
+          "type": "button",
+          "link": 13,
+          "img": null,
+          "bgColor": null,
+          "color": [ 255, 255, 255],
+          "text": "ROULETTE",
+          "fontSize": 16
+        },
+        {
+          "id": 25,
+          "position": [ 4, 0 ],
+          "alignment": "center",
+          "type": "button",
+          "link": 14,
+          "img": null,
+          "bgColor": null,
+          "color": [ 255, 255, 255],
+          "text": "BAG",
+          "fontSize": 16
+        },
+        {
+          "id": 26,
+          "position": [ 5, 0 ],
+          "alignment": "center",
+          "type": "button",
+          "link": 15,
+          "img": null,
+          "bgColor": null,
+          "color": [ 255, 255, 255],
+          "text": "SETUP",
+          "fontSize": 16
+        }
+      ]
+    }
+  ]
+}
