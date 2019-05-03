@@ -2,22 +2,25 @@
   "background": {
     "id": -100,
     "img": null,
-    "bgColor": [ 0, 148, 115, 255 ],
+    "bgColor": [
+      [ 35, 119, 170, 255 ],
+      [ 35, 119, 170, 210 ]
+    ],
     "isDrawGrid": false
   },
   "nodes": [
     {
       "id": -1,
-      "dimension": [ 0, 1, 7, 2 ],
+      "dimension": [ 0, 0, 9, 1 ],
       "margin": [ 0, 0 ],
       "gridSize": [ 1, 1 ],
       "img": null,
-      "color": [ 95, 75, 139, 255 ],
+      "color": [ 106, 175, 170, 255 ],
       "objects": []
     },
     {
         "id": 0,
-        "dimension": [ 0, 1, 2, 2 ],
+        "dimension": [ 0, 0, 2, 1 ],
         "margin": [ 5, 5 ],
         "gridSize": [ 2, 2 ],
         "img": null,
@@ -49,7 +52,7 @@
     },
     {
         "id": 5,
-        "dimension": [ 4, 1, 7, 2 ],
+        "dimension": [ 4, 0, 8, 1 ],
         "margin": [ 5, 10 ],
         "gridSize": [ 1, 1 ],
         "img": null,
@@ -70,16 +73,16 @@
     },
     {
       "id": -2,
-      "dimension": [ 0, 2, 7, 7 ],
+      "dimension": [ 0, 1, 9, 5 ],
       "margin": [ 5, 5 ],
       "gridSize": [ 1, 1 ],
       "img": null,
-      "color": [ 136, 176, 75, 255 ],
+      "color": [ 150, 179, 222, 255 ],
       "objects": []
     },
     {
         "id": 10,
-        "dimension": [ 0, 2, 4, 7 ],
+        "dimension": [ 0, 1, 4, 5 ],
         "margin": [ 10, 5 ],
         "gridSize": [ 1, 10 ],
         "img": null,
@@ -133,7 +136,7 @@
     },
     {
         "id": 15,
-        "dimension": [ 4, 2, 7, 7 ],
+        "dimension": [ 4, 1, 9, 5 ],
         "margin": [ 5, 5 ],
         "gridSize": [ 1, 1 ],
         "img": null,
@@ -154,11 +157,11 @@
     },
     {
       "id": 20,
-      "dimension": [ 0, 8, 7, 9 ],
+      "dimension": [ 0, 6, 9, 7 ],
       "margin": [ 5, 5 ],
       "gridSize": [ 6, 1 ],
       "img": null,
-      "color": [ 95, 75, 139, 255 ],
+      "color": [ 248, 247, 242, 255 ],
       "objects": [
         {
           "id": 21,

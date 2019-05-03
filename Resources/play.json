@@ -2,20 +2,20 @@
   "background": {
     "id": -100,
     "img": null,
-    "bgColor": [ 0, 148, 115, 255 ],
+    "bgColor": [ [ 0, 148, 115, 255 ], [ 0, 148, 115, 200 ] ],
     "isDrawGrid": false
   },
   "nodes": [
     {
       "id": -1,
-      "dimension": [ 0, 1, 7, 2 ],
+      "dimension": [ 0, 0, 9, 1 ],
       "margin": [ 0, 0 ],
       "gridSize": [ 3, 1 ],
       "img": null,
       "color": [ 95, 75, 139, 255 ],
       "objects": [
           {
-              "id": 1,
+              "id": -2,
               "position": [ 0, 0 ],
               "alignment": "center",
               "type": "label",
@@ -26,7 +26,7 @@
               "fontSize": 0
           },
           {
-              "id": 2,
+              "id": -3,
               "position": [ 1, 0 ],
               "alignment": "center",
               "type": "label",
@@ -37,7 +37,7 @@
               "fontSize": 0
           },
           {
-              "id": 3,
+              "id": -4,
               "position": [ 2, 0 ],
               "alignment": "center",
               "type": "label",
@@ -50,28 +50,72 @@
       ]
     },
     {
-        "id": 5,
-        "dimension": [ 0, 2, 3, 3 ],
-        "margin": [ 5, 5 ],
-        "gridSize": [ 1, 1 ],
-        "img": null,
-        "color": [ 255, 255, 255, 10 ],
-        "objects": [
-        ]
+      "id": -5,
+      "dimension": [ 0, 1, 4, 2 ],
+      "margin": [ 5, 5 ],
+      "gridSize": [ 1, 2 ],
+      "img": null,
+      "color": [ 255, 255, 255, 10 ],
+      "objects": [
+        {
+          "id": 1,
+          "position": [ 0, 0 ],
+          "alignment": "center",
+          "type": "loadingbar",
+          "link": null,
+          "img": "loadingbar_big.png",
+          "color": null,
+          "text": "",
+          "fontSize": 0
+        },
+        {
+          "id": 2,
+          "position": [ 0, 1 ],
+          "alignment": "center",
+          "type": "loadingbar",
+          "link": null,
+          "img": "loadingbar_big.png",
+          "color": null,
+          "text": "",
+          "fontSize": 0
+        }
+      ]
     },
     {
-        "id": 6,
-        "dimension": [ 4, 2, 7, 3 ],
-        "margin": [ 5, 5 ],
-        "gridSize": [ 1, 1 ],
-        "img": null,
-        "color": [ 255, 255, 255, 10 ],
-        "objects": [
-        ]
+      "id": -6,
+      "dimension": [ 5, 1, 9, 2 ],
+      "margin": [ 5, 5 ],
+      "gridSize": [ 1, 2 ],
+      "img": null,
+      "color": [ 255, 255, 255, 10 ],
+      "objects": [
+        {
+          "id": 6,
+          "position": [ 0, 0 ],
+          "alignment": "center",
+          "type": "loadingbar",
+          "link": null,
+          "img": "loadingbar_big.png",
+          "color": null,
+          "text": "",
+          "fontSize": 0
+        },
+        {
+          "id": 7,
+          "position": [ 0, 1 ],
+          "alignment": "center",
+          "type": "loadingbar",
+          "link": null,
+          "img": "loadingbar_big.png",
+          "color": null,
+          "text": "",
+          "fontSize": 0
+        }
+      ]
     },
     {
         "id": 10,
-        "dimension": [ 0, 3, 3, 8 ],
+        "dimension": [ 0, 2, 4, 6 ],
         "margin": [ 5, 5 ],
         "gridSize": [ 1, 1 ],
         "img": null,
@@ -80,7 +124,7 @@
     },
     {
         "id": 20,
-        "dimension": [ 4, 3, 7, 8 ],
+        "dimension": [ 5, 2, 9, 6 ],
         "margin": [ 5, 5 ],
         "gridSize": [ 1, 1 ],
         "img": null,
@@ -89,7 +133,7 @@
     },
     {
         "id": 30,
-        "dimension": [ 3, 3, 4, 8 ],
+        "dimension": [ 4, 2, 5, 6 ],
         "margin": [ 5, 5 ],
         "gridSize": [ 1, 5 ],
         "img": null,

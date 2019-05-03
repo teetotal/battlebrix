@@ -10,6 +10,15 @@
     <Filter Include="src">
       <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
     </Filter>
+    <Filter Include="library">
+      <UniqueIdentifier>{500bcb06-9d28-48e5-9410-1776ecbe998a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="library\library">
+      <UniqueIdentifier>{324f081e-976e-460c-a1d7-70a4ab4cd18e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="library\ui">
+      <UniqueIdentifier>{c7b97721-d2ca-4e63-bdaf-fc56daffe755}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -18,8 +27,53 @@
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\HelloWorldScene.cpp">
+    <ClCompile Include="..\Classes\Scenes.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\ui\ui.cpp">
+      <Filter>library\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\ui\ui_bgText.cpp">
+      <Filter>library\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\ui\ui_color.cpp">
+      <Filter>library\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\ui\ui_cultivation.cpp">
+      <Filter>library\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\ui\ui_deco.cpp">
+      <Filter>library\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\ui\ui_gacha.cpp">
+      <Filter>library\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\ui\ui_wizard.cpp">
+      <Filter>library\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\library\achievement.cpp">
+      <Filter>library\library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\library\farming.cpp">
+      <Filter>library\library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\library\inventory.cpp">
+      <Filter>library\library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\library\PhysicsScene.cpp">
+      <Filter>library\library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\library\quest.cpp">
+      <Filter>library\library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\library\sql.cpp">
+      <Filter>library\library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\library\trade.cpp">
+      <Filter>library\library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\library\util.cpp">
+      <Filter>library\library</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -29,7 +83,7 @@
     <ClInclude Include="..\Classes\AppDelegate.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\HelloWorldScene.h">
+    <ClInclude Include="..\Classes\Scenes.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
@@ -37,5 +91,16 @@
     <ResourceCompile Include="game.rc">
       <Filter>resource</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Resources\main.json">
+      <Filter>resource</Filter>
+    </None>
+    <None Include="..\Resources\play.json">
+      <Filter>resource</Filter>
+    </None>
+    <None Include="..\Resources\roulette.json">
+      <Filter>resource</Filter>
+    </None>
   </ItemGroup>
 </Project>
