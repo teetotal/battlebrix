@@ -48,6 +48,8 @@
 		4D4809B0227A9E9F0046472F /* inventory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D4809A8227A9E9F0046472F /* inventory.cpp */; };
 		4D4809B3227AA4070046472F /* roulette.json in Resources */ = {isa = PBXBuildFile; fileRef = 4D4809B1227AA4070046472F /* roulette.json */; };
 		4D4809B4227AA4070046472F /* main.json in Resources */ = {isa = PBXBuildFile; fileRef = 4D4809B2227AA4070046472F /* main.json */; };
+		4D7EFBF8227C22A300E19181 /* play.json in Resources */ = {isa = PBXBuildFile; fileRef = 4D7EFBF7227C22A300E19181 /* play.json */; };
+		4D7EFBFA227C2D3A00E19181 /* loadingbar_big.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D7EFBF9227C2D3A00E19181 /* loadingbar_big.png */; };
 		4D807217227ABE210099B6A4 /* coin.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D807215227ABE200099B6A4 /* coin.png */; };
 		4D807219227AF9790099B6A4 /* icons8-shopping-cart-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D807218227AF9790099B6A4 /* icons8-shopping-cart-100.png */; };
 		4D80721B227AF9DD0099B6A4 /* icons8-alarm-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D80721A227AF9DD0099B6A4 /* icons8-alarm-100.png */; };
@@ -170,6 +172,8 @@
 		4D4809A8227A9E9F0046472F /* inventory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = inventory.cpp; path = ../../library/library/inventory.cpp; sourceTree = "<group>"; };
 		4D4809B1227AA4070046472F /* roulette.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = roulette.json; sourceTree = "<group>"; };
 		4D4809B2227AA4070046472F /* main.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = main.json; sourceTree = "<group>"; };
+		4D7EFBF7227C22A300E19181 /* play.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = play.json; sourceTree = "<group>"; };
+		4D7EFBF9227C2D3A00E19181 /* loadingbar_big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loadingbar_big.png; sourceTree = "<group>"; };
 		4D807215227ABE200099B6A4 /* coin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coin.png; sourceTree = "<group>"; };
 		4D807218227AF9790099B6A4 /* icons8-shopping-cart-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-shopping-cart-100.png"; sourceTree = "<group>"; };
 		4D80721A227AF9DD0099B6A4 /* icons8-alarm-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-alarm-100.png"; sourceTree = "<group>"; };
@@ -334,6 +338,7 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4D7EFBF9227C2D3A00E19181 /* loadingbar_big.png */,
 				4D807232227AFF9C0099B6A4 /* bg_temp.png */,
 				4D80722E227AFBDD0099B6A4 /* icons8-play-button-circled-100.png */,
 				4D80722F227AFBDD0099B6A4 /* icons8-play-button-circled-filled-100.png */,
@@ -350,6 +355,7 @@
 				4D807218227AF9790099B6A4 /* icons8-shopping-cart-100.png */,
 				4D807215227ABE200099B6A4 /* coin.png */,
 				4D4809B1227AA4070046472F /* roulette.json */,
+				4D7EFBF7227C22A300E19181 /* play.json */,
 				4D4809B2227AA4070046472F /* main.json */,
 				521A8EA819F11F5000D177D7 /* fonts */,
 				3EACC98E19EE6D4300EB3C5E /* res */,
@@ -529,6 +535,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D7EFBFA227C2D3A00E19181 /* loadingbar_big.png in Resources */,
 				4D80722C227AFAF30099B6A4 /* icons8-shopping-cart-filled-100.png in Resources */,
 				4D807228227AFAF30099B6A4 /* icons8-settings-100.png in Resources */,
 				46880B8119C43A67006E1F66 /* HelloWorld.png in Resources */,
@@ -546,6 +553,7 @@
 				4D807230227AFBDD0099B6A4 /* icons8-play-button-circled-100.png in Resources */,
 				1AF87B891F6F781D007BE51C /* LaunchScreenBackground.png in Resources */,
 				46880B7B19C43A67006E1F66 /* CloseNormal.png in Resources */,
+				4D7EFBF8227C22A300E19181 /* play.json in Resources */,
 				4D807219227AF9790099B6A4 /* icons8-shopping-cart-100.png in Resources */,
 				4D80721B227AF9DD0099B6A4 /* icons8-alarm-100.png in Resources */,
 				4D807227227AFAF30099B6A4 /* icons8-roulette-100.png in Resources */,

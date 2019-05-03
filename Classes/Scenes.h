@@ -40,6 +40,25 @@ public:
 protected:
     virtual void callback(Ref* pSender, int from, int link);
     virtual const string getText(const string& defaultString, int id);
+    
+private:
+    enum eLINK {
+        eLINK_PLAY = 0
+    };
+};
+
+class ScenePlay : public ui_wizard
+{
+public:
+    static Scene* createScene() {
+        return ScenePlay::create();
+    };
+    virtual bool init();
+    CREATE_FUNC(ScenePlay);
+    
+protected:
+    virtual void callback(Ref* pSender, int from, int link);
+    virtual const string getText(const string& defaultString, int id);
 };
 
 #endif // __SCENES_H__

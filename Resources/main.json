@@ -1,121 +1,164 @@
 {
   "background": {
-    "img": "bg_temp.png",
-    "bgColor": [ 156, 126, 65, 255 ],
+    "id": -100,
+    "img": null,
+    "bgColor": [ 0, 148, 115, 255 ],
     "isDrawGrid": false
   },
   "nodes": [
     {
-      "id": 0,
-      "dimension": [ 0, 0, 9, 1 ],
-      "margin": [ 5, 5 ],
-      "gridSize": [ 5, 1 ],
+      "id": -1,
+      "dimension": [ 0, 1, 7, 2 ],
+      "margin": [ 0, 0 ],
+      "gridSize": [ 1, 1 ],
       "img": null,
-      "color": [ 118, 123, 165 ],
-      "objects": [
-        {
-          "id": 1,
-          "position": [ 0, 0 ],
-          "alignment": "center",
-          "type": "label",
-          "link": null,
-          "img": null,
-          "bgColor": null,
-          "color": null,
-          "text": "teetotal",
-          "fontSize": 0
-        },
-        {
-            "id": 2,
-            "position": [ 1, 0 ],
-            "alignment": "none",
-            "type": "label",
-            "link": null,
-            "img": null,
-            "bgColor": null,
-            "color": [ 255, 255, 255 ],
-            "text": "lv.16",
-            "fontSize": 10
-        },
-        {
-          "id": 3,
-          "position": [ 4, 0 ],
-          "alignment": "center",
-          "type": "button_sprite",
-          "link": 1,
-          "img": "icons8-coins-100.png",
-          "bgColor": null,
-          "color": null,
-          "text": " 575,211",
-          "fontSize": 0
-        }
-      ]
+      "color": [ 95, 75, 139, 255 ],
+      "objects": []
     },
     {
-      "id": 10,
-      "dimension": [ 1, 2, 8, 5 ],
-      "margin": [ 15, 5 ],
-      "gridSize": [ 3, 5 ],
+        "id": 0,
+        "dimension": [ 0, 1, 2, 2 ],
+        "margin": [ 5, 5 ],
+        "gridSize": [ 2, 2 ],
+        "img": null,
+        "color": [ 95, 75, 139, 0 ],
+        "objects": [
+            {
+                "id": 1,
+                "position": [ 0, 0 ],
+                "alignment": "none",
+                "type": "label",
+                "link": null,
+                "img": null,
+                "color": null,
+                "text": "teetotal",
+                "fontSize": 10
+            },
+            {
+                "id": 2,
+                "position": [ 0, 1 ],
+                "alignment": "none",
+                "type": "label",
+                "link": null,
+                "img": null,
+                "color": [ 255, 255, 255 ],
+                "text": "lv.16",
+                "fontSize": 10
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "dimension": [ 4, 1, 7, 2 ],
+        "margin": [ 5, 10 ],
+        "gridSize": [ 1, 1 ],
+        "img": null,
+        "color": [ 95, 75, 139, 0 ],
+        "objects": [
+            {
+                "id": 6,
+                "position": [ 0, 0 ],
+                "alignment": "center",
+                "type": "button_sprite",
+                "link": 1,
+                "img": "icons8-coins-100.png",
+                "color": [ 255, 255, 255 ],
+                "text": "  575,211",
+                "fontSize": 8
+            }
+        ]
+    },
+    {
+      "id": -2,
+      "dimension": [ 0, 2, 7, 7 ],
+      "margin": [ 5, 5 ],
+      "gridSize": [ 1, 1 ],
       "img": null,
-      "color": [ 95, 75, 139 ],
-      "objects": [
-        {
-          "id": 11,
-          "position": [ 0, 0 ],
-          "alignment": "none",
-          "type": "label",
-          "link": null,
-          "img": null,
-          "bgColor": null,
-          "color": [ 158, 182, 184 ],
-          "text": "Semi Pro",
-          "fontSize": 16
-        },
-        {
-          "id": 12,
-          "position": [ 0, 1 ],
-          "alignment": "none",
-          "type": "label",
-          "link": null,
-          "img": null,
-          "bgColor": null,
-          "color": [ 255, 255, 255 ],
-          "text": "3 win / 2 draw / 3 lose 48%",
-          "fontSize": 10
-        },
-        {
-          "id": 13,
-          "position": [ 0, 4 ],
-          "alignment": "none",
-          "type": "label",
-          "link": null,
-          "img": null,
-          "bgColor": null,
-          "color": [ 158, 182, 184 ],
-          "text": "1613th",
-          "fontSize": 16
-        },
-        {
-          "id": 14,
-          "position": [ 2, 2 ],
-          "alignment": "center",
-          "type": "button",
-          "link": 2,
-          "img": null,
-          "bgColor": null,
-          "color": [ 240, 161, 191],
-          "text": "SEMI\n PRO",
-          "fontSize": 24
-        }
-      ]
+      "color": [ 136, 176, 75, 255 ],
+      "objects": []
+    },
+    {
+        "id": 10,
+        "dimension": [ 0, 2, 4, 7 ],
+        "margin": [ 10, 5 ],
+        "gridSize": [ 1, 10 ],
+        "img": null,
+        "color": [ 255, 111, 97, 0 ],
+        "objects": [
+            {
+                "id": 11,
+                "position": [ 0, 1 ],
+                "alignment": "none",
+                "type": "label",
+                "link": null,
+                "img": null,
+                "color": null,
+                "text": "Semi Pro",
+                "fontSize": 0
+            },
+            {
+                "id": 12,
+                "position": [ 0, 2 ],
+                "alignment": "none",
+                "type": "label",
+                "link": null,
+                "img": null,
+                "color": [ 255, 255, 255 ],
+                "text": "3 win / 2 draw / 3 lose",
+                "fontSize": 8
+            },
+            {
+                "id": 13,
+                "position": [ 0, 3 ],
+                "alignment": "none",
+                "type": "label",
+                "link": null,
+                "img": null,
+                "color": [ 255, 255, 255 ],
+                "text": "48 %",
+                "fontSize": 8
+            },
+            {
+                "id": 14,
+                "position": [ 0, 8 ],
+                "alignment": "none",
+                "type": "label",
+                "link": null,
+                "img": null,
+                "color": null,
+                "text": "1613th",
+                "fontSize": 0
+            }
+        ]
+    },
+    {
+        "id": 15,
+        "dimension": [ 4, 2, 7, 7 ],
+        "margin": [ 5, 5 ],
+        "gridSize": [ 1, 1 ],
+        "img": null,
+        "color": [ 255, 111, 97, 0 ],
+        "objects": [
+            {
+                "id": 16,
+                "position": [ 0, 0 ],
+                "alignment": "center",
+                "type": "sprite_button",
+                "link": 0,
+                "img": [ "icons8-play-button-circled-100.png", "icons8-play-button-circled-filled-100.png" ],
+                "color": [ 95, 75, 139 ],
+                "text": "",
+                "fontSize": 16
+            }
+        ]
     },
     {
       "id": 20,
-      "dimension": [ 0, 6, 9, 7 ],
+      "dimension": [ 0, 8, 7, 9 ],
       "margin": [ 5, 5 ],
       "gridSize": [ 6, 1 ],
       "img": null,
-      "color": [ 118, 123, 165 ],
+      "color": [ 95, 75, 139, 255 ],
       "objects": [
         {
           "id": 21,
@@ -124,7 +167,6 @@
           "type": "sprite_button",
           "link": 10,
           "img": ["icons8-alarm-100.png", "icons8-alarm-filled-100.png"],
-          "bgColor": null,
           "color": [ 255, 255, 255],
           "text": "NOTICE",
           "fontSize": 16
@@ -136,7 +178,6 @@
           "type": "sprite",
           "link": 11,
           "img": "icons8-play-button-circled-filled-100.png",
-          "bgColor": null,
           "color": [ 156, 126, 65],
           "text": "PLAY",
           "fontSize": 16
@@ -148,7 +189,6 @@
           "type": "sprite_button",
           "link": 12,
           "img": ["icons8-shopping-cart-100.png", "icons8-shopping-cart-filled-100.png"],
-          "bgColor": null,
           "color": [ 255, 255, 255],
           "text": "SHOP",
           "fontSize": 16
@@ -160,7 +200,6 @@
           "type": "sprite_button",
           "link": 13,
           "img": ["icons8-roulette-100.png", "icons8-roulette-filled-100.png"],
-          "bgColor": null,
           "color": [ 255, 255, 255],
           "text": "ROULETTE",
           "fontSize": 16
@@ -172,7 +211,6 @@
           "type": "sprite_button",
           "link": 14,
           "img": ["icons8-shopping-bag-100.png", "icons8-shopping-bag-filled-100.png"],
-          "bgColor": null,
           "color": [ 255, 255, 255],
           "text": "BAG",
           "fontSize": 16
@@ -184,8 +222,7 @@
           "type": "sprite_button",
           "link": 15,
           "img": ["icons8-settings-100.png", "icons8-settings-filled-100.png"],
-          "bgColor": null,
-          "color": [ 255, 255, 255],
+          "color": [ 255, 0, 0 ],
           "text": "SETUP",
           "fontSize": 16
         }

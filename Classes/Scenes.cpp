@@ -29,13 +29,79 @@ bool SceneMain::init()
 {
     gui::inst()->initDefaultWithSpriteCache();
     this->loadFromJson("main", "main.json");
+    
     return true;
 }
 
 void SceneMain::callback(Ref* pSender, int from, int link) {
-    
+    switch((eLINK)link) {
+        case eLINK_PLAY:
+            this->pushScene(ScenePlay::create());
+            break;
+        default:
+            break;
+    }
 }
 
 const string SceneMain::getText(const string& defaultString, int id) {
     return defaultString;
 }
+
+//====================================================================
+bool ScenePlay::init()
+{
+    this->loadFromJson("play", "play.json");
+    Node * pLeft = this->getNodeById(5);
+    Node * pRight = this->getNodeById(6);
+    
+    {
+        auto l = LoadingBar::create("loadingbar_big.png");
+        gui::inst()->setScale(l, pLeft->getContentSize().width);
+        l->setDirection(LoadingBar::Direction::RIGHT);
+        l->setPercent(80);
+        l->setAnchorPoint(Vec2(0.5, 0.5));
+        l->setPosition(Vec2(pLeft->getContentSize().width / 2, pLeft->getContentSize().height * 0.5));
+        pLeft->addChild(l);
+    }
+    
+    {
+        auto l = LoadingBar::create("loadingbar_big.png");
+        gui::inst()->setScale(l, pLeft->getContentSize().width);
+        l->setDirection(LoadingBar::Direction::RIGHT);
+        l->setPercent(65);
+        l->setAnchorPoint(Vec2(0.5, 0.5));
+        l->setPosition(Vec2(pLeft->getContentSize().width / 2, pLeft->getContentSize().height * 0.75));
+        pLeft->addChild(l);
+    }
+    
+    {
+        auto l = LoadingBar::create("loadingbar_big.png");
+        gui::inst()->setScale(l, pRight->getContentSize().width);
+        l->setDirection(LoadingBar::Direction::LEFT);
+        l->setPercent(10);
+        l->setAnchorPoint(Vec2(0.5, 0.5));
+        l->setPosition(Vec2(pRight->getContentSize().width / 2, pRight->getContentSize().height * 0.5));
+        pRight->addChild(l);
+    }
+    
+    {
+        auto l = LoadingBar::create("loadingbar_big.png");
+        gui::inst()->setScale(l, pRight->getContentSize().width);
+        l->setDirection(LoadingBar::Direction::LEFT);
+        l->setPercent(65);
+        l->setAnchorPoint(Vec2(0.5, 0.5));
+        l->setPosition(Vec2(pRight->getContentSize().width / 2, pRight->getContentSize().height * 0.75));
+        pRight->addChild(l);
+    }
+    
+    return true;
+}
+
+void ScenePlay::callback(Ref* pSender, int from, int link) {
+    this->popScene();
+}
+
+const string ScenePlay::getText(const string& defaultString, int id) {
+    return defaultString;
+}
+
