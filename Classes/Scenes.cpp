@@ -29,7 +29,14 @@ bool SceneMain::init()
 {
 	gui::inst()->initDefaultWithSpriteCache();
     this->loadFromJson("main", "main.json");
-    
+    Node * bg = getNodeById(0);
+    gui::inst()->drawCircle(bg, Vec2::ZERO, 100, Color4F(1, 1, 1, 0.5))->runAction(
+       RepeatForever::create(
+                             Sequence::create(
+                                              MoveTo::create(30, Vec2(bg->getContentSize().width, bg->getContentSize().height))
+                                              , MoveTo::create(30, Vec2::ZERO)
+                                              , NULL)
+       ));
     return true;
 }
 

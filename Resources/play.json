@@ -13,13 +13,14 @@
       "id": -1,
       "dimension": [ 0, 0, 9, 1 ],
       "margin": [ 0, 0 ],
-      "gridSize": [ 3, 1 ],
+      "innerMargin": [ 10, 5 ],
+      "gridSize": [ 9, 1 ],
       "img": null,
       "color": [ 95, 75, 139, 255 ],
       "objects": [
         {
           "id": -2,
-          "position": [ 0, 0 ],
+          "position": [ 2, 0 ],
           "alignment": "center",
           "type": "label",
           "link": 1,
@@ -30,7 +31,7 @@
         },
         {
           "id": -3,
-          "position": [ 1, 0 ],
+          "position": [ 4, 0 ],
           "alignment": "center",
           "type": "label",
           "link": 1,
@@ -41,7 +42,7 @@
         },
         {
           "id": -4,
-          "position": [ 2, 0 ],
+          "position": [ 6, 0 ],
           "alignment": "center",
           "type": "label",
           "link": 1,
@@ -54,8 +55,9 @@
     },
     {
       "id": -5,
-      "dimension": [ 0, 1, 4, 2 ],
-      "margin": [ 5, 5 ],
+      "dimension": [ 1, 1, 4, 2 ],
+      "margin": [ 0, 0 ],
+      "innerMargin": [ 5, 5 ],
       "gridSize": [ 1, 2 ],
       "img": null,
       "color": [ 255, 255, 255, 10 ],
@@ -68,7 +70,7 @@
           "link": null,
           "img": "loadingbar_big.png",
           "color": null,
-          "text": "",
+          "text": null,
           "fontSize": 0
         },
         {
@@ -86,8 +88,9 @@
     },
     {
       "id": -6,
-      "dimension": [ 5, 1, 9, 2 ],
-      "margin": [ 5, 5 ],
+      "dimension": [ 5, 1, 8, 2 ],
+      "margin": [ 0, 0 ],
+      "innerMargin": [ 5, 5 ],
       "gridSize": [ 1, 2 ],
       "img": null,
       "color": [ 255, 255, 255, 10 ],
@@ -118,8 +121,9 @@
     },
     {
       "id": 10,
-      "dimension": [ 0, 2, 4, 6 ],
-      "margin": [ 5, 5 ],
+      "dimension": [ 1, 2, 4, 6 ],
+      "margin": [ 0, 0 ],
+      "innerMargin": [ 0, 0 ],
       "gridSize": [ 1, 1 ],
       "img": null,
       "color": [ 255, 255, 255, 255 ],
@@ -127,8 +131,9 @@
     },
     {
       "id": 20,
-      "dimension": [ 5, 2, 9, 6 ],
-      "margin": [ 5, 5 ],
+      "dimension": [ 5, 2, 8, 6 ],
+      "margin": [ 0, 0 ],
+      "innerMargin": [ 0, 0 ],
       "gridSize": [ 1, 1 ],
       "img": null,
       "color": [ 136, 176, 75, 255 ],
@@ -137,8 +142,9 @@
     {
       "id": 30,
       "dimension": [ 4, 2, 5, 6 ],
-      "margin": [ 5, 5 ],
-      "gridSize": [ 1, 5 ],
+      "margin": [ 0, 0 ],
+      "innerMargin": [ 0, 5 ],
+      "gridSize": [ 1, 7 ],
       "img": null,
       "color": [ 136, 176, 75, 255 ],
       "objects": [
@@ -166,7 +172,7 @@
         },
         {
           "id": -1,
-          "position": [ 0, 1 ],
+          "position": [ 0, 2 ],
           "alignment": "center",
           "type": "circle",
           "link": null,
@@ -177,7 +183,7 @@
         },
         {
           "id": 32,
-          "position": [ 0, 1 ],
+          "position": [ 0, 2 ],
           "alignment": "center",
           "type": "button",
           "link": 1,
@@ -188,7 +194,7 @@
         },
         {
           "id": -1,
-          "position": [ 0, 2 ],
+          "position": [ 0, 4 ],
           "alignment": "center",
           "type": "circle",
           "link": null,
@@ -199,7 +205,7 @@
         },
         {
           "id": 33,
-          "position": [ 0, 2 ],
+          "position": [ 0, 4 ],
           "alignment": "center",
           "type": "button",
           "link": 1,
@@ -210,7 +216,7 @@
         },
         {
           "id": -1,
-          "position": [ 0, 3 ],
+          "position": [ 0, 6 ],
           "alignment": "center",
           "type": "circle",
           "link": null,
@@ -221,7 +227,7 @@
         },
         {
           "id": 34,
-          "position": [ 0, 3 ],
+          "position": [ 0, 6 ],
           "alignment": "center",
           "type": "button",
           "link": 1,

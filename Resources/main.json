@@ -1,6 +1,6 @@
 {
   "background": {
-    "id": -1,
+    "id": 0,
     "img": null,
     "bgColor": [
       [ 24, 113, 115, 255 ],
@@ -46,9 +46,20 @@
                 "type": "label",
                 "link": null,
                 "img": null,
-                "color": [ 255, 255, 255 ],
+                "color": [ 243, 179, 59 ],
                 "text": "lv.16",
                 "fontSize": 12
+            },
+            {
+                "id": -1,
+                "position": [ 1, 0 ],
+                "alignment": "center",
+                "type": "rectangle",
+                "link": null,
+                "img": null,
+                "color": [ 243, 179, 59 ],
+                "text": null,
+                "fontSize": 0
             }
         ]
     },
@@ -100,7 +111,7 @@
       "id": -1,
       "dimension": [ 3, 1, 6, 7 ],
       "margin": [ 0, 10 ],
-      "innerMargin": [ 10, 5 ],
+      "innerMargin": [ 10, 10 ],
       "gridSize": [ 2, 6 ],
       "img": null,
       "color": [
@@ -116,45 +127,56 @@
           "link": null,
           "img": null,
           "color": null,
-          "text": "Semi Pro",
+          "text": "SEMI PRO",
           "fontSize": 18
         },
         {
-          "id": 12,
-          "position": [ 0, 1 ],
+            "id": 12,
+            "position": [ 0, 1 ],
+            "alignment": "center",
+            "type": "loadingbar",
+            "link": null,
+            "img": "loadingbar_big.png",
+            "color": null,
+            "text": null,
+            "fontSize": 0
+        },
+        {
+          "id": 13,
+          "position": [ 0, 2 ],
           "alignment": "none",
           "type": "label",
           "link": null,
           "img": null,
-          "color": [ 255, 255, 255 ],
+          "color": [ 243, 179, 59, 255 ],
           "text": "3 win / 2 draw / 3 lose\n48%",
-          "fontSize": 10
+          "fontSize": 9
         },
         {
-          "id": 13,
+          "id": 14,
           "position": [ 1, 0 ],
           "alignment": "center",
           "type": "label",
           "link": null,
           "img": null,
           "color": [ 243, 179, 59, 255 ],
-          "text": "1613th",
+          "text": "1,613th",
           "fontSize": 0
         },
         {
-          "id": -1,
-          "position": [ 0, 4 ],
-          "alignment": "center",
-          "type": "rectbound",
-          "link": null,
-          "img": null,
-          "color": [ 2, 170, 213 ],
-          "text": null,
-          "fontSize": 0
+            "id": -1,
+            "position": [ 0, 5 ],
+            "alignment": "center",
+            "type": "rectbound",
+            "link": null,
+            "img": null,
+            "color": [ 2, 170, 213 ],
+            "text": null,
+            "fontSize": 0
         },
         {
-          "id": 14,
-          "position": [ 0, 4 ],
+          "id": 15,
+          "position": [ 0, 5 ],
           "alignment": "center",
           "type": "button",
           "link": 0,
