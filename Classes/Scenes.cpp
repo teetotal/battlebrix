@@ -27,9 +27,12 @@
 
 bool SceneMain::init()
 {
-	gui::inst()->initDefaultWithSpriteCache();
+	gui::inst()->initDefaultWithSpriteCache("fonts/SDSwaggerTTF.ttf");
     this->loadFromJson("main", "main.json");
     Node * bg = getNodeById(0);
+    
+    //gui::inst()->drawDiamondTile(bg, Vec2(14, 10), Color4F(Color3B(36, 119, 170)));
+    
     gui::inst()->drawCircle(bg, Vec2::ZERO, 100, Color4F(1, 1, 1, 0.5))->runAction(
        RepeatForever::create(
                              Sequence::create(
