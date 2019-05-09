@@ -1,22 +1,27 @@
 {
-  "background": {
-    "id": -100,
-    "img": null,
-    "bgColor": [
-      [ 0, 148, 115, 255 ],
-      [ 0, 148, 115, 200 ]
-    ],
-    "isDrawGrid": false
-  },
+    "background": {
+        "id": 0,
+        "img": null,
+        "bgColor": [
+            [ 39, 124, 172, 255 ],
+            [ 39, 124, 172, 255 ]
+        ],
+        "tile": {
+            "color": [ 36, 119, 170, 255 ],
+            "num": [ 14, 10 ]
+        },
+        "isDrawGrid": false
+    },
   "nodes": [
     {
+        "comment": "top",
       "id": -1,
       "dimension": [ 0, 0, 9, 1 ],
       "margin": [ 0, 0 ],
       "innerMargin": [ 10, 5 ],
       "gridSize": [ 9, 1 ],
       "img": null,
-      "color": [ 95, 75, 139, 255 ],
+      "color": [ 52, 66, 83, 0 ],
       "objects": [
         {
           "id": -2,
@@ -25,7 +30,7 @@
           "type": "label",
           "link": 1,
           "img": null,
-          "color": [ 255, 255, 255 ],
+          "color": [ 240, 208, 75 ],
           "text": "CPU",
           "fontSize": 0
         },
@@ -36,7 +41,7 @@
           "type": "label",
           "link": 1,
           "img": null,
-          "color": null,
+          "color": [ 255, 255, 255 ],
           "text": "VS",
           "fontSize": 0
         },
@@ -47,20 +52,21 @@
           "type": "label",
           "link": 1,
           "img": null,
-          "color": [ 255, 255, 255 ],
+          "color": [ 240, 208, 75 ],
           "text": "teetotal",
           "fontSize": 0
         }
       ]
     },
     {
+        "comment": "cpu loading bars",
       "id": -5,
       "dimension": [ 1, 1, 4, 2 ],
       "margin": [ 0, 0 ],
       "innerMargin": [ 5, 5 ],
       "gridSize": [ 1, 2 ],
       "img": null,
-      "color": [ 255, 255, 255, 10 ],
+      "color": [ 106, 185, 253 ],
       "objects": [
         {
           "id": 1,
@@ -87,13 +93,14 @@
       ]
     },
     {
+        "comment": "my loading bars",
       "id": -6,
       "dimension": [ 5, 1, 8, 2 ],
       "margin": [ 0, 0 ],
       "innerMargin": [ 5, 5 ],
       "gridSize": [ 1, 2 ],
       "img": null,
-      "color": [ 255, 255, 255, 10 ],
+      "color": [ 106, 185, 253 ],
       "objects": [
         {
           "id": 6,
@@ -120,119 +127,78 @@
       ]
     },
     {
+        "comment": "cpu area",
       "id": 10,
       "dimension": [ 1, 2, 4, 6 ],
       "margin": [ 0, 0 ],
       "innerMargin": [ 0, 0 ],
       "gridSize": [ 1, 1 ],
       "img": null,
-      "color": [ 255, 255, 255, 255 ],
+      "color": [ 255, 255, 255 ],
       "objects": [ ]
     },
     {
+        "comment": "my area",
       "id": 20,
       "dimension": [ 5, 2, 8, 6 ],
       "margin": [ 0, 0 ],
       "innerMargin": [ 0, 0 ],
       "gridSize": [ 1, 1 ],
       "img": null,
-      "color": [ 136, 176, 75, 255 ],
+      "color": [ 255, 255, 255 ],
       "objects": [ ]
     },
     {
+        "comment": "skill",
       "id": 30,
       "dimension": [ 4, 2, 5, 6 ],
       "margin": [ 0, 0 ],
-      "innerMargin": [ 0, 5 ],
-      "gridSize": [ 1, 7 ],
+      "innerMargin": [ 5, 5 ],
+      "gridSize": [ 1, 4 ],
       "img": null,
-      "color": [ 136, 176, 75, 255 ],
+      "color": 0,
       "objects": [
-        {
-          "id": -1,
-          "position": [ 0, 0 ],
-          "alignment": "center",
-          "type": "circle",
-          "link": null,
-          "img": null,
-          "color": [ 95, 75, 139, 255 ],
-          "text": null,
-          "fontSize": 0
-        },
         {
           "id": 31,
           "position": [ 0, 0 ],
-          "alignment": "center",
-          "type": "button",
+          "alignment": "right",
+          "type": "button_circle",
           "link": 1,
           "img": null,
-          "color": [ 255, 255, 255 ],
+          "color": [ [ 0, 0, 0 ], [ 55, 227, 71 ] ],
           "text": "x2",
           "fontSize": 0
         },
         {
-          "id": -1,
-          "position": [ 0, 2 ],
-          "alignment": "center",
-          "type": "circle",
-          "link": null,
-          "img": null,
-          "color": [ 95, 75, 139, 255 ],
-          "text": null,
-          "fontSize": 0
-        },
-        {
           "id": 32,
-          "position": [ 0, 2 ],
-          "alignment": "center",
-          "type": "button",
-          "link": 1,
+          "position": [ 0, 1 ],
+          "alignment": "right",
+          "type": "button_circle",
+          "link": 2,
           "img": null,
-          "color": [ 255, 255, 255 ],
+          "color": [ [ 0, 0, 0 ], [ 55, 227, 71 ] ],
           "text": "x3",
           "fontSize": 0
         },
         {
-          "id": -1,
-          "position": [ 0, 4 ],
-          "alignment": "center",
-          "type": "circle",
-          "link": null,
-          "img": null,
-          "color": [ 95, 75, 139, 255 ],
-          "text": null,
-          "fontSize": 0
-        },
-        {
           "id": 33,
-          "position": [ 0, 4 ],
-          "alignment": "center",
-          "type": "button",
-          "link": 1,
+          "position": [ 0, 2 ],
+          "alignment": "right",
+          "type": "button_circle",
+          "link": 3,
           "img": null,
-          "color": [ 255, 255, 255 ],
+          "color": [ [ 0, 0, 0 ], [ 55, 227, 71 ] ],
           "text": "A",
           "fontSize": 0
         },
         {
-          "id": -1,
-          "position": [ 0, 6 ],
-          "alignment": "center",
-          "type": "circle",
-          "link": null,
-          "img": null,
-          "color": [ 95, 75, 139, 255 ],
-          "text": null,
-          "fontSize": 0
-        },
-        {
           "id": 34,
-          "position": [ 0, 6 ],
-          "alignment": "center",
-          "type": "button",
-          "link": 1,
+          "position": [ 0, 3 ],
+          "alignment": "right",
+          "type": "button_circle",
+          "link": 4,
           "img": null,
-          "color": [ 255, 255, 255 ],
+          "color": [ [ 0, 0, 0 ], [ 55, 227, 71 ] ],
           "text": "D",
           "fontSize": 0
         }

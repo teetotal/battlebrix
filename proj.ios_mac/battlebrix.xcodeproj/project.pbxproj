@@ -174,6 +174,8 @@
 		4D4809A8227A9E9F0046472F /* inventory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = inventory.cpp; path = ../../library/library/inventory.cpp; sourceTree = "<group>"; };
 		4D4809B1227AA4070046472F /* roulette.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = roulette.json; sourceTree = "<group>"; };
 		4D4809B2227AA4070046472F /* main.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = main.json; sourceTree = "<group>"; };
+		4D69BC802283E7C7009B4F5A /* ui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ui.h; path = ../../library/ui/ui.h; sourceTree = "<group>"; };
+		4D69BC822283FA26009B4F5A /* ui_wizard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ui_wizard.h; path = ../../library/ui/ui_wizard.h; sourceTree = "<group>"; };
 		4D7EFBF7227C22A300E19181 /* play.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = play.json; sourceTree = "<group>"; };
 		4D7EFBF9227C2D3A00E19181 /* loadingbar_big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loadingbar_big.png; sourceTree = "<group>"; };
 		4D807215227ABE200099B6A4 /* coin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coin.png; sourceTree = "<group>"; };
@@ -388,6 +390,8 @@
 		4D480989227A9DFC0046472F /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				4D69BC822283FA26009B4F5A /* ui_wizard.h */,
+				4D69BC802283E7C7009B4F5A /* ui.h */,
 				4D48098D227A9E370046472F /* ui_bgText.cpp */,
 				4D48098F227A9E370046472F /* ui_color.cpp */,
 				4D48098A227A9E360046472F /* ui_cultivation.cpp */,
