@@ -1,35 +1,26 @@
 {
   "background": {
     "id": 0,
-    "img": null,
-    "bgColor": [
-      [ 39, 124, 172, 255 ],
-      [ 39, 124, 172, 255 ]
-    ],
-    "tile": {
-        "color": [ 36, 119, 170, 255 ],
-        "num": [ 14, 10 ]
-    },
-    "isDrawGrid": false
+    "include": {
+        "path": "common.json",
+        "key": "backgroud"
+    }
   },
   "nodes": [
     {
       "comment": "top bg",
       "id": -1,
-      "dimension": [ 0, 0, 9, 1 ],
-      "margin": [ 0, 0 ],
-      "innerMargin": [ 0, 0 ],
-      "gridSize": [ 1, 1 ],
-      "img": null,
-      "color": [ 52, 66, 83, 220 ],
-      "objects": []
+      "include": {
+          "path": "common.json",
+          "key": "top_bg"
+      }
     },
     {
         "comment": "id & level",
         "id": -1,
         "dimension": [ 0, 0, 2, 1 ],
         "margin": [ 10, 5 ],
-        "innerMargin": [ 5, 0 ],
+        "innerMargin": [ 5, 5 ],
         "gridSize": [ 2, 2 ],
         "img": null,
         "color": 0,
@@ -55,28 +46,6 @@
                 "color": [ 240, 208, 75 ],
                 "text": "lv.16",
                 "fontSize": 12
-            },
-            {
-                "id": -1,
-                "position": [ 1, 1 ],
-                "alignment": "center",
-                "type": "rectangle",
-                "link": null,
-                "img": null,
-                "color": [ 240, 208, 75 ],
-                "text": null,
-                "fontSize": 0
-            },
-            {
-                "id": -1,
-                "position": [ 1, 1 ],
-                "alignment": "center",
-                "type": "label",
-                "link": null,
-                "img": null,
-                "color": [ 255, 255, 255 ],
-                "text": "98%",
-                "fontSize": 0
             }
         ]
     },
@@ -84,9 +53,9 @@
       "comment": "cash, setting, alarm",
       "id": -1,
       "dimension": [ 7, 0, 9, 1 ],
-      "margin": [ 0, 0 ],
-      "innerMargin": [ 5, 5 ],
-      "gridSize": [ 3, 1 ],
+      "margin": [ 10, 5 ],
+      "innerMargin": [ 2, 2 ],
+      "gridSize": [ 4, 1 ],
       "img": null,
       "color": 0,
       "objects": [
@@ -96,14 +65,14 @@
           "alignment": "right",
           "type": "button_sprite",
           "link": 1,
-          "img": "icons8-coins-100.png",
+          "img": "icons8-expensive-price-80.png",
           "color": [ 255, 255, 255 ],
-          "text": "  575,211",
+          "text": "575,211",
           "fontSize": 0
         },
         {
           "id": -1,
-          "position": [ 1, 0 ],
+          "position": [ 2, 0 ],
           "alignment": "right",
           "type": "sprite_button_circle",
           "link": 10,
@@ -114,7 +83,7 @@
         },
         {
             "id": -1,
-            "position": [ 2, 0 ],
+            "position": [ 3, 0 ],
             "alignment": "right",
             "type": "sprite_button_circle",
             "link": 10,
@@ -216,81 +185,115 @@
         ]
     },
     {
+        "comment": "play bg",
+        "id": -1,
+        "dimension": [ 1, 1, 8, 6 ],
+        "margin": [ 0, 20 ],
+        "innerMargin": [ 0, 0 ],
+        "gridSize": [ 1, 1 ],
+        "img": null,
+        "color": [
+            [ 106, 185, 253 ],
+            [ 76, 172, 255 ]
+        ],
+        "objects": []
+    },
+    {
+        "comment": "play progressbar",
+        "id": -1,
+        "dimension": [ 1, 1, 4, 6 ],
+        "margin": [ 10, 35 ],
+        "innerMargin": [ 5, 5 ],
+        "gridSize": [ 1, 5 ],
+        "img": null,
+        "color": 0,
+        "objects": [
+            {
+                "id": 13,
+                "position": [ 0, 1 ],
+                "alignment": "center",
+                "type": "loadingbar",
+                "link": null,
+                "img": "loadingbar_big.png",
+                "color": null,
+                "text": null,
+                "fontSize": 0
+            },
+            {
+                "id": 14,
+                "position": [ 0, 1 ],
+                "alignment": "center",
+                "type": "label",
+                "link": null,
+                "img": null,
+                "color": [ 255, 255, 255 ],
+                "text": " 5 / 12",
+                "fontSize": 10
+            }
+        ]
+    },
+    {
       "comment": "play",
       "id": -1,
-      "dimension": [ 1, 1, 8, 6 ],
-      "margin": [ 0, 20 ],
-      "innerMargin": [ 10, 4 ],
-      "gridSize": [ 4, 6 ],
+      "dimension": [ 1, 1, 4, 6 ],
+      "margin": [ 10, 35 ],
+      "innerMargin": [ 5, 2 ],
+      "gridSize": [ 2, 5 ],
       "img": null,
-      "color": [
-          [ 106, 185, 253 ],
-          [ 76, 172, 255 ]
-      ],
+      "color": 0,
       "objects": [
         {
           "id": 11,
-          "position": [ 0, 1 ],
+          "position": [ 0, 0 ],
           "alignment": "left",
           "type": "label",
           "link": null,
           "img": null,
           "color": null,
-          "text": "SEMI PRO III",
+          "text": "SEMI PRO 3",
           "fontSize": 20
         },
         {
             "id": 12,
+            "position": [ 1, 0 ],
+            "alignment": "right",
+            "type": "button",
+            "link": null,
+            "img": null,
+            "color": [ 240, 208, 75 ],
+            "text": "1,642th >>",
+            "fontSize": 12
+        },
+        {
+            "id": 13,
             "position": [ 0, 2 ],
             "alignment": "left",
             "type": "label",
             "link": null,
             "img": null,
             "color": [ 255, 255, 255 ],
-            "text": "3 win / 2 draw / 3 lose",
+            "text": " 3 win / 2 draw / 3 lose",
             "fontSize": 12
         },
         {
-            "id": 13,
+            "id": -1,
             "position": [ 0, 4 ],
             "alignment": "center",
-            "type": "loadingbar",
-            "link": null,
-            "img": "loadingbar_big.png",
-            "color": null,
-            "text": null,
-            "fontSize": 0
-        },
-        {
-            "id": 14,
-            "position": [ 0, 4 ],
-            "alignment": "center",
-            "type": "label",
-            "link": null,
+            "type": "button_rectangle_round_shadow",
+            "link": 0,
             "img": null,
-            "color": [ 255, 255, 255 ],
-            "text": " 5 / 12",
-            "fontSize": 10
-        },
-        {
-          "id": 15,
-          "position": [ 1, 1 ],
-          "alignment": "center",
-          "type": "button_rectangle_round_shadow",
-          "link": 0,
-          "img": null,
-          "color": [ [255,255,255], [ 55, 227, 71 ] ],
-          "text": "1,613th",
-          "fontSize": 0
+            "color": [ [ 0, 0, 0 ], [ 240, 208, 75 ] ],
+            "text": "PLAY",
+            "fontSize": 0
         }
       ]
     },
     {
-        "comment": "play button",
+        "comment": "play image",
         "id": -1,
-        "dimension": [ 1, 1, 8, 6 ],
-        "margin": [ 0, 20 ],
-        "innerMargin": [ 10, 20 ],
+        "dimension": [ 5, 1, 8, 6 ],
+        "margin": [ 10, 35 ],
+        "innerMargin": [ 5, 2 ],
         "gridSize": [ 1, 1 ],
         "img": null,
         "color": 0,
@@ -299,21 +302,10 @@
                 "id": -1,
                 "position": [ 0, 0 ],
                 "alignment": "center",
-                "type": "label",
-                "link": null,
-                "img": null,
-                "color": [ 255, 255, 255, 20],
-                "text": "BATTLE BRIX",
-                "fontSize": 120
-            },
-            {
-                "id": -1,
-                "position": [ 0, 0 ],
-                "alignment": "right",
-                "type": "sprite_button",
+                "type": "sprite",
                 "link": 0,
-                "img": ["icons8-play-button-circled-100.png", "icons8-play-button-circled-filled-100.png"],
-                "color": 250,
+                "img": "zombie.png",
+                "color": null,
                 "text": null,
                 "fontSize": 0
             }

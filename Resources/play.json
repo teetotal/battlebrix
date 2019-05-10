@@ -1,20 +1,14 @@
 {
     "background": {
         "id": 0,
-        "img": null,
-        "bgColor": [
-            [ 39, 124, 172, 255 ],
-            [ 39, 124, 172, 255 ]
-        ],
-        "tile": {
-            "color": [ 36, 119, 170, 255 ],
-            "num": [ 14, 10 ]
-        },
-        "isDrawGrid": false
+        "include": {
+            "path": "common.json",
+            "key": "backgroud"
+        }
     },
   "nodes": [
     {
-        "comment": "top",
+      "comment": "top",
       "id": -1,
       "dimension": [ 0, 0, 9, 1 ],
       "margin": [ 0, 0 ],
@@ -149,11 +143,11 @@
       "objects": [ ]
     },
     {
-        "comment": "skill",
+      "comment": "skill",
       "id": 30,
       "dimension": [ 4, 2, 5, 6 ],
       "margin": [ 0, 0 ],
-      "innerMargin": [ 5, 5 ],
+      "innerMargin": [ 0, 5 ],
       "gridSize": [ 1, 4 ],
       "img": null,
       "color": 0,
