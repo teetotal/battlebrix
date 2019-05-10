@@ -1,0 +1,13 @@
+{
+    "daily_bg": {
+        "comment": "daily reward bg",
+        "visible": true,
+        "dimension": [ 0, 0, 9, 7 ],
+        "margin": [ 0, 0 ],
+        "innerMargin": [ 0, 0 ],
+        "gridSize": [ 1, 1 ],
+        "img": null,
+        "color": 200,
+        "objects": []
+    }
+}

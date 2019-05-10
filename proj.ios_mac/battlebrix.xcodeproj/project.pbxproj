@@ -69,6 +69,9 @@
 		4DB85BC822853748001C541A /* zombie.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DB85BC722853748001C541A /* zombie.png */; };
 		4DB85BCA2285391B001C541A /* icons8-average-2-96.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DB85BC92285391B001C541A /* icons8-average-2-96.png */; };
 		4DB85BCC22854654001C541A /* icons8-expensive-price-80.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DB85BCB22854654001C541A /* icons8-expensive-price-80.png */; };
+		4DB85BCE2285613F001C541A /* daily.json in Resources */ = {isa = PBXBuildFile; fileRef = 4DB85BCD2285613F001C541A /* daily.json */; };
+		4DB85BD122857BCD001C541A /* icons8-unchecked-checkbox-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DB85BCF22857BCD001C541A /* icons8-unchecked-checkbox-100.png */; };
+		4DB85BD222857BCD001C541A /* icons8-checked-checkbox-52.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DB85BD022857BCD001C541A /* icons8-checked-checkbox-52.png */; };
 		4DE8A4ED2282C054005D5353 /* icons8-find-user-male-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DE8A4EA2282C053005D5353 /* icons8-find-user-male-100.png */; };
 		4DE8A4EE2282C054005D5353 /* icons8-find-user-male-filled-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DE8A4EC2282C053005D5353 /* icons8-find-user-male-filled-100.png */; };
 		503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 503AE0F617EB97AB00D1A890 /* Icon.icns */; };
@@ -201,6 +204,9 @@
 		4DB85BC722853748001C541A /* zombie.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zombie.png; sourceTree = "<group>"; };
 		4DB85BC92285391B001C541A /* icons8-average-2-96.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-average-2-96.png"; sourceTree = "<group>"; };
 		4DB85BCB22854654001C541A /* icons8-expensive-price-80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-expensive-price-80.png"; sourceTree = "<group>"; };
+		4DB85BCD2285613F001C541A /* daily.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = daily.json; sourceTree = "<group>"; };
+		4DB85BCF22857BCD001C541A /* icons8-unchecked-checkbox-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-unchecked-checkbox-100.png"; sourceTree = "<group>"; };
+		4DB85BD022857BCD001C541A /* icons8-checked-checkbox-52.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-checked-checkbox-52.png"; sourceTree = "<group>"; };
 		4DE8A4EA2282C053005D5353 /* icons8-find-user-male-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-find-user-male-100.png"; sourceTree = "<group>"; };
 		4DE8A4EC2282C053005D5353 /* icons8-find-user-male-filled-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-find-user-male-filled-100.png"; sourceTree = "<group>"; };
 		503AE0F617EB97AB00D1A890 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
@@ -352,6 +358,8 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4DB85BD022857BCD001C541A /* icons8-checked-checkbox-52.png */,
+				4DB85BCF22857BCD001C541A /* icons8-unchecked-checkbox-100.png */,
 				4DB85BCB22854654001C541A /* icons8-expensive-price-80.png */,
 				4DB85BC92285391B001C541A /* icons8-average-2-96.png */,
 				4DB85BC722853748001C541A /* zombie.png */,
@@ -376,6 +384,7 @@
 				4D4809B1227AA4070046472F /* roulette.json */,
 				4D7EFBF7227C22A300E19181 /* play.json */,
 				4D4809B2227AA4070046472F /* main.json */,
+				4DB85BCD2285613F001C541A /* daily.json */,
 				4DB85BC422852A0C001C541A /* common.json */,
 				521A8EA819F11F5000D177D7 /* fonts */,
 				3EACC98E19EE6D4300EB3C5E /* res */,
@@ -566,6 +575,7 @@
 				4D807233227AFF9C0099B6A4 /* bg_temp.png in Resources */,
 				4D807217227ABE210099B6A4 /* coin.png in Resources */,
 				1A88B2641FC3D9C9005C14AE /* Images.xcassets in Resources */,
+				4DB85BD222857BCD001C541A /* icons8-checked-checkbox-52.png in Resources */,
 				4D4809B3227AA4070046472F /* roulette.json in Resources */,
 				4DB85BC822853748001C541A /* zombie.png in Resources */,
 				4D807225227AFAF30099B6A4 /* icons8-settings-filled-100.png in Resources */,
@@ -574,6 +584,7 @@
 				4D807231227AFBDD0099B6A4 /* icons8-play-button-circled-filled-100.png in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
+				4DB85BD122857BCD001C541A /* icons8-unchecked-checkbox-100.png in Resources */,
 				4D807230227AFBDD0099B6A4 /* icons8-play-button-circled-100.png in Resources */,
 				1AF87B891F6F781D007BE51C /* LaunchScreenBackground.png in Resources */,
 				46880B7B19C43A67006E1F66 /* CloseNormal.png in Resources */,
@@ -582,6 +593,7 @@
 				4DE8A4ED2282C054005D5353 /* icons8-find-user-male-100.png in Resources */,
 				4D80721B227AF9DD0099B6A4 /* icons8-alarm-100.png in Resources */,
 				4DB85BCC22854654001C541A /* icons8-expensive-price-80.png in Resources */,
+				4DB85BCE2285613F001C541A /* daily.json in Resources */,
 				4D807227227AFAF30099B6A4 /* icons8-roulette-100.png in Resources */,
 				4DE8A4EE2282C054005D5353 /* icons8-find-user-male-filled-100.png in Resources */,
 				4D80722B227AFAF30099B6A4 /* icons8-shopping-bag-filled-100.png in Resources */,

@@ -310,6 +310,172 @@
                 "fontSize": 0
             }
         ]
+    },
+    {
+        "id": 100,
+        "include": {
+            "path": "daily.json",
+            "key": "daily_bg"
+        }
+    },
+    {
+        "comment": "daily reward",
+        "id": 101,
+        "visible": true,
+        "dimension": [ 2, 0, 7, 7 ],
+        "margin": [ 0, 10 ],
+        "innerMargin": [ 10, 5 ],
+        "gridSize": [ 3, 7 ],
+        "img": null,
+        "color": [
+            [ 106, 185, 253 ],
+            [ 76, 172, 255 ]
+        ],
+        "objects": [
+            {
+                "id": -1,
+                "position": [ 0, 0 ],
+                "alignment": "left",
+                "type": "label",
+                "link": 0,
+                "img": null,
+                "color": [ 240, 208, 75 ],
+                "text": "DAILY REWARD",
+                "fontSize": 20
+            },
+            {
+                "id": -1,
+                "position": [ 0, 1 ],
+                "alignment": "center",
+                "type": "label",
+                "link": 0,
+                "img": "coin.png",
+                "color": null,
+                "text": "x100",
+                "fontSize": 0
+            },
+            {
+                "id": -1,
+                "position": [ 1, 1 ],
+                "alignment": "center",
+                "type": "label",
+                "link": 0,
+                "img": "coin.png",
+                "color": null,
+                "text": "x110",
+                "fontSize": 0
+            },
+            {
+                "id": -1,
+                "position": [ 2, 1 ],
+                "alignment": "center",
+                "type": "label",
+                "link": 0,
+                "img": "coin.png",
+                "color": null,
+                "text": "x120",
+                "fontSize": 0
+            },
+            {
+                "id": -1,
+                "position": [ 0, 2 ],
+                "alignment": "center",
+                "type": "label_sprite",
+                "link": 0,
+                "img": "icons8-checked-checkbox-52.png",
+                "color": [ 255, 255, 255 ],
+                "text": "Day1",
+                "fontSize": 16
+            },
+            {
+                "id": -1,
+                "position": [ 1, 2 ],
+                "alignment": "center",
+                "type": "label_sprite",
+                "link": 0,
+                "img": "icons8-checked-checkbox-52.png",
+                "color": [ 255, 255, 255 ],
+                "text": "Day2",
+                "fontSize": 0
+            },
+            {
+                "id": -1,
+                "position": [ 2, 2 ],
+                "alignment": "center",
+                "type": "label_sprite",
+                "link": 0,
+                "img": "icons8-unchecked-checkbox-100.png",
+                "color": [ 255, 255, 255 ],
+                "text": "Day3",
+                "fontSize": 0
+            },
+            {
+                "id": -1,
+                "position": [ 0, 4 ],
+                "alignment": "center",
+                "type": "label",
+                "link": 0,
+                "img": "coin.png",
+                "color": null,
+                "text": "x130",
+                "fontSize": 0
+            },
+            {
+                "id": -1,
+                "position": [ 1, 4 ],
+                "alignment": "center",
+                "type": "label",
+                "link": 0,
+                "img": "coin.png",
+                "color": null,
+                "text": "x140",
+                "fontSize": 0
+            },
+            {
+                "id": -1,
+                "position": [ 2, 4 ],
+                "alignment": "center",
+                "type": "label",
+                "link": null,
+                "img": "coin.png",
+                "color": null,
+                "text": "x150",
+                "fontSize": 0
+            },
+            {
+                "id": -1,
+                "position": [ 0, 5 ],
+                "alignment": "center",
+                "type": "label_sprite",
+                "link": null,
+                "img": "icons8-unchecked-checkbox-100.png",
+                "color": [ 255, 255, 255 ],
+                "text": "Day4",
+                "fontSize": 0
+            },
+            {
+                "id": -1,
+                "position": [ 1, 5 ],
+                "alignment": "center",
+                "type": "label_sprite",
+                "link": null,
+                "img": "icons8-unchecked-checkbox-100.png",
+                "color": [ 255, 255, 255 ],
+                "text": "Day5",
+                "fontSize": 0
+            },
+            {
+                "id": -1,
+                "position": [ 2, 5 ],
+                "alignment": "center",
+                "type": "label_sprite",
+                "link": null,
+                "img": "icons8-unchecked-checkbox-100.png",
+                "color": [ 255, 255, 255 ],
+                "text": "Day6",
+                "fontSize": 0
+            }
+        ]
     }
   ]
 }

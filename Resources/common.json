@@ -13,7 +13,6 @@
     },
     "top_bg": {
         "comment": "top bg",
-        "id": -1,
         "dimension": [ 0, 0, 9, 1 ],
         "margin": [ 0, 0 ],
         "innerMargin": [ 0, 0 ],

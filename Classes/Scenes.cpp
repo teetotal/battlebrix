@@ -29,10 +29,7 @@ bool SceneMain::init()
 {
 	gui::inst()->initDefaultWithSpriteCache("fonts/SDSwaggerTTF.ttf");
     this->loadFromJson("main", "main.json");
-    Node * bg = getNodeById(0);
-    
-    //gui::inst()->drawDiamondTile(bg, Vec2(14, 10), Color4F(Color3B(36, 119, 170)));
-    
+    auto bg = getNodeById(0);
     gui::inst()->drawCircle(bg, Vec2::ZERO, 100, Color4F(1, 1, 1, 0.5))->runAction(
        RepeatForever::create(
                              Sequence::create(
@@ -40,6 +37,20 @@ bool SceneMain::init()
                                               , MoveTo::create(30, Vec2::ZERO)
                                               , NULL)
        ));
+    
+//    auto dailyBG = getNodeById(100);
+//    dailyBG->setVisible(true);
+//    auto daily = getNodeById(101);
+//    daily->setVisible(true);
+//    
+//    auto listener = EventListenerTouchOneByOne::create();
+//    listener->setSwallowTouches(true);
+//    listener->onTouchBegan = [this](Touch *touch,Event*event)->bool {
+//        return true;
+//    };
+//    auto dispatcher = Director::getInstance()->getEventDispatcher();
+//    dispatcher->addEventListenerWithSceneGraphPriority(listener, daily);
+    
     return true;
 }
 
