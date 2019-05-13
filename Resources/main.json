@@ -1,11 +1,14 @@
 {
-  "background": {
-    "id": 0,
-    "include": {
-        "path": "common.json",
-        "key": "backgroud"
-    }
-  },
+    "background": {
+        "id": 0,
+        "img": null,
+        "bgColor": [ 39, 124, 172, 255 ],
+        "tile": {
+            "color": [ 36, 119, 170, 255 ],
+            "num": [ 14, 10 ]
+        },
+        "isDrawGrid": false
+    },
   "nodes": [
     {
       "comment": "top bg",
@@ -67,7 +70,7 @@
           "link": 1,
           "img": "icons8-expensive-price-80.png",
           "color": [ 255, 255, 255 ],
-          "text": "575,211",
+          "text": " 575,211",
           "fontSize": 0
         },
         {
@@ -203,14 +206,14 @@
         "id": -1,
         "dimension": [ 1, 1, 4, 6 ],
         "margin": [ 10, 35 ],
-        "innerMargin": [ 5, 5 ],
-        "gridSize": [ 1, 5 ],
+        "innerMargin": [ 5, 3 ],
+        "gridSize": [ 1, 8 ],
         "img": null,
         "color": 0,
         "objects": [
             {
                 "id": 13,
-                "position": [ 0, 1 ],
+                "position": [ 0, 2 ],
                 "alignment": "center",
                 "type": "loadingbar",
                 "link": null,
@@ -221,13 +224,24 @@
             },
             {
                 "id": 14,
-                "position": [ 0, 1 ],
+                "position": [ 0, 2 ],
                 "alignment": "center",
                 "type": "label",
                 "link": null,
                 "img": null,
                 "color": [ 255, 255, 255 ],
                 "text": " 5 / 12",
+                "fontSize": 10
+            },
+            {
+                "id": 13,
+                "position": [ 0, 3 ],
+                "alignment": "left",
+                "type": "label",
+                "link": null,
+                "img": null,
+                "color": [ 255, 255, 255 ],
+                "text": " Win3 / Draw2 / Lose3",
                 "fontSize": 10
             }
         ]
@@ -262,17 +276,6 @@
             "img": null,
             "color": [ 240, 208, 75 ],
             "text": "1,642th >>",
-            "fontSize": 12
-        },
-        {
-            "id": 13,
-            "position": [ 0, 2 ],
-            "alignment": "left",
-            "type": "label",
-            "link": null,
-            "img": null,
-            "color": [ 255, 255, 255 ],
-            "text": " 3 win / 2 draw / 3 lose",
             "fontSize": 12
         },
         {
@@ -312,11 +315,16 @@
         ]
     },
     {
-        "id": 100,
-        "include": {
-            "path": "daily.json",
-            "key": "daily_bg"
-        }
+        "comment": "daily reward bg",
+        "id": -1,
+        "visible": true,
+        "dimension": [ 0, 0, 9, 7 ],
+        "margin": [ 0, 0 ],
+        "innerMargin": [ 0, 0 ],
+        "gridSize": [ 1, 1 ],
+        "img": null,
+        "color": 200,
+        "objects": []
     },
     {
         "comment": "daily reward",
@@ -324,8 +332,8 @@
         "visible": true,
         "dimension": [ 2, 0, 7, 7 ],
         "margin": [ 0, 10 ],
-        "innerMargin": [ 10, 5 ],
-        "gridSize": [ 3, 7 ],
+        "innerMargin": [ 10, 10 ],
+        "gridSize": [ 3, 6 ],
         "img": null,
         "color": [
             [ 106, 185, 253 ],
@@ -339,18 +347,43 @@
                 "type": "label",
                 "link": 0,
                 "img": null,
-                "color": [ 240, 208, 75 ],
+                "color": [ 255, 255, 255 ],
                 "text": "DAILY REWARD",
                 "fontSize": 20
             },
+            {
+                "id": -1,
+                "position": [ 1, 5 ],
+                "alignment": "center",
+                "type": "button_rectangle_round_shadow",
+                "link": 0,
+                "img": null,
+                "color": [ [ 255, 255, 255 ], [ 240, 208, 75 ] ],
+                "text": "OK",
+                "fontSize": 0
+            }
+        ]
+    },
+    {
+        "comment": "daily reward",
+        "id": 101,
+        "visible": true,
+        "dimension": [ 2, 1, 7, 5 ],
+        "margin": [ 20, 10 ],
+        "innerMargin": [ 5, 2 ],
+        "gridSize": [ 3, 5 ],
+        "img": null,
+        "color": 0,
+        "objects": [
             {
                 "id": -1,
                 "position": [ 0, 1 ],
                 "alignment": "center",
                 "type": "label",
                 "link": 0,
-                "img": "coin.png",
+                "img": "icons8-expensive-price-80.png",
                 "color": null,
+                "bgColor": [ 255, 255, 255, 100 ],
                 "text": "x100",
                 "fontSize": 0
             },
@@ -360,7 +393,7 @@
                 "alignment": "center",
                 "type": "label",
                 "link": 0,
-                "img": "coin.png",
+                "img": "icons8-expensive-price-80.png",
                 "color": null,
                 "text": "x110",
                 "fontSize": 0
@@ -371,84 +404,101 @@
                 "alignment": "center",
                 "type": "label",
                 "link": 0,
-                "img": "coin.png",
+                "img": "icons8-expensive-price-80.png",
                 "color": null,
+                "bgColor": [ 255, 255, 255, 100 ],
                 "text": "x120",
                 "fontSize": 0
             },
             {
                 "id": -1,
-                "position": [ 0, 2 ],
-                "alignment": "center",
-                "type": "label_sprite",
-                "link": 0,
-                "img": "icons8-checked-checkbox-52.png",
-                "color": [ 255, 255, 255 ],
-                "text": "Day1",
-                "fontSize": 16
-            },
-            {
-                "id": -1,
-                "position": [ 1, 2 ],
-                "alignment": "center",
-                "type": "label_sprite",
-                "link": 0,
-                "img": "icons8-checked-checkbox-52.png",
-                "color": [ 255, 255, 255 ],
-                "text": "Day2",
-                "fontSize": 0
-            },
-            {
-                "id": -1,
-                "position": [ 2, 2 ],
-                "alignment": "center",
-                "type": "label_sprite",
-                "link": 0,
-                "img": "icons8-unchecked-checkbox-100.png",
-                "color": [ 255, 255, 255 ],
-                "text": "Day3",
-                "fontSize": 0
-            },
-            {
-                "id": -1,
-                "position": [ 0, 4 ],
+                "position": [ 0, 3 ],
                 "alignment": "center",
                 "type": "label",
                 "link": 0,
-                "img": "coin.png",
+                "img": "icons8-expensive-price-80.png",
                 "color": null,
                 "text": "x130",
                 "fontSize": 0
             },
             {
                 "id": -1,
-                "position": [ 1, 4 ],
+                "position": [ 1, 3 ],
                 "alignment": "center",
                 "type": "label",
                 "link": 0,
-                "img": "coin.png",
+                "img": "icons8-expensive-price-80.png",
                 "color": null,
+                "bgColor": [ 255, 255, 255, 100 ],
                 "text": "x140",
                 "fontSize": 0
             },
             {
                 "id": -1,
-                "position": [ 2, 4 ],
+                "position": [ 2, 3 ],
                 "alignment": "center",
                 "type": "label",
                 "link": null,
-                "img": "coin.png",
+                "img": "icons8-expensive-price-80.png",
                 "color": null,
                 "text": "x150",
+                "fontSize": 0
+            }
+        ]
+    },
+    {
+        "comment": "daily reward",
+        "id": 102,
+        "visible": true,
+        "dimension": [ 2, 1, 7, 5 ],
+        "margin": [ 20, 10 ],
+        "innerMargin": [ 5, 2 ],
+        "gridSize": [ 3, 10 ],
+        "img": null,
+        "color": 0,
+        "objects": [
+            {
+                "id": -1,
+                "position": [ 0, 1 ],
+                "alignment": "center_bottom",
+                "type": "label",
+                "link": 0,
+                "img": null,
+                "color": [ 255, 255, 255 ],
+                "bgColor": [ 255, 255, 255, 100 ],
+                "text": "Received",
+                "fontSize": 0
+            },
+            {
+                "id": -1,
+                "position": [ 1, 1 ],
+                "alignment": "center_bottom",
+                "type": "label",
+                "link": null,
+                "img": null,
+                "color": [ 255, 255, 255 ],
+                "text": "Received",
+                "fontSize": 0
+            },
+            {
+                "id": -1,
+                "position": [ 2, 1 ],
+                "alignment": "center_bottom",
+                "type": "label",
+                "link": null,
+                "img": null,
+                "color": [ 255, 255, 255 ],
+                "bgColor": [ 255, 255, 255, 100 ],
+                "text": "Day3",
                 "fontSize": 0
             },
             {
                 "id": -1,
                 "position": [ 0, 5 ],
-                "alignment": "center",
-                "type": "label_sprite",
+                "alignment": "center_bottom",
+                "type": "label",
                 "link": null,
-                "img": "icons8-unchecked-checkbox-100.png",
+                "img": null,
                 "color": [ 255, 255, 255 ],
                 "text": "Day4",
                 "fontSize": 0
@@ -456,21 +506,22 @@
             {
                 "id": -1,
                 "position": [ 1, 5 ],
-                "alignment": "center",
-                "type": "label_sprite",
+                "alignment": "center_bottom",
+                "type": "label",
                 "link": null,
-                "img": "icons8-unchecked-checkbox-100.png",
+                "img": null,
                 "color": [ 255, 255, 255 ],
+                "bgColor": [ 255, 255, 255, 100 ],
                 "text": "Day5",
                 "fontSize": 0
             },
             {
                 "id": -1,
                 "position": [ 2, 5 ],
-                "alignment": "center",
-                "type": "label_sprite",
+                "alignment": "center_bottom",
+                "type": "label",
                 "link": null,
-                "img": "icons8-unchecked-checkbox-100.png",
+                "img": null,
                 "color": [ 255, 255, 255 ],
                 "text": "Day6",
                 "fontSize": 0

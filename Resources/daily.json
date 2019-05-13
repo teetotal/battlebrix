@@ -1,7 +1,7 @@
 {
     "daily_bg": {
         "comment": "daily reward bg",
-        "visible": true,
+        "visible": false,
         "dimension": [ 0, 0, 9, 7 ],
         "margin": [ 0, 0 ],
         "innerMargin": [ 0, 0 ],
