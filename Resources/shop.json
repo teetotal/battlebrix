@@ -7,7 +7,7 @@
             "color": [ 36, 119, 170, 255 ],
             "num": [ 14, 10 ]
         },
-        "isDrawGrid": false
+        "isDrawGrid": true
     },
   "nodes": [
     {
@@ -112,19 +112,19 @@
         "objects": [
             {
                 "id": -1,
-                "position": [ 0, 0 ],
-                "alignment": "center",
-                "type": "sprite_button",
-                "link": 1,
-                "img": [ "icons8-shopping-cart-100.png", "icons8-shopping-cart-filled-100.png" ]
-            },
-            {
-                "id": -1,
                 "position": [ 1, 0 ],
                 "alignment": "center",
                 "type": "sprite_button",
                 "link": 2,
                 "img": [ "icons8-leaderboard-100.png", "icons8-leaderboard-filled-100.png"]
+            },
+            {
+                "id": -1,
+                "position": [ 2, 0 ],
+                "alignment": "center",
+                "type": "sprite_button",
+                "link": 0,
+                "img": [ "icons8-play-button-circled-100.png", "icons8-play-button-circled-filled-100.png"]
             },
             {
                 "id": -1,
@@ -156,43 +156,30 @@
         "objects": [
             {
                 "id": -1,
-                "position": [ 2, 0 ],
+                "position": [ 0, 0 ],
                 "alignment": "center",
                 "type": "rectangle",
                 "color": [ 255, 255, 255, 255 ]
             },
             {
                 "id": -1,
-                "position": [ 2, 0 ],
+                "position": [ 0, 0 ],
                 "alignment": "center",
                 "type": "sprite",
-                "img": "icons8-play-button-circled-filled-100.png"
+                "img": "icons8-shopping-cart-filled-100.png"
             }
         ]
     },
     {
-        "comment": "play bg",
-        "id": -1,
-        "dimension": [ 1, 1, 8, 6 ],
-        "margin": [ 0, 20 ],
-        "innerMargin": [ 0, 0 ],
-        "gridSize": [ 1, 1 ],
-        "img": null,
-        "color": [
-            [ 106, 185, 253 ],
-            [ 76, 172, 255 ]
-        ],
-        "objects": []
-    },
-    {
         "comment": "play progressbar",
         "id": -1,
-        "dimension": [ 1, 1, 4, 6 ],
-        "margin": [ 10, 35 ],
+        "dimension": [ 1, 1, 4, 5 ],
+        "dimensionInner": [ 1, 1, 4, 15 ],
+        "margin": [ 0, 10 ],
         "innerMargin": [ 5, 3 ],
         "gridSize": [ 1, 8 ],
         "img": null,
-        "color": 0,
+        "color": [ 106, 185, 253 ],
         "objects": [
             {
                 "id": 13,
@@ -226,74 +213,6 @@
                 "color": [ 255, 255, 255 ],
                 "text": " Win3 / Draw2 / Lose3",
                 "fontSize": 10
-            }
-        ]
-    },
-    {
-      "comment": "play",
-      "id": -1,
-      "dimension": [ 1, 1, 4, 6 ],
-      "margin": [ 10, 35 ],
-      "innerMargin": [ 5, 0 ],
-      "gridSize": [ 2, 5 ],
-      "img": null,
-      "color": 0,
-      "objects": [
-        {
-          "id": 11,
-          "position": [ 0, 0 ],
-          "alignment": "left_bottom",
-          "type": "label",
-          "link": null,
-          "img": null,
-          "color": null,
-          "text": "SEMI PRO 3",
-          "fontSize": 18
-        },
-        {
-            "id": 12,
-            "position": [ 1, 0 ],
-            "alignment": "right_bottom",
-            "type": "button",
-            "link": null,
-            "img": null,
-            "color": [ 240, 208, 75 ],
-            "text": "1,642th >>",
-            "fontSize": 12
-        },
-        {
-            "id": -1,
-            "position": [ 0, 4 ],
-            "alignment": "center",
-            "type": "button_rectangle_round_shadow",
-            "link": 0,
-            "img": null,
-            "color": [ [ 0, 0, 0 ], [ 240, 208, 75 ] ],
-            "text": "PLAY",
-            "fontSize": 0
-        }
-      ]
-    },
-    {
-        "comment": "play image",
-        "id": -1,
-        "dimension": [ 5, 1, 8, 6 ],
-        "margin": [ 10, 35 ],
-        "innerMargin": [ 5, 2 ],
-        "gridSize": [ 1, 1 ],
-        "img": null,
-        "color": 0,
-        "objects": [
-            {
-                "id": -1,
-                "position": [ 0, 0 ],
-                "alignment": "center",
-                "type": "sprite",
-                "link": 0,
-                "img": "zombie.png",
-                "color": null,
-                "text": null,
-                "fontSize": 0
             }
         ]
     }

@@ -44,10 +44,19 @@ bool SceneMain::init()
 void SceneMain::callback(Ref* pSender, int from, int link) {
     switch((eLINK)link) {
         case eLINK_PLAY:
-            this->replaceScene(ScenePlay::create());
-            break;
+        this->replaceScene(ScenePlay::create());
+        break;
+        case eLINK_SHOP:
+        this->replaceScene(SceneShop::create());
+        break;
+        case eLINK_LEADERBOARD:
+        break;
+        case eLINK_FRIENDS:
+        break;
+        case eLINK_BAG:
+        break;
         default:
-            break;
+        break;
     }
 }
 
@@ -107,4 +116,19 @@ const string SceneDaily::getText(const string& defaultString, int id) {
 
 void SceneDaily::actionFinished() {
     this->replaceScene(SceneMain::create());
+}
+
+//====================================================================
+bool SceneShop::init()
+{
+    this->loadFromJson("shop", "shop.json");
+    return true;
+}
+
+void SceneShop::callback(Ref* pSender, int from, int link) {
+    this->replaceScene(SceneMain::create());
+}
+
+const string SceneShop::getText(const string& defaultString, int id) {
+    return defaultString;
 }

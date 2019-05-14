@@ -68,6 +68,7 @@
 		4DB682A6228A8242007A1E22 /* icons8-roulette-96.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DB682A4228A8242007A1E22 /* icons8-roulette-96.png */; };
 		4DB682A9228A9704007A1E22 /* icons8-leaderboard-filled-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DB682A7228A9704007A1E22 /* icons8-leaderboard-filled-100.png */; };
 		4DB682AA228A9704007A1E22 /* icons8-leaderboard-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DB682A8228A9704007A1E22 /* icons8-leaderboard-100.png */; };
+		4DB682AE228AC490007A1E22 /* shop.json in Resources */ = {isa = PBXBuildFile; fileRef = 4DB682AC228AC490007A1E22 /* shop.json */; };
 		4DB85BC622852A0D001C541A /* common.json in Resources */ = {isa = PBXBuildFile; fileRef = 4DB85BC422852A0C001C541A /* common.json */; };
 		4DB85BC822853748001C541A /* zombie.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DB85BC722853748001C541A /* zombie.png */; };
 		4DB85BCA2285391B001C541A /* icons8-average-2-96.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DB85BC92285391B001C541A /* icons8-average-2-96.png */; };
@@ -206,6 +207,7 @@
 		4DB682A4228A8242007A1E22 /* icons8-roulette-96.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-roulette-96.png"; sourceTree = "<group>"; };
 		4DB682A7228A9704007A1E22 /* icons8-leaderboard-filled-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-leaderboard-filled-100.png"; sourceTree = "<group>"; };
 		4DB682A8228A9704007A1E22 /* icons8-leaderboard-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-leaderboard-100.png"; sourceTree = "<group>"; };
+		4DB682AC228AC490007A1E22 /* shop.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = shop.json; sourceTree = "<group>"; };
 		4DB85BC422852A0C001C541A /* common.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = common.json; sourceTree = "<group>"; };
 		4DB85BC722853748001C541A /* zombie.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zombie.png; sourceTree = "<group>"; };
 		4DB85BC92285391B001C541A /* icons8-average-2-96.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-average-2-96.png"; sourceTree = "<group>"; };
@@ -391,6 +393,7 @@
 				4D807218227AF9790099B6A4 /* icons8-shopping-cart-100.png */,
 				4D807215227ABE200099B6A4 /* coin.png */,
 				4D4809B1227AA4070046472F /* roulette.json */,
+				4DB682AC228AC490007A1E22 /* shop.json */,
 				4D7EFBF7227C22A300E19181 /* play.json */,
 				4D4809B2227AA4070046472F /* main.json */,
 				4DB85BCD2285613F001C541A /* daily.json */,
@@ -610,6 +613,7 @@
 				4D80722B227AFAF30099B6A4 /* icons8-shopping-bag-filled-100.png in Resources */,
 				4DB682AA228A9704007A1E22 /* icons8-leaderboard-100.png in Resources */,
 				4DB85BC622852A0D001C541A /* common.json in Resources */,
+				4DB682AE228AC490007A1E22 /* shop.json in Resources */,
 				4D80722D227AFAF30099B6A4 /* icons8-shopping-bag-100.png in Resources */,
 				4D80722A227AFAF30099B6A4 /* icons8-roulette-filled-100.png in Resources */,
 				4D4809B4227AA4070046472F /* main.json in Resources */,

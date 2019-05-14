@@ -28,6 +28,14 @@
 #include "ui/ui_wizard.h"
 USING_NS_CC;
 
+enum eLINK {
+    eLINK_PLAY = 0,
+    eLINK_SHOP,
+    eLINK_LEADERBOARD,
+    eLINK_FRIENDS,
+    eLINK_BAG
+};
+
 class SceneMain : public ui_wizard
 {
 public:
@@ -40,11 +48,7 @@ public:
 protected:
     virtual void callback(Ref* pSender, int from, int link);
     virtual const string getText(const string& defaultString, int id);
-    
-private:
-    enum eLINK {
-        eLINK_PLAY = 0
-    };
+
 };
 // ScenePlay ==================================
 class ScenePlay : public ui_wizard
@@ -76,5 +80,18 @@ protected:
 private:
     void actionFinished();
 };
-
+// SceneShop ==================================
+class SceneShop : public ui_wizard
+{
+    public:
+    static Scene* createScene() {
+        return SceneShop::create();
+    };
+    virtual bool init();
+    CREATE_FUNC(SceneShop);
+    
+    protected:
+    virtual void callback(Ref* pSender, int from, int link);
+    virtual const string getText(const string& defaultString, int id);
+};
 #endif // __SCENES_H__
