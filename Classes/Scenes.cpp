@@ -27,8 +27,7 @@
 
 bool SceneMain::init()
 {
-	gui::inst()->initDefaultWithSpriteCache("fonts/SDSwaggerTTF.ttf");
-    this->loadFromJson("main", "main.json");
+	this->loadFromJson("main", "main.json");
     auto bg = getNodeById(0);
     gui::inst()->drawCircle(bg, Vec2::ZERO, 100, Color4F(1, 1, 1, 0.5))->runAction(
        RepeatForever::create(
@@ -38,19 +37,7 @@ bool SceneMain::init()
                                               , NULL)
        ));
     
-//    auto dailyBG = getNodeById(100);
-//    dailyBG->setVisible(true);
-//    auto daily = getNodeById(101);
-//    daily->setVisible(true);
-//    
-//    auto listener = EventListenerTouchOneByOne::create();
-//    listener->setSwallowTouches(true);
-//    listener->onTouchBegan = [this](Touch *touch,Event*event)->bool {
-//        return true;
-//    };
-//    auto dispatcher = Director::getInstance()->getEventDispatcher();
-//    dispatcher->addEventListenerWithSceneGraphPriority(listener, daily);
-    
+    this->pushScene(SceneDaily::create());
     return true;
 }
 
@@ -86,3 +73,38 @@ const string ScenePlay::getText(const string& defaultString, int id) {
     return defaultString;
 }
 
+//====================================================================
+bool SceneDaily::init()
+{
+    gui::inst()->initDefaultWithSpriteCache("fonts/SDSwaggerTTF.ttf");
+    this->loadFromJson("daily", "daily.json");
+    
+    return true;
+}
+
+void SceneDaily::callback(Ref* pSender, int from, int link) {
+    
+    auto today = getNodeById(100);
+    today->setVisible(true);
+    
+    gui::inst()->setModal(today);
+    
+    auto todayImg = getNodeById(101);
+//    std::function<void()> callFn = [=]() {
+//        this->replaceScene(SceneMain::create());
+//    };
+    std::function<void()> callFn = std::bind(&SceneDaily::actionFinished, this);
+    todayImg->runAction(Sequence::create(ScaleBy::create(.5f, 1.5f)
+                                         , ScaleBy::create(.3f, (10.f / 15.f))
+                                         , DelayTime::create(0.2f)
+                                         , CallFunc::create(callFn)
+                                         , NULL));
+}
+
+const string SceneDaily::getText(const string& defaultString, int id) {
+    return defaultString;
+}
+
+void SceneDaily::actionFinished() {
+    this->replaceScene(SceneMain::create());
+}

@@ -1,10 +1,13 @@
 {
     "background": {
         "id": 0,
-        "include": {
-            "path": "common.json",
-            "key": "backgroud"
-        }
+        "img": null,
+        "bgColor": [ 39, 124, 172, 255 ],
+        "tile": {
+            "color": [ 36, 119, 170, 255 ],
+            "num": [ 14, 10 ]
+        },
+        "isDrawGrid": false
     },
   "nodes": [
     {

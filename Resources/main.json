@@ -13,10 +13,13 @@
     {
       "comment": "top bg",
       "id": -1,
-      "include": {
-          "path": "common.json",
-          "key": "top_bg"
-      }
+      "dimension": [ 0, 0, 9, 1 ],
+      "margin": [ 0, 0 ],
+      "innerMargin": [ 0, 0 ],
+      "gridSize": [ 1, 1 ],
+      "img": null,
+      "color": [ 52, 66, 83, 220 ],
+      "objects": []
     },
     {
         "comment": "id & level",
@@ -124,7 +127,7 @@
                 "alignment": "center",
                 "type": "sprite_button",
                 "link": 2,
-                "img": ["icons8-roulette-100.png", "icons8-roulette-filled-100.png"],
+                "img": [ "icons8-leaderboard-100.png", "icons8-leaderboard-filled-100.png"],
                 "color": null,
                 "text": null,
                 "fontSize": 0
@@ -236,7 +239,7 @@
             {
                 "id": 13,
                 "position": [ 0, 3 ],
-                "alignment": "left",
+                "alignment": "left_bottom",
                 "type": "label",
                 "link": null,
                 "img": null,
@@ -251,7 +254,7 @@
       "id": -1,
       "dimension": [ 1, 1, 4, 6 ],
       "margin": [ 10, 35 ],
-      "innerMargin": [ 5, 2 ],
+      "innerMargin": [ 5, 0 ],
       "gridSize": [ 2, 5 ],
       "img": null,
       "color": 0,
@@ -259,18 +262,18 @@
         {
           "id": 11,
           "position": [ 0, 0 ],
-          "alignment": "left",
+          "alignment": "left_bottom",
           "type": "label",
           "link": null,
           "img": null,
           "color": null,
           "text": "SEMI PRO 3",
-          "fontSize": 20
+          "fontSize": 18
         },
         {
             "id": 12,
             "position": [ 1, 0 ],
-            "alignment": "right",
+            "alignment": "right_bottom",
             "type": "button",
             "link": null,
             "img": null,
@@ -310,220 +313,6 @@
                 "img": "zombie.png",
                 "color": null,
                 "text": null,
-                "fontSize": 0
-            }
-        ]
-    },
-    {
-        "comment": "daily reward bg",
-        "id": -1,
-        "visible": true,
-        "dimension": [ 0, 0, 9, 7 ],
-        "margin": [ 0, 0 ],
-        "innerMargin": [ 0, 0 ],
-        "gridSize": [ 1, 1 ],
-        "img": null,
-        "color": 200,
-        "objects": []
-    },
-    {
-        "comment": "daily reward",
-        "id": 101,
-        "visible": true,
-        "dimension": [ 2, 0, 7, 7 ],
-        "margin": [ 0, 10 ],
-        "innerMargin": [ 10, 10 ],
-        "gridSize": [ 3, 6 ],
-        "img": null,
-        "color": [
-            [ 106, 185, 253 ],
-            [ 76, 172, 255 ]
-        ],
-        "objects": [
-            {
-                "id": -1,
-                "position": [ 0, 0 ],
-                "alignment": "left",
-                "type": "label",
-                "link": 0,
-                "img": null,
-                "color": [ 255, 255, 255 ],
-                "text": "DAILY REWARD",
-                "fontSize": 20
-            },
-            {
-                "id": -1,
-                "position": [ 1, 5 ],
-                "alignment": "center",
-                "type": "button_rectangle_round_shadow",
-                "link": 0,
-                "img": null,
-                "color": [ [ 255, 255, 255 ], [ 240, 208, 75 ] ],
-                "text": "OK",
-                "fontSize": 0
-            }
-        ]
-    },
-    {
-        "comment": "daily reward",
-        "id": 101,
-        "visible": true,
-        "dimension": [ 2, 1, 7, 5 ],
-        "margin": [ 20, 10 ],
-        "innerMargin": [ 5, 2 ],
-        "gridSize": [ 3, 5 ],
-        "img": null,
-        "color": 0,
-        "objects": [
-            {
-                "id": -1,
-                "position": [ 0, 1 ],
-                "alignment": "center",
-                "type": "label",
-                "link": 0,
-                "img": "icons8-expensive-price-80.png",
-                "color": null,
-                "bgColor": [ 255, 255, 255, 100 ],
-                "text": "x100",
-                "fontSize": 0
-            },
-            {
-                "id": -1,
-                "position": [ 1, 1 ],
-                "alignment": "center",
-                "type": "label",
-                "link": 0,
-                "img": "icons8-expensive-price-80.png",
-                "color": null,
-                "text": "x110",
-                "fontSize": 0
-            },
-            {
-                "id": -1,
-                "position": [ 2, 1 ],
-                "alignment": "center",
-                "type": "label",
-                "link": 0,
-                "img": "icons8-expensive-price-80.png",
-                "color": null,
-                "bgColor": [ 255, 255, 255, 100 ],
-                "text": "x120",
-                "fontSize": 0
-            },
-            {
-                "id": -1,
-                "position": [ 0, 3 ],
-                "alignment": "center",
-                "type": "label",
-                "link": 0,
-                "img": "icons8-expensive-price-80.png",
-                "color": null,
-                "text": "x130",
-                "fontSize": 0
-            },
-            {
-                "id": -1,
-                "position": [ 1, 3 ],
-                "alignment": "center",
-                "type": "label",
-                "link": 0,
-                "img": "icons8-expensive-price-80.png",
-                "color": null,
-                "bgColor": [ 255, 255, 255, 100 ],
-                "text": "x140",
-                "fontSize": 0
-            },
-            {
-                "id": -1,
-                "position": [ 2, 3 ],
-                "alignment": "center",
-                "type": "label",
-                "link": null,
-                "img": "icons8-expensive-price-80.png",
-                "color": null,
-                "text": "x150",
-                "fontSize": 0
-            }
-        ]
-    },
-    {
-        "comment": "daily reward",
-        "id": 102,
-        "visible": true,
-        "dimension": [ 2, 1, 7, 5 ],
-        "margin": [ 20, 10 ],
-        "innerMargin": [ 5, 2 ],
-        "gridSize": [ 3, 10 ],
-        "img": null,
-        "color": 0,
-        "objects": [
-            {
-                "id": -1,
-                "position": [ 0, 1 ],
-                "alignment": "center_bottom",
-                "type": "label",
-                "link": 0,
-                "img": null,
-                "color": [ 255, 255, 255 ],
-                "bgColor": [ 255, 255, 255, 100 ],
-                "text": "Received",
-                "fontSize": 0
-            },
-            {
-                "id": -1,
-                "position": [ 1, 1 ],
-                "alignment": "center_bottom",
-                "type": "label",
-                "link": null,
-                "img": null,
-                "color": [ 255, 255, 255 ],
-                "text": "Received",
-                "fontSize": 0
-            },
-            {
-                "id": -1,
-                "position": [ 2, 1 ],
-                "alignment": "center_bottom",
-                "type": "label",
-                "link": null,
-                "img": null,
-                "color": [ 255, 255, 255 ],
-                "bgColor": [ 255, 255, 255, 100 ],
-                "text": "Day3",
-                "fontSize": 0
-            },
-            {
-                "id": -1,
-                "position": [ 0, 5 ],
-                "alignment": "center_bottom",
-                "type": "label",
-                "link": null,
-                "img": null,
-                "color": [ 255, 255, 255 ],
-                "text": "Day4",
-                "fontSize": 0
-            },
-            {
-                "id": -1,
-                "position": [ 1, 5 ],
-                "alignment": "center_bottom",
-                "type": "label",
-                "link": null,
-                "img": null,
-                "color": [ 255, 255, 255 ],
-                "bgColor": [ 255, 255, 255, 100 ],
-                "text": "Day5",
-                "fontSize": 0
-            },
-            {
-                "id": -1,
-                "position": [ 2, 5 ],
-                "alignment": "center_bottom",
-                "type": "label",
-                "link": null,
-                "img": null,
-                "color": [ 255, 255, 255 ],
-                "text": "Day6",
                 "fontSize": 0
             }
         ]

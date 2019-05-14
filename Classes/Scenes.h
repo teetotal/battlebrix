@@ -46,7 +46,7 @@ private:
         eLINK_PLAY = 0
     };
 };
-
+// ScenePlay ==================================
 class ScenePlay : public ui_wizard
 {
 public:
@@ -59,6 +59,22 @@ public:
 protected:
     virtual void callback(Ref* pSender, int from, int link);
     virtual const string getText(const string& defaultString, int id);
+};
+// SceneDaily ==================================
+class SceneDaily : public ui_wizard
+{
+public:
+    static Scene* createScene() {
+        return SceneDaily::create();
+    };
+    virtual bool init();
+    CREATE_FUNC(SceneDaily);
+    
+protected:
+    virtual void callback(Ref* pSender, int from, int link);
+    virtual const string getText(const string& defaultString, int id);
+private:
+    void actionFinished();
 };
 
 #endif // __SCENES_H__
