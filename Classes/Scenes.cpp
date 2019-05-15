@@ -24,6 +24,7 @@
 
 #include "Scenes.h"
 #include "SimpleAudioEngine.h"
+#include "ScenePlay.h"
 
 bool SceneMain::init()
 {
@@ -61,24 +62,6 @@ void SceneMain::callback(Ref* pSender, int from, int link) {
 }
 
 const string SceneMain::getText(const string& defaultString, int id) {
-    return defaultString;
-}
-
-//====================================================================
-bool ScenePlay::init()
-{
-    this->loadFromJson("play", "play.json");
-	((LoadingBar *)this->getNodeById(1))->setDirection(LoadingBar::Direction::RIGHT);
-	((LoadingBar *)this->getNodeById(2))->setDirection(LoadingBar::Direction::RIGHT);
-    
-    return true;
-}
-
-void ScenePlay::callback(Ref* pSender, int from, int link) {
-	this->replaceScene(SceneMain::create());
-}
-
-const string ScenePlay::getText(const string& defaultString, int id) {
     return defaultString;
 }
 

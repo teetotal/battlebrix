@@ -78,6 +78,7 @@
 		4DB85BD222857BCD001C541A /* icons8-checked-checkbox-52.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DB85BD022857BCD001C541A /* icons8-checked-checkbox-52.png */; };
 		4DE8A4ED2282C054005D5353 /* icons8-find-user-male-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DE8A4EA2282C053005D5353 /* icons8-find-user-male-100.png */; };
 		4DE8A4EE2282C054005D5353 /* icons8-find-user-male-filled-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DE8A4EC2282C053005D5353 /* icons8-find-user-male-filled-100.png */; };
+		4DFF8D0C228C16FB0098B187 /* ScenePlay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DFF8D09228C16FB0098B187 /* ScenePlay.cpp */; };
 		503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 503AE0F617EB97AB00D1A890 /* Icon.icns */; };
 		503AE10517EB98FF00D1A890 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 503AE10317EB98FF00D1A890 /* main.cpp */; };
 		503AE11B17EB9C5A00D1A890 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503AE11A17EB9C5A00D1A890 /* IOKit.framework */; };
@@ -217,6 +218,8 @@
 		4DB85BD022857BCD001C541A /* icons8-checked-checkbox-52.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-checked-checkbox-52.png"; sourceTree = "<group>"; };
 		4DE8A4EA2282C053005D5353 /* icons8-find-user-male-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-find-user-male-100.png"; sourceTree = "<group>"; };
 		4DE8A4EC2282C053005D5353 /* icons8-find-user-male-filled-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-find-user-male-filled-100.png"; sourceTree = "<group>"; };
+		4DFF8D09228C16FB0098B187 /* ScenePlay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScenePlay.cpp; sourceTree = "<group>"; };
+		4DFF8D0B228C16FB0098B187 /* ScenePlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScenePlay.h; sourceTree = "<group>"; };
 		503AE0F617EB97AB00D1A890 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		503AE0F717EB97AB00D1A890 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		503AE10317EB98FF00D1A890 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = mac/main.cpp; sourceTree = "<group>"; };
@@ -411,6 +414,8 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				4DFF8D09228C16FB0098B187 /* ScenePlay.cpp */,
+				4DFF8D0B228C16FB0098B187 /* ScenePlay.h */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
 				46880B8619C43A87006E1F66 /* Scenes.cpp */,
@@ -648,6 +653,7 @@
 				4D4809B0227A9E9F0046472F /* inventory.cpp in Sources */,
 				4D480996227A9E370046472F /* ui_color.cpp in Sources */,
 				1AF87B781F6F77F7007BE51C /* AppController.mm in Sources */,
+				4DFF8D0C228C16FB0098B187 /* ScenePlay.cpp in Sources */,
 				1AF87B8B1F6F782A007BE51C /* RootViewController.mm in Sources */,
 				4D4809AF227A9E9F0046472F /* PhysicsScene.cpp in Sources */,
 				4D4809AA227A9E9F0046472F /* quest.cpp in Sources */,

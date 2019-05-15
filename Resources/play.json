@@ -1,6 +1,6 @@
 {
     "background": {
-        "id": 0,
+        "id": -1,
         "img": null,
         "bgColor": [ 39, 124, 172, 255 ],
         "tile": {
@@ -116,7 +116,7 @@
     },
     {
         "comment": "cpu area",
-      "id": 10,
+      "id": 11,
       "dimension": [ 0, 2, 4, 6 ],
       "margin": [ 10, 0 ],
       "innerMargin": [ 0, 0 ],
@@ -127,7 +127,7 @@
     },
     {
         "comment": "my area",
-      "id": 20,
+      "id": 10,
       "dimension": [ 4, 2, 8, 6 ],
       "margin": [ 10, 0 ],
       "innerMargin": [ 0, 0 ],

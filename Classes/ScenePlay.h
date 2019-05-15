@@ -22,63 +22,38 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __SCENES_H__
-#define __SCENES_H__
+#ifndef __SCENE_PLAY_H__
+#define __SCENE_PLAY_H__
 
 #include "ui/ui_wizard.h"
 USING_NS_CC;
 
-enum eLINK {
-    eLINK_PLAY = 0,
-    eLINK_SHOP,
-    eLINK_LEADERBOARD,
-    eLINK_FRIENDS,
-    eLINK_BAG
-};
-
-class SceneMain : public ui_wizard
+// ScenePlay ==================================
+class ScenePlay : public ui_wizard
 {
 public:
     static Scene* createScene() {
-        return SceneMain::create();
+        return ScenePlay::create();
     };
     virtual bool init();
-    CREATE_FUNC(SceneMain);
+    CREATE_FUNC_PHYSICS(ScenePlay);
     
 protected:
     virtual void callback(Ref* pSender, int from, int link);
     virtual const string getText(const string& defaultString, int id);
-
-};
-// SceneDaily ==================================
-class SceneDaily : public ui_wizard
-{
-public:
-    static Scene* createScene() {
-        return SceneDaily::create();
-    };
-    virtual bool init();
-    CREATE_FUNC(SceneDaily);
     
-protected:
-    virtual void callback(Ref* pSender, int from, int link);
-    virtual const string getText(const string& defaultString, int id);
 private:
-    void actionFinished();
-    int mTodayId;
-};
-// SceneShop ==================================
-class SceneShop : public ui_wizard
-{
-    public:
-    static Scene* createScene() {
-        return SceneShop::create();
-    };
-    virtual bool init();
-    CREATE_FUNC(SceneShop);
+    bool onTouchBegan(Touch* touch, Event* event) ;
+    bool onTouchEnded(Touch* touch, Event* event);
+    void onTouchMoved(Touch *touch, Event *event);
+    bool onContactBegin(PhysicsContact &contact);
     
-    protected:
-    virtual void callback(Ref* pSender, int from, int link);
-    virtual const string getText(const string& defaultString, int id);
+    Node * createBall();
+    
+    enum ID_NODE {
+        ID_NODE_MY_AREA = 10,
+        ID_NODE_OTHER_AREA
+    };
+    Node * mLayer,  * mBall;
 };
-#endif // __SCENES_H__
+#endif // __SCENE_PLAY_H__
