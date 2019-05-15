@@ -85,8 +85,15 @@ const string ScenePlay::getText(const string& defaultString, int id) {
 //====================================================================
 bool SceneDaily::init()
 {
+    mTodayId = 2;
+   
     gui::inst()->initDefaultWithSpriteCache("fonts/SDSwaggerTTF.ttf");
     this->loadFromJson("daily", "daily.json");
+    //today
+    auto todayTitle = getNodeById(mTodayId);
+    todayTitle->setColor(Color3B(240, 208, 75));
+    todayTitle->runAction(Blink::create(3, 4));
+    getNodeById(10+mTodayId)->setVisible(true);
     
     return true;
 }
@@ -111,6 +118,12 @@ void SceneDaily::callback(Ref* pSender, int from, int link) {
 }
 
 const string SceneDaily::getText(const string& defaultString, int id) {
+    if(id == mTodayId) {
+        return "TODAY";
+    } else if(id < mTodayId && id < 10 && id > 0) {
+        return "Done";
+    }
+    
     return defaultString;
 }
 
@@ -130,5 +143,6 @@ void SceneShop::callback(Ref* pSender, int from, int link) {
 }
 
 const string SceneShop::getText(const string& defaultString, int id) {
+    
     return defaultString;
 }

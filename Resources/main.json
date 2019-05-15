@@ -44,14 +44,25 @@
             },
             {
                 "id": 2,
-                "position": [ 0, 1 ],
+                "position": [ 1, 0 ],
                 "alignment": "left",
                 "type": "label",
                 "link": null,
                 "img": null,
-                "color": [ 240, 208, 75 ],
+                "color": [ 255, 255, 255 ],
                 "text": "lv.16",
                 "fontSize": 12
+            },
+            {
+                "id": 12,
+                "position": [ 0, 1 ],
+                "alignment": "left",
+                "type": "button",
+                "link": null,
+                "img": null,
+                "color": [ 240, 208, 75 ],
+                "text": "1,642th",
+                "fontSize": 10
             }
         ]
     },
@@ -185,12 +196,35 @@
         "objects": []
     },
     {
-        "comment": "play progressbar",
+        "comment": "play BIG",
         "id": -1,
-        "dimension": [ 1, 1, 4, 6 ],
-        "margin": [ 10, 35 ],
-        "innerMargin": [ 5, 3 ],
-        "gridSize": [ 1, 8 ],
+        "dimension": [ 1, 1, 5, 6 ],
+        "margin": [ 10, 25 ],
+        "innerMargin": [ 0, 0 ],
+        "gridSize": [ 2, 5 ],
+        "img": null,
+        "color": 0,
+        "objects": [
+            {
+                "id": 11,
+                "position": [ 0, 0 ],
+                "alignment": "left",
+                "type": "label",
+                "link": null,
+                "img": null,
+                "color": null,
+                "text": "SEMI PRO 3",
+                "fontSize": 18
+            }
+        ]
+    },
+    {
+        "comment": "play details",
+        "id": -1,
+        "dimension": [ 1, 1, 5, 6 ],
+        "margin": [ 15, 25 ],
+        "innerMargin": [ 5, 2 ],
+        "gridSize": [ 1, 6 ],
         "img": null,
         "color": 0,
         "objects": [
@@ -202,6 +236,7 @@
                 "link": null,
                 "img": "loadingbar_big.png",
                 "color": null,
+                "bgColor": [ 255, 255, 255, 100 ],
                 "text": null,
                 "fontSize": 0
             },
@@ -219,60 +254,26 @@
             {
                 "id": 13,
                 "position": [ 0, 3 ],
-                "alignment": "left_bottom",
+                "alignment": "left",
                 "type": "label",
                 "link": null,
                 "img": null,
                 "color": [ 255, 255, 255 ],
-                "text": " Win3 / Draw2 / Lose3",
-                "fontSize": 10
+                "bgColor": [ 255, 255, 255, 100 ],
+                "text": "Win3/Draw2/Lose3",
+                "fontSize": 12
+            },
+            {
+                "id": 14,
+                "position": [ 0, 4 ],
+                "alignment": "left",
+                "type": "label",
+                "color": [ 255, 255, 255 ],
+                "bgColor": [ 255, 255, 255, 100 ],
+                "text": "1,614th >>",
+                "fontSize": 12
             }
         ]
-    },
-    {
-      "comment": "play",
-      "id": -1,
-      "dimension": [ 1, 1, 4, 6 ],
-      "margin": [ 10, 35 ],
-      "innerMargin": [ 5, 0 ],
-      "gridSize": [ 2, 5 ],
-      "img": null,
-      "color": 0,
-      "objects": [
-        {
-          "id": 11,
-          "position": [ 0, 0 ],
-          "alignment": "left_bottom",
-          "type": "label",
-          "link": null,
-          "img": null,
-          "color": null,
-          "text": "SEMI PRO 3",
-          "fontSize": 18
-        },
-        {
-            "id": 12,
-            "position": [ 1, 0 ],
-            "alignment": "right_bottom",
-            "type": "button",
-            "link": null,
-            "img": null,
-            "color": [ 240, 208, 75 ],
-            "text": "1,642th >>",
-            "fontSize": 12
-        },
-        {
-            "id": -1,
-            "position": [ 0, 4 ],
-            "alignment": "center",
-            "type": "button_rectangle_round_shadow",
-            "link": 0,
-            "img": null,
-            "color": [ [ 0, 0, 0 ], [ 240, 208, 75 ] ],
-            "text": "PLAY",
-            "fontSize": 0
-        }
-      ]
     },
     {
         "comment": "play image",

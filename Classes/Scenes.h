@@ -79,6 +79,7 @@ protected:
     virtual const string getText(const string& defaultString, int id);
 private:
     void actionFinished();
+    int mTodayId;
 };
 // SceneShop ==================================
 class SceneShop : public ui_wizard

@@ -173,9 +173,9 @@
     {
         "comment": "play progressbar",
         "id": -1,
-        "dimension": [ 1, 1, 4, 5 ],
+        "dimension": [ 1, 1, 7, 5 ],
         "dimensionInner": [ 1, 1, 4, 15 ],
-        "margin": [ 0, 10 ],
+        "margin": [ 10, 10 ],
         "innerMargin": [ 5, 3 ],
         "gridSize": [ 1, 8 ],
         "img": null,
