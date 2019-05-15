@@ -13,39 +13,36 @@
     {
       "comment": "top",
       "id": -1,
-      "dimension": [ 0, 0, 9, 1 ],
-      "margin": [ 0, 0 ],
-      "innerMargin": [ 10, 5 ],
-      "gridSize": [ 9, 1 ],
+      "dimension": [ 0, 0, 8, 1 ],
+      "margin": [ 10, 0 ],
+      "innerMargin": [ 5, 5 ],
+      "gridSize": [ 3, 1 ],
       "img": null,
       "color": [ 52, 66, 83, 0 ],
       "objects": [
         {
-          "id": -2,
-          "position": [ 2, 0 ],
-          "alignment": "center",
+          "id": 1,
+          "position": [ 0, 0 ],
+          "alignment": "left",
           "type": "label",
           "link": 1,
           "img": null,
           "color": [ 240, 208, 75 ],
-          "text": "CPU",
+          "text": "A.I",
           "fontSize": 0
         },
         {
-          "id": -3,
-          "position": [ 4, 0 ],
-          "alignment": "center",
-          "type": "label",
-          "link": 1,
-          "img": null,
-          "color": [ 255, 255, 255 ],
-          "text": "VS",
-          "fontSize": 0
+            "position": [ 1, 0 ],
+            "alignment": "center",
+            "type": "label",
+            "color": [ 255, 255, 255, 200 ],
+            "text": "VS",
+            "fontSize": -1
         },
         {
-          "id": -4,
-          "position": [ 6, 0 ],
-          "alignment": "center",
+          "id": 2,
+          "position": [ 2, 0 ],
+          "alignment": "right",
           "type": "label",
           "link": 1,
           "img": null,
@@ -56,10 +53,9 @@
       ]
     },
     {
-        "comment": "cpu loading bars",
-      "id": -5,
-      "dimension": [ 1, 1, 4, 2 ],
-      "margin": [ 0, 0 ],
+      "comment": "cpu loading bars",
+      "dimension": [ 0, 1, 4, 2 ],
+      "margin": [ 10, 0 ],
       "innerMargin": [ 5, 5 ],
       "gridSize": [ 1, 2 ],
       "img": null,
@@ -70,30 +66,22 @@
           "position": [ 0, 0 ],
           "alignment": "center",
           "type": "loadingbar",
-          "link": null,
-          "img": "loadingbar_big.png",
-          "color": null,
-          "text": null,
-          "fontSize": 0
+          "img": "loadingbar_big.png"
         },
         {
           "id": 2,
           "position": [ 0, 1 ],
           "alignment": "center",
           "type": "loadingbar",
-          "link": null,
-          "img": "loadingbar_big.png",
-          "color": null,
-          "text": "",
-          "fontSize": 0
+          "img": "loadingbar_big.png"
         }
       ]
     },
     {
-        "comment": "my loading bars",
+      "comment": "my loading bars",
       "id": -6,
-      "dimension": [ 5, 1, 8, 2 ],
-      "margin": [ 0, 0 ],
+      "dimension": [ 4, 1, 8, 2 ],
+      "margin": [ 10, 0 ],
       "innerMargin": [ 5, 5 ],
       "gridSize": [ 1, 2 ],
       "img": null,
@@ -104,30 +92,33 @@
           "position": [ 0, 0 ],
           "alignment": "center",
           "type": "loadingbar",
-          "link": null,
-          "img": "loadingbar_big.png",
-          "color": null,
-          "text": "",
-          "fontSize": 0
+          "img": "loadingbar_big.png"
         },
         {
           "id": 7,
           "position": [ 0, 1 ],
           "alignment": "center",
           "type": "loadingbar",
-          "link": null,
-          "img": "loadingbar_big.png",
-          "color": null,
-          "text": "",
-          "fontSize": 0
+          "img": "loadingbar_big.png"
         }
       ]
     },
     {
+        "comment": "my touch bars",
+        "id": -6,
+        "dimension": [ 4, 6, 8, 7 ],
+        "margin": [ 10, 5 ],
+        "innerMargin": [ 0, 0 ],
+        "gridSize": [ 1, 1 ],
+        "img": null,
+        "color": 50,
+        "objects": []
+    },
+    {
         "comment": "cpu area",
       "id": 10,
-      "dimension": [ 1, 2, 4, 6 ],
-      "margin": [ 0, 0 ],
+      "dimension": [ 0, 2, 4, 6 ],
+      "margin": [ 10, 0 ],
       "innerMargin": [ 0, 0 ],
       "gridSize": [ 1, 1 ],
       "img": null,
@@ -137,8 +128,8 @@
     {
         "comment": "my area",
       "id": 20,
-      "dimension": [ 5, 2, 8, 6 ],
-      "margin": [ 0, 0 ],
+      "dimension": [ 4, 2, 8, 6 ],
+      "margin": [ 10, 0 ],
       "innerMargin": [ 0, 0 ],
       "gridSize": [ 1, 1 ],
       "img": null,
@@ -148,54 +139,43 @@
     {
       "comment": "skill",
       "id": 30,
-      "dimension": [ 4, 2, 5, 6 ],
+      "dimension": [ 8, 2, 9, 6 ],
       "margin": [ 0, 0 ],
       "innerMargin": [ 0, 5 ],
-      "gridSize": [ 1, 4 ],
+      "gridSize": [ 1, 3 ],
       "img": null,
       "color": 0,
       "objects": [
         {
           "id": 31,
           "position": [ 0, 0 ],
-          "alignment": "right",
+          "alignment": "left",
           "type": "button_circle",
           "link": 1,
           "img": null,
-          "color": [ [ 0, 0, 0 ], [ 55, 227, 71 ] ],
+          "color": [ [ 200, 0, 0 ], [ 55, 227, 71 ] ],
           "text": "x2",
           "fontSize": 0
         },
         {
           "id": 32,
           "position": [ 0, 1 ],
-          "alignment": "right",
+          "alignment": "left",
           "type": "button_circle",
           "link": 2,
-          "img": null,
-          "color": [ [ 0, 0, 0 ], [ 55, 227, 71 ] ],
-          "text": "x3",
-          "fontSize": 0
-        },
-        {
-          "id": 33,
-          "position": [ 0, 2 ],
-          "alignment": "right",
-          "type": "button_circle",
-          "link": 3,
           "img": null,
           "color": [ [ 0, 0, 0 ], [ 55, 227, 71 ] ],
           "text": "A",
           "fontSize": 0
         },
         {
-          "id": 34,
-          "position": [ 0, 3 ],
-          "alignment": "right",
+          "id": 33,
+          "position": [ 0, 2 ],
+          "alignment": "left",
           "type": "button_circle",
-          "link": 4,
+          "link": 3,
           "img": null,
-          "color": [ [ 0, 0, 0 ], [ 55, 227, 71 ] ],
+          "color": [ [ 255, 255, 255 ], [ 55, 227, 71 ] ],
           "text": "D",
           "fontSize": 0
         }

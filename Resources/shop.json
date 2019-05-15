@@ -7,7 +7,7 @@
             "color": [ 36, 119, 170, 255 ],
             "num": [ 14, 10 ]
         },
-        "isDrawGrid": true
+        "isDrawGrid": false
     },
   "nodes": [
     {
@@ -26,7 +26,7 @@
         "id": -1,
         "dimension": [ 0, 0, 2, 1 ],
         "margin": [ 10, 5 ],
-        "innerMargin": [ 5, 5 ],
+        "innerMargin": [ 5, 1 ],
         "gridSize": [ 2, 2 ],
         "img": null,
         "color": 0,
@@ -40,65 +40,76 @@
                 "img": null,
                 "color": [ 255, 255, 255 ],
                 "text": "teetotal",
-                "fontSize": 12
+                "fontSize": 0
             },
             {
                 "id": 2,
-                "position": [ 0, 1 ],
+                "position": [ 1, 0 ],
                 "alignment": "left",
                 "type": "label",
                 "link": null,
                 "img": null,
-                "color": [ 240, 208, 75 ],
+                "color": [ 255, 255, 255 ],
                 "text": "lv.16",
-                "fontSize": 12
+                "fontSize": 0
+            },
+            {
+                "id": 12,
+                "position": [ 0, 1 ],
+                "alignment": "left",
+                "type": "button",
+                "link": null,
+                "img": null,
+                "color": [ 240, 208, 75 ],
+                "text": "1,642th",
+                "fontSize": 0
             }
         ]
     },
     {
-      "comment": "cash, setting, alarm",
-      "id": -1,
-      "dimension": [ 7, 0, 9, 1 ],
-      "margin": [ 10, 5 ],
-      "innerMargin": [ 2, 2 ],
-      "gridSize": [ 4, 1 ],
-      "img": null,
-      "color": 0,
-      "objects": [
-        {
-          "id": 3,
-          "position": [ 0, 0 ],
-          "alignment": "right",
-          "type": "button_sprite",
-          "link": 1,
-          "img": "icons8-expensive-price-80.png",
-          "color": [ 255, 255, 255 ],
-          "text": " 575,211",
-          "fontSize": 0
-        },
-        {
-          "id": -1,
-          "position": [ 2, 0 ],
-          "alignment": "right",
-          "type": "sprite_button_circle",
-          "link": 10,
-          "img": [ "icons8-settings-100.png", "icons8-settings-filled-100.png" ],
-          "color": [ 55, 227, 71 ],
-          "text": null,
-          "fontSize": 0
-        },
-        {
-            "id": -1,
-            "position": [ 3, 0 ],
-            "alignment": "right",
-            "type": "sprite_button_circle",
-            "link": 10,
-            "img": [ "icons8-alarm-100.png", "icons8-alarm-filled-100.png" ],
-            "color": [ 55, 227, 71 ],
-            "text": null,
-            "fontSize": 0
-        }
-      ]
+        "comment": "cash, setting, alarm",
+        "id": -1,
+        "dimension": [ 7, 0, 9, 1 ],
+        "margin": [ 10, 5 ],
+        "innerMargin": [ 2, 1 ],
+        "gridSize": [ 4, 1 ],
+        "img": null,
+        "color": 0,
+        "objects": [
+            {
+                "id": 3,
+                "position": [ 0, 0 ],
+                "alignment": "right",
+                "type": "button_sprite",
+                "link": 1,
+                "img": "icons8-expensive-price-80.png",
+                "color": [ 255, 255, 255 ],
+                "text": " 575,211",
+                "fontSize": -1
+            },
+            {
+                "id": -1,
+                "position": [ 2, 0 ],
+                "alignment": "right",
+                "type": "sprite_button_circle",
+                "link": 10,
+                "img": [ "icons8-settings-100.png", "icons8-settings-filled-100.png" ],
+                "color": [ 55, 227, 71 ],
+                "text": null,
+                "fontSize": 0
+            },
+            {
+                "id": -1,
+                "position": [ 3, 0 ],
+                "alignment": "right",
+                "type": "sprite_button_circle",
+                "link": 10,
+                "img": [ "icons8-alarm-100.png", "icons8-alarm-filled-100.png" ],
+                "color": [ 55, 227, 71 ],
+                "text": null,
+                "fontSize": 0
+            }
+        ]
     },
     {
         "comment": "bottom menu",
@@ -171,48 +182,75 @@
         ]
     },
     {
-        "comment": "play progressbar",
+        "comment": "scrollview",
         "id": -1,
-        "dimension": [ 1, 1, 7, 5 ],
-        "dimensionInner": [ 1, 1, 4, 15 ],
+        "dimension": [ 0, 1, 9, 6 ],
+        "dimensionInner": [ 0, 1, 16, 6 ],
         "margin": [ 10, 10 ],
-        "innerMargin": [ 5, 3 ],
-        "gridSize": [ 1, 8 ],
+        "innerMargin": [ 5, 5 ],
+        "gridSize": [ 5, 1 ],
         "img": null,
         "color": [ 106, 185, 253 ],
         "objects": [
             {
-                "id": 13,
-                "position": [ 0, 2 ],
+                "id": -1,
+                "position": [ 0, 0 ],
                 "alignment": "center",
-                "type": "loadingbar",
+                "type": "label",
                 "link": null,
-                "img": "loadingbar_big.png",
-                "color": null,
-                "text": null,
+                "img": null,
+                "color": [ 255, 255, 255 ],
+                "bgColor": [ 0, 0, 0, 50 ],
+                "text": "1",
                 "fontSize": 0
             },
             {
-                "id": 14,
-                "position": [ 0, 2 ],
+                "id": -1,
+                "position": [ 1, 0 ],
                 "alignment": "center",
                 "type": "label",
                 "link": null,
                 "img": null,
                 "color": [ 255, 255, 255 ],
-                "text": " 5 / 12",
-                "fontSize": 10
+                "bgColor": [ 0, 0, 0, 150 ],
+                "text": "2",
+                "fontSize": 0
             },
             {
-                "id": 13,
-                "position": [ 0, 3 ],
-                "alignment": "left_bottom",
+                "id": -1,
+                "position": [ 2, 0 ],
+                "alignment": "center",
                 "type": "label",
                 "link": null,
                 "img": null,
                 "color": [ 255, 255, 255 ],
-                "text": " Win3 / Draw2 / Lose3",
-                "fontSize": 10
+                "bgColor": [ 0, 0, 0, 50 ],
+                "text": "3",
+                "fontSize": 0
+            },
+            {
+                "id": -1,
+                "position": [ 3, 0 ],
+                "alignment": "center",
+                "type": "label",
+                "link": null,
+                "img": null,
+                "color": [ 255, 255, 255 ],
+                "bgColor": [ 0, 0, 0, 150 ],
+                "text": "4",
+                "fontSize": 0
+            },
+            {
+                "id": -1,
+                "position": [ 4, 0 ],
+                "alignment": "center",
+                "type": "label",
+                "link": null,
+                "img": null,
+                "color": [ 255, 255, 255 ],
+                "bgColor": [ 0, 0, 0, 50 ],
+                "text": "5",
+                "fontSize": 0
             }
         ]
     }
