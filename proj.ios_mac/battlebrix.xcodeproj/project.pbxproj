@@ -46,7 +46,7 @@
 		4D4809AE227A9E9F0046472F /* farming.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D4809A6227A9E9F0046472F /* farming.cpp */; };
 		4D4809AF227A9E9F0046472F /* PhysicsScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D4809A7227A9E9F0046472F /* PhysicsScene.cpp */; };
 		4D4809B0227A9E9F0046472F /* inventory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D4809A8227A9E9F0046472F /* inventory.cpp */; };
-		4D4809B3227AA4070046472F /* roulette.json in Resources */ = {isa = PBXBuildFile; fileRef = 4D4809B1227AA4070046472F /* roulette.json */; };
+		4D4809B3227AA4070046472F /* palette.json in Resources */ = {isa = PBXBuildFile; fileRef = 4D4809B1227AA4070046472F /* palette.json */; };
 		4D4809B4227AA4070046472F /* main.json in Resources */ = {isa = PBXBuildFile; fileRef = 4D4809B2227AA4070046472F /* main.json */; };
 		4D574B07228CFCCD001B8F7F /* ui_ext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D574B04228CFCCC001B8F7F /* ui_ext.cpp */; };
 		4D7EFBF8227C22A300E19181 /* play.json in Resources */ = {isa = PBXBuildFile; fileRef = 4D7EFBF7227C22A300E19181 /* play.json */; };
@@ -185,10 +185,11 @@
 		4D4809A6227A9E9F0046472F /* farming.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = farming.cpp; path = ../../library/library/farming.cpp; sourceTree = "<group>"; };
 		4D4809A7227A9E9F0046472F /* PhysicsScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PhysicsScene.cpp; path = ../../library/library/PhysicsScene.cpp; sourceTree = "<group>"; };
 		4D4809A8227A9E9F0046472F /* inventory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = inventory.cpp; path = ../../library/library/inventory.cpp; sourceTree = "<group>"; };
-		4D4809B1227AA4070046472F /* roulette.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = roulette.json; sourceTree = "<group>"; };
+		4D4809B1227AA4070046472F /* palette.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = palette.json; sourceTree = "<group>"; };
 		4D4809B2227AA4070046472F /* main.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = main.json; sourceTree = "<group>"; };
 		4D574B04228CFCCC001B8F7F /* ui_ext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ui_ext.cpp; path = ../../library/ui/ui_ext.cpp; sourceTree = "<group>"; };
 		4D574B06228CFCCC001B8F7F /* ui_ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ui_ext.h; path = ../../library/ui/ui_ext.h; sourceTree = "<group>"; };
+		4D574B0B228D71C8001B8F7F /* ui_color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ui_color.h; path = ../../library/ui/ui_color.h; sourceTree = "<group>"; };
 		4D69BC802283E7C7009B4F5A /* ui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ui.h; path = ../../library/ui/ui.h; sourceTree = "<group>"; };
 		4D69BC822283FA26009B4F5A /* ui_wizard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ui_wizard.h; path = ../../library/ui/ui_wizard.h; sourceTree = "<group>"; };
 		4D7EFBF7227C22A300E19181 /* play.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = play.json; sourceTree = "<group>"; };
@@ -398,7 +399,7 @@
 				4D80721A227AF9DD0099B6A4 /* icons8-alarm-100.png */,
 				4D807218227AF9790099B6A4 /* icons8-shopping-cart-100.png */,
 				4D807215227ABE200099B6A4 /* coin.png */,
-				4D4809B1227AA4070046472F /* roulette.json */,
+				4D4809B1227AA4070046472F /* palette.json */,
 				4DB682AC228AC490007A1E22 /* shop.json */,
 				4D7EFBF7227C22A300E19181 /* play.json */,
 				4D4809B2227AA4070046472F /* main.json */,
@@ -431,6 +432,7 @@
 		4D480989227A9DFC0046472F /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				4D574B0B228D71C8001B8F7F /* ui_color.h */,
 				4D574B04228CFCCC001B8F7F /* ui_ext.cpp */,
 				4D574B06228CFCCC001B8F7F /* ui_ext.h */,
 				4D69BC822283FA26009B4F5A /* ui_wizard.h */,
@@ -598,7 +600,7 @@
 				4D807217227ABE210099B6A4 /* coin.png in Resources */,
 				1A88B2641FC3D9C9005C14AE /* Images.xcassets in Resources */,
 				4DB85BD222857BCD001C541A /* icons8-checked-checkbox-52.png in Resources */,
-				4D4809B3227AA4070046472F /* roulette.json in Resources */,
+				4D4809B3227AA4070046472F /* palette.json in Resources */,
 				4DB85BC822853748001C541A /* zombie.png in Resources */,
 				4DB682A6228A8242007A1E22 /* icons8-roulette-96.png in Resources */,
 				4DB682A9228A9704007A1E22 /* icons8-leaderboard-filled-100.png in Resources */,
