@@ -2,9 +2,9 @@
     "background": {
         "id": -1,
         "img": null,
-        "bgColor": [ 39, 124, 172, 255 ],
+        "bgColor": [ 255, 255, 255, 255 ],
         "tile": {
-            "color": [ 36, 119, 170, 255 ],
+            "color": [ 250, 250, 250, 255 ],
             "num": [ 14, 10 ]
         },
         "isDrawGrid": false
@@ -13,7 +13,7 @@
     {
       "comment": "top",
       "id": -1,
-      "dimension": [ 0, 0, 8, 1 ],
+      "dimension": [ 0, 6, 8, 7 ],
       "margin": [ 10, 0 ],
       "innerMargin": [ 5, 5 ],
       "gridSize": [ 3, 1 ],
@@ -25,8 +25,6 @@
           "position": [ 0, 0 ],
           "alignment": "left",
           "type": "label",
-          "link": 1,
-          "img": null,
           "color": [ 240, 208, 75 ],
           "text": "A.I",
           "fontSize": 0
@@ -44,8 +42,6 @@
           "position": [ 2, 0 ],
           "alignment": "right",
           "type": "label",
-          "link": 1,
-          "img": null,
           "color": [ 240, 208, 75 ],
           "text": "teetotal",
           "fontSize": 0
@@ -54,12 +50,12 @@
     },
     {
       "comment": "cpu loading bars",
-      "dimension": [ 0, 1, 4, 2 ],
-      "margin": [ 10, 0 ],
-      "innerMargin": [ 5, 5 ],
+      "dimension": [ 0, 0, 4, 1 ],
+      "margin": [ 10, 5 ],
+      "innerMargin": [ 5, 1 ],
       "gridSize": [ 1, 2 ],
       "img": null,
-      "color": [ 106, 185, 253 ],
+      "color": [ 36, 119, 170 ],
       "objects": [
         {
           "id": 1,
@@ -79,13 +75,12 @@
     },
     {
       "comment": "my loading bars",
-      "id": -6,
-      "dimension": [ 4, 1, 8, 2 ],
-      "margin": [ 10, 0 ],
-      "innerMargin": [ 5, 5 ],
+      "dimension": [ 4, 0, 8, 1 ],
+      "margin": [ 10, 5 ],
+      "innerMargin": [ 5, 1 ],
       "gridSize": [ 1, 2 ],
       "img": null,
-      "color": [ 106, 185, 253 ],
+      "color": [ 36, 119, 170 ],
       "objects": [
         {
           "id": 6,
@@ -105,7 +100,6 @@
     },
     {
         "comment": "my touch bars",
-        "id": -6,
         "dimension": [ 4, 6, 8, 7 ],
         "margin": [ 10, 5 ],
         "innerMargin": [ 0, 0 ],
@@ -117,29 +111,29 @@
     {
         "comment": "cpu area",
       "id": 11,
-      "dimension": [ 0, 2, 4, 6 ],
+      "dimension": [ 0, 1, 4, 6 ],
       "margin": [ 10, 0 ],
       "innerMargin": [ 0, 0 ],
       "gridSize": [ 1, 1 ],
       "img": null,
-      "color": [ 255, 255, 255 ],
+      "color": [ 106, 185, 253 ],
       "objects": [ ]
     },
     {
         "comment": "my area",
       "id": 10,
-      "dimension": [ 4, 2, 8, 6 ],
+      "dimension": [ 4, 1, 8, 6 ],
       "margin": [ 10, 0 ],
       "innerMargin": [ 0, 0 ],
       "gridSize": [ 1, 1 ],
       "img": null,
-      "color": [ 255, 255, 255 ],
+      "color": [ 106, 185, 253 ],
       "objects": [ ]
     },
     {
       "comment": "skill",
       "id": 30,
-      "dimension": [ 8, 2, 9, 6 ],
+      "dimension": [ 8, 1, 9, 5 ],
       "margin": [ 0, 0 ],
       "innerMargin": [ 0, 5 ],
       "gridSize": [ 1, 3 ],

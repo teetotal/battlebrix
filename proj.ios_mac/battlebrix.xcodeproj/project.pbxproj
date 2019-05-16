@@ -48,6 +48,7 @@
 		4D4809B0227A9E9F0046472F /* inventory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D4809A8227A9E9F0046472F /* inventory.cpp */; };
 		4D4809B3227AA4070046472F /* roulette.json in Resources */ = {isa = PBXBuildFile; fileRef = 4D4809B1227AA4070046472F /* roulette.json */; };
 		4D4809B4227AA4070046472F /* main.json in Resources */ = {isa = PBXBuildFile; fileRef = 4D4809B2227AA4070046472F /* main.json */; };
+		4D574B07228CFCCD001B8F7F /* ui_ext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D574B04228CFCCC001B8F7F /* ui_ext.cpp */; };
 		4D7EFBF8227C22A300E19181 /* play.json in Resources */ = {isa = PBXBuildFile; fileRef = 4D7EFBF7227C22A300E19181 /* play.json */; };
 		4D7EFBFA227C2D3A00E19181 /* loadingbar_big.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D7EFBF9227C2D3A00E19181 /* loadingbar_big.png */; };
 		4D807217227ABE210099B6A4 /* coin.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D807215227ABE200099B6A4 /* coin.png */; };
@@ -186,6 +187,8 @@
 		4D4809A8227A9E9F0046472F /* inventory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = inventory.cpp; path = ../../library/library/inventory.cpp; sourceTree = "<group>"; };
 		4D4809B1227AA4070046472F /* roulette.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = roulette.json; sourceTree = "<group>"; };
 		4D4809B2227AA4070046472F /* main.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = main.json; sourceTree = "<group>"; };
+		4D574B04228CFCCC001B8F7F /* ui_ext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ui_ext.cpp; path = ../../library/ui/ui_ext.cpp; sourceTree = "<group>"; };
+		4D574B06228CFCCC001B8F7F /* ui_ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ui_ext.h; path = ../../library/ui/ui_ext.h; sourceTree = "<group>"; };
 		4D69BC802283E7C7009B4F5A /* ui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ui.h; path = ../../library/ui/ui.h; sourceTree = "<group>"; };
 		4D69BC822283FA26009B4F5A /* ui_wizard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ui_wizard.h; path = ../../library/ui/ui_wizard.h; sourceTree = "<group>"; };
 		4D7EFBF7227C22A300E19181 /* play.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = play.json; sourceTree = "<group>"; };
@@ -428,6 +431,8 @@
 		4D480989227A9DFC0046472F /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				4D574B04228CFCCC001B8F7F /* ui_ext.cpp */,
+				4D574B06228CFCCC001B8F7F /* ui_ext.h */,
 				4D69BC822283FA26009B4F5A /* ui_wizard.h */,
 				4D69BC802283E7C7009B4F5A /* ui.h */,
 				4D48098D227A9E370046472F /* ui_bgText.cpp */,
@@ -647,6 +652,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D480995227A9E370046472F /* ui_deco.cpp in Sources */,
+				4D574B07228CFCCD001B8F7F /* ui_ext.cpp in Sources */,
 				4D480994227A9E370046472F /* ui_bgText.cpp in Sources */,
 				4D4809AD227A9E9F0046472F /* sql.cpp in Sources */,
 				4D480991227A9E370046472F /* ui_cultivation.cpp in Sources */,

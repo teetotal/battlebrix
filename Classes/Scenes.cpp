@@ -75,7 +75,11 @@ bool SceneDaily::init()
     //today
     auto todayTitle = getNodeById(mTodayId);
     todayTitle->setColor(Color3B(240, 208, 75));
-    todayTitle->runAction(Blink::create(3, 4));
+    todayTitle->runAction(Sequence::create(DelayTime::create(0.2f)
+                                           , ScaleBy::create(.3f, 1.2f)
+                                           , ScaleBy::create(.2f, (1.f / 1.2f))
+                                           , DelayTime::create(0.2f)
+                                           , NULL));
     getNodeById(10+mTodayId)->setVisible(true);
     
     return true;
@@ -93,8 +97,9 @@ void SceneDaily::callback(Ref* pSender, int from, int link) {
 //        this->replaceScene(SceneMain::create());
 //    };
     std::function<void()> callFn = std::bind(&SceneDaily::actionFinished, this);
-    todayImg->runAction(Sequence::create(ScaleBy::create(.5f, 1.5f)
-                                         , ScaleBy::create(.3f, (10.f / 15.f))
+    todayImg->runAction(Sequence::create(DelayTime::create(0.2f)
+                                         , ScaleBy::create(.3f, 1.2f)
+                                         , ScaleBy::create(.2f, (1.f / 1.2f))
                                          , DelayTime::create(0.2f)
                                          , CallFunc::create(callFn)
                                          , NULL));

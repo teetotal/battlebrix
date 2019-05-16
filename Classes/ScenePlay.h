@@ -49,11 +49,15 @@ private:
     bool onContactBegin(PhysicsContact &contact);
     
     Node * createBall();
+    void timer(float f);
+    void setVibrate(Node * layer);
+    void addObstacle(Node * layer, Vec2 pos);
     
     enum ID_NODE {
         ID_NODE_MY_AREA = 10,
         ID_NODE_OTHER_AREA
     };
-    Node * mLayer,  * mBall;
+    Node * mLayer, * mLayerOther, * mBall;
+    Size mGridSize;
 };
 #endif // __SCENE_PLAY_H__

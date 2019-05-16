@@ -1,9 +1,14 @@
 
 #include "ScenePlay.h"
 #include "Scenes.h"
+#include "ui_ext.h"
+#include "library/util.h"
 
 #define SEPPED 1
-#define PHYSICSMATERIAL PhysicsMaterial(0.5, 1, 0.5)
+#define PHYSICSMATERIAL             PhysicsMaterial(.1f, 1.f, 0.f)
+#define PHYSICSMATERIAL_OBSTACLE    PhysicsMaterial(.1f, 1.f, 0.f)
+#define GRID_AREA Vec2(8.f, 9.f)
+#define RATIO_OBSTACLE_PER_GRID 0.6f
 
 bool ScenePlay::init()
 {
@@ -13,60 +18,91 @@ bool ScenePlay::init()
     
     TOUCH_INIT(ScenePlay);
     PHYSICS_CONTACT(ScenePlay);
-    mLayer = getNodeById(ID_NODE_MY_AREA);
-    initPhysicsBody(mLayer, PHYSICSMATERIAL, false, SEPPED);
     
-//    float radius = 10.f;
+    mLayer      = getNodeById(ID_NODE_MY_AREA);
+    mLayerOther = getNodeById(ID_NODE_OTHER_AREA);
+    mGridSize   = gui::inst()->getGridSize(mLayer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO);
+    mGridSize.width *= RATIO_OBSTACLE_PER_GRID;
+    mGridSize.height *= RATIO_OBSTACLE_PER_GRID;
+    
+    initPhysicsBody(mLayer, PHYSICSMATERIAL_OBSTACLE, false, SEPPED);
+    
+    //------------------------------------------------//
+//    gui::inst()->drawGrid(mLayer, mLayer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO);
     mBall = createBall();
-//    auto ball = gui::inst()->drawCircle(mLayer, Vec2(100, 100), radius, Color4F::BLUE);
     
-//    auto ball = DrawNode::create();
-//    ball->drawDot(Vec2(radius, radius), radius, Color4F::BLUE);
-//    ball->setContentSize(Size(radius * 2, radius * 2));
-//    auto body = PhysicsBody::createCircle(radius, PHYSICSMATERIAL);
-//    ball->setPosition(Vec2(100, 100));
-//    Vec2 pos = ball->getPosition();
-//    Size size = ball->getContentSize();
-//    ball->setPhysicsBody(body);
-//    mLayer->addChild(ball);
-//
-//    gui::inst()->drawCircle(mLayer, Vec2(110, 110), 10.f, Color4F::GREEN);
+    addObstacle(mLayer, Vec2(0, 0));
+    addObstacle(mLayer, Vec2(3, 1));
+    addObstacle(mLayer, Vec2(1, 2));
+    addObstacle(mLayer, Vec2(2, 3));
     
     
+//    this->schedule(schedule_selector(ScenePlay::timer), 1.0f);
     return true;
 }
 
 void ScenePlay::callback(Ref* pSender, int from, int link) {
-	this->replaceScene(SceneMain::create());
+    switch(link) {
+        case 1:
+            setVibrate(mLayer);
+            break;
+        case 2:
+            setVibrate(mLayerOther);
+            break;
+        case 3:
+            mBall->getPhysicsBody()->setVelocity(Vec2(mLayer->getContentSize()));
+            break;
+        default:
+            this->replaceScene(SceneMain::create());
+            break;
+    }
 }
 
 const string ScenePlay::getText(const string& defaultString, int id) {
     return defaultString;
 }
 
-//createBall
+void ScenePlay::timer(float f) {
+    createBall();
+}
+
+//createBall ===========================================================================
 Node * ScenePlay::createBall() {
     this->getPhysicsWorld()->setAutoStep(false);
     this->getPhysicsWorld()->step(0.0f);
-    if (mBall != NULL) {
-        mLayer->removeChild(mBall);
-    }
-    Color4F color = Color4F( 240 / 255.f, 208 / 255.f, 75 / 255.f, 1.f);
-    auto ball = gui::inst()->drawCircleForPhysics(mLayer, Vec2(100, 100), 5.f, color);
-    /*
-    auto ball = gui::inst()->addSpriteAutoDimension(2, 5, "circle.png", mLayer, ALIGNMENT_CENTER, mGridSize, Size::ZERO, Size::ZERO);
-    Vec2 pos = gui::inst()->getPointVec2(getRandValue(mGridSize.width), 5, ALIGNMENT_CENTER, mLayer->getContentSize(), mGridSize, Size::ZERO, Size::ZERO);
-    ball->setPosition(pos);
-    gui::inst()->setScale(ball, mRadius);
-     */
-    this->setPhysicsBodyCircle(ball, PHYSICSMATERIAL, true, 1, 0x1 << 0, 0x1 << 1 | 0x1 << 2, 0x1 << 1 | 0x1 << 2);
-//    ball->getPhysicsBody()->setVelocityLimit(mDefaultVelocity * 1.f);
+    Color4F color = gui::getColor4F(55, 227, 71);
     
+    Vec2 position = gui::inst()->getPointVec2(2, 2, ALIGNMENT_CENTER, mLayer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+    auto ball = guiExt::drawCircleForPhysics(mLayer, position, mGridSize.height / 2.f, color);
+    this->setPhysicsBodyCircle(ball, PHYSICSMATERIAL, true);
+    ball->getPhysicsBody()->setVelocityLimit(mLayer->getContentSize().width * 1.f);
     this->getPhysicsWorld()->setAutoStep(true);
    
     return ball;
 }
 
+// setVibrate ===========================================================================
+void ScenePlay::setVibrate(Node * layer) {
+    
+    Vec2 pos = layer->getPosition();
+    float duration = 0.1f;
+    float width = 5.f;
+    layer->runAction(Sequence::create( MoveTo::create(duration, Vec2(pos.x - width, pos.y - width))
+                                       , MoveTo::create(duration, Vec2(pos.x + width, pos.y + width))
+                                       , MoveTo::create(duration, Vec2(pos.x - width, pos.y))
+                                       , MoveTo::create(duration, Vec2(pos.x + width, pos.y))
+                                       , MoveTo::create(duration, pos)
+                                       , NULL));
+}
+
+// add Obstacle ===========================================================================
+void ScenePlay::addObstacle(Node * layer, Vec2 pos) {
+    Vec2 position = gui::inst()->getPointVec2(pos.x, pos.y, ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+    auto rect = guiExt::drawRectForPhysics(layer, position, mGridSize, gui::getColor4F(240, 208, 75, 255), true);
+    this->setPhysicsBodyRect(rect, PHYSICSMATERIAL_OBSTACLE, false);
+}
+
+// touch ===========================================================================
 bool ScenePlay::onTouchBegan(Touch* touch, Event* event) {
     return true;
 }
