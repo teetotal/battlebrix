@@ -1,19 +1,17 @@
 {
     "background": {
-        "id": -1,
         "img": null,
-        "bgColor": [ 255, 255, 255, 255 ],
+        "bgColor": "BG_MAIN",
         "tile": {
-            "color": [ 250, 250, 250, 255 ],
+            "color": "BG_MAIN_DARK",
             "num": [ 14, 10 ]
         },
         "isDrawGrid": false
     },
   "nodes": [
     {
-      "comment": "top",
-      "id": -1,
-      "dimension": [ 0, 6, 8, 7 ],
+      "comment": "vs",
+      "dimension": [ 0, 0, 8, 1 ],
       "margin": [ 10, 0 ],
       "innerMargin": [ 5, 5 ],
       "gridSize": [ 3, 1 ],
@@ -21,41 +19,23 @@
       "color": [ 52, 66, 83, 0 ],
       "objects": [
         {
-          "id": 1,
-          "position": [ 0, 0 ],
-          "alignment": "left",
-          "type": "label",
-          "color": [ 240, 208, 75 ],
-          "text": "A.I",
-          "fontSize": 0
-        },
-        {
             "position": [ 1, 0 ],
             "alignment": "center",
             "type": "label",
             "color": [ 255, 255, 255, 200 ],
             "text": "VS",
             "fontSize": -1
-        },
-        {
-          "id": 2,
-          "position": [ 2, 0 ],
-          "alignment": "right",
-          "type": "label",
-          "color": [ 240, 208, 75 ],
-          "text": "teetotal",
-          "fontSize": 0
         }
       ]
     },
     {
       "comment": "cpu loading bars",
       "dimension": [ 0, 0, 4, 1 ],
-      "margin": [ 10, 5 ],
+      "margin": [ 30, 5 ],
       "innerMargin": [ 5, 1 ],
       "gridSize": [ 1, 2 ],
       "img": null,
-      "color": [ 36, 119, 170 ],
+      "color": "WHITE_OPACITY_DEEP",
       "objects": [
         {
           "id": 1,
@@ -76,11 +56,11 @@
     {
       "comment": "my loading bars",
       "dimension": [ 4, 0, 8, 1 ],
-      "margin": [ 10, 5 ],
+      "margin": [ 30, 5 ],
       "innerMargin": [ 5, 1 ],
       "gridSize": [ 1, 2 ],
       "img": null,
-      "color": [ 36, 119, 170 ],
+      "color": "WHITE_OPACITY_DEEP",
       "objects": [
         {
           "id": 6,
@@ -106,29 +86,62 @@
         "gridSize": [ 1, 1 ],
         "img": null,
         "color": 50,
-        "objects": []
+        "objects": [
+            {
+            "position": [ 0, 0 ],
+            "alignment": "center",
+            "type": "label",
+            "color": [ 255, 255, 255, 100 ],
+            "text": "CONTROL PAD",
+            "fontSize": -1
+            }
+        ]
     },
     {
-        "comment": "cpu area",
+      "comment": "cpu area",
       "id": 11,
       "dimension": [ 0, 1, 4, 6 ],
       "margin": [ 10, 0 ],
       "innerMargin": [ 0, 0 ],
-      "gridSize": [ 1, 1 ],
+      "gridSize": [ 1, 3 ],
       "img": null,
-      "color": [ 106, 185, 253 ],
-      "objects": [ ]
+      "color": [ "GREEN", "WHITE" ],
+      "objects": [
+          {
+              "id": 50,
+              "position": [ 0, 1 ],
+              "alignment": "center",
+              "type": "label",
+              "color": [ 255, 255, 255, 100 ],
+              "text": "A.I",
+              "fontSize": -2
+          }
+      ]
     },
     {
-        "comment": "my area",
+      "comment": "my area",
       "id": 10,
       "dimension": [ 4, 1, 8, 6 ],
       "margin": [ 10, 0 ],
       "innerMargin": [ 0, 0 ],
-      "gridSize": [ 1, 1 ],
+      "gridSize": [ 1, 3 ],
       "img": null,
-      "color": [ 106, 185, 253 ],
-      "objects": [ ]
+      "color": [ "YELLOW", "WHITE_DARK" ],
+      "tile-": {
+          "color": "WHITE_DARK",
+          "num": [12, 12]
+      },
+      "objects": [
+          {
+              "id": 51,
+              "position": [ 0, 1 ],
+              "alignment": "center",
+              "type": "label",
+              "color": [ 255, 255, 255, 100 ],
+              "text": "teetotal",
+              "fontSize": -2
+          }
+      ]
     },
     {
       "comment": "skill",

@@ -8,6 +8,7 @@
 #define PHYSICSMATERIAL             PhysicsMaterial(.1f, 1.f, 0.f)
 #define PHYSICSMATERIAL_OBSTACLE    PhysicsMaterial(.1f, 1.f, 0.f)
 #define GRID_AREA Vec2(8.f, 9.f)
+//#define GRID_AREA Vec2(2.f, 3.f)
 #define RATIO_OBSTACLE_PER_GRID 0.6f
 
 bool ScenePlay::init()
@@ -26,15 +27,16 @@ bool ScenePlay::init()
     mGridSize.height *= RATIO_OBSTACLE_PER_GRID;
     
     initPhysicsBody(mLayer, PHYSICSMATERIAL_OBSTACLE, false, SEPPED);
+    initPhysicsBody(mLayerOther, PHYSICSMATERIAL_OBSTACLE, false, SEPPED);
     
     //------------------------------------------------//
 //    gui::inst()->drawGrid(mLayer, mLayer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO);
     mBall = createBall();
     
-    addObstacle(mLayer, Vec2(0, 0));
-    addObstacle(mLayer, Vec2(3, 1));
-    addObstacle(mLayer, Vec2(1, 2));
-    addObstacle(mLayer, Vec2(2, 3));
+    for(int n=0; n < 10; n ++) {
+        addObstacle(mLayer, Vec2(getRandValue(8), getRandValue(5)));
+        addObstacle(mLayerOther, Vec2(getRandValue(8), getRandValue(5)));
+    }
     
     
 //    this->schedule(schedule_selector(ScenePlay::timer), 1.0f);
@@ -47,7 +49,7 @@ void ScenePlay::callback(Ref* pSender, int from, int link) {
             setVibrate(mLayer);
             break;
         case 2:
-            setVibrate(mLayerOther);
+            this->replaceScene(SceneMain::create());
             break;
         case 3:
             mBall->getPhysicsBody()->setVelocity(Vec2(mLayer->getContentSize()));
@@ -70,7 +72,7 @@ void ScenePlay::timer(float f) {
 Node * ScenePlay::createBall() {
     this->getPhysicsWorld()->setAutoStep(false);
     this->getPhysicsWorld()->step(0.0f);
-    Color4F color = gui::getColor4F(55, 227, 71);
+    Color4F color = ui_wizard_share::inst()->getPalette()->getColor4F("BLUE");
     
     Vec2 position = gui::inst()->getPointVec2(2, 2, ALIGNMENT_CENTER, mLayer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
     auto ball = guiExt::drawCircleForPhysics(mLayer, position, mGridSize.height / 2.f, color);
@@ -97,8 +99,13 @@ void ScenePlay::setVibrate(Node * layer) {
 
 // add Obstacle ===========================================================================
 void ScenePlay::addObstacle(Node * layer, Vec2 pos) {
+    Color4F colors[4];
+    for(int n=1; n <= 4; n++){
+        string sz = "O" + to_string(n);
+        colors[n-1] = ui_wizard_share::inst()->getPalette()->getColor4F(sz);
+    }
     Vec2 position = gui::inst()->getPointVec2(pos.x, pos.y, ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-    auto rect = guiExt::drawRectForPhysics(layer, position, mGridSize, gui::getColor4F(240, 208, 75, 255), true);
+    auto rect = guiExt::drawRectForPhysics(layer, position, mGridSize, colors[getRandValue(4)], true);
     this->setPhysicsBodyRect(rect, PHYSICSMATERIAL_OBSTACLE, false);
 }
 
