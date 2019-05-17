@@ -2,9 +2,9 @@
     "background": {
         "id": 0,
         "img": null,
-        "bgColor": [ 39, 124, 172, 255 ],
+        "bgColor": "BG_MAIN",
         "tile": {
-            "color": [ 36, 119, 170, 255 ],
+            "color": "BG_MAIN_DARK",
             "num": [ 14, 10 ]
         },
         "isDrawGrid": false
@@ -18,7 +18,7 @@
       "innerMargin": [ 0, 0 ],
       "gridSize": [ 1, 1 ],
       "img": null,
-      "color": [ 52, 66, 83, 220 ],
+      "color": "BG_TOP",
       "objects": []
     },
     {
@@ -36,9 +36,7 @@
                 "position": [ 0, 0 ],
                 "alignment": "left",
                 "type": "label",
-                "link": null,
-                "img": null,
-                "color": [ 255, 255, 255 ],
+                "color": "WHITE",
                 "text": "teetotal",
                 "fontSize": 0
             },
@@ -47,9 +45,7 @@
                 "position": [ 1, 0 ],
                 "alignment": "left",
                 "type": "label",
-                "link": null,
-                "img": null,
-                "color": [ 255, 255, 255 ],
+                "color": "WHITE",
                 "text": "lv.16",
                 "fontSize": 0
             },
@@ -58,9 +54,7 @@
                 "position": [ 0, 1 ],
                 "alignment": "left",
                 "type": "button",
-                "link": null,
-                "img": null,
-                "color": [ 240, 208, 75 ],
+                "color": "YELLOW",
                 "text": "1,642th",
                 "fontSize": 0
             }
@@ -68,7 +62,6 @@
     },
     {
       "comment": "cash, setting, alarm",
-      "id": -1,
       "dimension": [ 7, 0, 9, 1 ],
       "margin": [ 10, 5 ],
       "innerMargin": [ 2, 1 ],
@@ -83,31 +76,25 @@
           "type": "button_sprite",
           "link": 1,
           "img": "icons8-expensive-price-80.png",
-          "color": [ 255, 255, 255 ],
+          "color": "WHITE",
           "text": " 575,211",
           "fontSize": -1
         },
         {
-          "id": -1,
           "position": [ 2, 0 ],
           "alignment": "right",
           "type": "sprite_button_circle",
           "link": 10,
           "img": [ "icons8-settings-100.png", "icons8-settings-filled-100.png" ],
-          "color": [ 55, 227, 71 ],
-          "text": null,
-          "fontSize": 0
+          "color": "GREEN"
         },
         {
-            "id": -1,
             "position": [ 3, 0 ],
             "alignment": "right",
             "type": "sprite_button_circle",
             "link": 10,
             "img": [ "icons8-alarm-100.png", "icons8-alarm-filled-100.png" ],
-            "color": [ 55, 227, 71 ],
-            "text": null,
-            "fontSize": 0
+            "color": "GREEN"
         }
       ]
     },
@@ -119,10 +106,9 @@
         "innerMargin": [ 5, 5 ],
         "gridSize": [ 5, 1 ],
         "img": null,
-        "color": [ 255, 255, 255, 200 ],
+        "color": "BG_BOTTOM",
         "objects": [
             {
-                "id": -1,
                 "position": [ 0, 0 ],
                 "alignment": "center",
                 "type": "sprite_button",
@@ -130,7 +116,6 @@
                 "img": [ "icons8-shopping-cart-100.png", "icons8-shopping-cart-filled-100.png" ]
             },
             {
-                "id": -1,
                 "position": [ 1, 0 ],
                 "alignment": "center",
                 "type": "sprite_button",
@@ -138,7 +123,6 @@
                 "img": [ "icons8-leaderboard-100.png", "icons8-leaderboard-filled-100.png"]
             },
             {
-                "id": -1,
                 "position": [ 3, 0 ],
                 "alignment": "center",
                 "type": "sprite_button",
@@ -146,7 +130,6 @@
                 "img": ["icons8-find-user-male-100.png", "icons8-find-user-male-filled-100.png"]
             },
             {
-                "id": -1,
                 "position": [ 4, 0 ],
                 "alignment": "center",
                 "type": "sprite_button",
@@ -157,7 +140,6 @@
     },
     {
         "comment": "selected",
-        "id": -1,
         "dimension": [ 0, 6, 9, 7 ],
         "margin": [ 0, 0 ],
         "innerMargin": [ 0, 0 ],
@@ -170,7 +152,7 @@
                 "position": [ 2, 0 ],
                 "alignment": "center",
                 "type": "rectangle",
-                "color": [ 255, 255, 255, 255 ]
+                "color": "WHITE"
             },
             {
                 "id": -1,
@@ -183,21 +165,16 @@
     },
     {
         "comment": "play bg",
-        "id": -1,
         "dimension": [ 1, 1, 8, 6 ],
         "margin": [ 0, 20 ],
         "innerMargin": [ 0, 0 ],
         "gridSize": [ 1, 1 ],
         "img": null,
-        "color": [
-            [ 106, 185, 253 ],
-            [ 76, 172, 255 ]
-        ],
+        "color": "BLUE",
         "objects": []
     },
     {
         "comment": "play BIG",
-        "id": -1,
         "dimension": [ 1, 1, 5, 6 ],
         "margin": [ 10, 25 ],
         "innerMargin": [ 0, 0 ],
@@ -210,8 +187,6 @@
                 "position": [ 0, 0 ],
                 "alignment": "left",
                 "type": "label",
-                "link": null,
-                "img": null,
                 "color": null,
                 "text": "SEMI PRO 3",
                 "fontSize": 0
@@ -220,7 +195,6 @@
     },
     {
         "comment": "play details",
-        "id": -1,
         "dimension": [ 1, 1, 5, 6 ],
         "margin": [ 10, 25 ],
         "innerMargin": [ 0, 1 ],
@@ -233,21 +207,14 @@
                 "position": [ 0, 2 ],
                 "alignment": "center",
                 "type": "loadingbar",
-                "link": null,
-                "img": "loadingbar_big.png",
-                "color": null,
-                "bgColor": [ 255, 255, 255, 0 ],
-                "text": null,
-                "fontSize": 0
+                "img": "loadingbar_big.png"
             },
             {
                 "id": 14,
                 "position": [ 0, 2 ],
                 "alignment": "center",
                 "type": "label",
-                "link": null,
-                "img": null,
-                "color": [ 255, 255, 255 ],
+                "color": "WHITE",
                 "text": " 5 / 12",
                 "fontSize": -1
             },
@@ -256,10 +223,7 @@
                 "position": [ 0, 3 ],
                 "alignment": "left",
                 "type": "label",
-                "link": null,
-                "img": null,
-                "color": [ 255, 255, 255 ],
-                "bgColor": [ 255, 255, 255, 0 ],
+                "color": "WHITE",
                 "text": "Win3 / Draw2 / Lose3",
                 "fontSize": -1
             },
@@ -268,8 +232,7 @@
                 "position": [ 0, 4 ],
                 "alignment": "left",
                 "type": "label",
-                "color": [ 255, 255, 255 ],
-                "bgColor": [ 255, 255, 255, 0 ],
+                "color": "WHITE",
                 "text": "1,614th >>",
                 "fontSize": -1
             }
@@ -277,7 +240,6 @@
     },
     {
         "comment": "play image",
-        "id": -1,
         "dimension": [ 5, 1, 8, 6 ],
         "margin": [ 10, 35 ],
         "innerMargin": [ 5, 2 ],
@@ -286,15 +248,11 @@
         "color": 0,
         "objects": [
             {
-                "id": -1,
                 "position": [ 0, 0 ],
                 "alignment": "center",
                 "type": "sprite_button",
                 "link": 0,
-                "img": "zombie.png",
-                "color": null,
-                "text": null,
-                "fontSize": 0
+                "img": "zombie.png"
             }
         ]
     }

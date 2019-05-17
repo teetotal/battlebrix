@@ -12,7 +12,7 @@
 
 bool ScenePlay::init()
 {
-    this->loadFromJson("play", "play.json");
+    this->loadFromJson("play", "play.json", "palette.json");
 	((LoadingBar *)this->getNodeById(1))->setDirection(LoadingBar::Direction::RIGHT);
 	((LoadingBar *)this->getNodeById(2))->setDirection(LoadingBar::Direction::RIGHT);
     

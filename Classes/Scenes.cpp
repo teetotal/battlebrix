@@ -28,7 +28,7 @@
 
 bool SceneMain::init()
 {
-	this->loadFromJson("main", "main.json");
+	this->loadFromJson("main", "main.json", "palette.json");
     auto bg = getNodeById(0);
     gui::inst()->drawCircle(bg, Vec2::ZERO, 100, Color4F(1, 1, 1, 0.5))->runAction(
        RepeatForever::create(
@@ -71,7 +71,7 @@ bool SceneDaily::init()
     mTodayId = 2;
    
     gui::inst()->initDefaultWithSpriteCache("fonts/SDSwaggerTTF.ttf");
-    this->loadFromJson("daily", "daily.json");
+    this->loadFromJson("daily", "daily.json", "palette.json");
     //today
     auto todayTitle = getNodeById(mTodayId);
     todayTitle->setColor(Color3B(240, 208, 75));
@@ -122,7 +122,7 @@ void SceneDaily::actionFinished() {
 //====================================================================
 bool SceneShop::init()
 {
-    this->loadFromJson("shop", "shop.json");
+    this->loadFromJson("shop", "shop.json", "palette.json");
     return true;
 }
 

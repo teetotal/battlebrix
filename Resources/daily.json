@@ -2,9 +2,9 @@
     "background": {
         "id": 0,
         "img": null,
-        "bgColor": [ 0, 0, 0, 250 ],
+        "bgColor": "BG_MAIN",
         "tile": {
-            "color": [ 20, 20, 20, 255 ],
+            "color": "BG_MAIN_DARK",
             "num": [ 14, 10 ]
         },
         "isDrawGrid": false
@@ -12,16 +12,12 @@
     "nodes": [
         {
             "comment": "daily reward outside",
-            
             "dimension": [ 1, 0, 8, 7 ],
             "margin": [ 0, 10 ],
             "innerMargin": [ 10, 7 ],
             "gridSize": [ 3, 6 ],
             "img": null,
-            "color": [
-                [ 106, 185, 253, 200 ],
-                [ 76, 172, 255, 200 ]
-            ],
+            "color": "BLUE",
             "objects": [
                 {
                     
@@ -30,7 +26,7 @@
                     "type": "label",
                     "link": 0,
                     "img": null,
-                    "color": null,
+                    "color": "BLACK_LIGHT",
                     "text": "DAILY REWARD",
                     "fontSize": 0
                 },
@@ -41,7 +37,7 @@
                     "type": "button_rectangle_round_shadow",
                     "link": 0,
                     "img": null,
-                    "color": [ [ 255, 255, 255 ], [ 240, 208, 75 ] ],
+                    "color": [ "WHITE", "YELLOW" ],
                     "text": "OK"
                 }
             ]
@@ -64,7 +60,7 @@
                     "link": null,
                     "img": null,
                     "color": [ 255, 255, 255 ],
-                    "bgColor": [ 255, 255, 255, 100 ],
+                    "bgColor": "WHITE_OPACITY_DEEP",
                     "text": "DAY7",
                     "fontSize": 0
                 },
@@ -74,29 +70,23 @@
                     "position": [ 2, 0 ],
                     "alignment": "center",
                     "type": "rectangle_line",
-                    "color": [ 255, 0, 0, 100 ]
+                    "color": "RED"
                 },
                 {
                     
                     "position": [ 2, 1 ],
                     "alignment": "center",
                     "type": "sprite",
-                    "link": null,
                     "img": "icons8-roulette-96.png",
-                    "color": null,
-                    "bgColor": [ 255, 255, 255, 100 ],
-                    "text": null,
-                    "fontSize": 0
+                    "bgColor": "WHITE_OPACITY_DEEP"
                 },
                 {
                     
                     "position": [ 2, 2 ],
                     "alignment": "center_top",
                     "type": "label",
-                    "link": null,
-                    "img": null,
                     "color": [ 255, 255, 255 ],
-                    "bgColor": [ 255, 255, 255, 100 ],
+                    "bgColor": "WHITE_OPACITY_DEEP",
                     "text": "x10",
                     "fontSize": -2
                 }
@@ -118,8 +108,8 @@
                     "position": [ 0, 0 ],
                     "alignment": "center_bottom",
                     "type": "label",
-                    "color": [ 255, 255, 255 ],
-                    "bgColor": [ 255, 255, 255, 100 ],
+                    "color": "WHITE",
+                    "bgColor": "WHITE_OPACITY_DEEP",
                     "text": "DAY1",
                     "fontSize": 0
                 },
@@ -128,8 +118,8 @@
                     "position": [ 1, 0 ],
                     "alignment": "center_bottom",
                     "type": "label",
-                    "color": [ 255, 255, 255 ],
-                    "bgColor": [ 255, 255, 255, 50 ],
+                    "color": "WHITE",
+                    "bgColor": "WHITE_OPACITY_LIGHT",
                     "text": "DAY2",
                     "fontSize": 0
                 },
@@ -138,8 +128,8 @@
                     "position": [ 2, 0 ],
                     "alignment": "center_bottom",
                     "type": "label",
-                    "color": [ 255, 255, 255 ],
-                    "bgColor": [ 255, 255, 255, 100 ],
+                    "color": "WHITE",
+                    "bgColor": "WHITE_OPACITY_DEEP",
                     "text": "DAY3",
                     "fontSize": 0
                 },
@@ -147,8 +137,8 @@
                     "position": [ 0, 2 ],
                     "alignment": "center_top",
                     "type": "label",
-                    "color": [ 255, 255, 255 ],
-                    "bgColor": [ 255, 255, 255, 100 ],
+                    "color": "WHITE",
+                    "bgColor": "WHITE_OPACITY_DEEP",
                     "text": "x100",
                     "fontSize": -1
                 },
@@ -156,8 +146,8 @@
                     "position": [ 1, 2 ],
                     "alignment": "center_top",
                     "type": "label",
-                    "color": [ 255, 255, 255 ],
-                    "bgColor": [ 255, 255, 255, 50 ],
+                    "color": "WHITE",
+                    "bgColor": "WHITE_OPACITY_LIGHT",
                     "text": "x1",
                     "fontSize": -1
                 },
@@ -165,8 +155,8 @@
                     "position": [ 2, 2 ],
                     "alignment": "center_top",
                     "type": "label",
-                    "color": [ 255, 255, 255 ],
-                    "bgColor": [ 255, 255, 255, 100 ],
+                    "color": "WHITE",
+                    "bgColor": "WHITE_OPACITY_DEEP",
                     "text": "x200",
                     "fontSize": -1
                 },
@@ -175,8 +165,8 @@
                     "position": [ 0, 4 ],
                     "alignment": "center_bottom",
                     "type": "label",
-                    "color": [ 255, 255, 255 ],
-                    "bgColor": [ 255, 255, 255, 50 ],
+                    "color": "WHITE",
+                    "bgColor": "WHITE_OPACITY_LIGHT",
                     "text": "DAY4",
                     "fontSize": 0
                 },
@@ -185,8 +175,8 @@
                     "position": [ 1, 4 ],
                     "alignment": "center_bottom",
                     "type": "label",
-                    "color": [ 255, 255, 255 ],
-                    "bgColor": [ 255, 255, 255, 100 ],
+                    "color": "WHITE",
+                    "bgColor": "WHITE_OPACITY_DEEP",
                     "text": "DAY5",
                     "fontSize": 0
                 },
@@ -195,8 +185,8 @@
                     "position": [ 2, 4 ],
                     "alignment": "center_bottom",
                     "type": "label",
-                    "color": [ 255, 255, 255 ],
-                    "bgColor": [ 255, 255, 255, 50 ],
+                    "color": "WHITE",
+                    "bgColor": "WHITE_OPACITY_LIGHT",
                     "text": "DAY6",
                     "fontSize": 0
                 },
@@ -204,8 +194,8 @@
                     "position": [ 0, 6 ],
                     "alignment": "center_top",
                     "type": "label",
-                    "color": [ 255, 255, 255 ],
-                    "bgColor": [ 255, 255, 255, 50 ],
+                    "color": "WHITE",
+                    "bgColor": "WHITE_OPACITY_LIGHT",
                     "text": "x3",
                     "fontSize": -1
                 },
@@ -213,8 +203,8 @@
                     "position": [ 1, 6 ],
                     "alignment": "center_top",
                     "type": "label",
-                    "color": [ 255, 255, 255 ],
-                    "bgColor": [ 255, 255, 255, 100 ],
+                    "color": "WHITE",
+                    "bgColor": "WHITE_OPACITY_DEEP",
                     "text": "x400",
                     "fontSize": -1
                 },
@@ -222,8 +212,8 @@
                     "position": [ 2, 6 ],
                     "alignment": "center_top",
                     "type": "label",
-                    "color": [ 255, 255, 255 ],
-                    "bgColor": [ 255, 255, 255, 50 ],
+                    "color": "WHITE",
+                    "bgColor": "WHITE_OPACITY_LIGHT",
                     "text": "x500",
                     "fontSize": -1
                 },
@@ -233,7 +223,7 @@
                     "type": "sprite",
                     "img": "icons8-expensive-price-80.png",
                     "color": null,
-                    "bgColor": [ 255, 255, 255, 100 ]
+                    "bgColor": "WHITE_OPACITY_DEEP"
                 },
                 {
                     "position": [ 1, 1 ],
@@ -241,7 +231,7 @@
                     "type": "sprite",
                     "img": "icons8-roulette-96.png",
                     "color": null,
-                    "bgColor": [ 255, 255, 255, 50 ]
+                    "bgColor": "WHITE_OPACITY_LIGHT"
                 },
                 {
                     "position": [ 2, 1 ],
@@ -249,7 +239,7 @@
                     "type": "sprite",
                     "img": "icons8-expensive-price-80.png",
                     "color": null,
-                    "bgColor": [ 255, 255, 255, 100 ]
+                    "bgColor": "WHITE_OPACITY_DEEP"
                 },
                 {
                     "position": [ 0, 5 ],
@@ -257,7 +247,7 @@
                     "type": "sprite",
                     "img": "icons8-roulette-96.png",
                     "color": null,
-                    "bgColor": [ 255, 255, 255, 50 ]
+                    "bgColor": "WHITE_OPACITY_LIGHT"
                 },
                 {
                     "position": [ 1, 5 ],
@@ -265,7 +255,7 @@
                     "type": "sprite",
                     "img": "icons8-expensive-price-80.png",
                     "color": null,
-                    "bgColor": [ 255, 255, 255, 100 ]
+                    "bgColor": "WHITE_OPACITY_DEEP"
                 },
                 {
                     "position": [ 2, 5 ],
@@ -274,7 +264,7 @@
                     "link": null,
                     "img": "icons8-expensive-price-80.png",
                     "color": null,
-                    "bgColor": [ 255, 255, 255, 50 ]
+                    "bgColor": "WHITE_OPACITY_LIGHT"
                 },
                 {
                     "id": 11,
@@ -282,7 +272,7 @@
                     "position": [ 0, 0 ],
                     "alignment": "center",
                     "type": "rectangle_line",
-                    "color": [ 255, 0, 0, 100 ]
+                    "color": "RED"
                 },
                 {
                     "id": 12,
@@ -290,7 +280,7 @@
                     "position": [ 1, 0 ],
                     "alignment": "center",
                     "type": "rectangle_line",
-                    "color": [ 255, 0, 0, 100 ]
+                    "color": "RED"
                 },
                 {
                     "id": 13,
@@ -298,7 +288,7 @@
                     "position": [ 2, 0 ],
                     "alignment": "center",
                     "type": "rectangle_line",
-                    "color": [ 255, 0, 0, 100 ]
+                    "color": "RED"
                 },
                 {
                     "id": 14,
@@ -306,7 +296,7 @@
                     "position": [ 0, 4 ],
                     "alignment": "center",
                     "type": "rectangle_line",
-                    "color": [ 255, 0, 0, 100 ]
+                    "color": "RED"
                 },
                 {
                     "id": 15,
@@ -314,7 +304,7 @@
                     "position": [ 1, 4 ],
                     "alignment": "center",
                     "type": "rectangle_line",
-                    "color": [ 255, 0, 0, 100 ]
+                    "color": "RED"
                 },
                 {
                     "id": 16,
@@ -322,7 +312,7 @@
                     "position": [ 2, 4 ],
                     "alignment": "center",
                     "type": "rectangle_line",
-                    "color": [ 255, 0, 0, 100 ]
+                    "color": "RED"
                 }
             ]
         },
@@ -343,8 +333,8 @@
                     "type": "label",
                     "link": 0,
                     "img": null,
-                    "color": [ 255, 255, 255 ],
-                    "bgColor": [ 52, 66, 83 ],
+                    "color": "WHITE",
+                    "bgColor": "BG_TOP",
                     "text": "TODAY",
                     "fontSize": -1
                 },
@@ -356,6 +346,7 @@
                     "img": "icons8-expensive-price-80.png"
                 },
                 {
+                    "id": 102,
                     "position": [ 0, 2 ],
                     "alignment": "center_top",
                     "type": "label",
