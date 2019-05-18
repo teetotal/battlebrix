@@ -1,7 +1,7 @@
 {
     "background": {
         "img": null,
-        "bgColor": [ "DARKGRAY", "O_Violet" ] ,
+        "bgColor": [ "BLACK", "O_Violet" ] ,
         "isDrawGrid": false
     },
   "nodes": [
@@ -27,7 +27,7 @@
     {
       "comment": "cpu loading bars",
       "dimension": [ 0, 0, 4, 1 ],
-      "margin": [ 10, 5 ],
+      "margin": [ 10, 2 ],
       "innerMargin": [ 0, 2 ],
       "gridSize": [ 1, 2 ],
       "img": null,
@@ -44,8 +44,8 @@
             "position": [ 0, 0 ],
             "alignment": "center",
             "type": "label",
-            "color": "WHITE_OPACITY_DEEP",
-            "text": "HP",
+            "color": "WHITE",
+            "text": "65%",
             "fontSize": -1
         },
         {
@@ -59,8 +59,8 @@
             "position": [ 0, 1 ],
             "alignment": "center",
             "type": "label",
-            "color": "WHITE_OPACITY_DEEP",
-            "text": "POWER",
+            "color": "WHITE",
+            "text": "65%",
             "fontSize": -1
         }
       ]
@@ -68,7 +68,7 @@
     {
       "comment": "my loading bars",
       "dimension": [ 4, 0, 8, 1 ],
-      "margin": [ 10, 5 ],
+      "margin": [ 10, 2 ],
       "innerMargin": [ 0, 2 ],
       "gridSize": [ 1, 2 ],
       "img": null,
@@ -85,8 +85,8 @@
             "position": [ 0, 0 ],
             "alignment": "center",
             "type": "label",
-            "color": "WHITE_OPACITY_DEEP",
-            "text": "HP",
+            "color": "WHITE",
+            "text": "65%",
             "fontSize": -1
         },
         {
@@ -100,8 +100,8 @@
             "position": [ 0, 1 ],
             "alignment": "center",
             "type": "label",
-            "color": "WHITE_OPACITY_DEEP",
-            "text": "POWER",
+            "color": "WHITE",
+            "text": "65%",
             "fontSize": -1
         }
       ]
@@ -131,18 +131,15 @@
       "dimension": [ 0, 1, 4, 6 ],
       "margin": [ 10, 0 ],
       "innerMargin": [ 0, 0 ],
-      "gridSize": [ 1, 3 ],
+      "gridSize": [ 1, 1 ],
       "img": null,
-      "color": "BLUE_LIGHT",
+      "color": "BLACK_OPACITY",
       "objects": [
           {
-              "id": 50,
-              "position": [ 0, 1 ],
+              "position": [ 0, 0 ],
               "alignment": "center",
-              "type": "label",
-              "color": [ 255, 255, 255, 0 ],
-              "text": "A.I",
-              "fontSize": -2
+              "type": "rectangle_line",
+              "color": "WHITE"
           }
       ]
     },
@@ -152,22 +149,19 @@
       "dimension": [ 4, 1, 8, 6 ],
       "margin": [ 10, 0 ],
       "innerMargin": [ 0, 0 ],
-      "gridSize": [ 1, 3 ],
+      "gridSize": [ 1, 1 ],
       "img": null,
-      "color": "BLUE_LIGHT",
+      "color": "BLACK_OPACITY",
       "tile-": {
           "color": "WHITE_OPACITY_DEEP",
           "num": [12, 12]
       },
       "objects": [
           {
-              "id": 51,
-              "position": [ 0, 1 ],
+              "position": [ 0, 0 ],
               "alignment": "center",
-              "type": "label",
-              "color": [ 255, 255, 255, 0 ],
-              "text": "teetotal",
-              "fontSize": -2
+              "type": "rectangle_line",
+              "color": "WHITE"
           }
       ]
     },

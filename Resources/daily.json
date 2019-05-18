@@ -4,7 +4,7 @@
         "img": null,
         "bgColor": "BG_MAIN",
         "tile": {
-            "color": "BG_MAIN_DARK",
+            "color": "BG_MAIN_PATTERN",
             "num": [ 14, 10 ]
         },
         "isDrawGrid": false

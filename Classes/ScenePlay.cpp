@@ -99,14 +99,21 @@ void ScenePlay::setVibrate(Node * layer) {
 
 // add Obstacle ===========================================================================
 void ScenePlay::addObstacle(Node * layer, Vec2 pos) {
-//    Color4F colors[4];
+    Color4F colors[] = {
+        ui_wizard_share::inst()->getPalette()->getColor4F("RED"),
+        ui_wizard_share::inst()->getPalette()->getColor4F("YELLOW"),
+        ui_wizard_share::inst()->getPalette()->getColor4F("GREEN"),
+        ui_wizard_share::inst()->getPalette()->getColor4F("BLUE"),
+        ui_wizard_share::inst()->getPalette()->getColor4F("PURPLE")
+    };
 //    for(int n=1; n <= 4; n++){
 //        string sz = "O" + to_string(n);
 //        colors[n-1] = ui_wizard_share::inst()->getPalette()->getColor4F(sz);
 //    }
     Vec2 position = gui::inst()->getPointVec2(pos.x, pos.y, ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-//    auto rect = guiExt::drawRectForPhysics(layer, position, mGridSize, colors[getRandValue(4)], true);
-    auto rect = guiExt::drawRectForPhysics(layer, position, mGridSize, ui_wizard_share::inst()->getPalette()->getColor4F("PINK"), true, .1);
+//    auto rect = guiExt::drawRectForPhysics(layer, position, mGridSize, colors[getRandValue(sizeof(colors) / sizeof(colors[0]))], true, .1f);
+    auto rect = guiExt::drawRectForPhysics(layer, position, mGridSize, colors[(int)pos.y], true, .1f);
+//    auto rect = guiExt::drawRectForPhysics(layer, position, mGridSize, ui_wizard_share::inst()->getPalette()->getColor4F("PINK"), true, .1);
     this->setPhysicsBodyRect(rect, PHYSICSMATERIAL_OBSTACLE, false);
 }
 

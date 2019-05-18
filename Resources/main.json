@@ -4,7 +4,7 @@
         "img": null,
         "bgColor": "BG_MAIN",
         "tile": {
-            "color": "BG_MAIN_DARK",
+            "color": "BG_MAIN_PATTERN",
             "num": [ 14, 10 ]
         },
         "isDrawGrid": false
@@ -198,28 +198,39 @@
         "dimension": [ 1, 1, 5, 6 ],
         "margin": [ 10, 25 ],
         "innerMargin": [ 0, 1 ],
-        "gridSize": [ 1, 7 ],
+        "gridSize": [ 1, 12 ],
         "img": null,
         "color": 0,
         "objects": [
             {
                 "id": 13,
-                "position": [ 0, 2 ],
+                "position": [ 0, 4 ],
                 "alignment": "center",
                 "type": "loadingbar",
                 "color": [ "YELLOW", "YELLOW" ]
             },
             {
                 "id": 14,
-                "position": [ 0, 2 ],
+                "position": [ 0, 4 ],
                 "alignment": "center",
                 "type": "label",
                 "color": "WHITE",
                 "text": " 5 / 12",
                 "fontSize": -1
-            },
+            }
+        ]
+    },
+    {
+        "comment": "play details",
+        "dimension": [ 1, 1, 5, 6 ],
+        "margin": [ 10, 25 ],
+        "innerMargin": [ 0, 1 ],
+        "gridSize": [ 1, 7 ],
+        "img": null,
+        "color": 0,
+        "objects": [
             {
-                "id": 13,
+                "id": 15,
                 "position": [ 0, 3 ],
                 "alignment": "left",
                 "type": "label",
@@ -228,7 +239,7 @@
                 "fontSize": -1
             },
             {
-                "id": 14,
+                "id": 16,
                 "position": [ 0, 4 ],
                 "alignment": "left",
                 "type": "label",

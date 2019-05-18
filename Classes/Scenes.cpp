@@ -126,6 +126,15 @@ void SceneDaily::actionFinished() {
 bool SceneShop::init()
 {
     this->loadFromJson("shop", "shop.json", "palette.json");
+    
+    auto warm = getNodeById(1000);
+    auto original = getNodeById(1001);
+    auto cool = getNodeById(1002);
+    COLOR_RGB color = ui_wizard_share::inst()->getPalette()->getColor("PURPLE");
+    
+    warm->setColor(color.getColor3B(COLOR_RGB_TYPE_WARM));
+    original->setColor(color.getColor3B());
+    cool->setColor(color.getColor3B(COLOR_RGB_TYPE_COOL));
     return true;
 }
 
