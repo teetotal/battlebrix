@@ -7,15 +7,15 @@
 #define SEPPED 1
 #define PHYSICSMATERIAL             PhysicsMaterial(.1f, 1.f, 0.f)
 #define PHYSICSMATERIAL_OBSTACLE    PhysicsMaterial(.1f, 1.f, 0.f)
-#define GRID_AREA Vec2(8.f, 9.f)
+#define GRID_AREA Vec2(8.f, 13.f)
 //#define GRID_AREA Vec2(2.f, 3.f)
 #define RATIO_OBSTACLE_PER_GRID 0.6f
 
 bool ScenePlay::init()
 {
     this->loadFromJson("play", "play.json", "palette.json");
-	((LoadingBar *)this->getNodeById(1))->setDirection(LoadingBar::Direction::RIGHT);
-	((LoadingBar *)this->getNodeById(2))->setDirection(LoadingBar::Direction::RIGHT);
+//    ((LoadingBar *)this->getNodeById(1))->setDirection(LoadingBar::Direction::RIGHT);
+//    ((LoadingBar *)this->getNodeById(2))->setDirection(LoadingBar::Direction::RIGHT);
     
     TOUCH_INIT(ScenePlay);
     PHYSICS_CONTACT(ScenePlay);
@@ -72,7 +72,7 @@ void ScenePlay::timer(float f) {
 Node * ScenePlay::createBall() {
     this->getPhysicsWorld()->setAutoStep(false);
     this->getPhysicsWorld()->step(0.0f);
-    Color4F color = ui_wizard_share::inst()->getPalette()->getColor4F("BLUE");
+    Color4F color = ui_wizard_share::inst()->getPalette()->getColor4F("WHITE");
     
     Vec2 position = gui::inst()->getPointVec2(2, 2, ALIGNMENT_CENTER, mLayer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
     auto ball = guiExt::drawCircleForPhysics(mLayer, position, mGridSize.height / 2.f, color);
@@ -99,13 +99,14 @@ void ScenePlay::setVibrate(Node * layer) {
 
 // add Obstacle ===========================================================================
 void ScenePlay::addObstacle(Node * layer, Vec2 pos) {
-    Color4F colors[4];
-    for(int n=1; n <= 4; n++){
-        string sz = "O" + to_string(n);
-        colors[n-1] = ui_wizard_share::inst()->getPalette()->getColor4F(sz);
-    }
+//    Color4F colors[4];
+//    for(int n=1; n <= 4; n++){
+//        string sz = "O" + to_string(n);
+//        colors[n-1] = ui_wizard_share::inst()->getPalette()->getColor4F(sz);
+//    }
     Vec2 position = gui::inst()->getPointVec2(pos.x, pos.y, ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-    auto rect = guiExt::drawRectForPhysics(layer, position, mGridSize, colors[getRandValue(4)], true);
+//    auto rect = guiExt::drawRectForPhysics(layer, position, mGridSize, colors[getRandValue(4)], true);
+    auto rect = guiExt::drawRectForPhysics(layer, position, mGridSize, ui_wizard_share::inst()->getPalette()->getColor4F("PINK"), true, .1);
     this->setPhysicsBodyRect(rect, PHYSICSMATERIAL_OBSTACLE, false);
 }
 

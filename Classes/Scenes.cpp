@@ -25,11 +25,14 @@
 #include "Scenes.h"
 #include "SimpleAudioEngine.h"
 #include "ScenePlay.h"
+#include "ui/ui_ext.h"
 
 bool SceneMain::init()
 {
 	this->loadFromJson("main", "main.json", "palette.json");
     auto bg = getNodeById(0);
+    
+//    guiExt::drawCircleForPhysics(bg, Vec2(50, 50), 100, Color4F(0.5, 0.5, 0.5, 0.5))
     gui::inst()->drawCircle(bg, Vec2::ZERO, 100, Color4F(1, 1, 1, 0.5))->runAction(
        RepeatForever::create(
                              Sequence::create(

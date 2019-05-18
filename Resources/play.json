@@ -1,11 +1,7 @@
 {
     "background": {
         "img": null,
-        "bgColor": "BG_MAIN",
-        "tile": {
-            "color": "BG_MAIN_DARK",
-            "num": [ 14, 10 ]
-        },
+        "bgColor": [ "DARKGRAY", "O_Violet" ] ,
         "isDrawGrid": false
     },
   "nodes": [
@@ -16,65 +12,97 @@
       "innerMargin": [ 5, 5 ],
       "gridSize": [ 3, 1 ],
       "img": null,
-      "color": [ 52, 66, 83, 0 ],
+      "color": 0,
       "objects": [
         {
             "position": [ 1, 0 ],
             "alignment": "center",
             "type": "label",
-            "color": [ 255, 255, 255, 200 ],
+            "color": [ 255, 255, 255, 100 ],
             "text": "VS",
-            "fontSize": -1
+            "fontSize": -2
         }
       ]
     },
     {
       "comment": "cpu loading bars",
       "dimension": [ 0, 0, 4, 1 ],
-      "margin": [ 30, 5 ],
-      "innerMargin": [ 5, 1 ],
+      "margin": [ 10, 5 ],
+      "innerMargin": [ 0, 2 ],
       "gridSize": [ 1, 2 ],
       "img": null,
-      "color": "WHITE_OPACITY_DEEP",
+      "color": 0,
       "objects": [
         {
           "id": 1,
           "position": [ 0, 0 ],
-          "alignment": "center",
+          "alignment": "right",
           "type": "loadingbar",
-          "img": "loadingbar_big.png"
+          "color": [ "YELLOW", "YELLOW" ]
+        },
+        {
+            "position": [ 0, 0 ],
+            "alignment": "center",
+            "type": "label",
+            "color": "WHITE_OPACITY_DEEP",
+            "text": "HP",
+            "fontSize": -1
         },
         {
           "id": 2,
           "position": [ 0, 1 ],
-          "alignment": "center",
+          "alignment": "right",
           "type": "loadingbar",
-          "img": "loadingbar_big.png"
+          "color": [ "GREEN", "GREEN" ]
+        },
+        {
+            "position": [ 0, 1 ],
+            "alignment": "center",
+            "type": "label",
+            "color": "WHITE_OPACITY_DEEP",
+            "text": "POWER",
+            "fontSize": -1
         }
       ]
     },
     {
       "comment": "my loading bars",
       "dimension": [ 4, 0, 8, 1 ],
-      "margin": [ 30, 5 ],
-      "innerMargin": [ 5, 1 ],
+      "margin": [ 10, 5 ],
+      "innerMargin": [ 0, 2 ],
       "gridSize": [ 1, 2 ],
       "img": null,
-      "color": "WHITE_OPACITY_DEEP",
+      "color": 0,
       "objects": [
         {
           "id": 6,
           "position": [ 0, 0 ],
           "alignment": "center",
           "type": "loadingbar",
-          "img": "loadingbar_big.png"
+          "color": [ "YELLOW", "YELLOW" ]
+        },
+        {
+            "position": [ 0, 0 ],
+            "alignment": "center",
+            "type": "label",
+            "color": "WHITE_OPACITY_DEEP",
+            "text": "HP",
+            "fontSize": -1
         },
         {
           "id": 7,
           "position": [ 0, 1 ],
           "alignment": "center",
           "type": "loadingbar",
-          "img": "loadingbar_big.png"
+          "color": [ "GREEN", "GREEN" ]
+        },
+        {
+            "position": [ 0, 1 ],
+            "alignment": "center",
+            "type": "label",
+            "color": "WHITE_OPACITY_DEEP",
+            "text": "POWER",
+            "fontSize": -1
         }
       ]
     },
@@ -85,13 +113,13 @@
         "innerMargin": [ 0, 0 ],
         "gridSize": [ 1, 1 ],
         "img": null,
-        "color": 50,
+        "color": [ 255, 255, 255, 100 ],
         "objects": [
             {
             "position": [ 0, 0 ],
             "alignment": "center",
             "type": "label",
-            "color": [ 255, 255, 255, 100 ],
+            "color": [ 255, 255, 255, 10 ],
             "text": "CONTROL PAD",
             "fontSize": -1
             }
@@ -105,14 +133,14 @@
       "innerMargin": [ 0, 0 ],
       "gridSize": [ 1, 3 ],
       "img": null,
-      "color": [ "GREEN", "WHITE" ],
+      "color": "BLUE_LIGHT",
       "objects": [
           {
               "id": 50,
               "position": [ 0, 1 ],
               "alignment": "center",
               "type": "label",
-              "color": [ 255, 255, 255, 100 ],
+              "color": [ 255, 255, 255, 0 ],
               "text": "A.I",
               "fontSize": -2
           }
@@ -126,9 +154,9 @@
       "innerMargin": [ 0, 0 ],
       "gridSize": [ 1, 3 ],
       "img": null,
-      "color": [ "YELLOW", "WHITE_DARK" ],
+      "color": "BLUE_LIGHT",
       "tile-": {
-          "color": "WHITE_DARK",
+          "color": "WHITE_OPACITY_DEEP",
           "num": [12, 12]
       },
       "objects": [
@@ -137,7 +165,7 @@
               "position": [ 0, 1 ],
               "alignment": "center",
               "type": "label",
-              "color": [ 255, 255, 255, 100 ],
+              "color": [ 255, 255, 255, 0 ],
               "text": "teetotal",
               "fontSize": -2
           }
@@ -160,7 +188,7 @@
           "type": "button_circle",
           "link": 1,
           "img": null,
-          "color": [ [ 200, 0, 0 ], [ 55, 227, 71 ] ],
+          "color": [ "WHITE", "YELLOW" ],
           "text": "x2",
           "fontSize": 0
         },
@@ -171,7 +199,7 @@
           "type": "button_circle",
           "link": 2,
           "img": null,
-          "color": [ [ 0, 0, 0 ], [ 55, 227, 71 ] ],
+          "color": [ "WHITE", "YELLOW" ],
           "text": "A",
           "fontSize": 0
         },
@@ -182,7 +210,7 @@
           "type": "button_circle",
           "link": 3,
           "img": null,
-          "color": [ [ 255, 255, 255 ], [ 55, 227, 71 ] ],
+          "color": [ "WHITE", "YELLOW" ],
           "text": "D",
           "fontSize": 0
         }

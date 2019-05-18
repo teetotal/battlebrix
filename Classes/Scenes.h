@@ -81,4 +81,19 @@ class SceneShop : public ui_wizard
     virtual void callback(Ref* pSender, int from, int link);
     virtual const string getText(const string& defaultString, int id);
 };
+
+class testComponent : public Node {
+public:
+    static testComponent* create() {
+        auto ret = new (std::nothrow) testComponent;
+        
+        if (ret)
+        {
+            ret->autorelease();
+        }
+        
+        return ret;
+    };
+    void setProgress(float f);
+};
 #endif // __SCENES_H__
