@@ -72,7 +72,7 @@ void ScenePlay::timer(float f) {
 Node * ScenePlay::createBall() {
     this->getPhysicsWorld()->setAutoStep(false);
     this->getPhysicsWorld()->step(0.0f);
-    Color4F color = ui_wizard_share::inst()->getPalette()->getColor4F("WHITE");
+    COLOR_RGB color = ui_wizard_share::inst()->getPalette()->getColor("WHITE");
     
     Vec2 position = gui::inst()->getPointVec2(2, 2, ALIGNMENT_CENTER, mLayer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
     auto ball = guiExt::drawCircleForPhysics(mLayer, position, mGridSize.height / 2.f, color);
@@ -99,12 +99,12 @@ void ScenePlay::setVibrate(Node * layer) {
 
 // add Obstacle ===========================================================================
 void ScenePlay::addObstacle(Node * layer, Vec2 pos) {
-    Color4F colors[] = {
-        ui_wizard_share::inst()->getPalette()->getColor4F("RED_LIGHT"),
-        ui_wizard_share::inst()->getPalette()->getColor4F("YELLOW_LIGHT"),
-        ui_wizard_share::inst()->getPalette()->getColor4F("GREEN_LIGHT"),
-        ui_wizard_share::inst()->getPalette()->getColor4F("BLUE_LIGHT"),
-        ui_wizard_share::inst()->getPalette()->getColor4F("PURPLE_LIGHT")
+    COLOR_RGB colors[] = {
+        ui_wizard_share::inst()->getPalette()->getColor("RED_LIGHT"),
+        ui_wizard_share::inst()->getPalette()->getColor("YELLOW_LIGHT"),
+        ui_wizard_share::inst()->getPalette()->getColor("GREEN_LIGHT"),
+        ui_wizard_share::inst()->getPalette()->getColor("BLUE_LIGHT"),
+        ui_wizard_share::inst()->getPalette()->getColor("PURPLE_LIGHT")
     };
 //    for(int n=1; n <= 4; n++){
 //        string sz = "O" + to_string(n);
