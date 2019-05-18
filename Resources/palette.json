@@ -1,6 +1,6 @@
 {
     "tone": 30,
-    "brightness": 15,
+    "brightness": 50,
     "BG_MAIN": [ 39, 124, 172, 255 ],
     "BG_MAIN_PATTERN": [ 36, 119, 170, 255 ],
     "BG_TOP": [ 52, 66, 83, 220 ],

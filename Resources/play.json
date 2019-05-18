@@ -168,7 +168,7 @@
     {
       "comment": "skill",
       "id": 30,
-      "dimension": [ 8, 1, 9, 5 ],
+      "dimension": [ 8, 2, 9, 6 ],
       "margin": [ 0, 0 ],
       "innerMargin": [ 0, 5 ],
       "gridSize": [ 1, 3 ],
@@ -182,7 +182,7 @@
           "type": "button_circle",
           "link": 1,
           "img": null,
-          "color": [ "WHITE", "YELLOW" ],
+          "color": [ "DARKGRAY", "YELLOW" ],
           "text": "x2",
           "fontSize": 0
         },
@@ -193,8 +193,8 @@
           "type": "button_circle",
           "link": 2,
           "img": null,
-          "color": [ "WHITE", "YELLOW" ],
-          "text": "A",
+          "color": [ "DARKGRAY", "YELLOW" ],
+          "text": "AT",
           "fontSize": 0
         },
         {
@@ -204,8 +204,8 @@
           "type": "button_circle",
           "link": 3,
           "img": null,
-          "color": [ "WHITE", "YELLOW" ],
-          "text": "D",
+          "color": [ "DARKGRAY", "YELLOW" ],
+          "text": "DP",
           "fontSize": 0
         }
       ]

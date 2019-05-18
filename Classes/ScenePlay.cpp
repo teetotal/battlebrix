@@ -100,11 +100,11 @@ void ScenePlay::setVibrate(Node * layer) {
 // add Obstacle ===========================================================================
 void ScenePlay::addObstacle(Node * layer, Vec2 pos) {
     Color4F colors[] = {
-        ui_wizard_share::inst()->getPalette()->getColor4F("RED"),
-        ui_wizard_share::inst()->getPalette()->getColor4F("YELLOW"),
-        ui_wizard_share::inst()->getPalette()->getColor4F("GREEN"),
-        ui_wizard_share::inst()->getPalette()->getColor4F("BLUE"),
-        ui_wizard_share::inst()->getPalette()->getColor4F("PURPLE")
+        ui_wizard_share::inst()->getPalette()->getColor4F("RED_LIGHT"),
+        ui_wizard_share::inst()->getPalette()->getColor4F("YELLOW_LIGHT"),
+        ui_wizard_share::inst()->getPalette()->getColor4F("GREEN_LIGHT"),
+        ui_wizard_share::inst()->getPalette()->getColor4F("BLUE_LIGHT"),
+        ui_wizard_share::inst()->getPalette()->getColor4F("PURPLE_LIGHT")
     };
 //    for(int n=1; n <= 4; n++){
 //        string sz = "O" + to_string(n);
