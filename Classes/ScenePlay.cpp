@@ -37,8 +37,11 @@ bool ScenePlay::init()
         addObstacle(mLayer, Vec2(getRandValue(8), getRandValue(5)));
         addObstacle(mLayerOther, Vec2(getRandValue(8), getRandValue(5)));
     }
-    
-    
+//    auto rect1 = getNodeById(500);
+//    rect1->setVisible(false);
+//    auto rect = getNodeById(501);
+//    rect->setVisible(true);
+//    rect->runAction(Blink::create(10, 30));
 //    this->schedule(schedule_selector(ScenePlay::timer), 1.0f);
     return true;
 }
