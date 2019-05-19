@@ -206,7 +206,7 @@
                 "id": 13,
                 "position": [ 0, 4 ],
                 "alignment": "center",
-                "type": "loadingbar",
+                "type": "progressbar_0",
                 "color": [ "YELLOW", "YELLOW" ]
             },
             {

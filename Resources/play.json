@@ -37,7 +37,7 @@
           "id": 1,
           "position": [ 0, 0 ],
           "alignment": "right",
-          "type": "loadingbar",
+          "type": "progressbar_2",
           "color": [ "YELLOW", "YELLOW" ]
         },
         {
@@ -52,7 +52,7 @@
           "id": 2,
           "position": [ 0, 1 ],
           "alignment": "right",
-          "type": "loadingbar",
+          "type": "progressbar_2",
           "color": [ "GREEN", "GREEN" ]
         },
         {
@@ -78,7 +78,7 @@
           "id": 6,
           "position": [ 0, 0 ],
           "alignment": "center",
-          "type": "loadingbar",
+          "type": "progressbar_2",
           "color": [ "YELLOW", "YELLOW" ]
         },
         {
@@ -93,7 +93,7 @@
           "id": 7,
           "position": [ 0, 1 ],
           "alignment": "center",
-          "type": "loadingbar",
+          "type": "progressbar_2",
           "color": [ "GREEN", "GREEN" ]
         },
         {
