@@ -1,4 +1,60 @@
 {
+    "daily_day": {
+        "dimension": [ 0, 0, 1, 1 ],
+        "margin": [ 0, 0 ],
+        "innerMargin": [ 0, 0 ],
+        "gridSize": [ 1, 1 ],
+        "img": null,
+        "color": 0,
+        "objects": [
+            {
+                "id": 1,
+                "position": [ 0, 0 ],
+                "alignment": "center",
+                "type": "label",
+                "color": "GRAY",
+                "text": "DAY",
+                "fontSize": 0
+            }
+        ]
+    },
+    "daily_img": {
+        "dimension": [ 0, 1, 1, 3 ],
+        "margin": [ 0, 0 ],
+        "innerMargin": [ 0, 0 ],
+        "gridSize": [ 1, 1 ],
+        "img": null,
+        "color": 0,
+        "objects": [
+            {
+                "id": 2,
+                "position": [ 0, 0 ],
+                "alignment": "center",
+                "type": "sprite",
+                "img": "icons8-expensive-price-80.png"
+            }
+        ]
+    },
+    "daily_quantity": {
+        "dimension": [ 0, 3, 1, 4 ],
+        "margin": [ 0, 0 ],
+        "innerMargin": [ 0, 0 ],
+        "gridSize": [ 1, 1 ],
+        "img": null,
+        "color": 0,
+        "objects": [
+            {
+                "id": 3,
+                "position": [ 0, 0 ],
+                "alignment": "center_top",
+                "type": "label",
+                "color": "GRAY",
+                "bgColor": "WHITE_OPACITY_LIGHT",
+                "text": "x500",
+                "fontSize": -1
+            }
+        ]
+    },
     "top_bg": {
         "comment": "top bg",
         "id": -1,

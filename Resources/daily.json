@@ -37,7 +37,18 @@
                     "alignment": "left_bottom",
                     "type": "line",
                     "color": "BLUE_LIGHT"
-                },
+                }
+            ]
+        },
+        {
+            "comment": "daily reward outside",
+            "dimension": [ 1, 0, 8, 7 ],
+            "margin": [ 25, 20 ],
+            "innerMargin": [ 2, 7 ],
+            "gridSize": [ 1, 7 ],
+            "img": null,
+            "color": 0,
+            "objects": [
                 {
                     
                     "position": [ 0, 6 ],
@@ -53,6 +64,7 @@
         {
             "comment": "daily reward inner side big",
             "id": 101,
+            "visible": true,
             "dimension": [ 1, 1, 8, 6 ],
             "margin": [ 25, 30 ],
             "innerMargin": [ 2, 5 ],
@@ -111,6 +123,54 @@
             "img": null,
             "color": 0,
             "objects": [
+                {
+                    "id": 11,
+                    "visible": false,
+                    "position": [ 0, 0 ],
+                    "alignment": "center",
+                    "type": "rectangle_line",
+                    "color": "RED"
+                },
+                {
+                    "id": 12,
+                    "visible": false,
+                    "position": [ 1, 0 ],
+                    "alignment": "center",
+                    "type": "rectangle_line",
+                    "color": "RED"
+                },
+                {
+                    "id": 13,
+                    "visible": false,
+                    "position": [ 2, 0 ],
+                    "alignment": "center",
+                    "type": "rectangle_line",
+                    "color": "RED"
+                },
+                {
+                    "id": 14,
+                    "visible": false,
+                    "position": [ 0, 4 ],
+                    "alignment": "center",
+                    "type": "rectangle_line",
+                    "color": "RED"
+                },
+                {
+                    "id": 15,
+                    "visible": false,
+                    "position": [ 1, 4 ],
+                    "alignment": "center",
+                    "type": "rectangle_line",
+                    "color": "RED"
+                },
+                {
+                    "id": 16,
+                    "visible": false,
+                    "position": [ 2, 4 ],
+                    "alignment": "center",
+                    "type": "rectangle_line",
+                    "color": "RED"
+                },
                 {
                     "id": 1,
                     "position": [ 0, 0 ],
@@ -273,54 +333,6 @@
                     "img": "icons8-expensive-price-80.png",
                     "color": null,
                     "bgColor": "WHITE_OPACITY_LIGHT"
-                },
-                {
-                    "id": 11,
-                    "visible": false,
-                    "position": [ 0, 0 ],
-                    "alignment": "center",
-                    "type": "rectangle_line",
-                    "color": "RED"
-                },
-                {
-                    "id": 12,
-                    "visible": false,
-                    "position": [ 1, 0 ],
-                    "alignment": "center",
-                    "type": "rectangle_line",
-                    "color": "RED"
-                },
-                {
-                    "id": 13,
-                    "visible": false,
-                    "position": [ 2, 0 ],
-                    "alignment": "center",
-                    "type": "rectangle_line",
-                    "color": "RED"
-                },
-                {
-                    "id": 14,
-                    "visible": false,
-                    "position": [ 0, 4 ],
-                    "alignment": "center",
-                    "type": "rectangle_line",
-                    "color": "RED"
-                },
-                {
-                    "id": 15,
-                    "visible": false,
-                    "position": [ 1, 4 ],
-                    "alignment": "center",
-                    "type": "rectangle_line",
-                    "color": "RED"
-                },
-                {
-                    "id": 16,
-                    "visible": false,
-                    "position": [ 2, 4 ],
-                    "alignment": "center",
-                    "type": "rectangle_line",
-                    "color": "RED"
                 }
             ]
         },

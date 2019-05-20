@@ -76,7 +76,7 @@ bool SceneDaily::init()
     this->loadFromJson("daily", "daily.json");
     //today
     auto todayTitle = getNodeById(mTodayId);
-    todayTitle->setColor(Color3B(240, 208, 75));
+    todayTitle->setColor(ui_wizard_share::inst()->getPalette()->getColor3B("YELLOW"));
     todayTitle->runAction(Sequence::create(DelayTime::create(0.2f)
                                            , ScaleBy::create(.3f, 1.2f)
                                            , ScaleBy::create(.2f, (1.f / 1.2f))
