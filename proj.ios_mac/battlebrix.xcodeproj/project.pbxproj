@@ -77,8 +77,9 @@
 		4D4EDBD6229160B400F375BF /* icons8-defense-80.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D4EDBD4229160B400F375BF /* icons8-defense-80.png */; };
 		4D574B07228CFCCD001B8F7F /* ui_ext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D574B04228CFCCC001B8F7F /* ui_ext.cpp */; };
 		4D7EFBF8227C22A300E19181 /* play.json in Resources */ = {isa = PBXBuildFile; fileRef = 4D7EFBF7227C22A300E19181 /* play.json */; };
+		4DAD0ACC22928A410042F1E6 /* icons8-heart-outline-80.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DAD0ACB22928A410042F1E6 /* icons8-heart-outline-80.png */; };
 		4DB682AE228AC490007A1E22 /* shop.json in Resources */ = {isa = PBXBuildFile; fileRef = 4DB682AC228AC490007A1E22 /* shop.json */; };
-		4DB85BC622852A0D001C541A /* common.json in Resources */ = {isa = PBXBuildFile; fileRef = 4DB85BC422852A0C001C541A /* common.json */; };
+		4DB85BC622852A0D001C541A /* components.json in Resources */ = {isa = PBXBuildFile; fileRef = 4DB85BC422852A0C001C541A /* components.json */; };
 		4DB85BCE2285613F001C541A /* daily.json in Resources */ = {isa = PBXBuildFile; fileRef = 4DB85BCD2285613F001C541A /* daily.json */; };
 		4DFF8D0C228C16FB0098B187 /* ScenePlay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DFF8D09228C16FB0098B187 /* ScenePlay.cpp */; };
 		503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 503AE0F617EB97AB00D1A890 /* Icon.icns */; };
@@ -222,8 +223,9 @@
 		4D69BC802283E7C7009B4F5A /* ui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ui.h; path = ../../library/ui/ui.h; sourceTree = "<group>"; };
 		4D69BC822283FA26009B4F5A /* ui_wizard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ui_wizard.h; path = ../../library/ui/ui_wizard.h; sourceTree = "<group>"; };
 		4D7EFBF7227C22A300E19181 /* play.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = play.json; sourceTree = "<group>"; };
+		4DAD0ACB22928A410042F1E6 /* icons8-heart-outline-80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-heart-outline-80.png"; sourceTree = "<group>"; };
 		4DB682AC228AC490007A1E22 /* shop.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = shop.json; sourceTree = "<group>"; };
-		4DB85BC422852A0C001C541A /* common.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = common.json; sourceTree = "<group>"; };
+		4DB85BC422852A0C001C541A /* components.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = components.json; sourceTree = "<group>"; };
 		4DB85BCD2285613F001C541A /* daily.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = daily.json; sourceTree = "<group>"; };
 		4DFF8D09228C16FB0098B187 /* ScenePlay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScenePlay.cpp; sourceTree = "<group>"; };
 		4DFF8D0B228C16FB0098B187 /* ScenePlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScenePlay.h; sourceTree = "<group>"; };
@@ -376,13 +378,14 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4DAD0ACB22928A410042F1E6 /* icons8-heart-outline-80.png */,
 				4D4EDBD4229160B400F375BF /* icons8-defense-80.png */,
 				4D4809B1227AA4070046472F /* palette.json */,
 				4DB682AC228AC490007A1E22 /* shop.json */,
 				4D7EFBF7227C22A300E19181 /* play.json */,
 				4D4809B2227AA4070046472F /* main.json */,
 				4DB85BCD2285613F001C541A /* daily.json */,
-				4DB85BC422852A0C001C541A /* common.json */,
+				4DB85BC422852A0C001C541A /* components.json */,
 				4D4EDBCF22915B0200F375BF /* Daeko_400.png */,
 				4D1BB92F228FA34700F51D57 /* bg_temp.png */,
 				4D1BB940228FA34800F51D57 /* icons8-alarm-100.png */,
@@ -623,7 +626,8 @@
 				4DB85BCE2285613F001C541A /* daily.json in Resources */,
 				4D1BB947228FA34800F51D57 /* icons8-checked-checkbox-52.png in Resources */,
 				4D1BB94F228FA34800F51D57 /* icons8-average-2-96.png in Resources */,
-				4DB85BC622852A0D001C541A /* common.json in Resources */,
+				4DAD0ACC22928A410042F1E6 /* icons8-heart-outline-80.png in Resources */,
+				4DB85BC622852A0D001C541A /* components.json in Resources */,
 				4D1BB954228FA34800F51D57 /* icons8-roulette-100.png in Resources */,
 				4DB682AE228AC490007A1E22 /* shop.json in Resources */,
 				4D1BB94A228FA34800F51D57 /* bg_temp.png in Resources */,

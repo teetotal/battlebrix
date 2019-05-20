@@ -2,9 +2,9 @@
     "background": {
         "id": 0,
         "img": null,
-        "bgColor": "BG_MAIN",
+        "bgColor": "BG_MAIN_DARK",
         "tile": {
-            "color": "BG_MAIN_PATTERN",
+            "color": "BG_MAIN_PATTERN_DARK",
             "num": [ 14, 10 ]
         },
         "isDrawGrid": false
@@ -13,9 +13,9 @@
         {
             "comment": "daily reward outside",
             "dimension": [ 1, 0, 8, 7 ],
-            "margin": [ 0, 10 ],
+            "margin": [ 0, 20 ],
             "innerMargin": [ 10, 7 ],
-            "gridSize": [ 3, 6 ],
+            "gridSize": [ 1, 7 ],
             "img": null,
             "color": "BLUE",
             "objects": [
@@ -26,13 +26,21 @@
                     "type": "label",
                     "link": 0,
                     "img": null,
-                    "color": "BLACK_LIGHT",
+                    "color": "BLUE_LIGHT",
+                    "bgColor": "BLUE_DARK",
                     "text": "DAILY REWARD",
                     "fontSize": 0
                 },
                 {
                     
-                    "position": [ 1, 5 ],
+                    "position": [ 0, 0 ],
+                    "alignment": "left_bottom",
+                    "type": "line",
+                    "color": "BLUE_LIGHT"
+                },
+                {
+                    
+                    "position": [ 0, 6 ],
                     "alignment": "center",
                     "type": "button_rectangle_round_shadow",
                     "link": 0,
@@ -46,7 +54,7 @@
             "comment": "daily reward inner side big",
             "id": 101,
             "dimension": [ 1, 1, 8, 6 ],
-            "margin": [ 20, 20 ],
+            "margin": [ 25, 30 ],
             "innerMargin": [ 2, 5 ],
             "gridSize": [ 3, 3 ],
             "img": null,
@@ -59,7 +67,7 @@
                     "type": "label",
                     "link": null,
                     "img": null,
-                    "color": [ 255, 255, 255 ],
+                    "color": "GRAY",
                     "bgColor": "WHITE_OPACITY_DEEP",
                     "text": "DAY7",
                     "fontSize": 0
@@ -85,7 +93,7 @@
                     "position": [ 2, 2 ],
                     "alignment": "center_top",
                     "type": "label",
-                    "color": [ 255, 255, 255 ],
+                    "color": "GRAY",
                     "bgColor": "WHITE_OPACITY_DEEP",
                     "text": "x10",
                     "fontSize": -2
@@ -97,7 +105,7 @@
             "id": 0,
             "visible": true,
             "dimension": [ 1, 1, 8, 6 ],
-            "margin": [ 20, 20 ],
+            "margin": [ 25, 30 ],
             "innerMargin": [ 2, 2 ],
             "gridSize": [ 5, 7 ],
             "img": null,
@@ -108,7 +116,7 @@
                     "position": [ 0, 0 ],
                     "alignment": "center_bottom",
                     "type": "label",
-                    "color": "WHITE",
+                    "color": "GRAY",
                     "bgColor": "WHITE_OPACITY_DEEP",
                     "text": "DAY1",
                     "fontSize": 0
@@ -118,7 +126,7 @@
                     "position": [ 1, 0 ],
                     "alignment": "center_bottom",
                     "type": "label",
-                    "color": "WHITE",
+                    "color": "GRAY",
                     "bgColor": "WHITE_OPACITY_LIGHT",
                     "text": "DAY2",
                     "fontSize": 0
@@ -128,7 +136,7 @@
                     "position": [ 2, 0 ],
                     "alignment": "center_bottom",
                     "type": "label",
-                    "color": "WHITE",
+                    "color": "GRAY",
                     "bgColor": "WHITE_OPACITY_DEEP",
                     "text": "DAY3",
                     "fontSize": 0
@@ -137,7 +145,7 @@
                     "position": [ 0, 2 ],
                     "alignment": "center_top",
                     "type": "label",
-                    "color": "WHITE",
+                    "color": "GRAY",
                     "bgColor": "WHITE_OPACITY_DEEP",
                     "text": "x100",
                     "fontSize": -1
@@ -146,7 +154,7 @@
                     "position": [ 1, 2 ],
                     "alignment": "center_top",
                     "type": "label",
-                    "color": "WHITE",
+                    "color": "GRAY",
                     "bgColor": "WHITE_OPACITY_LIGHT",
                     "text": "x1",
                     "fontSize": -1
@@ -155,7 +163,7 @@
                     "position": [ 2, 2 ],
                     "alignment": "center_top",
                     "type": "label",
-                    "color": "WHITE",
+                    "color": "GRAY",
                     "bgColor": "WHITE_OPACITY_DEEP",
                     "text": "x200",
                     "fontSize": -1
@@ -165,7 +173,7 @@
                     "position": [ 0, 4 ],
                     "alignment": "center_bottom",
                     "type": "label",
-                    "color": "WHITE",
+                    "color": "GRAY",
                     "bgColor": "WHITE_OPACITY_LIGHT",
                     "text": "DAY4",
                     "fontSize": 0
@@ -175,7 +183,7 @@
                     "position": [ 1, 4 ],
                     "alignment": "center_bottom",
                     "type": "label",
-                    "color": "WHITE",
+                    "color": "GRAY",
                     "bgColor": "WHITE_OPACITY_DEEP",
                     "text": "DAY5",
                     "fontSize": 0
@@ -185,7 +193,7 @@
                     "position": [ 2, 4 ],
                     "alignment": "center_bottom",
                     "type": "label",
-                    "color": "WHITE",
+                    "color": "GRAY",
                     "bgColor": "WHITE_OPACITY_LIGHT",
                     "text": "DAY6",
                     "fontSize": 0
@@ -194,7 +202,7 @@
                     "position": [ 0, 6 ],
                     "alignment": "center_top",
                     "type": "label",
-                    "color": "WHITE",
+                    "color": "GRAY",
                     "bgColor": "WHITE_OPACITY_LIGHT",
                     "text": "x3",
                     "fontSize": -1
@@ -203,7 +211,7 @@
                     "position": [ 1, 6 ],
                     "alignment": "center_top",
                     "type": "label",
-                    "color": "WHITE",
+                    "color": "GRAY",
                     "bgColor": "WHITE_OPACITY_DEEP",
                     "text": "x400",
                     "fontSize": -1
@@ -212,7 +220,7 @@
                     "position": [ 2, 6 ],
                     "alignment": "center_top",
                     "type": "label",
-                    "color": "WHITE",
+                    "color": "GRAY",
                     "bgColor": "WHITE_OPACITY_LIGHT",
                     "text": "x500",
                     "fontSize": -1

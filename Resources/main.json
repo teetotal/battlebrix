@@ -2,101 +2,25 @@
     "background": {
         "id": 0,
         "img": null,
-        "bgColor": "BG_MAIN",
+        "bgColor": "BG_MAIN_DARK",
         "tile": {
-            "color": "BG_MAIN_PATTERN",
+            "color": "BG_MAIN_PATTERN_DARK",
             "num": [ 14, 10 ]
         },
         "isDrawGrid": false
     },
   "nodes": [
     {
-      "comment": "top bg",
-      "id": -1,
-      "dimension": [ 0, 0, 9, 1 ],
-      "margin": [ 0, 0 ],
-      "innerMargin": [ 0, 0 ],
-      "gridSize": [ 1, 1 ],
-      "img": null,
-      "color": "BG_TOP",
-      "objects": []
+        "component": "top_bg"
     },
     {
-        "comment": "id & level",
-        "id": -1,
-        "dimension": [ 0, 0, 2, 1 ],
-        "margin": [ 10, 5 ],
-        "innerMargin": [ 5, 1 ],
-        "gridSize": [ 2, 2 ],
-        "img": null,
-        "color": 0,
-        "objects": [
-            {
-                "id": 1,
-                "position": [ 0, 0 ],
-                "alignment": "left",
-                "type": "label",
-                "color": "WHITE",
-                "text": "teetotal",
-                "fontSize": 0
-            },
-            {
-                "id": 2,
-                "position": [ 1, 0 ],
-                "alignment": "left",
-                "type": "label",
-                "color": "WHITE",
-                "text": "lv.16",
-                "fontSize": 0
-            },
-            {
-                "id": 12,
-                "position": [ 0, 1 ],
-                "alignment": "left",
-                "type": "button",
-                "color": "YELLOW",
-                "text": "1,642th",
-                "fontSize": 0
-            }
-        ]
+        "component": "top_id"
     },
     {
-      "comment": "cash, setting, alarm",
-      "dimension": [ 7, 0, 9, 1 ],
-      "margin": [ 10, 5 ],
-      "innerMargin": [ 2, 1 ],
-      "gridSize": [ 4, 1 ],
-      "img": null,
-      "color": 0,
-      "objects": [
-        {
-          "id": 3,
-          "position": [ 0, 0 ],
-          "alignment": "right",
-          "type": "button_sprite",
-          "link": 1,
-          "img": "icons8-expensive-price-80.png",
-          "color": "WHITE",
-          "text": " 575,211",
-          "fontSize": -1
-        },
-        {
-          "position": [ 2, 0 ],
-          "alignment": "right",
-          "type": "sprite_button_circle",
-          "link": 10,
-          "img": [ "icons8-settings-100.png", "icons8-settings-filled-100.png" ],
-          "color": "GREEN"
-        },
-        {
-            "position": [ 3, 0 ],
-            "alignment": "right",
-            "type": "sprite_button_circle",
-            "link": 10,
-            "img": [ "icons8-alarm-100.png", "icons8-alarm-filled-100.png" ],
-            "color": "GREEN"
-        }
-      ]
+        "component": "top_cash"
+    },
+    {
+        "component": "top_button"
     },
     {
         "comment": "bottom menu",
@@ -167,85 +91,40 @@
         "comment": "play bg",
         "dimension": [ 1, 1, 8, 6 ],
         "margin": [ 0, 20 ],
-        "innerMargin": [ 0, 0 ],
-        "gridSize": [ 1, 1 ],
+        "innerMargin": [ 5, 0 ],
+        "gridSize": [ 1, 5 ],
         "img": null,
         "color": "BLUE",
-        "objects": []
-    },
-    {
-        "comment": "play BIG",
-        "dimension": [ 1, 1, 5, 6 ],
-        "margin": [ 10, 25 ],
-        "innerMargin": [ 0, 0 ],
-        "gridSize": [ 2, 5 ],
-        "img": null,
-        "color": 0,
         "objects": [
+            {
+                "position": [ 0, 0 ],
+                "alignment": "left_bottom",
+                "type": "line",
+                "color": "BLUE_LIGHT"
+            },
             {
                 "id": 11,
                 "position": [ 0, 0 ],
                 "alignment": "left",
                 "type": "label",
-                "color": null,
+                "color": "BLUE_LIGHT",
+                "bgColor": "BLUE_DARK",
                 "text": "SEMI PRO 3",
-                "fontSize": 0
-            }
-        ]
-    },
-    {
-        "comment": "play details",
-        "dimension": [ 1, 1, 5, 6 ],
-        "margin": [ 10, 25 ],
-        "innerMargin": [ 0, 1 ],
-        "gridSize": [ 1, 12 ],
-        "img": null,
-        "color": 0,
-        "objects": [
-            {
-                "id": 13,
-                "position": [ 0, 4 ],
-                "alignment": "center",
-                "type": "progressbar_0",
-                "color": [ "YELLOW", "YELLOW" ]
-            },
-            {
-                "id": 14,
-                "position": [ 0, 4 ],
-                "alignment": "center",
-                "type": "label",
-                "color": "WHITE",
-                "text": " 5 / 12",
-                "fontSize": -1
-            }
-        ]
-    },
-    {
-        "comment": "play details",
-        "dimension": [ 1, 1, 5, 6 ],
-        "margin": [ 10, 25 ],
-        "innerMargin": [ 0, 1 ],
-        "gridSize": [ 1, 7 ],
-        "img": null,
-        "color": 0,
-        "objects": [
-            {
-                "id": 15,
-                "position": [ 0, 3 ],
-                "alignment": "left",
-                "type": "label",
-                "color": "WHITE",
-                "text": "Win3 / Draw2 / Lose3",
                 "fontSize": -1
             },
             {
-                "id": 16,
-                "position": [ 0, 4 ],
+                "id": 1000,
+                "position": [ 0, 1 ],
                 "alignment": "left",
-                "type": "label",
-                "color": "WHITE",
-                "text": "1,614th >>",
-                "fontSize": -1
+                "type": "component",
+                "component": "main_progress"
+            },
+            {
+                "id": 1000,
+                "position": [ 0, 2 ],
+                "alignment": "left",
+                "type": "component",
+                "component": "main_text1"
             }
         ]
     },

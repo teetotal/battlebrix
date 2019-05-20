@@ -124,6 +124,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // create a scene. it's an autorelease object
     // run
+    ui_wizard_share::inst()->loadPaletteFromJson("palette.json");
+    ui_wizard_share::inst()->loadComponentFromJson("components.json");
     director->runWithScene(SceneDaily::createScene());
 
     return true;

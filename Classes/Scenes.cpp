@@ -29,19 +29,18 @@
 
 bool SceneMain::init()
 {
-	this->loadFromJson("main", "main.json", "palette.json");
-    auto bg = getNodeById(0);
+	this->loadFromJson("main", "main.json");
+//    auto bg = getNodeById(0);
     
 //    guiExt::drawCircleForPhysics(bg, Vec2(50, 50), 100, Color4F(0.5, 0.5, 0.5, 0.5))
-    gui::inst()->drawCircle(bg, Vec2::ZERO, 100, Color4F(1, 1, 1, 0.5))->runAction(
-       RepeatForever::create(
-                             Sequence::create(
-                                              MoveTo::create(30, Vec2(bg->getContentSize().width, bg->getContentSize().height))
-                                              , MoveTo::create(30, Vec2::ZERO)
-                                              , NULL)
-       ));
-    
-    this->pushScene(SceneDaily::create());
+//    gui::inst()->drawCircle(bg, Vec2::ZERO, 100, Color4F(1, 1, 1, 0.5))->runAction(
+//       RepeatForever::create(
+//                             Sequence::create(
+//                                              MoveTo::create(30, Vec2(bg->getContentSize().width, bg->getContentSize().height))
+//                                              , MoveTo::create(30, Vec2::ZERO)
+//                                              , NULL)
+//       ));
+//
     return true;
 }
 
@@ -74,7 +73,7 @@ bool SceneDaily::init()
     mTodayId = 2;
    
     gui::inst()->initDefaultWithSpriteCache("fonts/SDSwaggerTTF.ttf");
-    this->loadFromJson("daily", "daily.json", "palette.json");
+    this->loadFromJson("daily", "daily.json");
     //today
     auto todayTitle = getNodeById(mTodayId);
     todayTitle->setColor(Color3B(240, 208, 75));
@@ -125,7 +124,7 @@ void SceneDaily::actionFinished() {
 //====================================================================
 bool SceneShop::init()
 {
-    this->loadFromJson("shop", "shop.json", "palette.json");
+    this->loadFromJson("shop", "shop.json");
     
     auto warm = getNodeById(1000);
     auto original = getNodeById(1001);
