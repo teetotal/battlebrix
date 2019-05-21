@@ -91,7 +91,7 @@
         "comment": "play bg",
         "dimension": [ 1, 1, 8, 6 ],
         "margin": [ 0, 20 ],
-        "innerMargin": [ 5, 0 ],
+        "innerMargin": [ 10, 2 ],
         "gridSize": [ 1, 5 ],
         "img": null,
         "color": "BLUE",
@@ -110,7 +110,7 @@
                 "color": "BLUE_LIGHT",
                 "bgColor": "BLUE_DARK",
                 "text": "SEMI PRO 3",
-                "fontSize": -1
+                "fontSize": 0
             },
             {
                 "id": 1000,
@@ -132,7 +132,7 @@
         "comment": "play image",
         "dimension": [ 5, 1, 8, 6 ],
         "margin": [ 10, 35 ],
-        "innerMargin": [ 5, 2 ],
+        "innerMargin": [ 0, 2 ],
         "gridSize": [ 1, 1 ],
         "img": null,
         "color": 0,
