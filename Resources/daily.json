@@ -44,7 +44,7 @@
             "comment": "daily reward outside",
             "dimension": [ 1, 0, 8, 7 ],
             "margin": [ 25, 20 ],
-            "innerMargin": [ 2, 7 ],
+            "innerMargin": [ 0, 7 ],
             "gridSize": [ 1, 7 ],
             "img": null,
             "color": 0,
@@ -62,283 +62,183 @@
             ]
         },
         {
-            "comment": "daily reward inner side big",
-            "id": 101,
-            "visible": true,
-            "dimension": [ 1, 1, 8, 6 ],
-            "margin": [ 25, 30 ],
-            "innerMargin": [ 2, 5 ],
-            "gridSize": [ 3, 3 ],
-            "img": null,
-            "color": 0,
-            "objects": [
-                {
-                    "id": 7,
-                    "position": [ 2, 0 ],
-                    "alignment": "center",
-                    "type": "label",
-                    "link": null,
-                    "img": null,
-                    "color": "GRAY",
-                    "bgColor": "WHITE_OPACITY_DEEP",
-                    "text": "DAY7",
-                    "fontSize": 0
-                },
-                {
-                    "id": 17,
-                    "visible": false,
-                    "position": [ 2, 0 ],
-                    "alignment": "center",
-                    "type": "rectangle_line",
-                    "color": "RED"
-                },
-                {
-                    
-                    "position": [ 2, 1 ],
-                    "alignment": "center",
-                    "type": "sprite",
-                    "img": "icons8-roulette-96.png",
-                    "bgColor": "WHITE_OPACITY_DEEP"
-                },
-                {
-                    
-                    "position": [ 2, 2 ],
-                    "alignment": "center_top",
-                    "type": "label",
-                    "color": "GRAY",
-                    "bgColor": "WHITE_OPACITY_DEEP",
-                    "text": "x10",
-                    "fontSize": -2
-                }
-            ]
-        },
-        {
             "comment": "daily reward inner side text",
             "id": 0,
             "visible": true,
             "dimension": [ 1, 1, 8, 6 ],
             "margin": [ 25, 30 ],
-            "innerMargin": [ 2, 2 ],
-            "gridSize": [ 5, 7 ],
+            "innerMargin": [ 0, 5 ],
+            "gridSize": [ 5, 2 ],
             "img": null,
             "color": 0,
             "objects": [
                 {
-                    "id": 11,
-                    "visible": false,
+                    "id": 10,
                     "position": [ 0, 0 ],
                     "alignment": "center",
-                    "type": "rectangle_line",
-                    "color": "RED"
+                    "type": "component",
+                    "component": "daily_day_cash",
+                    "bgColor": "WHITE_OPACITY_DEEP"
                 },
                 {
-                    "id": 12,
-                    "visible": false,
+                    "id": 20,
                     "position": [ 1, 0 ],
                     "alignment": "center",
-                    "type": "rectangle_line",
-                    "color": "RED"
+                    "type": "component",
+                    "component": "daily_day_roulette",
+                    "bgColor": "WHITE_OPACITY_LIGHT"
                 },
                 {
-                    "id": 13,
-                    "visible": false,
+                    "id": 30,
                     "position": [ 2, 0 ],
                     "alignment": "center",
-                    "type": "rectangle_line",
-                    "color": "RED"
+                    "type": "component",
+                    "component": "daily_day_cash",
+                    "bgColor": "WHITE_OPACITY_DEEP"
                 },
                 {
-                    "id": 14,
-                    "visible": false,
-                    "position": [ 0, 4 ],
+                    "id": 40,
+                    "position": [ 0, 1 ],
                     "alignment": "center",
-                    "type": "rectangle_line",
-                    "color": "RED"
+                    "type": "component",
+                    "component": "daily_day_roulette",
+                    "bgColor": "WHITE_OPACITY_LIGHT"
                 },
                 {
-                    "id": 15,
-                    "visible": false,
-                    "position": [ 1, 4 ],
+                    "id": 50,
+                    "position": [ 1, 1 ],
                     "alignment": "center",
-                    "type": "rectangle_line",
-                    "color": "RED"
+                    "type": "component",
+                    "component": "daily_day_cash",
+                    "bgColor": "WHITE_OPACITY_DEEP"
                 },
                 {
-                    "id": 16,
-                    "visible": false,
-                    "position": [ 2, 4 ],
+                    "id": 60,
+                    "position": [ 2, 1 ],
                     "alignment": "center",
-                    "type": "rectangle_line",
-                    "color": "RED"
+                    "type": "component",
+                    "component": "daily_day_roulette",
+                    "bgColor": "WHITE_OPACITY_LIGHT"
+                },
+                {
+                    "id": 70,
+                    "position": [ 3, 0 ],
+                    "span": [1, 1],
+                    "alignment": "center",
+                    "type": "component",
+                    "component": "daily_day_roulette",
+                    "bgColor": "WHITE_OPACITY_LIGHT2"
                 },
                 {
                     "id": 1,
+                    "visible": false,
                     "position": [ 0, 0 ],
-                    "alignment": "center_bottom",
-                    "type": "label",
-                    "color": "GRAY",
-                    "bgColor": "WHITE_OPACITY_DEEP",
-                    "text": "DAY1",
-                    "fontSize": 0
+                    "alignment": "center",
+                    "type": "rectangle_line",
+                    "color": "RED"
                 },
                 {
                     "id": 2,
+                    "visible": false,
                     "position": [ 1, 0 ],
-                    "alignment": "center_bottom",
-                    "type": "label",
-                    "color": "GRAY",
-                    "bgColor": "WHITE_OPACITY_LIGHT",
-                    "text": "DAY2",
-                    "fontSize": 0
+                    "alignment": "center",
+                    "type": "rectangle_line",
+                    "color": "RED"
                 },
                 {
                     "id": 3,
+                    "visible": false,
                     "position": [ 2, 0 ],
-                    "alignment": "center_bottom",
-                    "type": "label",
-                    "color": "GRAY",
-                    "bgColor": "WHITE_OPACITY_DEEP",
-                    "text": "DAY3",
-                    "fontSize": 0
-                },
-                {
-                    "position": [ 0, 2 ],
-                    "alignment": "center_top",
-                    "type": "label",
-                    "color": "GRAY",
-                    "bgColor": "WHITE_OPACITY_DEEP",
-                    "text": "x100",
-                    "fontSize": -1
-                },
-                {
-                    "position": [ 1, 2 ],
-                    "alignment": "center_top",
-                    "type": "label",
-                    "color": "GRAY",
-                    "bgColor": "WHITE_OPACITY_LIGHT",
-                    "text": "x1",
-                    "fontSize": -1
-                },
-                {
-                    "position": [ 2, 2 ],
-                    "alignment": "center_top",
-                    "type": "label",
-                    "color": "GRAY",
-                    "bgColor": "WHITE_OPACITY_DEEP",
-                    "text": "x200",
-                    "fontSize": -1
+                    "alignment": "center",
+                    "type": "rectangle_line",
+                    "color": "RED"
                 },
                 {
                     "id": 4,
-                    "position": [ 0, 4 ],
-                    "alignment": "center_bottom",
-                    "type": "label",
-                    "color": "GRAY",
-                    "bgColor": "WHITE_OPACITY_LIGHT",
-                    "text": "DAY4",
-                    "fontSize": 0
+                    "visible": false,
+                    "position": [ 0, 1 ],
+                    "alignment": "center",
+                    "type": "rectangle_line",
+                    "color": "RED"
                 },
                 {
                     "id": 5,
-                    "position": [ 1, 4 ],
-                    "alignment": "center_bottom",
-                    "type": "label",
-                    "color": "GRAY",
-                    "bgColor": "WHITE_OPACITY_DEEP",
-                    "text": "DAY5",
-                    "fontSize": 0
+                    "visible": false,
+                    "position": [ 1, 1 ],
+                    "alignment": "center",
+                    "type": "rectangle_line",
+                    "color": "RED"
                 },
                 {
                     "id": 6,
-                    "position": [ 2, 4 ],
-                    "alignment": "center_bottom",
-                    "type": "label",
-                    "color": "GRAY",
-                    "bgColor": "WHITE_OPACITY_LIGHT",
-                    "text": "DAY6",
-                    "fontSize": 0
+                    "visible": false,
+                    "position": [ 2, 1 ],
+                    "alignment": "center",
+                    "type": "rectangle_line",
+                    "color": "RED"
                 },
                 {
-                    "position": [ 0, 6 ],
-                    "alignment": "center_top",
-                    "type": "label",
-                    "color": "GRAY",
-                    "bgColor": "WHITE_OPACITY_LIGHT",
-                    "text": "x3",
-                    "fontSize": -1
+                    "id": 7,
+                    "visible": false,
+                    "position": [ 3, 0 ],
+                    "span": [1, 1],
+                    "alignment": "center",
+                    "type": "rectangle_line",
+                    "color": "RED"
                 },
                 {
-                    "position": [ 1, 6 ],
-                    "alignment": "center_top",
-                    "type": "label",
-                    "color": "GRAY",
-                    "bgColor": "WHITE_OPACITY_DEEP",
-                    "text": "x400",
-                    "fontSize": -1
+                    "id": 101,
+                    "visible": false,
+                    "position": [ 0, 0 ],
+                    "alignment": "center",
+                    "type": "sprite",
+                    "img": "icons8-checkmark2-480.png"
                 },
                 {
-                    "position": [ 2, 6 ],
-                    "alignment": "center_top",
-                    "type": "label",
-                    "color": "GRAY",
-                    "bgColor": "WHITE_OPACITY_LIGHT",
-                    "text": "x500",
-                    "fontSize": -1
+                    "id": 102,
+                    "visible": false,
+                    "position": [ 1, 0 ],
+                    "alignment": "center",
+                    "type": "sprite",
+                    "img": "icons8-checkmark2-480.png"
                 },
                 {
+                    "id": 103,
+                    "visible": false,
+                    "position": [ 2, 0 ],
+                    "alignment": "center",
+                    "type": "sprite",
+                    "img": "icons8-checkmark2-480.png"
+                },
+                {
+                    "id": 104,
+                    "visible": false,
                     "position": [ 0, 1 ],
                     "alignment": "center",
                     "type": "sprite",
-                    "img": "icons8-expensive-price-80.png",
-                    "color": null,
-                    "bgColor": "WHITE_OPACITY_DEEP"
+                    "img": "icons8-checkmark2-480.png"
                 },
                 {
+                    "id": 105,
+                    "visible": false,
                     "position": [ 1, 1 ],
                     "alignment": "center",
                     "type": "sprite",
-                    "img": "icons8-roulette-96.png",
-                    "color": null,
-                    "bgColor": "WHITE_OPACITY_LIGHT"
+                    "img": "icons8-checkmark2-480.png"
                 },
                 {
+                    "id": 106,
+                    "visible": false,
                     "position": [ 2, 1 ],
                     "alignment": "center",
                     "type": "sprite",
-                    "img": "icons8-expensive-price-80.png",
-                    "color": null,
-                    "bgColor": "WHITE_OPACITY_DEEP"
-                },
-                {
-                    "position": [ 0, 5 ],
-                    "alignment": "center",
-                    "type": "sprite",
-                    "img": "icons8-roulette-96.png",
-                    "color": null,
-                    "bgColor": "WHITE_OPACITY_LIGHT"
-                },
-                {
-                    "position": [ 1, 5 ],
-                    "alignment": "center",
-                    "type": "sprite",
-                    "img": "icons8-expensive-price-80.png",
-                    "color": null,
-                    "bgColor": "WHITE_OPACITY_DEEP"
-                },
-                {
-                    "position": [ 2, 5 ],
-                    "alignment": "center",
-                    "type": "sprite",
-                    "link": null,
-                    "img": "icons8-expensive-price-80.png",
-                    "color": null,
-                    "bgColor": "WHITE_OPACITY_LIGHT"
+                    "img": "icons8-checkmark2-480.png"
                 }
             ]
         },
         {
             "comment": "today reward",
-            "id": 100,
+            "id": 1000,
             "visible": false,
             "dimension": [ 2, 0, 7, 7 ],
             "margin": [ 20, 20 ],
@@ -359,14 +259,14 @@
                     "fontSize": -1
                 },
                 {
-                    "id": 101,
+                    "id": 1001,
                     "position": [ 0, 1 ],
                     "alignment": "center",
                     "type": "sprite",
                     "img": "icons8-expensive-price-80.png"
                 },
                 {
-                    "id": 102,
+                    "id": 1002,
                     "position": [ 0, 2 ],
                     "alignment": "center_top",
                     "type": "label",

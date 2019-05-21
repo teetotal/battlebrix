@@ -70,31 +70,36 @@ const string SceneMain::getText(const string& defaultString, int id) {
 //====================================================================
 bool SceneDaily::init()
 {
-    mTodayId = 2;
+    mTodayIdx = 5;
    
     gui::inst()->initDefaultWithSpriteCache("fonts/SDSwaggerTTF.ttf");
     this->loadFromJson("daily", "daily.json");
+    //disable
+    for(int n = 1; n < mTodayIdx; n++) {
+        auto disable = getNodeById(100 + n);
+        disable->setVisible(true);
+    }
     //today
-    auto todayTitle = getNodeById(mTodayId);
+    auto todayTitle = getNodeById(mTodayIdx * 10 + 1);
     todayTitle->setColor(ui_wizard_share::inst()->getPalette()->getColor3B("YELLOW"));
     todayTitle->runAction(Sequence::create(DelayTime::create(0.2f)
                                            , ScaleBy::create(.3f, 1.2f)
                                            , ScaleBy::create(.2f, (1.f / 1.2f))
                                            , DelayTime::create(0.2f)
                                            , NULL));
-    getNodeById(10+mTodayId)->setVisible(true);
+    getNodeById(mTodayIdx)->setVisible(true);
     
     return true;
 }
 
 void SceneDaily::callback(Ref* pSender, int from, int link) {
     
-    auto today = getNodeById(100);
+    auto today = getNodeById(1000);
     today->setVisible(true);
     
     gui::inst()->setModal(today);
     
-    auto todayImg = getNodeById(101);
+    auto todayImg = getNodeById(1001);
 //    std::function<void()> callFn = [=]() {
 //        this->replaceScene(SceneMain::create());
 //    };
@@ -108,10 +113,24 @@ void SceneDaily::callback(Ref* pSender, int from, int link) {
 }
 
 const string SceneDaily::getText(const string& defaultString, int id) {
-    if(id == mTodayId) {
-        return "TODAY";
-    } else if(id < mTodayId && id < 10 && id > 0) {
-        return "Done";
+//    if(id == mTodayId) {
+//        return "TODAY";
+//    } else if(id < mTodayId && id < 10 && id > 0) {
+//        return "Done";
+//    }
+    int nDay = id / 10;
+    int nPart = id % 10;
+    switch (nPart) {
+        case 1: //날짜
+        {
+            if(mTodayIdx == nDay)
+                return "TODAY";
+            return "DAY" + to_string(nDay);
+        }
+        case 2: //이미지
+        case 3: //quantity
+        default:
+            break;
     }
     
     return defaultString;

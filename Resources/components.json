@@ -1,9 +1,9 @@
 {
-    "daily_day": {
+    "daily_day_cash": {
         "dimension": [ 0, 0, 1, 1 ],
         "margin": [ 0, 0 ],
-        "innerMargin": [ 0, 0 ],
-        "gridSize": [ 1, 1 ],
+        "innerMargin": [ 0, 1 ],
+        "gridSize": [ 1, 4 ],
         "img": null,
         "color": 0,
         "objects": [
@@ -15,42 +15,58 @@
                 "color": "GRAY",
                 "text": "DAY",
                 "fontSize": 0
-            }
-        ]
-    },
-    "daily_img": {
-        "dimension": [ 0, 1, 1, 3 ],
-        "margin": [ 0, 0 ],
-        "innerMargin": [ 0, 0 ],
-        "gridSize": [ 1, 1 ],
-        "img": null,
-        "color": 0,
-        "objects": [
+            },
             {
                 "id": 2,
-                "position": [ 0, 0 ],
+                "position": [ 0, 1 ],
+                "span": [0, 1],
                 "alignment": "center",
                 "type": "sprite",
                 "img": "icons8-expensive-price-80.png"
+            },
+            {
+                "id": 3,
+                "position": [ 0, 3 ],
+                "alignment": "center",
+                "type": "label",
+                "color": "GRAY",
+                "text": "x500",
+                "fontSize": -1
             }
         ]
     },
-    "daily_quantity": {
-        "dimension": [ 0, 3, 1, 4 ],
+    "daily_day_roulette": {
+        "dimension": [ 0, 0, 1, 1 ],
         "margin": [ 0, 0 ],
-        "innerMargin": [ 0, 0 ],
-        "gridSize": [ 1, 1 ],
+        "innerMargin": [ 0, 1 ],
+        "gridSize": [ 1, 4 ],
         "img": null,
         "color": 0,
         "objects": [
             {
-                "id": 3,
+                "id": 1,
                 "position": [ 0, 0 ],
-                "alignment": "center_top",
+                "alignment": "center",
                 "type": "label",
                 "color": "GRAY",
-                "bgColor": "WHITE_OPACITY_LIGHT",
-                "text": "x500",
+                "text": "DAY",
+                "fontSize": 0
+            },
+            {
+                "id": 2,
+                "position": [ 0, 1 ],
+                "span": [0, 1],
+                "alignment": "center",
+                "type": "sprite",
+                "img": "icons8-roulette-96.png"
+            },
+            {
+                "id": 3,
+                "position": [ 0, 3 ],
+                "alignment": "center",
+                "type": "label",
+                "color": "GRAY",
+                "text": "x1",
                 "fontSize": -1
             }
         ]
