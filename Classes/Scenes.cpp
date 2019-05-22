@@ -26,6 +26,8 @@
 #include "SimpleAudioEngine.h"
 #include "ScenePlay.h"
 #include "ui/ui_ext.h"
+#include "ui/ui_roulette.h"
+#include "library/util.h"
 
 bool SceneMain::init()
 {
@@ -145,6 +147,19 @@ void SceneDaily::actionFinished() {
 bool SceneRoulette::init()
 {
     this->loadFromJson("roulette", "roulette.json");
+    auto p = (ui_roulette*)getNodeById(1);
+    for(int n=0; n< 8; n++) {
+        auto node = gui::inst()->createLabel(0, 0, to_string(100 + n), 10, ALIGNMENT_CENTER, Color3B::BLACK);
+        p->insertItem(node);
+    }
+
+    p->setValue(getRandValue(360), [=]() {
+        p->mEnable = true;
+        int degree2 = getRandValue(360);
+        p->setValue(degree2);
+        int idx = p->getResultIdx();
+         CCLOG("onCallback. %d", 100 + idx);
+    });
     
     return true;
 }

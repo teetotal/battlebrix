@@ -7,7 +7,7 @@
             "color": "BG_MAIN_PATTERN_DARK",
             "num": [ 14, 10 ]
         },
-        "isDrawGrid": true
+        "isDrawGrid": false
     },
     "nodes": [
         {
@@ -42,22 +42,21 @@
         },
         {
             "comment": "main",
-            "id": 0,
-            "visible": true,
-            "dimension": [ 1, 1, 8, 6 ],
+            "dimension": [ 1, 1, 8, 7 ],
             "margin": [ 25, 30 ],
-            "innerMargin": [ 0, 5 ],
+            "innerMargin": [ 0, 0 ],
             "gridSize": [ 1, 1 ],
             "img": null,
             "color": 0,
             "objects": [
                 {
-                    "id": 10,
+                    "id": 1,
                     "position": [ 0, 0 ],
                     "alignment": "center",
                     "type": "roulette",
                     "component": "daily_day_cash",
-                    "color": [ "ORANGE", "YELLOW" ]
+                    "color": [ "ORANGE", "YELLOW" ],
+                    "text": "GO"
                 }
             ]
         }
