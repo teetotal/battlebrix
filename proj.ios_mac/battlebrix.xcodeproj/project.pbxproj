@@ -56,6 +56,8 @@
 		4D1BB95A228FA34800F51D57 /* icons8-play-button-circled-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D1BB93F228FA34800F51D57 /* icons8-play-button-circled-100.png */; };
 		4D1BB95B228FA34800F51D57 /* icons8-alarm-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D1BB940228FA34800F51D57 /* icons8-alarm-100.png */; };
 		4D1BB95F228FC9D500F51D57 /* ui_progressbar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D1BB95D228FC9D500F51D57 /* ui_progressbar.cpp */; };
+		4D2563252294FDE400421986 /* ui_roulette.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D2563222294FDE300421986 /* ui_roulette.cpp */; };
+		4D2563272295012D00421986 /* roulette.json in Resources */ = {isa = PBXBuildFile; fileRef = 4D2563262295012D00421986 /* roulette.json */; };
 		4D480991227A9E370046472F /* ui_cultivation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D48098A227A9E360046472F /* ui_cultivation.cpp */; };
 		4D480992227A9E370046472F /* ui_wizard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D48098B227A9E370046472F /* ui_wizard.cpp */; };
 		4D480993227A9E370046472F /* ui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D48098C227A9E370046472F /* ui.cpp */; };
@@ -201,6 +203,10 @@
 		4D1BB940228FA34800F51D57 /* icons8-alarm-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-alarm-100.png"; sourceTree = "<group>"; };
 		4D1BB95D228FC9D500F51D57 /* ui_progressbar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ui_progressbar.cpp; path = ../../library/ui/ui_progressbar.cpp; sourceTree = "<group>"; };
 		4D1BB95E228FC9D500F51D57 /* ui_progressbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ui_progressbar.h; path = ../../library/ui/ui_progressbar.h; sourceTree = "<group>"; };
+		4D2563222294FDE300421986 /* ui_roulette.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ui_roulette.cpp; path = ../../library/ui/ui_roulette.cpp; sourceTree = "<group>"; };
+		4D2563242294FDE400421986 /* ui_roulette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ui_roulette.h; path = ../../library/ui/ui_roulette.h; sourceTree = "<group>"; };
+		4D2563262295012D00421986 /* roulette.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = roulette.json; sourceTree = "<group>"; };
+		4D2563282295032200421986 /* ui_deco.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ui_deco.h; path = ../../library/ui/ui_deco.h; sourceTree = "<group>"; };
 		4D48098A227A9E360046472F /* ui_cultivation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ui_cultivation.cpp; path = ../../library/ui/ui_cultivation.cpp; sourceTree = "<group>"; };
 		4D48098B227A9E370046472F /* ui_wizard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ui_wizard.cpp; path = ../../library/ui/ui_wizard.cpp; sourceTree = "<group>"; };
 		4D48098C227A9E370046472F /* ui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ui.cpp; path = ../../library/ui/ui.cpp; sourceTree = "<group>"; };
@@ -384,6 +390,7 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4D2563262295012D00421986 /* roulette.json */,
 				4DAA62772293E1BB00E25318 /* icons8-checkmark2-480.png */,
 				4DAA62752293E13100E25318 /* icons8-ok-480.png */,
 				4DAA62722293DFBF00E25318 /* icons8-checkmark-480.png */,
@@ -447,6 +454,9 @@
 		4D480989227A9DFC0046472F /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				4D2563282295032200421986 /* ui_deco.h */,
+				4D2563222294FDE300421986 /* ui_roulette.cpp */,
+				4D2563242294FDE400421986 /* ui_roulette.h */,
 				4D1BB95D228FC9D500F51D57 /* ui_progressbar.cpp */,
 				4D1BB95E228FC9D500F51D57 /* ui_progressbar.h */,
 				4D574B0B228D71C8001B8F7F /* ui_color.h */,
@@ -627,6 +637,7 @@
 				4D1BB911228FA27000F51D57 /* .gitkeep in Resources */,
 				4D4EDBD022915B0200F375BF /* Daeko_400.png in Resources */,
 				4D1BB944228FA34800F51D57 /* icons8-shopping-bag-100.png in Resources */,
+				4D2563272295012D00421986 /* roulette.json in Resources */,
 				4D1BB959228FA34800F51D57 /* icons8-leaderboard-filled-100.png in Resources */,
 				4D1BB957228FA34800F51D57 /* icons8-expensive-price-80.png in Resources */,
 				4D1BB948228FA34800F51D57 /* icons8-shopping-cart-filled-100.png in Resources */,
@@ -683,6 +694,7 @@
 				4D4809B0227A9E9F0046472F /* inventory.cpp in Sources */,
 				4D480996227A9E370046472F /* ui_color.cpp in Sources */,
 				1AF87B781F6F77F7007BE51C /* AppController.mm in Sources */,
+				4D2563252294FDE400421986 /* ui_roulette.cpp in Sources */,
 				4DFF8D0C228C16FB0098B187 /* ScenePlay.cpp in Sources */,
 				1AF87B8B1F6F782A007BE51C /* RootViewController.mm in Sources */,
 				4D4809AF227A9E9F0046472F /* PhysicsScene.cpp in Sources */,

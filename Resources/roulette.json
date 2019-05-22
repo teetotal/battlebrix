@@ -1,0 +1,65 @@
+{
+    "background": {
+        "id": 0,
+        "img": null,
+        "bgColor": "BG_MAIN_DARK",
+        "tile": {
+            "color": "BG_MAIN_PATTERN_DARK",
+            "num": [ 14, 10 ]
+        },
+        "isDrawGrid": true
+    },
+    "nodes": [
+        {
+            "comment": "title",
+            "dimension": [ 1, 0, 8, 7 ],
+            "margin": [ 0, 20 ],
+            "innerMargin": [ 10, 7 ],
+            "gridSize": [ 1, 7 ],
+            "img": null,
+            "color": "BLUE",
+            "objects": [
+                {
+                    
+                    "position": [ 0, 0 ],
+                    "alignment": "left",
+                    "type": "label",
+                    "link": 0,
+                    "img": null,
+                    "color": "BLUE_LIGHT",
+                    "bgColor": "BLUE_DARK",
+                    "text": "ROULETTE",
+                    "fontSize": 0
+                },
+                {
+                    
+                    "position": [ 0, 0 ],
+                    "alignment": "left_bottom",
+                    "type": "line",
+                    "color": "BLUE_LIGHT"
+                }
+            ]
+        },
+        {
+            "comment": "main",
+            "id": 0,
+            "visible": true,
+            "dimension": [ 1, 1, 8, 6 ],
+            "margin": [ 25, 30 ],
+            "innerMargin": [ 0, 5 ],
+            "gridSize": [ 1, 1 ],
+            "img": null,
+            "color": 0,
+            "objects": [
+                {
+                    "id": 10,
+                    "position": [ 0, 0 ],
+                    "alignment": "center",
+                    "type": "roulette",
+                    "component": "daily_day_cash",
+                    "color": [ "ORANGE", "YELLOW" ]
+                }
+            ]
+        }
+    ]
+}

@@ -67,6 +67,21 @@ private:
     void actionFinished();
     int mTodayIdx;
 };
+// SceneRoulette ==================================
+class SceneRoulette : public ui_wizard
+{
+public:
+    static Scene* createScene() {
+        return SceneRoulette::create();
+    };
+    virtual bool init();
+    CREATE_FUNC(SceneRoulette);
+    
+protected:
+    virtual void callback(Ref* pSender, int from, int link);
+    virtual const string getText(const string& defaultString, int id);
+private:
+};
 // SceneShop ==================================
 class SceneShop : public ui_wizard
 {

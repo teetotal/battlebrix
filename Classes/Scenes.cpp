@@ -137,9 +137,26 @@ const string SceneDaily::getText(const string& defaultString, int id) {
 }
 
 void SceneDaily::actionFinished() {
+//    this->replaceScene(SceneMain::create());
+    this->replaceScene(SceneRoulette::create());
+    
+}
+//====================================================================
+bool SceneRoulette::init()
+{
+    this->loadFromJson("roulette", "roulette.json");
+    
+    return true;
+}
+
+void SceneRoulette::callback(Ref* pSender, int from, int link) {
     this->replaceScene(SceneMain::create());
 }
 
+const string SceneRoulette::getText(const string& defaultString, int id) {
+    
+    return defaultString;
+}
 //====================================================================
 bool SceneShop::init()
 {
