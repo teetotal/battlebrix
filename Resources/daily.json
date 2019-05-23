@@ -237,8 +237,40 @@
             ]
         },
         {
-            "comment": "today reward",
             "id": 1000,
+            "comment": "modal BG",
+            "visible": false,
+            "dimension": [ 0, 0, 9, 8 ],
+            "margin": [ 0, 0 ],
+            "innerMargin": [ 0, 0 ],
+            "gridSize": [ 1, 1 ],
+            "img": null,
+            "color": 150
+        },
+        {
+            "id": 2000,
+            "comment": "roulette",
+            "visible": false,
+            "dimension": [ 2, 0, 7, 7 ],
+            "margin": [ 20, 25 ],
+            "innerMargin": [ 0, 0 ],
+            "gridSize": [ 1, 1 ],
+            "img": null,
+            "color": 0,
+            "objects": [
+                {
+                    "id": 2001,
+                    "position": [ 0, 0 ],
+                    "alignment": "center",
+                    "type": "roulette",
+                    "color": [ "ORANGE", "YELLOW" ],
+                    "text": "START"
+                }
+            ]
+        },
+        {
+            "comment": "today reward",
+            "id": 3000,
             "visible": false,
             "dimension": [ 2, 0, 7, 7 ],
             "margin": [ 20, 25 ],
@@ -265,7 +297,7 @@
                     "color": "BLACK"
                 },
                 {
-                    "id": 1001,
+                    "id": 3001,
                     "position": [ 0, 1 ],
                     "span": [0, 1],
                     "alignment": "center",
@@ -273,7 +305,7 @@
                     "img": "icons8-roulette-96.png"
                 },
                 {
-                    "id": 1002,
+                    "id": 3002,
                     "position": [ 0, 3 ],
                     "alignment": "center_top",
                     "type": "label",

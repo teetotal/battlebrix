@@ -26,6 +26,7 @@
 #define __SCENES_H__
 
 #include "ui/ui_wizard.h"
+#include "ui/ui_roulette.h"
 USING_NS_CC;
 
 enum eLINK {
@@ -66,21 +67,8 @@ protected:
 private:
     void actionFinished();
     int mTodayIdx;
-};
-// SceneRoulette ==================================
-class SceneRoulette : public ui_wizard
-{
-public:
-    static Scene* createScene() {
-        return SceneRoulette::create();
-    };
-    virtual bool init();
-    CREATE_FUNC(SceneRoulette);
-    
-protected:
-    virtual void callback(Ref* pSender, int from, int link);
-    virtual const string getText(const string& defaultString, int id);
-private:
+    ui_roulette * mRoulette;
+    void callbackRoulette(Ref* pSender);
 };
 // SceneShop ==================================
 class SceneShop : public ui_wizard

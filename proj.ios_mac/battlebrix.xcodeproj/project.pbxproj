@@ -460,7 +460,6 @@
 				4D1BB95D228FC9D500F51D57 /* ui_progressbar.cpp */,
 				4D1BB95E228FC9D500F51D57 /* ui_progressbar.h */,
 				4D574B0B228D71C8001B8F7F /* ui_color.h */,
-				4D574B04228CFCCC001B8F7F /* ui_ext.cpp */,
 				4D574B06228CFCCC001B8F7F /* ui_ext.h */,
 				4D69BC822283FA26009B4F5A /* ui_wizard.h */,
 				4D69BC802283E7C7009B4F5A /* ui.h */,
@@ -471,6 +470,7 @@
 				4D480990227A9E370046472F /* ui_gacha.cpp */,
 				4D48098B227A9E370046472F /* ui_wizard.cpp */,
 				4D48098C227A9E370046472F /* ui.cpp */,
+				4D574B04228CFCCC001B8F7F /* ui_ext.cpp */,
 			);
 			name = ui;
 			sourceTree = "<group>";

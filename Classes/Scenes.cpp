@@ -26,7 +26,6 @@
 #include "SimpleAudioEngine.h"
 #include "ScenePlay.h"
 #include "ui/ui_ext.h"
-#include "ui/ui_roulette.h"
 #include "library/util.h"
 
 bool SceneMain::init()
@@ -82,7 +81,7 @@ bool SceneDaily::init()
         disable->setVisible(true);
     }
     //today
-    auto todayTitle = getNodeById(mTodayIdx * 10 + 1);
+    Node * todayTitle = *getNodePointerById(mTodayIdx * 10 + 1);
     todayTitle->setColor(ui_wizard_share::inst()->getPalette()->getColor3B("YELLOW"));
     todayTitle->runAction(Sequence::create(DelayTime::create(0.2f)
                                            , ScaleBy::create(.3f, 1.2f)
@@ -91,16 +90,53 @@ bool SceneDaily::init()
                                            , NULL));
     getNodeById(mTodayIdx)->setVisible(true);
     
+    //roulette
+    mRoulette = (ui_roulette*)getNodeById(2001);
+    
+    ui_roulette * roulette = (ui_roulette*)(mRoulette);
+    for(int n=0; n< 8; n++) {
+        auto node = gui::inst()->createLabel(0, 0, to_string(100 + n), 10, ALIGNMENT_CENTER, Color3B::BLACK);
+        roulette->insertItem(node);
+    }
+    
+    roulette->setValue(getRandValue(360), CC_CALLBACK_1(SceneDaily::callbackRoulette, this));
+    
     return true;
 }
 
+void SceneDaily::callbackRoulette(Ref* pSender) {
+    ui_roulette * roulette = (mRoulette);
+    int idx = roulette->getResultIdx();
+    CCLOG("onCallback. %d", 100 + idx);
+    
+//    roulette->mEnable = true;
+//    int degree2 = getRandValue(360);
+//    roulette->setValue(degree2);
+//    CCLOG("%f", roulette->mValue);
+    
+    roulette->setVisible(false);
+    getNodeById(3000)->setVisible(true);
+    auto todayImg = getNodeById(3001);
+    todayImg->runAction(Sequence::create(DelayTime::create(0.2f)
+                                        , ScaleBy::create(.3f, 1.2f)
+                                        , ScaleBy::create(.2f, (1.f / 1.2f))
+                                        , DelayTime::create(0.2f)
+                                         , CallFunc::create([=](){
+        this->replaceScene(SceneMain::create());
+    })
+                                        , NULL));
+}
+
 void SceneDaily::callback(Ref* pSender, int from, int link) {
+    getNodeById(1000)->setVisible(true);
+    auto roulette = (ui_roulette*)getNodeById(2000);
+    roulette->setVisible(true);
     
-    auto today = getNodeById(1000);
-    today->setVisible(true);
+    gui::inst()->setModal(roulette);
     
-    gui::inst()->setModal(today);
     
+    
+    /*
     auto todayImg = getNodeById(1001);
 //    std::function<void()> callFn = [=]() {
 //        this->replaceScene(SceneMain::create());
@@ -112,6 +148,7 @@ void SceneDaily::callback(Ref* pSender, int from, int link) {
                                          , DelayTime::create(0.2f)
                                          , CallFunc::create(callFn)
                                          , NULL));
+     */
 }
 
 const string SceneDaily::getText(const string& defaultString, int id) {
@@ -139,38 +176,7 @@ const string SceneDaily::getText(const string& defaultString, int id) {
 }
 
 void SceneDaily::actionFinished() {
-//    this->replaceScene(SceneMain::create());
-    this->replaceScene(SceneRoulette::create());
-    
-}
-//====================================================================
-bool SceneRoulette::init()
-{
-    this->loadFromJson("roulette", "roulette.json");
-    auto p = (ui_roulette*)getNodeById(1);
-    for(int n=0; n< 8; n++) {
-        auto node = gui::inst()->createLabel(0, 0, to_string(100 + n), 10, ALIGNMENT_CENTER, Color3B::BLACK);
-        p->insertItem(node);
-    }
-
-    p->setValue(getRandValue(360), [=]() {
-        p->mEnable = true;
-        int degree2 = getRandValue(360);
-        p->setValue(degree2);
-        int idx = p->getResultIdx();
-         CCLOG("onCallback. %d", 100 + idx);
-    });
-    
-    return true;
-}
-
-void SceneRoulette::callback(Ref* pSender, int from, int link) {
     this->replaceScene(SceneMain::create());
-}
-
-const string SceneRoulette::getText(const string& defaultString, int id) {
-    
-    return defaultString;
 }
 //====================================================================
 bool SceneShop::init()
