@@ -85,7 +85,7 @@
         "comment": "TOP ID",
         "id": -1,
         "dimension": [ 0, 0, 2, 1 ],
-        "margin": [ 10, 5 ],
+        "margin": [ 10, 2 ],
         "innerMargin": [ 5, 1 ],
         "gridSize": [ 2, 2 ],
         "img": null,
@@ -124,7 +124,7 @@
         "comment": "TOP cash",
         "id": -1,
         "dimension": [ 7, 0, 9, 1 ],
-        "margin": [ 0, 5 ],
+        "margin": [ 0, 2 ],
         "innerMargin": [ 0, 2 ],
         "gridSize": [ 4, 2 ],
         "img": null,
@@ -158,7 +158,7 @@
         "comment": "TOP BUTTON",
         "id": -1,
         "dimension": [ 7, 0, 9, 1 ],
-        "margin": [ 10, 5 ],
+        "margin": [ 10, 2 ],
         "innerMargin": [ 1, 1 ],
         "gridSize": [ 4, 1 ],
         "img": null,
@@ -185,8 +185,8 @@
     "main_progress": {
         "dimension": [ 0, 0, 1, 1 ],
         "margin": [ 0, 0 ],
-        "innerMargin": [ 0, 2 ],
-        "gridSize": [ 2, 2 ],
+        "innerMargin": [ 0, 0 ],
+        "gridSize": [ 1, 2 ],
         "img": null,
         "color": 0,
         "objects": [
@@ -202,9 +202,9 @@
                 "position": [ 0, 1 ],
                 "alignment": "center",
                 "type": "label",
-                "color": "WHITE",
+                "color": "GRAY",
                 "text": " 5 / 12",
-                "fontSize": -1
+                "fontSize": 0
             }
         ]
     },
@@ -217,17 +217,16 @@
         "color": 0,
         "objects": [
             {
-                "id": 15,
-                "position": [ 0, 0 ],
+                "position": [ 0, 1 ],
                 "alignment": "left",
                 "type": "label",
                 "color": "GRAY",
-                "text": "3 Win / 2 Draw / 3 Lose",
+                "text": "BEGINNER > AMATEUR > SEMI PRO > PRO > WORLD CLASS",
                 "fontSize": 0
             },
             {
                 "id": 16,
-                "position": [ 0, 1 ],
+                "position": [ 0, 0 ],
                 "alignment": "left",
                 "type": "label",
                 "color": "GRAY",

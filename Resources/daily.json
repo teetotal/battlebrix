@@ -14,7 +14,7 @@
             "comment": "daily reward outside",
             "dimension": [ 1, 0, 8, 7 ],
             "margin": [ 0, 20 ],
-            "innerMargin": [ 10, 7 ],
+            "innerMargin": [ 10, 5 ],
             "gridSize": [ 1, 7 ],
             "img": null,
             "color": "BLUE",
@@ -44,7 +44,7 @@
             "comment": "daily reward outside",
             "dimension": [ 1, 0, 8, 7 ],
             "margin": [ 25, 20 ],
-            "innerMargin": [ 0, 7 ],
+            "innerMargin": [ 0, 5 ],
             "gridSize": [ 1, 7 ],
             "img": null,
             "color": 0,
@@ -245,7 +245,7 @@
             "innerMargin": [ 0, 0 ],
             "gridSize": [ 1, 1 ],
             "img": null,
-            "color": 150
+            "color": 200
         },
         {
             "id": 2000,
@@ -269,7 +269,7 @@
             ]
         },
         {
-            "comment": "today reward",
+            "comment": "reward",
             "id": 3000,
             "visible": false,
             "dimension": [ 2, 0, 7, 7 ],
@@ -277,7 +277,7 @@
             "innerMargin": [ 5, 5 ],
             "gridSize": [ 1, 4 ],
             "img": null,
-            "color": [ "BG_MAIN_DARK", "WHITE" ],
+            "color": 0,
             "objects": [
                 {
                     "position": [ 0, 0 ],
@@ -287,14 +287,16 @@
                     "img": null,
                     "color": "GRAY",
                     "bgColor": "BG_TOP",
-                    "text": "TODAY",
-                    "fontSize": -1
+                    "text": "REWARD",
+                    "fontSize": -1,
+                    "visible": false
                 },
                 {
                     "position": [ 0, 0 ],
                     "alignment": "left_bottom",
                     "type": "line",
-                    "color": "BLACK"
+                    "color": "BLACK",
+                     "visible": false
                 },
                 {
                     "id": 3001,
@@ -302,7 +304,7 @@
                     "span": [0, 1],
                     "alignment": "center",
                     "type": "sprite",
-                    "img": "icons8-roulette-96.png"
+                    "img": "icons8-expensive-price-80.png"
                 },
                 {
                     "id": 3002,
@@ -310,7 +312,7 @@
                     "alignment": "center_top",
                     "type": "label",
                     "text": "x1",
-                    "color": "BLACK",
+                    "color": "GRAY",
                     "fontSize": -2
                 }
             ]

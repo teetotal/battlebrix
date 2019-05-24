@@ -91,17 +91,11 @@
         "comment": "play bg",
         "dimension": [ 1, 1, 8, 6 ],
         "margin": [ 0, 20 ],
-        "innerMargin": [ 10, 2 ],
+        "innerMargin": [ 10, 5 ],
         "gridSize": [ 1, 5 ],
         "img": null,
         "color": "BLUE",
         "objects": [
-            {
-                "position": [ 0, 0 ],
-                "alignment": "left_bottom",
-                "type": "line",
-                "color": "BLUE_LIGHT"
-            },
             {
                 "id": 11,
                 "position": [ 0, 0 ],
@@ -113,18 +107,53 @@
                 "fontSize": 0
             },
             {
-                "id": 1000,
-                "position": [ 0, 1 ],
+                "position": [ 0, 0 ],
+                "alignment": "left_bottom",
+                "type": "line",
+                "color": "BLUE_LIGHT"
+            }
+        ]
+    },
+    {
+        "comment": "play bg",
+        "dimension": [ 1, 1, 8, 6 ],
+        "margin": [ 0, 20 ],
+        "innerMargin": [ 10, 2 ],
+        "gridSize": [ 2, 10 ],
+        "img": null,
+        "color": 0,
+        "objects": [
+            {
+                "position": [ 0, 3 ],
                 "alignment": "left",
                 "type": "component",
                 "component": "main_progress"
             },
             {
-                "id": 1000,
-                "position": [ 0, 2 ],
+                "id": 15,
+                "position": [ 0, 4 ],
                 "alignment": "left",
-                "type": "component",
-                "component": "main_text1"
+                "type": "label",
+                "color": "GRAY",
+                "text": "3 Win / 2 Draw / 3 Lose",
+                "fontSize": 0
+            },
+            {
+                "id": 16,
+                "position": [ 0, 5 ],
+                "alignment": "left",
+                "type": "label",
+                "color": "GRAY",
+                "text": "1,614th >>",
+                "fontSize": 0
+            },
+            {
+                "position": [ 0, 9 ],
+                "alignment": "left",
+                "type": "label",
+                "color": "BLUE_DARK",
+                "text": "BEGINNER > AMATEUR > SEMI PRO > PRO > WORLD CLASS",
+                "fontSize": -1
             }
         ]
     },

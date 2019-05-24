@@ -127,6 +127,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     ui_wizard_share::inst()->loadPaletteFromJson("palette.json");
     ui_wizard_share::inst()->loadComponentFromJson("components.json");
     director->runWithScene(SceneDaily::createScene());
+//    director->runWithScene(SceneMain::createScene());
 
     return true;
 }

@@ -30,6 +30,7 @@
 
 bool SceneMain::init()
 {
+    gui::inst()->initDefaultWithSpriteCache("fonts/SDSwaggerTTF.ttf");
 	this->loadFromJson("main", "main.json");
 //    auto bg = getNodeById(0);
     
@@ -71,7 +72,7 @@ const string SceneMain::getText(const string& defaultString, int id) {
 //====================================================================
 bool SceneDaily::init()
 {
-    mTodayIdx = 5;
+    mTodayIdx = 1;
    
     gui::inst()->initDefaultWithSpriteCache("fonts/SDSwaggerTTF.ttf");
     this->loadFromJson("daily", "daily.json");
@@ -95,7 +96,8 @@ bool SceneDaily::init()
     
     ui_roulette * roulette = (ui_roulette*)(mRoulette);
     for(int n=0; n< 8; n++) {
-        auto node = gui::inst()->createLabel(0, 0, to_string(100 + n), 10, ALIGNMENT_CENTER, Color3B::BLACK);
+        float fontSize = gui::inst()->getFontSize(Size(roulette->mRadius, roulette->mRadius));
+        auto node = gui::inst()->createLabel(0, 0, to_string(100 + n), fontSize, ALIGNMENT_CENTER, Color3B::BLACK);
         roulette->insertItem(node);
     }
     
@@ -118,14 +120,12 @@ void SceneDaily::callbackRoulette(Ref* pSender) {
     roulette->setVisible(false);
     getNodeById(3000)->setVisible(true);
     auto todayImg = getNodeById(3001);
-    todayImg->runAction(Sequence::create(DelayTime::create(0.2f)
-                                        , ScaleBy::create(.3f, 1.2f)
-                                        , ScaleBy::create(.2f, (1.f / 1.2f))
-                                        , DelayTime::create(0.2f)
-                                         , CallFunc::create([=](){
-        this->replaceScene(SceneMain::create());
-    })
-                                        , NULL));
+    todayImg->runAction(Sequence::create(DelayTime::create(.2f)
+                                         , ScaleBy::create(.3f, 1.2f)
+                                         , ScaleBy::create(.2f, (1.f / 1.2f))
+                                         , DelayTime::create(0.5f)
+                                         , CallFunc::create([=]() { this->replaceScene(SceneMain::create()); })
+                                         , NULL));
 }
 
 void SceneDaily::callback(Ref* pSender, int from, int link) {
