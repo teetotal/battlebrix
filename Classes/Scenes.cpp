@@ -100,14 +100,15 @@ bool SceneDaily::init()
     }
     
     roulette->setValue(getRandValue(360), CC_CALLBACK_1(SceneDaily::callbackRoulette, this));
-    
+    CCLOG("_ID: %d, refCnt = %d", roulette->_ID, roulette->getReferenceCount());
     return true;
 }
 
 void SceneDaily::callbackRoulette(Ref* pSender) {
-    ui_roulette * roulette = (mRoulette);
+//    ui_roulette * roulette = (mRoulette);
+    ui_roulette * roulette = (ui_roulette *)(pSender);
     int idx = roulette->getResultIdx();
-    CCLOG("onCallback. %d", 100 + idx);
+    CCLOG("onCallback. %d, _ID=%d, refCnt = %d", 100 + idx, pSender->_ID, pSender->getReferenceCount());
     
 //    roulette->mEnable = true;
 //    int degree2 = getRandValue(360);
