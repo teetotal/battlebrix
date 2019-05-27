@@ -303,8 +303,9 @@
                     "position": [ 0, 1 ],
                     "span": [0, 1],
                     "alignment": "center",
-                    "type": "sprite",
-                    "img": "icons8-expensive-price-80.png"
+                    "type": "icon_circle",
+                    "color": "YELLOW",
+                    "text": "$"
                 },
                 {
                     "id": 3002,
