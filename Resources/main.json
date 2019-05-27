@@ -14,13 +14,7 @@
         "component": "top_bg"
     },
     {
-        "component": "top_id"
-    },
-    {
-        "component": "top_cash"
-    },
-    {
-        "component": "top_button"
+        "component": "top"
     },
     {
         "comment": "bottom menu",
@@ -91,7 +85,7 @@
         "comment": "play bg",
         "dimension": [ 1, 1, 8, 6 ],
         "margin": [ 0, 20 ],
-        "innerMargin": [ 10, 5 ],
+        "innerMargin": [ 10, 3 ],
         "gridSize": [ 1, 5 ],
         "img": null,
         "color": "BLUE",
@@ -115,23 +109,33 @@
         ]
     },
     {
-        "comment": "play bg",
-        "dimension": [ 1, 1, 8, 6 ],
-        "margin": [ 0, 20 ],
-        "innerMargin": [ 10, 2 ],
-        "gridSize": [ 2, 10 ],
-        "img": null,
+        "comment": "play",
+        "dimension": [ 1, 2, 5, 6 ],
+        "margin": [ 10, 20 ],
+        "innerMargin": [ 0, 2 ],
+        "gridSize": [ 1, 8 ],
         "color": 0,
         "objects": [
             {
-                "position": [ 0, 3 ],
-                "alignment": "left",
-                "type": "component",
-                "component": "main_progress"
+                "id": 13,
+                "position": [ 0, 0 ],
+                "alignment": "center",
+                "type": "progressbar_0",
+                "color": [ "BLUE_DARK", "BLUE_DARK" ]
             },
             {
+                "id": 14,
+                "position": [ 0, 0 ],
+                "alignment": "center",
+                "type": "label",
+                "color": "GRAY",
+                "text": " 5 / 12",
+                "fontSize": 0
+            },
+            {
+                "visible": true,
                 "id": 15,
-                "position": [ 0, 4 ],
+                "position": [ 0, 1 ],
                 "alignment": "left",
                 "type": "label",
                 "color": "GRAY",
@@ -139,16 +143,28 @@
                 "fontSize": 0
             },
             {
+                "visible": true,
                 "id": 16,
-                "position": [ 0, 5 ],
+                "position": [ 0, 2 ],
                 "alignment": "left",
                 "type": "label",
                 "color": "GRAY",
+                "text": "53%",
+                "fontSize": 0
+            },
+            {
+                "visible": true,
+                "id": 17,
+                "position": [ 0, 4 ],
+                "alignment": "left",
+                "type": "label",
+                "color": "YELLOW",
                 "text": "1,614th >>",
                 "fontSize": 0
             },
             {
-                "position": [ 0, 9 ],
+                "visible": true,
+                "position": [ 0, 7 ],
                 "alignment": "left",
                 "type": "label",
                 "color": "BLUE_DARK",

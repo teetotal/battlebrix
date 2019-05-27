@@ -23,7 +23,7 @@
                 "alignment": "center",
                 "type": "icon_circle",
                 "color": "YELLOW",
-                "text": "$"
+                "text": "C"
             },
             {
                 "id": 3,
@@ -83,13 +83,13 @@
         "img": null,
         "color": "BG_TOP_LIGHT"
     },
-    "top_id": {
-        "comment": "TOP ID",
+    "top": {
+        "comment": "TOP",
         "id": -1,
-        "dimension": [ 0, 0, 2, 1 ],
-        "margin": [ 10, 2 ],
-        "innerMargin": [ 5, 1 ],
-        "gridSize": [ 2, 2 ],
+        "dimension": [ 0, 0, 9, 1 ],
+        "margin": [ 10, 5 ],
+        "innerMargin": [ 2, 1 ],
+        "gridSize": [ 20, 2 ],
         "img": null,
         "color": 0,
         "objects": [
@@ -110,120 +110,103 @@
                 "color": "YELLOW",
                 "text": "Lv.16",
                 "fontSize": 0
-            }
-        ]
-    },
-    "top_cash": {
-        "comment": "TOP cash",
-        "id": -1,
-        "dimension": [ 7, 0, 9, 1 ],
-        "margin": [ 0, 2 ],
-        "innerMargin": [ 0, 2 ],
-        "gridSize": [ 4, 2 ],
-        "img": null,
-        "color": 0,
-        "objects": [
+            },
+            {
+                "position": [ 14, 0 ],
+                "alignment": "right",
+                "type": "icon_circle",
+                "color": "YELLOW",
+                "text": "C"
+            },
+            {
+                "position": [ 14, 1 ],
+                "alignment": "right",
+                "type": "icon_heart",
+                "color": "GREEN"
+            },
             {
                 "id": 3,
-                "position": [ 0, 0 ],
+                "position": [ 15, 0 ],
                 "alignment": "left",
-                "type": "button_sprite",
+                "type": "button",
                 "link": 1,
-                "img": "icons8-expensive-price-80.png",
                 "color": "GRAY",
-                "text": " 575,211",
+                "text": "575,211",
                 "fontSize": 0
             },
             {
                 "id": 4,
-                "position": [ 0, 1 ],
+                "position": [ 15, 1 ],
                 "alignment": "left",
                 "type": "button_sprite",
                 "link": 1,
-                "img": "icons8-heart-outline-80.png",
                 "color": "GRAY",
-                "text": " 5 / 5",
+                "text": "5 / 5",
                 "fontSize": 0
-            }
-        ]
-    },
-    "top_button": {
-        "comment": "TOP BUTTON",
-        "id": -1,
-        "dimension": [ 7, 0, 9, 1 ],
-        "margin": [ 10, 2 ],
-        "innerMargin": [ 1, 1 ],
-        "gridSize": [ 4, 1 ],
-        "img": null,
-        "color": 0,
-        "objects": [
+            },
             {
-                "position": [ 2, 0 ],
+                "position": [ 18, 0 ],
                 "alignment": "right",
                 "type": "sprite_button_circle",
                 "link": 10,
                 "img": [ "icons8-settings-100.png", "icons8-settings-filled-100.png" ],
-                "color": "GREEN"
+                "color": "GREEN",
+                "span": [0, 1]
             },
             {
-                "position": [ 3, 0 ],
+                "position": [ 19, 0 ],
                 "alignment": "right",
                 "type": "sprite_button_circle",
                 "link": 10,
                 "img": [ "icons8-alarm-100.png", "icons8-alarm-filled-100.png" ],
-                "color": "GREEN"
+                "color": "GREEN",
+                "span": [0, 1]
             }
         ]
     },
-    "main_progress": {
+    "shop_item": {
         "dimension": [ 0, 0, 1, 1 ],
         "margin": [ 0, 0 ],
-        "innerMargin": [ 0, 0 ],
-        "gridSize": [ 1, 2 ],
+        "innerMargin": [ 2, 5 ],
+        "gridSize": [ 1, 5 ],
         "img": null,
-        "color": 0,
+        "color": [255, 255, 255, 50],
         "objects": [
             {
-                "id": 13,
-                "position": [ 0, 1 ],
-                "alignment": "center",
-                "type": "progressbar_0",
-                "color": [ "YELLOW", "YELLOW" ]
-            },
-            {
-                "id": 14,
-                "position": [ 0, 1 ],
-                "alignment": "center",
-                "type": "label",
-                "color": "GRAY",
-                "text": " 5 / 12",
-                "fontSize": 0
-            }
-        ]
-    },
-    "main_text1": {
-        "dimension": [ 0, 0, 1, 1 ],
-        "margin": [ 0, 0 ],
-        "innerMargin": [ 0, 2 ],
-        "gridSize": [ 2, 2 ],
-        "img": null,
-        "color": 0,
-        "objects": [
-            {
-                "position": [ 0, 1 ],
-                "alignment": "left",
-                "type": "label",
-                "color": "GRAY",
-                "text": "BEGINNER > AMATEUR > SEMI PRO > PRO > WORLD CLASS",
-                "fontSize": 0
-            },
-            {
-                "id": 16,
+                "id": 1,
                 "position": [ 0, 0 ],
-                "alignment": "left",
+                "alignment": "center",
                 "type": "label",
                 "color": "GRAY",
-                "text": "1,614th >>",
+                "bgColor": "BLUE_DARK",
+                "text": "POINT",
+                "fontSize": 0
+            },
+            {
+                "id": 1,
+                "position": [ 0, 1 ],
+                "alignment": "center",
+                "type": "label",
+                "color": "BLACK",
+                "text": "x10,000",
+                "fontSize": -1
+            },
+            {
+                "id": 2,
+                "position": [ 0, 2 ],
+                "span": [0, 1],
+                "alignment": "center",
+                "type": "icon_circle",
+                "color": "YELLOW",
+                "text": "C"
+            },
+            {
+                "id": 3,
+                "position": [ 0, 4 ],
+                "alignment": "center",
+                "type": "button_rectangle_round_shadow",
+                "color": [ "WHITE", "GREEN" ],
+                "text": "$1.99",
                 "fontSize": 0
             }
         ]

@@ -2,116 +2,21 @@
     "background": {
         "id": 0,
         "img": null,
-        "bgColor": "BG_MAIN",
+        "bgColor": "BG_MAIN_DARK",
         "tile": {
-            "color": "BG_MAIN_PATTERN",
+            "color": "BG_MAIN_PATTERN_DARK",
             "num": [ 14, 10 ]
         },
         "isDrawGrid": false
     },
-  "nodes": [
-    {
-      "comment": "top bg",
-      "id": -1,
-      "dimension": [ 0, 0, 9, 1 ],
-      "margin": [ 0, 0 ],
-      "innerMargin": [ 0, 0 ],
-      "gridSize": [ 1, 1 ],
-      "img": null,
-      "color": [ 52, 66, 83, 220 ],
-      "objects": []
-    },
-    {
-        "comment": "id & level",
-        "id": -1,
-        "dimension": [ 0, 0, 2, 1 ],
-        "margin": [ 10, 5 ],
-        "innerMargin": [ 5, 1 ],
-        "gridSize": [ 2, 2 ],
-        "img": null,
-        "color": 0,
-        "objects": [
-            {
-                "id": 1,
-                "position": [ 0, 0 ],
-                "alignment": "left",
-                "type": "label",
-                "link": null,
-                "img": null,
-                "color": [ 255, 255, 255 ],
-                "text": "teetotal",
-                "fontSize": 0
-            },
-            {
-                "id": 2,
-                "position": [ 1, 0 ],
-                "alignment": "left",
-                "type": "label",
-                "link": null,
-                "img": null,
-                "color": [ 255, 255, 255 ],
-                "text": "lv.16",
-                "fontSize": 0
-            },
-            {
-                "id": 12,
-                "position": [ 0, 1 ],
-                "alignment": "left",
-                "type": "button",
-                "link": null,
-                "img": null,
-                "color": [ 240, 208, 75 ],
-                "text": "1,642th",
-                "fontSize": 0
-            }
-        ]
-    },
-    {
-        "comment": "cash, setting, alarm",
-        "id": -1,
-        "dimension": [ 7, 0, 9, 1 ],
-        "margin": [ 10, 5 ],
-        "innerMargin": [ 2, 1 ],
-        "gridSize": [ 4, 1 ],
-        "img": null,
-        "color": 0,
-        "objects": [
-            {
-                "id": 3,
-                "position": [ 0, 0 ],
-                "alignment": "right",
-                "type": "button_sprite",
-                "link": 1,
-                "img": "icons8-expensive-price-80.png",
-                "color": [ 255, 255, 255 ],
-                "text": " 575,211",
-                "fontSize": -1
-            },
-            {
-                "id": -1,
-                "position": [ 2, 0 ],
-                "alignment": "right",
-                "type": "sprite_button_circle",
-                "link": 10,
-                "img": [ "icons8-settings-100.png", "icons8-settings-filled-100.png" ],
-                "color": [ 55, 227, 71 ],
-                "text": null,
-                "fontSize": 0
-            },
-            {
-                "id": -1,
-                "position": [ 3, 0 ],
-                "alignment": "right",
-                "type": "sprite_button_circle",
-                "link": 10,
-                "img": [ "icons8-alarm-100.png", "icons8-alarm-filled-100.png" ],
-                "color": [ 55, 227, 71 ],
-                "text": null,
-                "fontSize": 0
-            }
-        ]
-    },
-    {
+    "nodes": [
+        {
+          "component": "top_bg"
+        },
+        {
+          "component": "top"
+        },
+        {
         "comment": "bottom menu",
         "id": -1,
         "dimension": [ 0, 6, 9, 7 ],
@@ -186,71 +91,41 @@
         "id": -1,
         "dimension": [ 0, 1, 9, 6 ],
         "dimensionInner": [ 0, 1, 16, 6 ],
-        "margin": [ 10, 10 ],
-        "innerMargin": [ 5, 5 ],
-        "gridSize": [ 5, 1 ],
+        "margin": [ 15, 15 ],
+        "innerMargin": [ 5, 10 ],
+        "gridSize": [ 6, 1 ],
         "img": null,
-        "color": [ 106, 185, 253 ],
+        "color": "BLUE",
         "objects": [
             {
                 "id": 1000,
                 "position": [ 0, 0 ],
-                "alignment": "center",
-                "type": "label",
-                "link": null,
-                "img": null,
-                "color": [ 255, 255, 255 ],
-                "bgColor": [ 0, 0, 0, 255 ],
-                "text": "1",
-                "fontSize": 0
+                "type": "component",
+                "component": "shop_item"
             },
             {
                 "id": 1001,
                 "position": [ 1, 0 ],
-                "alignment": "center",
-                "type": "label",
-                "link": null,
-                "img": null,
-                "color": [ 255, 255, 255 ],
-                "bgColor": [ 0, 0, 0, 255 ],
-                "text": "2",
-                "fontSize": 0
+                "type": "component",
+                "component": "shop_item"
             },
             {
                 "id": 1002,
                 "position": [ 2, 0 ],
-                "alignment": "center",
-                "type": "label",
-                "link": null,
-                "img": null,
-                "color": [ 255, 255, 255 ],
-                "bgColor": [ 0, 0, 0, 255 ],
-                "text": "3",
-                "fontSize": 0
+                "type": "component",
+                "component": "shop_item"
             },
             {
                 "id": -1,
                 "position": [ 3, 0 ],
-                "alignment": "center",
-                "type": "label",
-                "link": null,
-                "img": null,
-                "color": [ 255, 255, 255 ],
-                "bgColor": [ 0, 0, 0, 150 ],
-                "text": "4",
-                "fontSize": 0
+                "type": "component",
+                "component": "shop_item"
             },
             {
                 "id": -1,
                 "position": [ 4, 0 ],
-                "alignment": "center",
-                "type": "label",
-                "link": null,
-                "img": null,
-                "color": [ 255, 255, 255 ],
-                "bgColor": [ 0, 0, 0, 50 ],
-                "text": "5",
-                "fontSize": 0
+                "type": "component",
+                "component": "shop_item"
             }
         ]
     }
