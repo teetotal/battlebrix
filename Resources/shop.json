@@ -101,22 +101,22 @@
                 "id": 1000,
                 "position": [ 0, 0 ],
                 "type": "component",
-                "component": "shop_item"
+                "component": "shop_ad"
+            },
+            {
+                "id": 1000,
+                "position": [ 1, 0 ],
+                "type": "component",
+                "component": "shop_point"
             },
             {
                 "id": 1001,
-                "position": [ 1, 0 ],
-                "type": "component",
-                "component": "shop_item"
-            },
-            {
-                "id": 1002,
                 "position": [ 2, 0 ],
                 "type": "component",
                 "component": "shop_item"
             },
             {
-                "id": -1,
+                "id": 1002,
                 "position": [ 3, 0 ],
                 "type": "component",
                 "component": "shop_item"

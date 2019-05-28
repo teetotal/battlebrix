@@ -23,7 +23,7 @@
                 "alignment": "center",
                 "type": "icon_circle",
                 "color": "YELLOW",
-                "text": "C"
+                "text": "P"
             },
             {
                 "id": 3,
@@ -116,7 +116,7 @@
                 "alignment": "right",
                 "type": "icon_circle",
                 "color": "YELLOW",
-                "text": "C"
+                "text": "P"
             },
             {
                 "position": [ 14, 1 ],
@@ -164,13 +164,13 @@
             }
         ]
     },
-    "shop_item": {
+    "shop_ad": {
         "dimension": [ 0, 0, 1, 1 ],
         "margin": [ 0, 0 ],
-        "innerMargin": [ 2, 5 ],
+        "innerMargin": [ 2, 4 ],
         "gridSize": [ 1, 5 ],
         "img": null,
-        "color": [255, 255, 255, 50],
+        "color": "GRAY",
         "objects": [
             {
                 "id": 1,
@@ -183,9 +183,67 @@
                 "fontSize": 0
             },
             {
+                "position": [ 0, 0 ],
+                "alignment": "left_bottom",
+                "type": "line",
+                "color": "BLUE_LIGHT"
+            },
+            {
                 "id": 1,
                 "position": [ 0, 1 ],
+                "alignment": "center_bottom",
+                "type": "label",
+                "color": "BLACK",
+                "text": "x1,000",
+                "fontSize": -1
+            },
+            {
+                "id": 2,
+                "position": [ 0, 2 ],
+                "span": [0, 1],
                 "alignment": "center",
+                "type": "icon_circle",
+                "color": "YELLOW",
+                "text": "P"
+            },
+            {
+                "id": 3,
+                "position": [ 0, 4 ],
+                "alignment": "center",
+                "type": "button_rectangle_round_shadow",
+                "color": [ "WHITE", "GREEN" ],
+                "img": "icons8-video-100.png"
+            }
+        ]
+    },
+    "shop_point": {
+        "dimension": [ 0, 0, 1, 1 ],
+        "margin": [ 0, 0 ],
+        "innerMargin": [ 2, 4 ],
+        "gridSize": [ 1, 5 ],
+        "img": null,
+        "color": "GRAY",
+        "objects": [
+            {
+                "id": 1,
+                "position": [ 0, 0 ],
+                "alignment": "center",
+                "type": "label",
+                "color": "GRAY",
+                "bgColor": "BLUE_DARK",
+                "text": "POINT",
+                "fontSize": 0
+            },
+            {
+                "position": [ 0, 0 ],
+                "alignment": "left_bottom",
+                "type": "line",
+                "color": "BLUE_LIGHT"
+            },
+            {
+                "id": 1,
+                "position": [ 0, 1 ],
+                "alignment": "center_bottom",
                 "type": "label",
                 "color": "BLACK",
                 "text": "x10,000",
@@ -198,7 +256,7 @@
                 "alignment": "center",
                 "type": "icon_circle",
                 "color": "YELLOW",
-                "text": "C"
+                "text": "P"
             },
             {
                 "id": 3,
@@ -206,7 +264,59 @@
                 "alignment": "center",
                 "type": "button_rectangle_round_shadow",
                 "color": [ "WHITE", "GREEN" ],
-                "text": "$1.99",
+                "text": "₩1,000",
+                "fontSize": 0
+            }
+        ]
+    },
+    "shop_item": {
+        "dimension": [ 0, 0, 1, 1 ],
+        "margin": [ 0, 0 ],
+        "innerMargin": [ 2, 4 ],
+        "gridSize": [ 1, 5 ],
+        "img": null,
+        "color": "GRAY",
+        "objects": [
+            {
+                "id": 1,
+                "position": [ 0, 0 ],
+                "alignment": "center",
+                "type": "label",
+                "color": "GRAY",
+                "bgColor": "BLUE_DARK",
+                "text": "ITEM",
+                "fontSize": 0
+            },
+            {
+                "position": [ 0, 0 ],
+                "alignment": "left_bottom",
+                "type": "line",
+                "color": "BLUE_LIGHT"
+            },
+            {
+                "id": 1,
+                "position": [ 0, 1 ],
+                "alignment": "center_bottom",
+                "type": "label",
+                "color": "BLACK",
+                "text": "x10",
+                "fontSize": -1
+            },
+            {
+                "id": 2,
+                "position": [ 0, 2 ],
+                "span": [0, 1],
+                "alignment": "center",
+                "type": "sprite",
+                "img": "icons8-atomic-bomb-96.png"
+            },
+            {
+                "id": 3,
+                "position": [ 0, 4 ],
+                "alignment": "center",
+                "type": "button_rectangle_round_shadow",
+                "color": [ "WHITE", "YELLOW" ],
+                "text": "P100",
                 "fontSize": 0
             }
         ]

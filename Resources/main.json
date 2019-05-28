@@ -88,16 +88,16 @@
         "innerMargin": [ 10, 3 ],
         "gridSize": [ 1, 5 ],
         "img": null,
-        "color": "BLUE",
+        "color": "BLUE_OPACITY",
         "objects": [
             {
                 "id": 11,
                 "position": [ 0, 0 ],
                 "alignment": "left",
                 "type": "label",
-                "color": "BLUE_LIGHT",
+                "color": "GRAY",
                 "bgColor": "BLUE_DARK",
-                "text": "SEMI PRO 3",
+                "text": "SEMI PRO III",
                 "fontSize": 0
             },
             {
@@ -112,20 +112,20 @@
         "comment": "play",
         "dimension": [ 1, 2, 5, 6 ],
         "margin": [ 10, 20 ],
-        "innerMargin": [ 0, 2 ],
+        "innerMargin": [ 0, 1 ],
         "gridSize": [ 1, 8 ],
         "color": 0,
         "objects": [
             {
                 "id": 13,
-                "position": [ 0, 0 ],
+                "position": [ 0, 3 ],
                 "alignment": "center",
                 "type": "progressbar_0",
                 "color": [ "BLUE_DARK", "BLUE_DARK" ]
             },
             {
                 "id": 14,
-                "position": [ 0, 0 ],
+                "position": [ 0, 3 ],
                 "alignment": "center",
                 "type": "label",
                 "color": "GRAY",
@@ -135,7 +135,7 @@
             {
                 "visible": true,
                 "id": 15,
-                "position": [ 0, 1 ],
+                "position": [ 0, 0 ],
                 "alignment": "left",
                 "type": "label",
                 "color": "GRAY",
@@ -143,9 +143,9 @@
                 "fontSize": 0
             },
             {
-                "visible": true,
+                "visible": false,
                 "id": 16,
-                "position": [ 0, 2 ],
+                "position": [ 0, 3 ],
                 "alignment": "left",
                 "type": "label",
                 "color": "GRAY",
@@ -155,11 +155,12 @@
             {
                 "visible": true,
                 "id": 17,
-                "position": [ 0, 4 ],
+                "position": [ 0, 1 ],
                 "alignment": "left",
-                "type": "label",
-                "color": "YELLOW",
-                "text": "1,614th >>",
+                "type": "label_sprite",
+                "color": "GRAY",
+                "img": "icons8-crown-480.png",
+                "text": "1,614th",
                 "fontSize": 0
             },
             {
@@ -167,7 +168,7 @@
                 "position": [ 0, 7 ],
                 "alignment": "left",
                 "type": "label",
-                "color": "BLUE_DARK",
+                "color": "GRAY",
                 "text": "BEGINNER > AMATEUR > SEMI PRO > PRO > WORLD CLASS",
                 "fontSize": -1
             }

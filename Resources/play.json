@@ -1,34 +1,39 @@
 {
     "background": {
+        "id": 0,
         "img": null,
-        "bgColor": [ "BLACK", "O_Violet" ] ,
+        "bgColor": "BG_MAIN",
+        "tile": {
+            "color": "BG_MAIN_PATTERN",
+            "num": [ 14, 10 ]
+        },
         "isDrawGrid": false
     },
-  "nodes": [
+    "nodes": [
     {
       "comment": "vs",
       "dimension": [ 0, 0, 8, 1 ],
-      "margin": [ 10, 0 ],
+      "margin": [ 10, 5 ],
       "innerMargin": [ 5, 5 ],
-      "gridSize": [ 3, 1 ],
+      "gridSize": [ 1, 1 ],
       "img": null,
       "color": 0,
       "objects": [
         {
-            "position": [ 1, 0 ],
+            "position": [ 0, 0 ],
             "alignment": "center",
             "type": "label",
-            "color": [ 255, 255, 255, 100 ],
+            "color": "GRAY",
             "text": "VS",
-            "fontSize": -2
+            "fontSize": -1
         }
       ]
     },
     {
       "comment": "cpu loading bars",
       "dimension": [ 0, 0, 4, 1 ],
-      "margin": [ 10, 2 ],
-      "innerMargin": [ 0, 2 ],
+      "margin": [ 10, 5 ],
+      "innerMargin": [ 0, 1 ],
       "gridSize": [ 1, 2 ],
       "img": null,
       "color": 0,
@@ -37,8 +42,8 @@
           "id": 1,
           "position": [ 0, 0 ],
           "alignment": "right",
-          "type": "progressbar_2",
-          "color": [ "YELLOW", "YELLOW" ]
+          "type": "progressbar_1",
+          "color": [ "ORANGE", "ORANGE" ]
         },
         {
             "position": [ 0, 0 ],
@@ -52,8 +57,8 @@
           "id": 2,
           "position": [ 0, 1 ],
           "alignment": "right",
-          "type": "progressbar_2",
-          "color": [ "GREEN", "GREEN" ]
+          "type": "progressbar_1",
+          "color": [ "YELLOW", "YELLOW" ]
         },
         {
             "position": [ 0, 1 ],
@@ -68,8 +73,8 @@
     {
       "comment": "my loading bars",
       "dimension": [ 4, 0, 8, 1 ],
-      "margin": [ 10, 2 ],
-      "innerMargin": [ 0, 2 ],
+      "margin": [ 10, 5 ],
+      "innerMargin": [ 0, 1 ],
       "gridSize": [ 1, 2 ],
       "img": null,
       "color": 0,
@@ -79,7 +84,7 @@
           "position": [ 0, 0 ],
           "alignment": "center",
           "type": "progressbar_2",
-          "color": [ "YELLOW", "YELLOW" ]
+          "color": [ "ORANGE", "ORANGE" ]
         },
         {
             "position": [ 0, 0 ],
@@ -93,8 +98,8 @@
           "id": 7,
           "position": [ 0, 1 ],
           "alignment": "center",
-          "type": "progressbar_2",
-          "color": [ "GREEN", "GREEN" ]
+          "type": "progressbar_1",
+          "color": [ "YELLOW", "YELLOW" ]
         },
         {
             "position": [ 0, 1 ],
@@ -107,19 +112,46 @@
       ]
     },
     {
+        "comment": "CPU name",
+        "dimension": [ 0, 6, 4, 7 ],
+        "margin": [ 10, 5 ],
+        "innerMargin": [ 0, 1 ],
+        "gridSize": [ 1, 2 ],
+        "img": null,
+        "color": [ 255, 255, 255, 150 ],
+        "objects": [
+            {
+                "position": [ 0, 0 ],
+                "alignment": "center",
+                "type": "label",
+                "color": "GRAY",
+                "text": "CPU",
+                "fontSize": 0
+            },
+            {
+                "position": [ 0, 1 ],
+                "alignment": "center",
+                "type": "label",
+                "color": "GRAY",
+                "text": "Lv.17",
+                "fontSize": -1
+            }
+        ]
+    },
+    {
         "comment": "my touch bars",
         "dimension": [ 4, 6, 8, 7 ],
         "margin": [ 10, 5 ],
         "innerMargin": [ 0, 0 ],
         "gridSize": [ 1, 1 ],
         "img": null,
-        "color": [ 255, 255, 255, 100 ],
+        "color": [ 255, 255, 255, 150 ],
         "objects": [
             {
             "position": [ 0, 0 ],
             "alignment": "center",
             "type": "label",
-            "color": [ 255, 255, 255, 10 ],
+            "color": "GRAY",
             "text": "CONTROL PAD",
             "fontSize": -1
             }
@@ -129,13 +161,15 @@
       "comment": "cpu area",
       "id": 11,
       "dimension": [ 0, 1, 4, 6 ],
-      "margin": [ 10, 0 ],
+      "margin": [ 10, 5 ],
       "innerMargin": [ 0, 0 ],
       "gridSize": [ 1, 1 ],
       "img": null,
-      "color": "BLACK_OPACITY",
+      "color": 150,
       "objects": [
           {
+              "id": 500,
+              "visible": false,
               "position": [ 0, 0 ],
               "alignment": "center",
               "type": "rectangle_line",
@@ -147,23 +181,12 @@
       "comment": "my area",
       "id": 10,
       "dimension": [ 4, 1, 8, 6 ],
-      "margin": [ 10, 0 ],
+      "margin": [ 10, 5 ],
       "innerMargin": [ 0, 0 ],
       "gridSize": [ 1, 1 ],
       "img": null,
-      "color": "BLACK_OPACITY",
-      "tile-": {
-          "color": "WHITE_OPACITY_DEEP",
-          "num": [12, 12]
-      },
+      "color": 150,
       "objects": [
-          {
-              "id": 500,
-              "position": [ 0, 0 ],
-              "alignment": "center",
-              "type": "rectangle_line",
-              "color": "WHITE"
-          },
           {
               "id": 501,
               "visible": false,
@@ -188,23 +211,19 @@
           "id": 31,
           "position": [ 0, 0 ],
           "alignment": "left",
-          "type": "button_circle",
+          "type": "sprite_button_circle",
           "link": 1,
-          "img": null,
-          "color": [ "DARKGRAY", "YELLOW" ],
-          "text": "x2",
-          "fontSize": 0
+          "img": "icons8-synchronize-480.png",
+          "color": "BLUE"
         },
         {
           "id": 32,
           "position": [ 0, 1 ],
           "alignment": "left",
-          "type": "button_circle",
+          "type": "sprite_button_circle",
           "link": 2,
-          "img": null,
-          "color": [ "DARKGRAY", "YELLOW" ],
-          "text": "AT",
-          "fontSize": 0
+          "img": "icons8-hyper-potion-96.png",
+          "color": "YELLOW"
         },
         {
           "id": 33,
@@ -212,10 +231,8 @@
           "alignment": "left",
           "type": "sprite_button_circle",
           "link": 3,
-          "img": [ "icons8-defense-80.png", "icons8-defense-80.png" ],
-          "color": "GREEN",
-          "text": "DP",
-          "fontSize": 0
+          "img": "icons8-atomic-bomb-96.png",
+          "color": "GREEN"
         }
       ]
     }
