@@ -42,8 +42,8 @@
           "id": 1,
           "position": [ 0, 0 ],
           "alignment": "right",
-          "type": "progressbar_1",
-          "color": [ "ORANGE", "ORANGE" ]
+          "type": "progressbar_0",
+          "color": [ "PINK", "PINK" ]
         },
         {
             "position": [ 0, 0 ],
@@ -57,8 +57,8 @@
           "id": 2,
           "position": [ 0, 1 ],
           "alignment": "right",
-          "type": "progressbar_1",
-          "color": [ "YELLOW", "YELLOW" ]
+          "type": "progressbar_0",
+          "color": [ "BLUE", "BLUE" ]
         },
         {
             "position": [ 0, 1 ],
@@ -83,8 +83,8 @@
           "id": 6,
           "position": [ 0, 0 ],
           "alignment": "center",
-          "type": "progressbar_2",
-          "color": [ "ORANGE", "ORANGE" ]
+          "type": "progressbar_0",
+          "color": [ "PINK", "PINK" ]
         },
         {
             "position": [ 0, 0 ],
@@ -98,8 +98,8 @@
           "id": 7,
           "position": [ 0, 1 ],
           "alignment": "center",
-          "type": "progressbar_1",
-          "color": [ "YELLOW", "YELLOW" ]
+          "type": "progressbar_0",
+          "color": [ "BLUE", "BLUE" ]
         },
         {
             "position": [ 0, 1 ],
@@ -116,7 +116,7 @@
         "dimension": [ 0, 6, 4, 7 ],
         "margin": [ 10, 5 ],
         "innerMargin": [ 0, 1 ],
-        "gridSize": [ 1, 2 ],
+        "gridSize": [ 1, 1 ],
         "img": null,
         "color": [ 255, 255, 255, 150 ],
         "objects": [
@@ -125,15 +125,7 @@
                 "alignment": "center",
                 "type": "label",
                 "color": "GRAY",
-                "text": "CPU",
-                "fontSize": 0
-            },
-            {
-                "position": [ 0, 1 ],
-                "alignment": "center",
-                "type": "label",
-                "color": "GRAY",
-                "text": "Lv.17",
+                "text": "CPU Lv.17",
                 "fontSize": -1
             }
         ]
