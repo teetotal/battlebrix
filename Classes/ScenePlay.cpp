@@ -51,14 +51,21 @@ void ScenePlay::callback(Ref* pSender, int from, int link) {
         case 1:
             setVibrate(mLayer);
             break;
-        case 2:
-            this->replaceScene(SceneMain::create());
+        case 2: {
+            guiExt::addMovingEffect(getNodeById(0)
+                                    , ui_wizard_share::inst()->getPalette()->getColor("WHITE_OPACITY_DEEP")
+                                    , "icons8-synchronize-480.png"
+                                    , false
+                                    );
             break;
+        }
         case 3:
             mBall->getPhysicsBody()->setVelocity(Vec2(mLayer->getContentSize()));
             break;
-        default:
+        case 999:
             this->replaceScene(SceneMain::create());
+            break;
+        default:
             break;
     }
 }

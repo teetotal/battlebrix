@@ -54,6 +54,7 @@ private:
     void addObstacle(Node * layer, Vec2 pos);
     
     enum ID_NODE {
+        ID_NODE_BG = 0,
         ID_NODE_MY_AREA = 10,
         ID_NODE_OTHER_AREA
     };

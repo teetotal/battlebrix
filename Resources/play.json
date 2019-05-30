@@ -1,6 +1,5 @@
 {
     "background": {
-        "id": 0,
         "img": null,
         "bgColor": "BG_MAIN",
         "tile": {
@@ -110,6 +109,26 @@
             "fontSize": -1
         }
       ]
+    },
+    {
+        "comment": "exit",
+        "dimension": [ 8, 0, 9, 1 ],
+        "margin": [ 5, 5 ],
+        "innerMargin": [ 0, 0 ],
+        "gridSize": [ 3, 1 ],
+        "img": null,
+        "color": 0,
+        "objects": [
+            {
+                "link": 999,
+                "position": [ 2, 0 ],
+                "alignment": "center_top",
+                "type": "button_circle",
+                "color": [ "WHITE", "DARKGRAY"],
+                "text": "x",
+                "fontSize": -1
+            }
+        ]
     },
     {
         "comment": "CPU name",
@@ -227,6 +246,15 @@
           "color": "GREEN"
         }
       ]
+    },
+    {
+        "comment": "for effect",
+        "id": 0,
+        "dimension": [ 0, 0, 9, 7 ],
+        "margin": [ 0, 0 ],
+        "innerMargin": [ 0, 0 ],
+        "gridSize": [ 1, 1 ],
+        "color": 0
     }
   ]
 }
