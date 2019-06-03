@@ -60,5 +60,6 @@ private:
     };
     Node * mLayer, * mLayerOther, * mBall;
     Size mGridSize;
+    float mFontSizeCombo;
 };
 #endif // __SCENE_PLAY_H__

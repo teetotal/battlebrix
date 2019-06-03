@@ -11,6 +11,16 @@
 //#define GRID_AREA Vec2(2.f, 3.f)
 #define RATIO_OBSTACLE_PER_GRID 0.6f
 
+enum _PHYSICS_ID {
+    _PHYSICS_ID_MY_BALL = 0x01 << 0,
+    _PHYSICS_ID_MY_BOARD = 0x01 << 1,
+    _PHYSICS_ID_MY_OBSTACLE_1 = 0x01 << 2,
+    
+    _PHYSICS_ID_1_BALL = 0x01 << 10,
+    _PHYSICS_ID_1_BOARD = 0x01 << 11,
+    _PHYSICS_ID_1_OBSTACLE_1 = 0x01 << 12,
+};
+
 bool ScenePlay::init()
 {
     this->loadFromJson("play", "play.json");
@@ -25,6 +35,7 @@ bool ScenePlay::init()
     mGridSize   = gui::inst()->getGridSize(mLayer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO);
     mGridSize.width *= RATIO_OBSTACLE_PER_GRID;
     mGridSize.height *= RATIO_OBSTACLE_PER_GRID;
+    mFontSizeCombo = gui::inst()->getFontSize(mGridSize) * 1.5f;
     
     initPhysicsBody(mLayer, PHYSICSMATERIAL_OBSTACLE, false, SEPPED);
     initPhysicsBody(mLayerOther, PHYSICSMATERIAL_OBSTACLE, false, SEPPED);
@@ -33,7 +44,7 @@ bool ScenePlay::init()
 //    gui::inst()->drawGrid(mLayer, mLayer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO);
     mBall = createBall();
     
-    for(int n=0; n < 10; n ++) {
+    for(int n=0; n < 15; n ++) {
         addObstacle(mLayer, Vec2(getRandValue(8), getRandValue(5)));
         addObstacle(mLayerOther, Vec2(getRandValue(8), getRandValue(5)));
     }
@@ -86,7 +97,12 @@ Node * ScenePlay::createBall() {
     
     Vec2 position = gui::inst()->getPointVec2(2, 2, ALIGNMENT_CENTER, mLayer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
     auto ball = guiExt::drawCircleForPhysics(mLayer, position, mGridSize.height / 2.f, color);
-    this->setPhysicsBodyCircle(ball, PHYSICSMATERIAL, true);
+    this->setPhysicsBodyCircle(ball, PHYSICSMATERIAL, true
+                               , _PHYSICS_ID_MY_BALL
+                               , -1
+                               , -1 // _PHYSICS_ID_MY_BOARD | _PHYSICS_ID_MY_OBSTACLE_1
+                               ,  _PHYSICS_ID_MY_OBSTACLE_1
+                               );
     ball->getPhysicsBody()->setVelocityLimit(mLayer->getContentSize().width * 1.f);
     this->getPhysicsWorld()->setAutoStep(true);
    
@@ -124,7 +140,13 @@ void ScenePlay::addObstacle(Node * layer, Vec2 pos) {
 //    auto rect = guiExt::drawRectForPhysics(layer, position, mGridSize, colors[getRandValue(sizeof(colors) / sizeof(colors[0]))], true, .1f);
     auto rect = guiExt::drawRectForPhysics(layer, position, mGridSize, colors[(int)pos.y], true, .1f);
 //    auto rect = guiExt::drawRectForPhysics(layer, position, mGridSize, ui_wizard_share::inst()->getPalette()->getColor4F("PINK"), true, .1);
-    this->setPhysicsBodyRect(rect, PHYSICSMATERIAL_OBSTACLE, false);
+    int id = 123;
+    this->setPhysicsBodyRect(rect, PHYSICSMATERIAL_OBSTACLE, false
+                             , id
+                             , -1
+                             , -1 //_PHYSICS_ID_MY_BALL
+                             , _PHYSICS_ID_MY_BALL
+                             );
 }
 
 // touch ===========================================================================
@@ -138,5 +160,35 @@ void ScenePlay::onTouchMoved(Touch *touch, Event *event) {
     
 }
 bool ScenePlay::onContactBegin(PhysicsContact &contact) {
+    int other;
+    bitmask st = getBitmask(contact);
+    if(isCollosion(contact, _PHYSICS_ID_MY_BALL, other)) {
+        CCLOG("Collision %d with %d, Category %d, %d, Collision %d, %d"
+              , _PHYSICS_ID_MY_BALL, other
+              , st.categoryA, st.categoryB
+              , st.collisionA, st.collisionB
+              );
+//
+//                CCLOG("Category %d, %d", st.categoryA, st.categoryB);
+//                CCLOG("Collision %d, %d", st.collisionA, st.collisionB);
+//                CCLOG("Contact %d, %d", st.contactA, st.contactB);
+    }
+    
+    if(isContact(contact, _PHYSICS_ID_MY_BALL, other)) {
+        const Vec2 pos = mBall->getPosition();
+        
+        CCLOG("Contact %d, with %d, Category %d, %d, Contact %d, %d, (%f, %f)"
+              , _PHYSICS_ID_MY_BALL, other
+              , st.categoryA, st.categoryB
+              , st.contactA, st.contactB
+              , pos.x, pos.y
+              );
+        
+        auto label = gui::inst()->addLabelAutoDimension(0, 0, "COMBO", mLayer, mFontSizeCombo, ALIGNMENT_CENTER, ui_wizard_share::inst()->getPalette()->getColor3B("ORANGE"));
+        label->enableGlow(ui_wizard_share::inst()->getPalette()->getColor4B("BLACK"));
+        label->setPosition(pos);
+        label->runAction( Sequence::create(ScaleBy::create(0.3, 1.5), RemoveSelf::create(), NULL) );
+        
+    }
     return true;
 }

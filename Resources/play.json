@@ -42,7 +42,7 @@
           "position": [ 0, 0 ],
           "alignment": "right",
           "type": "progressbar_0",
-          "color": [ "PINK", "PINK" ]
+          "color": [ "YELLOW", "YELLOW" ]
         },
         {
             "position": [ 0, 0 ],
@@ -83,7 +83,7 @@
           "position": [ 0, 0 ],
           "alignment": "center",
           "type": "progressbar_0",
-          "color": [ "PINK", "PINK" ]
+          "color": [ "YELLOW", "YELLOW" ]
         },
         {
             "position": [ 0, 0 ],
