@@ -38,34 +38,18 @@
       "color": 0,
       "objects": [
         {
-          "id": 1,
+          "id": 3,
           "position": [ 0, 0 ],
           "alignment": "right",
-          "type": "progressbar_0",
-          "color": [ "YELLOW", "YELLOW" ]
+          "type": "progressbar_1",
+          "color": [ "YELLOW", "ORANGE" ]
         },
         {
-            "position": [ 0, 0 ],
-            "alignment": "center",
-            "type": "label",
-            "color": "WHITE",
-            "text": "65%",
-            "fontSize": -1
-        },
-        {
-          "id": 2,
+          "id": 4,
           "position": [ 0, 1 ],
           "alignment": "right",
-          "type": "progressbar_0",
+          "type": "progressbar_2",
           "color": [ "BLUE", "BLUE" ]
-        },
-        {
-            "position": [ 0, 1 ],
-            "alignment": "center",
-            "type": "label",
-            "color": "WHITE",
-            "text": "65%",
-            "fontSize": -1
         }
       ]
     },
@@ -79,34 +63,18 @@
       "color": 0,
       "objects": [
         {
-          "id": 6,
+          "id": 1,
           "position": [ 0, 0 ],
           "alignment": "center",
-          "type": "progressbar_0",
+          "type": "progressbar_2",
           "color": [ "YELLOW", "YELLOW" ]
         },
         {
-            "position": [ 0, 0 ],
-            "alignment": "center",
-            "type": "label",
-            "color": "WHITE",
-            "text": "65%",
-            "fontSize": -1
-        },
-        {
-          "id": 7,
+          "id": 2,
           "position": [ 0, 1 ],
           "alignment": "center",
-          "type": "progressbar_0",
-          "color": [ "BLUE", "BLUE" ]
-        },
-        {
-            "position": [ 0, 1 ],
-            "alignment": "center",
-            "type": "label",
-            "color": "WHITE",
-            "text": "65%",
-            "fontSize": -1
+          "type": "progressbar_1",
+          "color": [ "BLUE", "BLACK" ]
         }
       ]
     },

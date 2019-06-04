@@ -26,6 +26,7 @@
 #define __SCENE_PLAY_H__
 
 #include "ui/ui_wizard.h"
+#include "ui/ui_progressbar.h"
 USING_NS_CC;
 
 // ScenePlay ==================================
@@ -53,13 +54,10 @@ private:
     void setVibrate(Node * layer);
     void addObstacle(Node * layer, Vec2 pos);
     
-    enum ID_NODE {
-        ID_NODE_BG = 0,
-        ID_NODE_MY_AREA = 10,
-        ID_NODE_OTHER_AREA
-    };
     Node * mLayer, * mLayerOther, * mBall;
     Size mGridSize;
     float mFontSizeCombo;
+    ui_progressbar * mProgressbarMyHP, * mProgressbarMyMP;
+    ui_progressbar * mProgressbarOtherHP, * mProgressbarOtherMP;
 };
 #endif // __SCENE_PLAY_H__

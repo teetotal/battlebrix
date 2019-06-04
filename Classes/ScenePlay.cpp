@@ -21,6 +21,16 @@ enum _PHYSICS_ID {
     _PHYSICS_ID_1_OBSTACLE_1 = 0x01 << 12,
 };
 
+enum ID_NODE {
+    ID_NODE_BG = 0,
+    ID_HP_MY,
+    ID_MP_MY,
+    ID_HP_OTHER,
+    ID_MP_OTHER,
+    ID_NODE_MY_AREA = 10,
+    ID_NODE_OTHER_AREA
+};
+
 bool ScenePlay::init()
 {
     this->loadFromJson("play", "play.json");
@@ -36,6 +46,18 @@ bool ScenePlay::init()
     mGridSize.width *= RATIO_OBSTACLE_PER_GRID;
     mGridSize.height *= RATIO_OBSTACLE_PER_GRID;
     mFontSizeCombo = gui::inst()->getFontSize(mGridSize) * 1.5f;
+    
+    mProgressbarMyHP = (ui_progressbar*)getNodeById(ID_HP_MY);
+    mProgressbarMyMP = (ui_progressbar*)getNodeById(ID_MP_MY);
+    
+    mProgressbarOtherHP = (ui_progressbar*)getNodeById(ID_HP_OTHER);
+    mProgressbarOtherMP = (ui_progressbar*)getNodeById(ID_MP_OTHER);
+    
+    mProgressbarMyHP->setValue(1.f);
+    mProgressbarMyMP->setValue(0.f);
+    
+    mProgressbarOtherHP->setValue(1.f);
+    mProgressbarOtherMP->setValue(0.f);
     
     initPhysicsBody(mLayer, PHYSICSMATERIAL_OBSTACLE, false, SEPPED);
     initPhysicsBody(mLayerOther, PHYSICSMATERIAL_OBSTACLE, false, SEPPED);
@@ -188,6 +210,20 @@ bool ScenePlay::onContactBegin(PhysicsContact &contact) {
         label->enableGlow(ui_wizard_share::inst()->getPalette()->getColor4B("BLACK"));
         label->setPosition(pos);
         label->runAction( Sequence::create(ScaleBy::create(0.3, 1.5), RemoveSelf::create(), NULL) );
+        
+        if(mProgressbarMyMP->setValueIncrese(0.05f) >= 1.f) {
+            mProgressbarMyMP->setValue(0.f);
+            
+            mProgressbarMyMP->runAction(Blink::create(0.5, 2));
+            guiExt::addMovingEffect(getNodeById(0)
+                                    , ui_wizard_share::inst()->getPalette()->getColor("WHITE_OPACITY_DEEP")
+                                    , "icons8-synchronize-480.png"
+                                    , false
+                                    );
+            
+            mProgressbarOtherHP->setValueDecrese(0.02);
+            mProgressbarOtherHP->runAction(Blink::create(0.5, 2));
+        }
         
     }
     return true;
