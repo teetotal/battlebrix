@@ -41,15 +41,15 @@
           "id": 3,
           "position": [ 0, 0 ],
           "alignment": "right",
-          "type": "progressbar_1",
-          "color": [ "YELLOW", "ORANGE" ]
+          "type": "progressbar",
+          "color": [ "YELLOW", "BLACK" ]
         },
         {
           "id": 4,
           "position": [ 0, 1 ],
           "alignment": "right",
-          "type": "progressbar_2",
-          "color": [ "BLUE", "BLUE" ]
+          "type": "progressbar",
+          "color": [ "BLUE", "BLACK" ]
         }
       ]
     },
@@ -66,14 +66,14 @@
           "id": 1,
           "position": [ 0, 0 ],
           "alignment": "center",
-          "type": "progressbar_2",
-          "color": [ "YELLOW", "YELLOW" ]
+          "type": "progressbar",
+          "color": [ "YELLOW", "BLACK" ]
         },
         {
           "id": 2,
           "position": [ 0, 1 ],
           "alignment": "center",
-          "type": "progressbar_1",
+          "type": "progressbar",
           "color": [ "BLUE", "BLACK" ]
         }
       ]

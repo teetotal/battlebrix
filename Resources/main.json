@@ -120,8 +120,8 @@
                 "id": 13,
                 "position": [ 0, 3 ],
                 "alignment": "center",
-                "type": "progressbar_0",
-                "color": [ "BLUE_DARK", "BLUE_DARK" ]
+                "type": "progressbar",
+                "color": [ "BLUE_LIGHT", "BLUE_DARK" ]
             },
             {
                 "id": 14,

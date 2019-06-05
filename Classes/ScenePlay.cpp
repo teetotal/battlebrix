@@ -85,11 +85,7 @@ void ScenePlay::callback(Ref* pSender, int from, int link) {
             setVibrate(mLayer);
             break;
         case 2: {
-            guiExt::addMovingEffect(getNodeById(0)
-                                    , ui_wizard_share::inst()->getPalette()->getColor("WHITE_OPACITY_DEEP")
-                                    , "icons8-synchronize-480.png"
-                                    , false
-                                    );
+            
             break;
         }
         case 3:
@@ -215,14 +211,17 @@ bool ScenePlay::onContactBegin(PhysicsContact &contact) {
             mProgressbarMyMP->setValue(0.f);
             
             mProgressbarMyMP->runAction(Blink::create(0.5, 2));
+            
             guiExt::addMovingEffect(getNodeById(0)
                                     , ui_wizard_share::inst()->getPalette()->getColor("WHITE_OPACITY_DEEP")
-                                    , "icons8-synchronize-480.png"
+                                    , "icons8-action-96.png"
+                                    , "ATTACK"
+                                    , ui_wizard_share::inst()->getPalette()->getColor("GRAY")
                                     , false
                                     );
             
-            mProgressbarOtherHP->setValueDecrese(0.02);
-            mProgressbarOtherHP->runAction(Blink::create(0.5, 2));
+            mProgressbarOtherHP->setValueDecrese(0.1);
+            setVibrate(mLayerOther);
         }
         
     }
