@@ -65,5 +65,7 @@ private:
     
     COLOR_RGB colors[5];
     clock_t mLatestCollisionWithBoard;
+    
+    bool mLockShakeMy, mLockShakeOther;
 };
 #endif // __SCENE_PLAY_H__

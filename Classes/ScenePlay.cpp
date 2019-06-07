@@ -4,16 +4,16 @@
 #include "ui_ext.h"
 #include "library/util.h"
 
-#define SEPPED 1.f
+#define SEPPED 1.5f
 #define PHYSICSMATERIAL             PhysicsMaterial(.1f, 1.f, 0.f)
 #define PHYSICSMATERIAL_OBSTACLE    PhysicsMaterial(.1f, 1.f, 0.f)
 #define PHYSICSMATERIAL_BOARD    PhysicsMaterial(.1f, 1.f, 0.f)
 #define GRID_AREA Vec2(8.f, 13.f)
 //#define GRID_AREA Vec2(2.f, 3.f)
 #define RATIO_OBSTACLE_PER_GRID 0.6f
-#define _ID_BOTTOM -1
+#define _ID_BOTTOM 0
 enum _BOARD_ID {
-    _BOARD_ID_L = 0,
+    _BOARD_ID_L = 1,
     _BOARD_ID_LM,
     _BOARD_ID_RM,
     _BOARD_ID_R
@@ -46,6 +46,8 @@ bool ScenePlay::init()
     colors[2] = ui_wizard_share::inst()->getPalette()->getColor("GREEN_LIGHT");
     colors[3] = ui_wizard_share::inst()->getPalette()->getColor("BLUE_LIGHT");
     colors[4] = ui_wizard_share::inst()->getPalette()->getColor("PURPLE_LIGHT");
+    
+    mLockShakeMy = false;
     
     this->loadFromJson("play", "play.json");
 //    ((LoadingBar *)this->getNodeById(1))->setDirection(LoadingBar::Direction::RIGHT);
@@ -209,6 +211,21 @@ void ScenePlay::addObstacle(Node * layer, Vec2 pos) {
 }
 // setVibrate ===========================================================================
 void ScenePlay::setVibrate(Node * layer) {
+    CallFunc * cf;
+    if(layer == mLayer) {
+        if(mLockShakeMy)
+            return;
+        
+        mLockShakeMy = true;
+        cf = CallFunc::create([=]() { mLockShakeMy = false; });
+    }
+    if(layer == mLayerOther) {
+        if(mLockShakeOther)
+            return;
+        
+        mLockShakeOther = true;
+        cf = CallFunc::create([=]() { mLockShakeOther = false; });
+    }
     
     Vec2 pos = layer->getPosition();
     float duration = 0.1f;
@@ -218,7 +235,10 @@ void ScenePlay::setVibrate(Node * layer) {
                                       , MoveTo::create(duration, Vec2(pos.x - width, pos.y))
                                       , MoveTo::create(duration, Vec2(pos.x + width, pos.y))
                                       , MoveTo::create(duration, pos)
+                                      , cf
                                       , NULL));
+    
+    
 }
 
 // touch ===========================================================================
@@ -253,7 +273,7 @@ bool ScenePlay::onContactBegin(PhysicsContact &contact) {
     if(isContact(contact, _PHYSICS_ID_MY_BALL, other)) {
         if(other == _ID_BOTTOM) {
             mProgressbarMyHP->setValueDecrese(0.1);
-            mProgressbarMyHP->runAction(Blink::create(0.5, 2));
+            mProgressbarMyHP->blink();
             setVibrate(mLayer);
             return true;
         }
@@ -261,11 +281,17 @@ bool ScenePlay::onContactBegin(PhysicsContact &contact) {
             //동시 충돌 방지
             clock_t now = clock();
             if(now - mLatestCollisionWithBoard < 10) {
-                CCLOG("%f concurrent collision %d", mLatestCollisionWithBoard, other);
+                CCLOG("%lf concurrent collision %d", mLatestCollisionWithBoard, other);
                 return true;
             }
             else
                 mLatestCollisionWithBoard = now;
+            
+            if(mBall->getPosition().y > mBoardMy->getPosition().y + mBoardMy->getContentSize().height * 2.f)
+                return false;
+            
+            CCLOG("Other = %d, (%f)", other, mBall->getPosition().y);
+            
             
             switch((_BOARD_ID)other) {
                 case _BOARD_ID_L:
@@ -302,7 +328,7 @@ bool ScenePlay::onContactBegin(PhysicsContact &contact) {
         if(mProgressbarMyMP->setValueIncrese(0.05f) >= 1.f) {
             mProgressbarMyMP->setValue(0.f);
             
-            mProgressbarMyMP->runAction(Blink::create(0.5, 2));
+            mProgressbarMyMP->blink();
             
             guiExt::addMovingEffect(getNodeById(0)
                                     , ui_wizard_share::inst()->getPalette()->getColor("WHITE_OPACITY_DEEP")
@@ -313,7 +339,7 @@ bool ScenePlay::onContactBegin(PhysicsContact &contact) {
                                     );
             
             mProgressbarOtherHP->setValueDecrese(0.1);
-            mProgressbarOtherHP->runAction(Blink::create(0.5, 2));
+            mProgressbarOtherHP->blink();
             setVibrate(mLayerOther);
         }
         
