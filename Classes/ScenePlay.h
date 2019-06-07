@@ -39,6 +39,10 @@ public:
     virtual bool init();
     CREATE_FUNC_PHYSICS(ScenePlay);
     
+    Node * createBall(Node * p);
+    Node * createBoard(Node * p);
+    Node * createBottom(Node * p);
+    
 protected:
     virtual void callback(Ref* pSender, int from, int link);
     virtual const string getText(const string& defaultString, int id);
@@ -49,23 +53,36 @@ private:
     void onTouchMoved(Touch *touch, Event *event);
     bool onContactBegin(PhysicsContact &contact);
     
-    Node * createBall();
-    Node * createBoard(Node * p);
-    Node * createBottom(Node * p);
-    
-    void setVibrate(Node * layer);
     void addObstacle(Node * layer, Vec2 pos);
     
-    Node * mLayer, * mLayerOther, * mBall;
-    Node * mBoardMy, * mBoardOther;
+    //Node * mLayer, * mLayerOther, * mBall;
     Size mGridSize, mObstacleSize;
     float mFontSizeCombo;
-    ui_progressbar * mProgressbarMyHP, * mProgressbarMyMP;
-    ui_progressbar * mProgressbarOtherHP, * mProgressbarOtherMP;
     
     COLOR_RGB colors[5];
-    clock_t mLatestCollisionWithBoard;
     
-    bool mLockShakeMy, mLockShakeOther;
+    struct PLAYER {
+        Node * layer;
+        Node * ball;
+        Node * board;
+        Node * obstacles[8][8];
+        ui_progressbar * hp, * mp;
+        bool lockShake;
+        clock_t latestCollisionWithBoard;
+        ScenePlay * pScene;
+        
+        PLAYER(){
+            bool lockShake = false;
+            latestCollisionWithBoard = 0;
+        };
+        void init(ScenePlay* p, int layerId, int hpId, int mpId);
+        void vibrate();
+        bool onContact(int id); // true면 other hp 깎음
+        void decreseHP();
+    };
+    
+    PLAYER mPlayers[2];
+    
+    
 };
 #endif // __SCENE_PLAY_H__

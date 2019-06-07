@@ -12,6 +12,11 @@
 //#define GRID_AREA Vec2(2.f, 3.f)
 #define RATIO_OBSTACLE_PER_GRID 0.6f
 #define _ID_BOTTOM 0
+
+enum _PLAYER_ID {
+    _PLAYER_ID_ME = 0,
+    _PLAYER_ID_OTHER,
+};
 enum _BOARD_ID {
     _BOARD_ID_L = 1,
     _BOARD_ID_LM,
@@ -38,7 +43,114 @@ enum ID_NODE {
     ID_NODE_MY_AREA = 10,
     ID_NODE_OTHER_AREA
 };
+// ----------------------------------------------------------------------------------------------------------------
+void ScenePlay::PLAYER::init(ScenePlay* p, int layerId, int hpId, int mpId) {
+    layer = p->getNodeById(layerId);
+    hp = (ui_progressbar*)p->getNodeById(hpId);
+    mp = (ui_progressbar*)p->getNodeById(mpId);
+    hp->setValue(1.f);
+    mp->setValue(0.f);
+    p->initPhysicsBody(layer, PHYSICSMATERIAL_OBSTACLE, false, SEPPED);
+    /*
+    // add ball
+    ball = p->createBall(layer);
+    // add board
+    board = p->createBoard(layer);
+    // add bottom
+    p->createBottom(layer);
+    */
+    pScene = p;
+}
+// vibrate ===========================================================================
+void ScenePlay::PLAYER::vibrate() {
+    if(lockShake)
+        return;
+    lockShake = true;
+    
+    Vec2 pos = layer->getPosition();
+    float duration = 0.1f;
+    float width = 5.f;
+    layer->runAction(Sequence::create( MoveTo::create(duration, Vec2(pos.x - width, pos.y - width))
+                                      , MoveTo::create(duration, Vec2(pos.x + width, pos.y + width))
+                                      , MoveTo::create(duration, Vec2(pos.x - width, pos.y))
+                                      , MoveTo::create(duration, Vec2(pos.x + width, pos.y))
+                                      , MoveTo::create(duration, pos)
+                                      , CallFunc::create([=]() { lockShake = false; })
+                                      , NULL));
+}
+// decreseHP ===========================================================================
+void ScenePlay::PLAYER::decreseHP() {
+    hp->setValueDecrese(0.1);
+    hp->blink();
+    vibrate();
+}
+// onContact ===========================================================================
+bool ScenePlay::PLAYER::onContact(int id) {
+    
+    const Vec2 ballPosition = ball->getPosition();
+    
+    if(id == _ID_BOTTOM) {
+        hp->setValueDecrese(0.1);
+        mp->blink();
+        vibrate();
+    }
+    else if(id >= _BOARD_ID_L && id <= _BOARD_ID_R) {
+        //동시 충돌 방지
+        clock_t now = clock();
+        if(now - latestCollisionWithBoard < 10) {
+            CCLOG("%lf concurrent collision %d", latestCollisionWithBoard, id);
+            return false;
+        }
+        else
+            latestCollisionWithBoard = now;
+        
+        //보드에 맞지도 않았는데 튀어 나가는 현상이 있음.
+        if(ballPosition.y > board->getPosition().y + board->getContentSize().height * 2.f)
+            return false;
+        
+        CCLOG("Other = %d, (%f)", id, ballPosition.y);
+        
+        
+        switch((_BOARD_ID)id) {
+            case _BOARD_ID_L:
+                ball->getPhysicsBody()->setVelocity(Vec2(layer->getContentSize().width * -1.f, layer->getContentSize().height));
+                break;
+            case _BOARD_ID_LM:
+                ball->getPhysicsBody()->setVelocity(Vec2(layer->getContentSize().width * -0.5f, layer->getContentSize().height));
+                break;
+            case _BOARD_ID_RM:
+                ball->getPhysicsBody()->setVelocity(Vec2(layer->getContentSize().width * 0.5f, layer->getContentSize().height));
+                break;
+            case _BOARD_ID_R:
+                ball->getPhysicsBody()->setVelocity(Vec2(layer->getContentSize()));
+                break;
+            default:
+                break;
+        }
+        
+    } else {
+        auto label = gui::inst()->addLabelAutoDimension(0, 0, "COMBO", layer, pScene->mFontSizeCombo, ALIGNMENT_CENTER, ui_wizard_share::inst()->getPalette()->getColor3B("ORANGE"));
+        label->enableGlow(ui_wizard_share::inst()->getPalette()->getColor4B("BLACK"));
+        label->setPosition(ballPosition);
+        label->runAction( Sequence::create(ScaleBy::create(0.3, 1.5), RemoveSelf::create(), NULL) );
+        
+        if(mp->setValueIncrese(0.05f) >= 1.f) {
+            mp->setValue(0.f);
+            mp->blink();
+            guiExt::addMovingEffect(pScene->getNodeById(0)
+                                    , ui_wizard_share::inst()->getPalette()->getColor("WHITE_OPACITY_DEEP")
+                                    , "icons8-action-96.png"
+                                    , "ATTACK"
+                                    , ui_wizard_share::inst()->getPalette()->getColor("GRAY")
+                                    , false
+                                    );
+            return true;
+        }
+    }
+    return false;
 
+}
+// ----------------------------------------------------------------------------------------------------------------
 bool ScenePlay::init()
 {
     colors[0] = ui_wizard_share::inst()->getPalette()->getColor("PINK_LIGHT");
@@ -47,8 +159,6 @@ bool ScenePlay::init()
     colors[3] = ui_wizard_share::inst()->getPalette()->getColor("BLUE_LIGHT");
     colors[4] = ui_wizard_share::inst()->getPalette()->getColor("PURPLE_LIGHT");
     
-    mLockShakeMy = false;
-    
     this->loadFromJson("play", "play.json");
 //    ((LoadingBar *)this->getNodeById(1))->setDirection(LoadingBar::Direction::RIGHT);
 //    ((LoadingBar *)this->getNodeById(2))->setDirection(LoadingBar::Direction::RIGHT);
@@ -56,42 +166,25 @@ bool ScenePlay::init()
     TOUCH_INIT(ScenePlay);
     PHYSICS_CONTACT(ScenePlay);
     
-    mLayer      = getNodeById(ID_NODE_MY_AREA);
-    mLayerOther = getNodeById(ID_NODE_OTHER_AREA);
-    mGridSize   = gui::inst()->getGridSize(mLayer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO);
+    mPlayers[_PLAYER_ID_ME].init(this, ID_NODE_MY_AREA, ID_HP_MY, ID_MP_MY);
+    mPlayers[_PLAYER_ID_OTHER].init(this, ID_NODE_OTHER_AREA, ID_HP_OTHER, ID_MP_OTHER);
+    
+    mGridSize   = gui::inst()->getGridSize(mPlayers[_PLAYER_ID_ME].layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO);
     mObstacleSize = mGridSize;
     mObstacleSize.width *= RATIO_OBSTACLE_PER_GRID;
     mObstacleSize.height *= RATIO_OBSTACLE_PER_GRID;
     mFontSizeCombo = gui::inst()->getFontSize(mGridSize) * 1.f;
     
-    mProgressbarMyHP = (ui_progressbar*)getNodeById(ID_HP_MY);
-    mProgressbarMyMP = (ui_progressbar*)getNodeById(ID_MP_MY);
-    
-    mProgressbarOtherHP = (ui_progressbar*)getNodeById(ID_HP_OTHER);
-    mProgressbarOtherMP = (ui_progressbar*)getNodeById(ID_MP_OTHER);
-    
-    mProgressbarMyHP->setValue(1.f);
-    mProgressbarMyMP->setValue(0.f);
-    
-    mProgressbarOtherHP->setValue(1.f);
-    mProgressbarOtherMP->setValue(0.f);
-    
-    initPhysicsBody(mLayer, PHYSICSMATERIAL_OBSTACLE, false, SEPPED);
-    initPhysicsBody(mLayerOther, PHYSICSMATERIAL_OBSTACLE, false, SEPPED);
-    
-    //------------------------------------------------//
-//    gui::inst()->drawGrid(mLayer, mLayer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO);
-    mBall = createBall();
-    
     for(int n=0; n < 15; n ++) {
-        addObstacle(mLayer, Vec2(getRandValue(8), getRandValue(5)));
-        addObstacle(mLayerOther, Vec2(getRandValue(8), getRandValue(5)));
+        addObstacle(mPlayers[_PLAYER_ID_ME].layer, Vec2(getRandValue(8), getRandValue(5)));
+        addObstacle(mPlayers[_PLAYER_ID_OTHER].layer, Vec2(getRandValue(8), getRandValue(5)));
     }
-
+    // add ball
+    mPlayers[_PLAYER_ID_ME].ball = createBall(mPlayers[_PLAYER_ID_ME].layer);
     // add board
-    mBoardMy = createBoard(mLayer);
+    mPlayers[_PLAYER_ID_ME].board = createBoard(mPlayers[_PLAYER_ID_ME].layer);
     // add bottom
-    createBottom(mLayer);
+    createBottom(mPlayers[_PLAYER_ID_ME].layer);
     
 //    gui::inst()->drawGrid(mLayer, mLayer->getContentSize(), GRID_AREA, Size::ZERO, Size::ZERO);
     
@@ -107,7 +200,6 @@ void ScenePlay::callback(Ref* pSender, int from, int link) {
             
             break;
         case 3:
-            mBall->getPhysicsBody()->setVelocity(Vec2(mLayer->getContentSize()));
             break;
         case 999:
             this->replaceScene(SceneMain::create());
@@ -122,20 +214,20 @@ const string ScenePlay::getText(const string& defaultString, int id) {
 }
 
 //createBall ===========================================================================
-Node * ScenePlay::createBall() {
+Node * ScenePlay::createBall(Node * p) {
     this->getPhysicsWorld()->setAutoStep(false);
     this->getPhysicsWorld()->step(0.0f);
     COLOR_RGB color = ui_wizard_share::inst()->getPalette()->getColor("WHITE");
     
-    Vec2 position = gui::inst()->getPointVec2(2, 5, ALIGNMENT_CENTER, mLayer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-    auto ball = guiExt::drawCircleForPhysics(mLayer, position, mObstacleSize.height / 2.f, color);
+    Vec2 position = gui::inst()->getPointVec2(2, 5, ALIGNMENT_CENTER, p->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+    auto ball = guiExt::drawCircleForPhysics(p, position, mObstacleSize.height / 2.f, color);
     this->setPhysicsBodyCircle(ball, PHYSICSMATERIAL, true
                                , _PHYSICS_ID_MY_BALL
                                , -1
                                , -1 // _PHYSICS_ID_MY_BOARD | _PHYSICS_ID_MY_OBSTACLE_1
                                ,  _PHYSICS_ID_MY_OBSTACLE_1
                                );
-    ball->getPhysicsBody()->setVelocityLimit(mLayer->getContentSize().width * 1.f);
+    ball->getPhysicsBody()->setVelocityLimit(p->getContentSize().width * 1.f);
     this->getPhysicsWorld()->setAutoStep(true);
    
     return ball;
@@ -172,8 +264,6 @@ Node * ScenePlay::createBoard(Node * p) {
     
     p->addChild(layer);
     
-    mLatestCollisionWithBoard = 0;
-    
     return layer;
 }
 //createBottom ===========================================================================
@@ -197,8 +287,6 @@ Node * ScenePlay::createBottom(Node * p) {
 }
 // add Obstacle ===========================================================================
 void ScenePlay::addObstacle(Node * layer, Vec2 pos) {
-    
-
     Vec2 position = gui::inst()->getPointVec2(pos.x, pos.y, ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
     auto rect = guiExt::drawRectForPhysics(layer, position, mObstacleSize, colors[(int)pos.y], true, .1f);
     int id = 123;
@@ -209,37 +297,6 @@ void ScenePlay::addObstacle(Node * layer, Vec2 pos) {
                              , _PHYSICS_ID_MY_BALL
                              );
 }
-// setVibrate ===========================================================================
-void ScenePlay::setVibrate(Node * layer) {
-    CallFunc * cf;
-    if(layer == mLayer) {
-        if(mLockShakeMy)
-            return;
-        
-        mLockShakeMy = true;
-        cf = CallFunc::create([=]() { mLockShakeMy = false; });
-    }
-    if(layer == mLayerOther) {
-        if(mLockShakeOther)
-            return;
-        
-        mLockShakeOther = true;
-        cf = CallFunc::create([=]() { mLockShakeOther = false; });
-    }
-    
-    Vec2 pos = layer->getPosition();
-    float duration = 0.1f;
-    float width = 5.f;
-    layer->runAction(Sequence::create( MoveTo::create(duration, Vec2(pos.x - width, pos.y - width))
-                                      , MoveTo::create(duration, Vec2(pos.x + width, pos.y + width))
-                                      , MoveTo::create(duration, Vec2(pos.x - width, pos.y))
-                                      , MoveTo::create(duration, Vec2(pos.x + width, pos.y))
-                                      , MoveTo::create(duration, pos)
-                                      , cf
-                                      , NULL));
-    
-    
-}
 
 // touch ===========================================================================
 bool ScenePlay::onTouchBegan(Touch* touch, Event* event) {
@@ -248,16 +305,17 @@ bool ScenePlay::onTouchBegan(Touch* touch, Event* event) {
 bool ScenePlay::onTouchEnded(Touch* touch, Event* event) {
     return true;
 }
+
 void ScenePlay::onTouchMoved(Touch *touch, Event *event) {
-    Vec2 pos = Vec2(touch->getLocation().x - mLayer->getPosition().x, mBoardMy->getPosition().y);
-    pos.x -= mBoardMy->getContentSize().width / 2.f;
+    Vec2 pos = Vec2(touch->getLocation().x - mPlayers[_PLAYER_ID_ME].layer->getPosition().x, mPlayers[_PLAYER_ID_ME].board->getPosition().y);
+    pos.x -= mPlayers[_PLAYER_ID_ME].board->getContentSize().width / 2.f;
     
     if(pos.x <= 0)
         pos.x = 0;
-    if(pos.x >= mLayer->getContentSize().width - mBoardMy->getContentSize().width)
-        pos.x = mLayer->getContentSize().width - mBoardMy->getContentSize().width;
+    if(pos.x >= mPlayers[_PLAYER_ID_ME].layer->getContentSize().width - mPlayers[_PLAYER_ID_ME].board->getContentSize().width)
+        pos.x = mPlayers[_PLAYER_ID_ME].layer->getContentSize().width - mPlayers[_PLAYER_ID_ME].board->getContentSize().width;
     
-    mBoardMy->setPosition(pos);
+    mPlayers[_PLAYER_ID_ME].board->setPosition(pos);
 }
 bool ScenePlay::onContactBegin(PhysicsContact &contact) {
     int other;
@@ -271,76 +329,9 @@ bool ScenePlay::onContactBegin(PhysicsContact &contact) {
     }
     
     if(isContact(contact, _PHYSICS_ID_MY_BALL, other)) {
-        if(other == _ID_BOTTOM) {
-            mProgressbarMyHP->setValueDecrese(0.1);
-            mProgressbarMyHP->blink();
-            setVibrate(mLayer);
-            return true;
-        }
-        else if(other >= _BOARD_ID_L && other <= _BOARD_ID_R) {
-            //동시 충돌 방지
-            clock_t now = clock();
-            if(now - mLatestCollisionWithBoard < 10) {
-                CCLOG("%lf concurrent collision %d", mLatestCollisionWithBoard, other);
-                return true;
-            }
-            else
-                mLatestCollisionWithBoard = now;
-            
-            if(mBall->getPosition().y > mBoardMy->getPosition().y + mBoardMy->getContentSize().height * 2.f)
-                return false;
-            
-            CCLOG("Other = %d, (%f)", other, mBall->getPosition().y);
-            
-            
-            switch((_BOARD_ID)other) {
-                case _BOARD_ID_L:
-                    mBall->getPhysicsBody()->setVelocity(Vec2(mLayer->getContentSize().width * -1.f, mLayer->getContentSize().height));
-                    break;
-                case _BOARD_ID_LM:
-                    mBall->getPhysicsBody()->setVelocity(Vec2(mLayer->getContentSize().width * -0.5f, mLayer->getContentSize().height));
-                    break;
-                case _BOARD_ID_RM:
-                    mBall->getPhysicsBody()->setVelocity(Vec2(mLayer->getContentSize().width * 0.5f, mLayer->getContentSize().height));
-                    break;
-                case _BOARD_ID_R:
-                    mBall->getPhysicsBody()->setVelocity(Vec2(mLayer->getContentSize()));
-                    break;
-                default:
-                    break;
-            }
-            return true;
-        }
-        const Vec2 pos = mBall->getPosition();
         
-//        CCLOG("Contact %d, with %d, Category %d, %d, Contact %d, %d, (%f, %f)"
-//              , _PHYSICS_ID_MY_BALL, other
-//              , st.categoryA, st.categoryB
-//              , st.contactA, st.contactB
-//              , pos.x, pos.y
-//              );
-        
-        auto label = gui::inst()->addLabelAutoDimension(0, 0, "COMBO", mLayer, mFontSizeCombo, ALIGNMENT_CENTER, ui_wizard_share::inst()->getPalette()->getColor3B("ORANGE"));
-        label->enableGlow(ui_wizard_share::inst()->getPalette()->getColor4B("BLACK"));
-        label->setPosition(pos);
-        label->runAction( Sequence::create(ScaleBy::create(0.3, 1.5), RemoveSelf::create(), NULL) );
-        
-        if(mProgressbarMyMP->setValueIncrese(0.05f) >= 1.f) {
-            mProgressbarMyMP->setValue(0.f);
-            
-            mProgressbarMyMP->blink();
-            
-            guiExt::addMovingEffect(getNodeById(0)
-                                    , ui_wizard_share::inst()->getPalette()->getColor("WHITE_OPACITY_DEEP")
-                                    , "icons8-action-96.png"
-                                    , "ATTACK"
-                                    , ui_wizard_share::inst()->getPalette()->getColor("GRAY")
-                                    , false
-                                    );
-            
-            mProgressbarOtherHP->setValueDecrese(0.1);
-            mProgressbarOtherHP->blink();
-            setVibrate(mLayerOther);
+        if(mPlayers[_PLAYER_ID_ME].onContact(other)) {
+            mPlayers[_PLAYER_ID_OTHER].decreseHP();
         }
         
     }
