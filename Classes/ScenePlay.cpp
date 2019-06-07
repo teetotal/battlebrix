@@ -4,12 +4,20 @@
 #include "ui_ext.h"
 #include "library/util.h"
 
-#define SEPPED 1
+#define SEPPED 1.f
 #define PHYSICSMATERIAL             PhysicsMaterial(.1f, 1.f, 0.f)
 #define PHYSICSMATERIAL_OBSTACLE    PhysicsMaterial(.1f, 1.f, 0.f)
+#define PHYSICSMATERIAL_BOARD    PhysicsMaterial(.1f, 1.f, 0.f)
 #define GRID_AREA Vec2(8.f, 13.f)
 //#define GRID_AREA Vec2(2.f, 3.f)
 #define RATIO_OBSTACLE_PER_GRID 0.6f
+#define _ID_BOTTOM -1
+enum _BOARD_ID {
+    _BOARD_ID_L = 0,
+    _BOARD_ID_LM,
+    _BOARD_ID_RM,
+    _BOARD_ID_R
+};
 
 enum _PHYSICS_ID {
     _PHYSICS_ID_MY_BALL = 0x01 << 0,
@@ -33,6 +41,12 @@ enum ID_NODE {
 
 bool ScenePlay::init()
 {
+    colors[0] = ui_wizard_share::inst()->getPalette()->getColor("PINK_LIGHT");
+    colors[1] = ui_wizard_share::inst()->getPalette()->getColor("YELLOW_LIGHT");
+    colors[2] = ui_wizard_share::inst()->getPalette()->getColor("GREEN_LIGHT");
+    colors[3] = ui_wizard_share::inst()->getPalette()->getColor("BLUE_LIGHT");
+    colors[4] = ui_wizard_share::inst()->getPalette()->getColor("PURPLE_LIGHT");
+    
     this->loadFromJson("play", "play.json");
 //    ((LoadingBar *)this->getNodeById(1))->setDirection(LoadingBar::Direction::RIGHT);
 //    ((LoadingBar *)this->getNodeById(2))->setDirection(LoadingBar::Direction::RIGHT);
@@ -43,9 +57,10 @@ bool ScenePlay::init()
     mLayer      = getNodeById(ID_NODE_MY_AREA);
     mLayerOther = getNodeById(ID_NODE_OTHER_AREA);
     mGridSize   = gui::inst()->getGridSize(mLayer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO);
-    mGridSize.width *= RATIO_OBSTACLE_PER_GRID;
-    mGridSize.height *= RATIO_OBSTACLE_PER_GRID;
-    mFontSizeCombo = gui::inst()->getFontSize(mGridSize) * 1.5f;
+    mObstacleSize = mGridSize;
+    mObstacleSize.width *= RATIO_OBSTACLE_PER_GRID;
+    mObstacleSize.height *= RATIO_OBSTACLE_PER_GRID;
+    mFontSizeCombo = gui::inst()->getFontSize(mGridSize) * 1.f;
     
     mProgressbarMyHP = (ui_progressbar*)getNodeById(ID_HP_MY);
     mProgressbarMyMP = (ui_progressbar*)getNodeById(ID_MP_MY);
@@ -70,24 +85,25 @@ bool ScenePlay::init()
         addObstacle(mLayer, Vec2(getRandValue(8), getRandValue(5)));
         addObstacle(mLayerOther, Vec2(getRandValue(8), getRandValue(5)));
     }
-//    auto rect1 = getNodeById(500);
-//    rect1->setVisible(false);
-//    auto rect = getNodeById(501);
-//    rect->setVisible(true);
-//    rect->runAction(Blink::create(10, 30));
-//    this->schedule(schedule_selector(ScenePlay::timer), 1.0f);
+
+    // add board
+    mBoardMy = createBoard(mLayer);
+    // add bottom
+    createBottom(mLayer);
+    
+//    gui::inst()->drawGrid(mLayer, mLayer->getContentSize(), GRID_AREA, Size::ZERO, Size::ZERO);
+    
     return true;
 }
 
 void ScenePlay::callback(Ref* pSender, int from, int link) {
     switch(link) {
         case 1:
-            setVibrate(mLayer);
-            break;
-        case 2: {
             
             break;
-        }
+        case 2:
+            
+            break;
         case 3:
             mBall->getPhysicsBody()->setVelocity(Vec2(mLayer->getContentSize()));
             break;
@@ -103,18 +119,14 @@ const string ScenePlay::getText(const string& defaultString, int id) {
     return defaultString;
 }
 
-void ScenePlay::timer(float f) {
-    createBall();
-}
-
 //createBall ===========================================================================
 Node * ScenePlay::createBall() {
     this->getPhysicsWorld()->setAutoStep(false);
     this->getPhysicsWorld()->step(0.0f);
     COLOR_RGB color = ui_wizard_share::inst()->getPalette()->getColor("WHITE");
     
-    Vec2 position = gui::inst()->getPointVec2(2, 2, ALIGNMENT_CENTER, mLayer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-    auto ball = guiExt::drawCircleForPhysics(mLayer, position, mGridSize.height / 2.f, color);
+    Vec2 position = gui::inst()->getPointVec2(2, 5, ALIGNMENT_CENTER, mLayer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+    auto ball = guiExt::drawCircleForPhysics(mLayer, position, mObstacleSize.height / 2.f, color);
     this->setPhysicsBodyCircle(ball, PHYSICSMATERIAL, true
                                , _PHYSICS_ID_MY_BALL
                                , -1
@@ -127,37 +139,66 @@ Node * ScenePlay::createBall() {
     return ball;
 }
 
-// setVibrate ===========================================================================
-void ScenePlay::setVibrate(Node * layer) {
+//createBoard ===========================================================================
+Node * ScenePlay::createBoard(Node * p) {
+    auto layer = LayerColor::create(Color4B::RED);
+    layer->setContentSize(Size(mGridSize.width * 2.f, mGridSize.height / 3.f));
+    Vec2 pos = gui::inst()->getPointVec2(1, 11, ALIGNMENT_CENTER, p->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+    pos.x -= layer->getContentSize().width / 2.f;
+    pos.y -= layer->getContentSize().height / 2.f;
+    layer->setPosition(pos);
     
-    Vec2 pos = layer->getPosition();
-    float duration = 0.1f;
-    float width = 5.f;
-    layer->runAction(Sequence::create( MoveTo::create(duration, Vec2(pos.x - width, pos.y - width))
-                                       , MoveTo::create(duration, Vec2(pos.x + width, pos.y + width))
-                                       , MoveTo::create(duration, Vec2(pos.x - width, pos.y))
-                                       , MoveTo::create(duration, Vec2(pos.x + width, pos.y))
-                                       , MoveTo::create(duration, pos)
-                                       , NULL));
+    Size size = Size(layer->getContentSize().width / 4.f, layer->getContentSize().height);
+   
+    for(int n=0; n < 4; n++) {
+        auto rect = guiExt::drawRectForPhysics(layer
+                                               , gui::inst()->getPointVec2(n, 0, ALIGNMENT_CENTER, layer->getContentSize(), Vec2(4,1), Vec2::ZERO, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO)
+                                               , size
+                                               , ui_wizard_share::inst()->getPalette()->getColor("RED")
+                                               , true
+                                               , 0.f);
+        this->setPhysicsBodyRect(rect
+                                 , PHYSICSMATERIAL_BOARD
+                                 , false
+                                 , _BOARD_ID_L + n
+                                 , -1
+                                 , -1 //_PHYSICS_ID_MY_BALL
+                                 , _PHYSICS_ID_MY_BALL
+                                 );
+    }
+    
+    
+    p->addChild(layer);
+    
+    mLatestCollisionWithBoard = 0;
+    
+    return layer;
 }
-
+//createBottom ===========================================================================
+Node * ScenePlay::createBottom(Node * p) {
+    auto rect = guiExt::drawRectForPhysics(p
+                                           , Vec2(p->getContentSize().width / 2.f, mGridSize.height / 4.f)
+                                           , Size(p->getContentSize().width, mGridSize.height / 4.f)
+                                           , ui_wizard_share::inst()->getPalette()->getColor("BLACK")
+                                           , true
+                                           , .1f);
+    this->setPhysicsBodyRect(rect
+                             , PHYSICSMATERIAL
+                             , false
+                             , _ID_BOTTOM
+                             , -1
+                             , -1 //_PHYSICS_ID_MY_BALL
+                             , _PHYSICS_ID_MY_BALL
+                             );
+    
+    return rect;
+}
 // add Obstacle ===========================================================================
 void ScenePlay::addObstacle(Node * layer, Vec2 pos) {
-    COLOR_RGB colors[] = {
-        ui_wizard_share::inst()->getPalette()->getColor("RED_LIGHT"),
-        ui_wizard_share::inst()->getPalette()->getColor("YELLOW_LIGHT"),
-        ui_wizard_share::inst()->getPalette()->getColor("GREEN_LIGHT"),
-        ui_wizard_share::inst()->getPalette()->getColor("BLUE_LIGHT"),
-        ui_wizard_share::inst()->getPalette()->getColor("PURPLE_LIGHT")
-    };
-//    for(int n=1; n <= 4; n++){
-//        string sz = "O" + to_string(n);
-//        colors[n-1] = ui_wizard_share::inst()->getPalette()->getColor4F(sz);
-//    }
+    
+
     Vec2 position = gui::inst()->getPointVec2(pos.x, pos.y, ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-//    auto rect = guiExt::drawRectForPhysics(layer, position, mGridSize, colors[getRandValue(sizeof(colors) / sizeof(colors[0]))], true, .1f);
-    auto rect = guiExt::drawRectForPhysics(layer, position, mGridSize, colors[(int)pos.y], true, .1f);
-//    auto rect = guiExt::drawRectForPhysics(layer, position, mGridSize, ui_wizard_share::inst()->getPalette()->getColor4F("PINK"), true, .1);
+    auto rect = guiExt::drawRectForPhysics(layer, position, mObstacleSize, colors[(int)pos.y], true, .1f);
     int id = 123;
     this->setPhysicsBodyRect(rect, PHYSICSMATERIAL_OBSTACLE, false
                              , id
@@ -165,6 +206,19 @@ void ScenePlay::addObstacle(Node * layer, Vec2 pos) {
                              , -1 //_PHYSICS_ID_MY_BALL
                              , _PHYSICS_ID_MY_BALL
                              );
+}
+// setVibrate ===========================================================================
+void ScenePlay::setVibrate(Node * layer) {
+    
+    Vec2 pos = layer->getPosition();
+    float duration = 0.1f;
+    float width = 5.f;
+    layer->runAction(Sequence::create( MoveTo::create(duration, Vec2(pos.x - width, pos.y - width))
+                                      , MoveTo::create(duration, Vec2(pos.x + width, pos.y + width))
+                                      , MoveTo::create(duration, Vec2(pos.x - width, pos.y))
+                                      , MoveTo::create(duration, Vec2(pos.x + width, pos.y))
+                                      , MoveTo::create(duration, pos)
+                                      , NULL));
 }
 
 // touch ===========================================================================
@@ -175,32 +229,70 @@ bool ScenePlay::onTouchEnded(Touch* touch, Event* event) {
     return true;
 }
 void ScenePlay::onTouchMoved(Touch *touch, Event *event) {
+    Vec2 pos = Vec2(touch->getLocation().x - mLayer->getPosition().x, mBoardMy->getPosition().y);
+    pos.x -= mBoardMy->getContentSize().width / 2.f;
     
+    if(pos.x <= 0)
+        pos.x = 0;
+    if(pos.x >= mLayer->getContentSize().width - mBoardMy->getContentSize().width)
+        pos.x = mLayer->getContentSize().width - mBoardMy->getContentSize().width;
+    
+    mBoardMy->setPosition(pos);
 }
 bool ScenePlay::onContactBegin(PhysicsContact &contact) {
     int other;
     bitmask st = getBitmask(contact);
     if(isCollosion(contact, _PHYSICS_ID_MY_BALL, other)) {
-        CCLOG("Collision %d with %d, Category %d, %d, Collision %d, %d"
-              , _PHYSICS_ID_MY_BALL, other
-              , st.categoryA, st.categoryB
-              , st.collisionA, st.collisionB
-              );
-//
-//                CCLOG("Category %d, %d", st.categoryA, st.categoryB);
-//                CCLOG("Collision %d, %d", st.collisionA, st.collisionB);
-//                CCLOG("Contact %d, %d", st.contactA, st.contactB);
+//        CCLOG("Collision %d with %d, Category %d, %d, Collision %d, %d"
+//              , _PHYSICS_ID_MY_BALL, other
+//              , st.categoryA, st.categoryB
+//              , st.collisionA, st.collisionB
+//              );
     }
     
     if(isContact(contact, _PHYSICS_ID_MY_BALL, other)) {
+        if(other == _ID_BOTTOM) {
+            mProgressbarMyHP->setValueDecrese(0.1);
+            mProgressbarMyHP->runAction(Blink::create(0.5, 2));
+            setVibrate(mLayer);
+            return true;
+        }
+        else if(other >= _BOARD_ID_L && other <= _BOARD_ID_R) {
+            //동시 충돌 방지
+            clock_t now = clock();
+            if(now - mLatestCollisionWithBoard < 10) {
+                CCLOG("%f concurrent collision %d", mLatestCollisionWithBoard, other);
+                return true;
+            }
+            else
+                mLatestCollisionWithBoard = now;
+            
+            switch((_BOARD_ID)other) {
+                case _BOARD_ID_L:
+                    mBall->getPhysicsBody()->setVelocity(Vec2(mLayer->getContentSize().width * -1.f, mLayer->getContentSize().height));
+                    break;
+                case _BOARD_ID_LM:
+                    mBall->getPhysicsBody()->setVelocity(Vec2(mLayer->getContentSize().width * -0.5f, mLayer->getContentSize().height));
+                    break;
+                case _BOARD_ID_RM:
+                    mBall->getPhysicsBody()->setVelocity(Vec2(mLayer->getContentSize().width * 0.5f, mLayer->getContentSize().height));
+                    break;
+                case _BOARD_ID_R:
+                    mBall->getPhysicsBody()->setVelocity(Vec2(mLayer->getContentSize()));
+                    break;
+                default:
+                    break;
+            }
+            return true;
+        }
         const Vec2 pos = mBall->getPosition();
         
-        CCLOG("Contact %d, with %d, Category %d, %d, Contact %d, %d, (%f, %f)"
-              , _PHYSICS_ID_MY_BALL, other
-              , st.categoryA, st.categoryB
-              , st.contactA, st.contactB
-              , pos.x, pos.y
-              );
+//        CCLOG("Contact %d, with %d, Category %d, %d, Contact %d, %d, (%f, %f)"
+//              , _PHYSICS_ID_MY_BALL, other
+//              , st.categoryA, st.categoryB
+//              , st.contactA, st.contactB
+//              , pos.x, pos.y
+//              );
         
         auto label = gui::inst()->addLabelAutoDimension(0, 0, "COMBO", mLayer, mFontSizeCombo, ALIGNMENT_CENTER, ui_wizard_share::inst()->getPalette()->getColor3B("ORANGE"));
         label->enableGlow(ui_wizard_share::inst()->getPalette()->getColor4B("BLACK"));
@@ -221,6 +313,7 @@ bool ScenePlay::onContactBegin(PhysicsContact &contact) {
                                     );
             
             mProgressbarOtherHP->setValueDecrese(0.1);
+            mProgressbarOtherHP->runAction(Blink::create(0.5, 2));
             setVibrate(mLayerOther);
         }
         

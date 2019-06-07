@@ -251,6 +251,7 @@
 		4DB682AC228AC490007A1E22 /* shop.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = shop.json; sourceTree = "<group>"; };
 		4DB85BC422852A0C001C541A /* components.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = components.json; sourceTree = "<group>"; };
 		4DB85BCD2285613F001C541A /* daily.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = daily.json; sourceTree = "<group>"; };
+		4DC392F622AA404700507DC7 /* PhysicsScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhysicsScene.h; path = ../../library/library/PhysicsScene.h; sourceTree = "<group>"; };
 		4DFF8D09228C16FB0098B187 /* ScenePlay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScenePlay.cpp; sourceTree = "<group>"; };
 		4DFF8D0B228C16FB0098B187 /* ScenePlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScenePlay.h; sourceTree = "<group>"; };
 		503AE0F617EB97AB00D1A890 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
@@ -496,6 +497,7 @@
 		4D4809A0227A9E800046472F /* library */ = {
 			isa = PBXGroup;
 			children = (
+				4DC392F622AA404700507DC7 /* PhysicsScene.h */,
 				4D4809A4227A9E9F0046472F /* achievement.cpp */,
 				4D4809A6227A9E9F0046472F /* farming.cpp */,
 				4D4809A8227A9E9F0046472F /* inventory.cpp */,

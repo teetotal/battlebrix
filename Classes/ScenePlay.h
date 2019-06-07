@@ -50,14 +50,20 @@ private:
     bool onContactBegin(PhysicsContact &contact);
     
     Node * createBall();
-    void timer(float f);
+    Node * createBoard(Node * p);
+    Node * createBottom(Node * p);
+    
     void setVibrate(Node * layer);
     void addObstacle(Node * layer, Vec2 pos);
     
     Node * mLayer, * mLayerOther, * mBall;
-    Size mGridSize;
+    Node * mBoardMy, * mBoardOther;
+    Size mGridSize, mObstacleSize;
     float mFontSizeCombo;
     ui_progressbar * mProgressbarMyHP, * mProgressbarMyMP;
     ui_progressbar * mProgressbarOtherHP, * mProgressbarOtherMP;
+    
+    COLOR_RGB colors[5];
+    clock_t mLatestCollisionWithBoard;
 };
 #endif // __SCENE_PLAY_H__
