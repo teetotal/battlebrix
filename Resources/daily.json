@@ -263,7 +263,7 @@
                     "position": [ 0, 0 ],
                     "alignment": "center",
                     "type": "roulette",
-                    "color": [ "ORANGE", "YELLOW" ],
+                    "color": [ "GREEN_DARK", "GREEN" ],
                     "text": "START"
                 }
             ]

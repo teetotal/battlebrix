@@ -39,9 +39,7 @@ public:
     virtual bool init();
     CREATE_FUNC_PHYSICS(ScenePlay);
     
-    Node * createBall(Node * p);
-    Node * createBoard(Node * p);
-    Node * createBottom(Node * p);
+    COLOR_RGB mColors[5];
     
 protected:
     virtual void callback(Ref* pSender, int from, int link);
@@ -53,13 +51,7 @@ private:
     void onTouchMoved(Touch *touch, Event *event);
     bool onContactBegin(PhysicsContact &contact);
     
-    void addObstacle(Node * layer, Vec2 pos);
-    
     //Node * mLayer, * mLayerOther, * mBall;
-    Size mGridSize, mObstacleSize;
-    float mFontSizeCombo;
-    
-    COLOR_RGB colors[5];
     
     struct PLAYER {
         Node * layer;
@@ -71,14 +63,22 @@ private:
         clock_t latestCollisionWithBoard;
         ScenePlay * pScene;
         
+        Size gridSize, obstacleSize;
+        float fontSizeCombo;
+        
         PLAYER(){
-            bool lockShake = false;
+            lockShake = false;
             latestCollisionWithBoard = 0;
         };
-        void init(ScenePlay* p, int layerId, int hpId, int mpId);
+        void init(ScenePlay* p, int layerId, int hpId, int mpId, int ballId);
         void vibrate();
-        bool onContact(int id); // true면 other hp 깎음
+        bool onContact(int id, bool toRight = false);
         void decreseHP();
+        void createBall(int ballId);
+        void createBoard();
+        void createBottom();
+        void addObstacle(Vec2 pos);
+        
     };
     
     PLAYER mPlayers[2];
