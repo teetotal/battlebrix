@@ -51,13 +51,28 @@ private:
     void onTouchMoved(Touch *touch, Event *event);
     bool onContactBegin(PhysicsContact &contact);
     
+    void timer(float f);
+    void timerAddObstacle(float f);
+    
     //Node * mLayer, * mLayerOther, * mBall;
+    
+    struct OBSTACLE {
+        DrawNode * pDrawNode;
+        int typeCode;
+        Vec2 position;
+    };
     
     struct PLAYER {
         Node * layer;
         Node * ball;
         Node * board;
-        Node * obstacles[8][8];
+        
+        int obstacleStartId, obstacleId, ballId;
+        
+        map<int, Vec2> obstaclesPos;
+        vector<DrawNode *> obstacles;
+        
+        
         ui_progressbar * hp, * mp;
         bool lockShake;
         clock_t latestCollisionWithBoard;
@@ -69,15 +84,22 @@ private:
         PLAYER(){
             lockShake = false;
             latestCollisionWithBoard = 0;
+            obstacleId = 100;
+            obstacleStartId = obstacleId;
         };
         void init(ScenePlay* p, int layerId, int hpId, int mpId, int ballId);
         void vibrate();
         bool onContact(int id, bool toRight = false);
         void decreseHP();
-        void createBall(int ballId);
+        void createBall();
         void createBoard();
         void createBottom();
-        void addObstacle(Vec2 pos);
+        void addObstacle();
+        void addObstacle(Vec2 pos, int id);
+        const float getHPValue() {
+            return hp->getValue();
+        };
+        void deleteObstacle(int id);
         
     };
     

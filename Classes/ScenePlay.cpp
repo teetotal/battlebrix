@@ -29,7 +29,7 @@ enum _PHYSICS_ID {
     _PHYSICS_ID_MY_BOARD = 0x01 << 1,
     _PHYSICS_ID_MY_OBSTACLE_1 = 0x01 << 2,
     
-    _PHYSICS_ID_1_BALL = 0x01 << 10
+    _PHYSICS_ID_1_BALL = 0x01 << 3
 };
 
 enum ID_NODE {
@@ -52,6 +52,7 @@ enum ID_NODE {
 // ----------------------------------------------------------------------------------------------------------------
 void ScenePlay::PLAYER::init(ScenePlay* p, int layerId, int hpId, int mpId, int ballId) {
     pScene = p;
+    this->ballId = ballId;
     layer = p->getNodeById(layerId);
     hp = (ui_progressbar*)p->getNodeById(hpId);
     mp = (ui_progressbar*)p->getNodeById(mpId);
@@ -70,17 +71,12 @@ void ScenePlay::PLAYER::init(ScenePlay* p, int layerId, int hpId, int mpId, int 
     // create bottom
     createBottom();
     
-    for(int n=0; n < 15; n ++) {
-        addObstacle(Vec2(getRandValue(8), getRandValue(5)));
+    for(int n=0; n < 5; n ++) {
+        addObstacle(Vec2(getRandValue(8), n), obstacleId++);
     }
-    
-    // create ball
-    createBall(ballId);
 }
 //createBall ===========================================================================
-void ScenePlay::PLAYER::createBall(int ballId) {
-    //    this->getPhysicsWorld()->setAutoStep(false);
-    //    this->getPhysicsWorld()->step(0.0f);
+void ScenePlay::PLAYER::createBall() {
     COLOR_RGB color = ui_wizard_share::inst()->getPalette()->getColor("WHITE");
     
     Vec2 position = gui::inst()->getPointVec2(2, 5, ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
@@ -92,7 +88,6 @@ void ScenePlay::PLAYER::createBall(int ballId) {
                                  ,  _PHYSICS_ID_MY_OBSTACLE_1
                                  );
     ball->getPhysicsBody()->setVelocityLimit(layer->getContentSize().width * 1.f);
-    //    this->getPhysicsWorld()->setAutoStep(true);
 }
 //createBoard ===========================================================================
 void ScenePlay::PLAYER::createBoard() {
@@ -142,16 +137,63 @@ void ScenePlay::PLAYER::createBottom() {
                              );
 }
 // add Obstacle ===========================================================================
-void ScenePlay::PLAYER::addObstacle(Vec2 pos) {
+void ScenePlay::PLAYER::addObstacle() {
+
+    pScene->getPhysicsWorld()->setAutoStep(false);
+    pScene->getPhysicsWorld()->step(0.0f);
+    vector<Vec2> vec;
+    //전체 삭제
+    for(int n=0; n < obstacles.size(); n++) {
+        layer->removeChild(obstacles[n]);
+    }
+    obstacles.clear();
+    
+    for(map<int, Vec2>::iterator it = obstaclesPos.begin(); it != obstaclesPos.end(); ++it) {
+        Vec2 pos = it->second;
+        if(pos.y < 6)
+            vec.push_back(Vec2(pos.x, pos.y + 1));
+    }
+    obstaclesPos.clear();
+    
+    //생성
+    for(int n=0; n < vec.size(); n++) {
+        addObstacle(vec[n], obstacleId++);
+    }
+    
+    vec.clear();
+    
+    //신규 추가
+    Vec2 pos = Vec2(getRandValue(8), 0);
+    addObstacle(pos, obstacleId++);
+    pScene->getPhysicsWorld()->setAutoStep(true);
+}
+
+void ScenePlay::PLAYER::addObstacle(Vec2 pos, int id) {
+    
     Vec2 position = gui::inst()->getPointVec2(pos.x, pos.y, ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
     auto rect = guiExt::drawRectForPhysics(layer, position, obstacleSize, pScene->mColors[(int)pos.y], true, .1f);
-    int id = 123;
-    pScene->setPhysicsBodyRect(rect, PHYSICSMATERIAL_OBSTACLE, false
-                             , id
-                             , -1
-                             , -1 //_PHYSICS_ID_MY_BALL
-                             , _PHYSICS_ID_MY_BALL
-                             );
+    pScene->setPhysicsBodyRect(rect
+                               , PHYSICSMATERIAL_OBSTACLE
+                               , false
+                               , id
+                               , -1
+                               , -1 //_PHYSICS_ID_MY_BALL
+                               , ballId
+                               );
+    //map 추가
+//    OBSTACLE obs;
+//    obs.pDrawNode = rect;
+//    obs.position = pos;
+//    mapObstacle[id] = obs;
+    obstaclesPos[id] = pos;
+    obstacles.push_back(rect);
+}
+// delete Obstacle ===========================================================================
+void ScenePlay::PLAYER::deleteObstacle(int id) {
+    layer->removeChildByTag(id);
+    obstaclesPos.erase(id);
+//    CCASSERT(p, "INVALID Obstacle");
+    
 }
 // vibrate ===========================================================================
 void ScenePlay::PLAYER::vibrate() {
@@ -178,6 +220,11 @@ void ScenePlay::PLAYER::decreseHP() {
 }
 // onContact ===========================================================================
 bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
+    if(ball == NULL)
+        return false;
+    
+    CCLOG("id %d", id);
+    bool ret = false;
     
     const Vec2 ballPosition = ball->getPosition();
     
@@ -218,8 +265,8 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
             default:
                 break;
         }
-        
-    } else {
+    } else if(id >= 100) {
+        deleteObstacle(id);
         auto label = gui::inst()->addLabelAutoDimension(0, 0, "COMBO", layer, fontSizeCombo, ALIGNMENT_CENTER, ui_wizard_share::inst()->getPalette()->getColor3B("ORANGE"));
         label->enableGlow(ui_wizard_share::inst()->getPalette()->getColor4B("BLACK"));
         label->setPosition(ballPosition);
@@ -235,13 +282,18 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
                                     , ui_wizard_share::inst()->getPalette()->getColor("GRAY")
                                     , toRight
                                     );
-            return true;
+            ret = true;
         }
     }
-    return false;
-
+    
+    return ret;
 }
-// ----------------------------------------------------------------------------------------------------------------
+
+/* ----------------------------------------------------------------------------------------------------------------
+ 
+ ScenePlay
+ 
+ ---------------------------------------------------------------------------------------------------------------- */
 bool ScenePlay::init()
 {
     mColors[0] = ui_wizard_share::inst()->getPalette()->getColor("PINK_LIGHT");
@@ -260,7 +312,31 @@ bool ScenePlay::init()
     
 //    gui::inst()->drawGrid(mLayer, mLayer->getContentSize(), GRID_AREA, Size::ZERO, Size::ZERO);
     
+    guiExt::addMovingEffect(this->getNodeById(0)
+                            , ui_wizard_share::inst()->getPalette()->getColor("WHITE_OPACITY_DEEP")
+                            , ""
+                            , "CPU vs TEETOTAL"
+                            , ui_wizard_share::inst()->getPalette()->getColor("ORANGE")
+                            , false
+                            , 1.5f
+                            , CallFunc::create([=]()
+    {
+        mPlayers[_PLAYER_ID_ME].createBall();
+        mPlayers[_PLAYER_ID_OTHER].createBall();
+        
+        this->schedule(schedule_selector(ScenePlay::timerAddObstacle), 1.f);
+        this->schedule(schedule_selector(ScenePlay::timer), .1f);
+    })
+                            );
+   
     return true;
+}
+void ScenePlay::timerAddObstacle(float f) {
+    mPlayers[_PLAYER_ID_ME].addObstacle();
+    mPlayers[_PLAYER_ID_OTHER].addObstacle();
+}
+void ScenePlay::timer(float f) {
+    mPlayers[_PLAYER_ID_OTHER].board->setPosition(Vec2(mPlayers[_PLAYER_ID_OTHER].ball->getPosition().x, mPlayers[_PLAYER_ID_OTHER].board->getPosition().y));
 }
 
 void ScenePlay::callback(Ref* pSender, int from, int link) {
@@ -313,18 +389,48 @@ bool ScenePlay::onContactBegin(PhysicsContact &contact) {
 //              );
     }
     
-    if(isContact(contact, _PHYSICS_ID_MY_BALL, other)) {
-        
+    if(isContact(contact, _PHYSICS_ID_MY_BALL, other))
+    {
         if(mPlayers[_PLAYER_ID_ME].onContact(other)) {
             mPlayers[_PLAYER_ID_OTHER].decreseHP();
         }
     }
     
-    if(isContact(contact, _PHYSICS_ID_1_BALL, other)) {
-        
+    if(isContact(contact, _PHYSICS_ID_1_BALL, other))
+    {
         if(mPlayers[_PLAYER_ID_OTHER].onContact(other, true)) {
             mPlayers[_PLAYER_ID_ME].decreseHP();
         }
     }
+    
+    bool isEnd = false;
+    string szEnd, szColor;
+    if(mPlayers[_PLAYER_ID_OTHER].getHPValue() <= 0.f) {
+        //WIN
+        szEnd = "WIN";
+        szColor = "ORANGE";
+        isEnd = true;
+    } else if(mPlayers[_PLAYER_ID_ME].getHPValue() <= 0.f) {
+        //Lose
+        szEnd = "LOSE";
+        szColor = "BLACK";
+        isEnd = true;
+    }
+    
+    if(isEnd) {
+        this->getPhysicsWorld()->setAutoStep(false);
+        this->getPhysicsWorld()->step(0.0f);
+        
+        guiExt::addMovingEffect(this->getNodeById(0)
+                                , ui_wizard_share::inst()->getPalette()->getColor("WHITE_OPACITY_DEEP")
+                                , ""
+                                , szEnd
+                                , ui_wizard_share::inst()->getPalette()->getColor(szColor)
+                                , false
+                                , 1.5f
+                                , CallFunc::create([=](){ this->replaceScene(SceneMain::create()); })
+                                );
+    }
+    
     return true;
 }
