@@ -39,7 +39,7 @@ public:
     virtual bool init();
     CREATE_FUNC_PHYSICS(ScenePlay);
     
-    COLOR_RGB mColors[5];
+    COLOR_RGB mColors[10];
     
 protected:
     virtual void callback(Ref* pSender, int from, int link);
@@ -52,9 +52,7 @@ private:
     bool onContactBegin(PhysicsContact &contact);
     
     void timer(float f);
-    void timerAddObstacle(float f);
-    
-    //Node * mLayer, * mLayerOther, * mBall;
+    void onEnd(float f);
     
     struct OBSTACLE {
         DrawNode * pDrawNode;
@@ -63,15 +61,14 @@ private:
     };
     
     struct PLAYER {
-        Node * layer;
+        Node * layer, * layerBrix;
         Node * ball;
         Node * board;
         
         int obstacleStartId, obstacleId, ballId;
+        int combo;
         
         map<int, Vec2> obstaclesPos;
-        vector<DrawNode *> obstacles;
-        
         
         ui_progressbar * hp, * mp;
         bool lockShake;
@@ -84,8 +81,10 @@ private:
         PLAYER(){
             lockShake = false;
             latestCollisionWithBoard = 0;
+            combo = 0;
             obstacleId = 100;
             obstacleStartId = obstacleId;
+            layerBrix = NULL;
         };
         void init(ScenePlay* p, int layerId, int hpId, int mpId, int ballId);
         void vibrate();
@@ -101,10 +100,13 @@ private:
         };
         void deleteObstacle(int id);
         
+        void createLayerBrix();
+        void attachLayerBrix();
+        
     };
     
     PLAYER mPlayers[2];
-    
+    bool mIsEnd, mIsWin;
     
 };
 #endif // __SCENE_PLAY_H__

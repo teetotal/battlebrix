@@ -71,9 +71,24 @@ void ScenePlay::PLAYER::init(ScenePlay* p, int layerId, int hpId, int mpId, int 
     // create bottom
     createBottom();
     
-    for(int n=0; n < 5; n ++) {
-        addObstacle(Vec2(getRandValue(8), n), obstacleId++);
+    //create brix layer
+    createLayerBrix();
+    for(int n=0; n < 8; n = n + 2) {
+        addObstacle(Vec2(0, n), obstacleId++);
     }
+    attachLayerBrix();
+}
+//createLayerBrix ===========================================================================
+void ScenePlay::PLAYER::createLayerBrix() {
+    if(layerBrix)
+        layer->removeChild(layerBrix);
+    
+    layerBrix = Layer::create();
+    layerBrix->setContentSize(layer->getContentSize());
+}
+
+void ScenePlay::PLAYER::attachLayerBrix() {
+    layer->addChild(layerBrix);
 }
 //createBall ===========================================================================
 void ScenePlay::PLAYER::createBall() {
@@ -138,40 +153,35 @@ void ScenePlay::PLAYER::createBottom() {
 }
 // add Obstacle ===========================================================================
 void ScenePlay::PLAYER::addObstacle() {
-
-    pScene->getPhysicsWorld()->setAutoStep(false);
-    pScene->getPhysicsWorld()->step(0.0f);
-    vector<Vec2> vec;
     //전체 삭제
-    for(int n=0; n < obstacles.size(); n++) {
-        layer->removeChild(obstacles[n]);
-    }
-    obstacles.clear();
+    createLayerBrix();
+    vector<Vec2> vec;
     
     for(map<int, Vec2>::iterator it = obstaclesPos.begin(); it != obstaclesPos.end(); ++it) {
         Vec2 pos = it->second;
-        if(pos.y < 6)
-            vec.push_back(Vec2(pos.x, pos.y + 1));
+        if(pos.y < 6) {
+            pos.y += 1;
+            vec.push_back(pos);
+        }
     }
     obstaclesPos.clear();
     
-    //생성
-    for(int n=0; n < vec.size(); n++) {
+    for(int n = 0; n < vec.size(); n++ ) {
         addObstacle(vec[n], obstacleId++);
     }
-    
     vec.clear();
     
     //신규 추가
     Vec2 pos = Vec2(getRandValue(8), 0);
     addObstacle(pos, obstacleId++);
-    pScene->getPhysicsWorld()->setAutoStep(true);
+    
+    attachLayerBrix();
 }
 
 void ScenePlay::PLAYER::addObstacle(Vec2 pos, int id) {
     
-    Vec2 position = gui::inst()->getPointVec2(pos.x, pos.y, ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-    auto rect = guiExt::drawRectForPhysics(layer, position, obstacleSize, pScene->mColors[(int)pos.y], true, .1f);
+    Vec2 position = gui::inst()->getPointVec2(pos.x, pos.y, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+    auto rect = guiExt::drawRectForPhysics(layerBrix, position, obstacleSize, pScene->mColors[(int)pos.y], true, .1f);
     pScene->setPhysicsBodyRect(rect
                                , PHYSICSMATERIAL_OBSTACLE
                                , false
@@ -180,13 +190,11 @@ void ScenePlay::PLAYER::addObstacle(Vec2 pos, int id) {
                                , -1 //_PHYSICS_ID_MY_BALL
                                , ballId
                                );
-    //map 추가
-//    OBSTACLE obs;
-//    obs.pDrawNode = rect;
-//    obs.position = pos;
-//    mapObstacle[id] = obs;
+    int d = max(10, getRandValue(30));
+    float f = (float)d / 10.f;
+    auto seq = Sequence::create(MoveTo::create(f, Vec2(layerBrix->getContentSize().width - rect->getContentSize().width, rect->getPosition().y)), MoveTo::create(f, Vec2(0, rect->getPosition().y)), NULL);
+    rect->runAction(RepeatForever::create(seq));
     obstaclesPos[id] = pos;
-    obstacles.push_back(rect);
 }
 // delete Obstacle ===========================================================================
 void ScenePlay::PLAYER::deleteObstacle(int id) {
@@ -229,6 +237,7 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
     const Vec2 ballPosition = ball->getPosition();
     
     if(id == _ID_BOTTOM) {
+        combo = 0;
         hp->setValueDecrese(0.1);
         hp->blink();
         vibrate();
@@ -247,7 +256,7 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
         if(ballPosition.y > board->getPosition().y + board->getContentSize().height * 2.f)
             return false;
         
-//        CCLOG("Other = %d, (%f)", id, ballPosition.y);
+        combo = 0;
         
         switch((_BOARD_ID)id) {
             case _BOARD_ID_L:
@@ -266,13 +275,34 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
                 break;
         }
     } else if(id >= 100) {
-        deleteObstacle(id);
-        auto label = gui::inst()->addLabelAutoDimension(0, 0, "COMBO", layer, fontSizeCombo, ALIGNMENT_CENTER, ui_wizard_share::inst()->getPalette()->getColor3B("ORANGE"));
+//        deleteObstacle(id);
+        combo++;
+        
+        string sz = (combo > 1) ? to_string(combo) + "COMBO" : "Cool";
+        string color;
+        float fIncrease = 0.05;
+        if(combo == 1) {
+            color = "YELLOW";
+        }
+        else if(combo < 5) {
+            fIncrease *= 2.f;
+            color = "ORANGE";
+        }
+        else if(combo < 8) {
+            fIncrease *= 3.f;
+            color = "BLUE";
+        }
+        else {
+            fIncrease *= 4.f;
+            color = "GREEN";
+        }
+        
+        auto label = gui::inst()->addLabelAutoDimension(0, 0, sz, layer, fontSizeCombo, ALIGNMENT_CENTER, ui_wizard_share::inst()->getPalette()->getColor3B(color));
         label->enableGlow(ui_wizard_share::inst()->getPalette()->getColor4B("BLACK"));
         label->setPosition(ballPosition);
         label->runAction( Sequence::create(ScaleBy::create(0.3, 1.5), RemoveSelf::create(), NULL) );
         
-        if(mp->setValueIncrese(0.05f) >= 1.f) {
+        if(mp->setValueIncrese(fIncrease) >= 1.f) {
             mp->setValue(0.f);
             mp->blink();
             guiExt::addMovingEffect(pScene->getNodeById(0)
@@ -296,17 +326,25 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
  ---------------------------------------------------------------------------------------------------------------- */
 bool ScenePlay::init()
 {
-    mColors[0] = ui_wizard_share::inst()->getPalette()->getColor("PINK_LIGHT");
-    mColors[1] = ui_wizard_share::inst()->getPalette()->getColor("YELLOW_LIGHT");
-    mColors[2] = ui_wizard_share::inst()->getPalette()->getColor("GREEN_LIGHT");
-    mColors[3] = ui_wizard_share::inst()->getPalette()->getColor("BLUE_LIGHT");
-    mColors[4] = ui_wizard_share::inst()->getPalette()->getColor("PURPLE_LIGHT");
+    int n = 0;
+    mColors[n++] = ui_wizard_share::inst()->getPalette()->getColor("PINK_LIGHT");
+    mColors[n++] = ui_wizard_share::inst()->getPalette()->getColor("BLUE_LIGHT");
+    mColors[n++] = ui_wizard_share::inst()->getPalette()->getColor("YELLOW_LIGHT");
+    mColors[n++] = ui_wizard_share::inst()->getPalette()->getColor("PURPLE_LIGHT");
+    mColors[n++] = ui_wizard_share::inst()->getPalette()->getColor("GREEN_LIGHT");
+    
+    mColors[n++] = ui_wizard_share::inst()->getPalette()->getColor("PINK_LIGHT");
+    mColors[n++] = ui_wizard_share::inst()->getPalette()->getColor("BLUE_LIGHT");
+    mColors[n++] = ui_wizard_share::inst()->getPalette()->getColor("YELLOW_LIGHT");
+    mColors[n++] = ui_wizard_share::inst()->getPalette()->getColor("PURPLE_LIGHT");
+    mColors[n++] = ui_wizard_share::inst()->getPalette()->getColor("GREEN_LIGHT");
     
     this->loadFromJson("play", "play.json");
     
     TOUCH_INIT(ScenePlay);
     PHYSICS_CONTACT(ScenePlay);
     
+    mIsEnd = 0;
     mPlayers[_PLAYER_ID_ME].init(this, ID_NODE_MY_AREA, ID_HP_MY, ID_MP_MY, _PHYSICS_ID_MY_BALL);
     mPlayers[_PLAYER_ID_OTHER].init(this, ID_NODE_OTHER_AREA, ID_HP_OTHER, ID_MP_OTHER, _PHYSICS_ID_1_BALL);
     
@@ -324,17 +362,22 @@ bool ScenePlay::init()
         mPlayers[_PLAYER_ID_ME].createBall();
         mPlayers[_PLAYER_ID_OTHER].createBall();
         
-        this->schedule(schedule_selector(ScenePlay::timerAddObstacle), 1.f);
+//        this->schedule(schedule_selector(ScenePlay::timerAddObstacle), 1.f);
         this->schedule(schedule_selector(ScenePlay::timer), .1f);
     })
                             );
    
     return true;
 }
-void ScenePlay::timerAddObstacle(float f) {
-    mPlayers[_PLAYER_ID_ME].addObstacle();
-    mPlayers[_PLAYER_ID_OTHER].addObstacle();
-}
+//void ScenePlay::timerAddObstacle(float f) {
+//    this->getPhysicsWorld()->setAutoStep(false);
+//    this->getPhysicsWorld()->step(0.0f);
+//
+//    mPlayers[_PLAYER_ID_ME].addObstacle();
+//    mPlayers[_PLAYER_ID_OTHER].addObstacle();
+//
+//    this->getPhysicsWorld()->setAutoStep(true);
+//}
 void ScenePlay::timer(float f) {
     mPlayers[_PLAYER_ID_OTHER].board->setPosition(Vec2(mPlayers[_PLAYER_ID_OTHER].ball->getPosition().x, mPlayers[_PLAYER_ID_OTHER].board->getPosition().y));
 }
@@ -403,34 +446,48 @@ bool ScenePlay::onContactBegin(PhysicsContact &contact) {
         }
     }
     
-    bool isEnd = false;
-    string szEnd, szColor;
+    if(mIsEnd)
+        return true;
+    
     if(mPlayers[_PLAYER_ID_OTHER].getHPValue() <= 0.f) {
         //WIN
-        szEnd = "WIN";
-        szColor = "ORANGE";
-        isEnd = true;
+        mIsWin = true;
+        mIsEnd = true;
     } else if(mPlayers[_PLAYER_ID_ME].getHPValue() <= 0.f) {
         //Lose
-        szEnd = "LOSE";
-        szColor = "BLACK";
-        isEnd = true;
+        mIsWin = false;
+        mIsEnd = true;
     }
     
-    if(isEnd) {
+    if(mIsEnd) {
         this->getPhysicsWorld()->setAutoStep(false);
         this->getPhysicsWorld()->step(0.0f);
+        this->getNodeById(99)->setVisible(true);
         
-        guiExt::addMovingEffect(this->getNodeById(0)
-                                , ui_wizard_share::inst()->getPalette()->getColor("WHITE_OPACITY_DEEP")
-                                , ""
-                                , szEnd
-                                , ui_wizard_share::inst()->getPalette()->getColor(szColor)
-                                , false
-                                , 1.5f
-                                , CallFunc::create([=](){ this->replaceScene(SceneMain::create()); })
-                                );
+        this->scheduleOnce(schedule_selector(ScenePlay::onEnd), 0.5f);
     }
     
     return true;
+}
+
+void ScenePlay::onEnd(float f) {
+    
+    string szEnd, szColor;
+    if(mIsWin) {
+        szEnd = "YOU WIN";
+        szColor = "ORANGE";
+    } else {
+        szEnd = "YOU LOSE";
+        szColor = "BLACK";
+    }
+    
+    guiExt::addMovingEffect(this->getNodeById(0)
+                            , ui_wizard_share::inst()->getPalette()->getColor("WHITE_OPACITY_DEEP")
+                            , ""
+                            , szEnd
+                            , ui_wizard_share::inst()->getPalette()->getColor(szColor)
+                            , false
+                            , 1.5f
+                            , CallFunc::create([=](){ this->replaceScene(SceneMain::create()); })
+                            );
 }
