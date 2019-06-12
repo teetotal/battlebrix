@@ -152,7 +152,7 @@
               "position": [ 0, 0 ],
               "alignment": "center",
               "type": "rectangle_line",
-              "color": "WHITE"
+              "color": "RED"
           }
       ]
     },

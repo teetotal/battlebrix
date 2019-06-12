@@ -449,6 +449,18 @@ bool ScenePlay::onContactBegin(PhysicsContact &contact) {
     if(mIsEnd)
         return true;
     
+    if(mPlayers[_PLAYER_ID_OTHER].getHPValue() <= 0.3f) {
+        auto alert = this->getNodeById(500);
+        alert->setVisible(true);
+        alert->runAction(RepeatForever::create(Blink::create(0.4f, 1)));
+    }
+    
+    if(mPlayers[_PLAYER_ID_ME].getHPValue() <= 0.3f) {
+        auto alert = this->getNodeById(501);
+        alert->setVisible(true);
+        alert->runAction(RepeatForever::create(Blink::create(0.4f, 1)));
+    }
+    
     if(mPlayers[_PLAYER_ID_OTHER].getHPValue() <= 0.f) {
         //WIN
         mIsWin = true;
