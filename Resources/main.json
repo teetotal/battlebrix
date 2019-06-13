@@ -139,7 +139,7 @@
                 "alignment": "left",
                 "type": "label",
                 "color": "GRAY",
-                "text": "3 Win / 2 Draw / 3 Lose",
+                "text": "3 Win / 3 Lose",
                 "fontSize": 0
             },
             {

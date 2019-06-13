@@ -1,10 +1,11 @@
 
 #include "ScenePlay.h"
 #include "Scenes.h"
-#include "ui_ext.h"
+#include "ui/ui_ext.h"
 #include "library/util.h"
+#include "battleBrix.h"
 
-#define SEPPED 1.5f
+#define SEPPED 1.0f
 #define PHYSICSMATERIAL             PhysicsMaterial(.1f, 1.f, 0.f)
 #define PHYSICSMATERIAL_OBSTACLE    PhysicsMaterial(.1f, 1.f, 0.f)
 #define PHYSICSMATERIAL_BOARD    PhysicsMaterial(.1f, 1.f, 0.f)
@@ -39,7 +40,8 @@ enum ID_NODE {
     ID_HP_OTHER,
     ID_MP_OTHER,
     ID_NODE_MY_AREA = 10,
-    ID_NODE_OTHER_AREA
+    ID_NODE_OTHER_AREA,
+    ID_NODE_SKILL_POTION = 32,
 };
 
 //static COLOR_RGB colors[5] = {
@@ -280,6 +282,7 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
         
         string sz = (combo > 1) ? to_string(combo) + "COMBO" : "Cool";
         string color;
+        string szAttack = toRight ? "ATTACK >" : "< ATTACK";
         float fIncrease = 0.05;
         if(combo == 1) {
             color = "YELLOW";
@@ -306,9 +309,9 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
             mp->setValue(0.f);
             mp->blink();
             guiExt::addMovingEffect(pScene->getNodeById(0)
-                                    , ui_wizard_share::inst()->getPalette()->getColor("WHITE_OPACITY_DEEP")
+                                    , ui_wizard_share::inst()->getPalette()->getColor("TRANSPARENT")
                                     , "icons8-action-96.png"
-                                    , "ATTACK"
+                                    , szAttack
                                     , ui_wizard_share::inst()->getPalette()->getColor("GRAY")
                                     , toRight
                                     );
@@ -386,8 +389,24 @@ void ScenePlay::callback(Ref* pSender, int from, int link) {
     switch(link) {
         case 1:
             break;
-        case 2:
+        case 2: { //potion
+            guiExt::addMovingEffect(this->getNodeById(0)
+                                    , ui_wizard_share::inst()->getPalette()->getColor("WHITE_OPACITY_LIGHT2")
+                                    , "icons8-hyper-potion-96.png"
+                                    , "POTION"
+                                    , ui_wizard_share::inst()->getPalette()->getColor("YELLOW")
+                                    , false
+                                    , 1.5f
+                                    , CallFunc::create([=]()
+            {
+                mPlayers[_PLAYER_ID_ME].hp->setValueIncrese(0.2);
+                auto p = ((MenuItem*)this->getNodeById(ID_NODE_SKILL_POTION));
+                p->setEnabled(false);
+                p->setColor(ui_wizard_share::inst()->getPalette()->getColor3B("DARKGRAY"));
+            })
+                                    );
             break;
+        }
         case 3:
             break;
         case 999:
@@ -488,9 +507,11 @@ void ScenePlay::onEnd(float f) {
     if(mIsWin) {
         szEnd = "YOU WIN";
         szColor = "ORANGE";
+        battleBrix::inst()->mUserData.win++;
     } else {
         szEnd = "YOU LOSE";
         szColor = "BLACK";
+        battleBrix::inst()->mUserData.lose++;
     }
     
     guiExt::addMovingEffect(this->getNodeById(0)

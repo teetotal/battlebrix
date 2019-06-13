@@ -26,12 +26,19 @@
 #include "SimpleAudioEngine.h"
 #include "ScenePlay.h"
 #include "ui/ui_ext.h"
-#include "library/util.h"
+#include "library/pch.h"
+#include "battleBrix.h"
 
 bool SceneMain::init()
 {
     gui::inst()->initDefaultWithSpriteCache("fonts/SDSwaggerTTF.ttf");
 	this->loadFromJson("main", "main.json");
+    auto p = (ui_progressbar *) getNodeById(ID_NODE_PROGRESSBAR);
+    int total = battleBrix::inst()->mUserData.win + battleBrix::inst()->mUserData.lose;
+    if(total == 0)
+        p->setValue(0.f);
+    else
+        p->setValue((float)battleBrix::inst()->mUserData.win / (float)total);
 //    auto bg = getNodeById(0);
     
 //    guiExt::drawCircleForPhysics(bg, Vec2(50, 50), 100, Color4F(0.5, 0.5, 0.5, 0.5))
@@ -49,24 +56,41 @@ bool SceneMain::init()
 void SceneMain::callback(Ref* pSender, int from, int link) {
     switch((eLINK)link) {
         case eLINK_PLAY:
-        this->replaceScene(ScenePlay::create());
-        break;
+            this->replaceScene(ScenePlay::create());
+            break;
         case eLINK_SHOP:
-        this->replaceScene(SceneShop::create());
-        break;
+            this->replaceScene(SceneShop::create());
+            break;
         case eLINK_LEADERBOARD:
-        break;
+            break;
         case eLINK_FRIENDS:
-        break;
+            break;
         case eLINK_BAG:
-        break;
+            break;
         default:
-        break;
+            break;
     }
 }
 
 const string SceneMain::getText(const string& defaultString, int id) {
-    return defaultString;
+    switch(id) {
+        case ID_NODE_LABEL_ID:
+            return battleBrix::inst()->mUserData.id;
+        case ID_NODE_LABEL_POINT:
+            return numberFormat(battleBrix::inst()->mUserData.point);
+        case ID_NODE_LABEL_HEART:
+            return to_string(battleBrix::inst()->mUserData.heart) + " / " + to_string(battleBrix::inst()->mUserData.heartMax);
+        case ID_NODE_LABEL_LEVEL:
+            return "Lv." + to_string(battleBrix::inst()->mUserData.level);
+        case ID_NODE_PROGRESSBAR_LABEL_WINNING_RATE:
+            return to_string(battleBrix::inst()->mUserData.win) + " / " + to_string(battleBrix::inst()->mUserData.win + battleBrix::inst()->mUserData.lose);
+        case ID_NODE_LABEL_WINNING_RATE:
+            return to_string(battleBrix::inst()->mUserData.win) + " Win / " + to_string(battleBrix::inst()->mUserData.lose) + " Lose";
+        case ID_NODE_LABEL_RANKING:
+            return numberFormat(battleBrix::inst()->mUserData.ranking) + "th";
+        default:
+            return defaultString;
+    }
 }
 
 //====================================================================

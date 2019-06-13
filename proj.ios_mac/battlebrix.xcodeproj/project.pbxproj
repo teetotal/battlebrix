@@ -84,6 +84,7 @@
 		4D68FA80229D1BCA00900F5E /* icons8-video-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D68FA7F229D1BCA00900F5E /* icons8-video-100.png */; };
 		4D68FA82229D230600900F5E /* icons8-crown-480.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D68FA81229D230600900F5E /* icons8-crown-480.png */; };
 		4D71954022A7CF8700703A90 /* icons8-action-96.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D71953E22A7CF8700703A90 /* icons8-action-96.png */; };
+		4D7778C222B2352800CA2BC4 /* battleBrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D7778C022B2352800CA2BC4 /* battleBrix.cpp */; };
 		4D7EFBF8227C22A300E19181 /* play.json in Resources */ = {isa = PBXBuildFile; fileRef = 4D7EFBF7227C22A300E19181 /* play.json */; };
 		4DAA62742293DFBF00E25318 /* icons8-checkmark-480.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DAA62722293DFBF00E25318 /* icons8-checkmark-480.png */; };
 		4DAA62762293E13100E25318 /* icons8-ok-480.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DAA62752293E13100E25318 /* icons8-ok-480.png */; };
@@ -243,6 +244,8 @@
 		4D69BC802283E7C7009B4F5A /* ui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ui.h; path = ../../library/ui/ui.h; sourceTree = "<group>"; };
 		4D69BC822283FA26009B4F5A /* ui_wizard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ui_wizard.h; path = ../../library/ui/ui_wizard.h; sourceTree = "<group>"; };
 		4D71953E22A7CF8700703A90 /* icons8-action-96.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-action-96.png"; sourceTree = "<group>"; };
+		4D7778C022B2352800CA2BC4 /* battleBrix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = battleBrix.cpp; sourceTree = "<group>"; };
+		4D7778C122B2352800CA2BC4 /* battleBrix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = battleBrix.h; sourceTree = "<group>"; };
 		4D7EFBF7227C22A300E19181 /* play.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = play.json; sourceTree = "<group>"; };
 		4DAA62722293DFBF00E25318 /* icons8-checkmark-480.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-checkmark-480.png"; sourceTree = "<group>"; };
 		4DAA62752293E13100E25318 /* icons8-ok-480.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-ok-480.png"; sourceTree = "<group>"; };
@@ -465,6 +468,8 @@
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
 				46880B8619C43A87006E1F66 /* Scenes.cpp */,
 				46880B8719C43A87006E1F66 /* Scenes.h */,
+				4D7778C022B2352800CA2BC4 /* battleBrix.cpp */,
+				4D7778C122B2352800CA2BC4 /* battleBrix.h */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -720,6 +725,7 @@
 				4D4809B0227A9E9F0046472F /* inventory.cpp in Sources */,
 				4D480996227A9E370046472F /* ui_color.cpp in Sources */,
 				1AF87B781F6F77F7007BE51C /* AppController.mm in Sources */,
+				4D7778C222B2352800CA2BC4 /* battleBrix.cpp in Sources */,
 				4D2563252294FDE400421986 /* ui_roulette.cpp in Sources */,
 				4DFF8D0C228C16FB0098B187 /* ScenePlay.cpp in Sources */,
 				1AF87B8B1F6F782A007BE51C /* RootViewController.mm in Sources */,

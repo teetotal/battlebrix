@@ -12,6 +12,7 @@
     "WHITE_OPACITY_DEEP": [ 255, 255, 255, 100 ],
     "WHITE_OPACITY_LIGHT": [ 255, 255, 255, 50 ],
     "WHITE_OPACITY_LIGHT2": [ 255, 255, 255, 30 ],
+    "TRANSPARENT": [ 255, 255, 255, 0 ],
     "BLACK": [ 0, 0, 0, 255 ],
     "BLACK_OPACITY": [ 0, 0, 0, 100 ],
     "RED": [200, 0, 0, 255 ],

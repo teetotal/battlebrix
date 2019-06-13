@@ -49,6 +49,17 @@ public:
 protected:
     virtual void callback(Ref* pSender, int from, int link);
     virtual const string getText(const string& defaultString, int id);
+    
+    enum ID_NODE {
+        ID_NODE_LABEL_ID = 1,
+        ID_NODE_LABEL_POINT = 3,
+        ID_NODE_LABEL_HEART = 4,
+        ID_NODE_LABEL_LEVEL = 12,
+        ID_NODE_PROGRESSBAR = 13,
+        ID_NODE_PROGRESSBAR_LABEL_WINNING_RATE = 14,
+        ID_NODE_LABEL_WINNING_RATE = 15,
+        ID_NODE_LABEL_RANKING = 17,
+    };
 
 };
 // SceneDaily ==================================
