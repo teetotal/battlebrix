@@ -92,11 +92,12 @@ private:
         void createBall();
         void createBoard();
         void createBottom();
+        
+        void addBrix0();
         void addBrix1();
         void addBrix2();
         void addBrix3();
         void addBrix4();
-        void addBrix5();
         
         const float getHPValue() {
             return hp->getValue();
