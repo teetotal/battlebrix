@@ -33,7 +33,7 @@ bool SceneMain::init()
 {
     gui::inst()->initDefaultWithSpriteCache("fonts/SDSwaggerTTF.ttf");
 	this->loadFromJson("main", "main.json");
-    auto p = (ui_progressbar *) getNodeById(ID_NODE_PROGRESSBAR);
+    auto p = (ui_progressbar *) getNodeById(_ID_NODE_PROGRESSBAR);
     int total = battleBrix::inst()->mUserData.win + battleBrix::inst()->mUserData.lose;
     if(total == 0)
         p->setValue(0.f);
@@ -74,22 +74,8 @@ void SceneMain::callback(Ref* pSender, int from, int link) {
 
 const string SceneMain::getText(const string& defaultString, int id) {
     switch(id) {
-        case ID_NODE_LABEL_ID:
-            return battleBrix::inst()->mUserData.id;
-        case ID_NODE_LABEL_POINT:
-            return numberFormat(battleBrix::inst()->mUserData.point);
-        case ID_NODE_LABEL_HEART:
-            return to_string(battleBrix::inst()->mUserData.heart) + " / " + to_string(battleBrix::inst()->mUserData.heartMax);
-        case ID_NODE_LABEL_LEVEL:
-            return "Lv." + to_string(battleBrix::inst()->mUserData.level);
-        case ID_NODE_PROGRESSBAR_LABEL_WINNING_RATE:
-            return to_string(battleBrix::inst()->mUserData.win) + " / " + to_string(battleBrix::inst()->mUserData.win + battleBrix::inst()->mUserData.lose);
-        case ID_NODE_LABEL_WINNING_RATE:
-            return to_string(battleBrix::inst()->mUserData.win) + " Win / " + to_string(battleBrix::inst()->mUserData.lose) + " Lose";
-        case ID_NODE_LABEL_RANKING:
-            return numberFormat(battleBrix::inst()->mUserData.ranking) + "th";
         default:
-            return defaultString;
+            return battleBrix::inst()->getText(defaultString, id);
     }
 }
 
@@ -209,6 +195,8 @@ void SceneShop::callback(Ref* pSender, int from, int link) {
 }
 
 const string SceneShop::getText(const string& defaultString, int id) {
-    
-    return defaultString;
+    switch(id) {
+        default:
+            return battleBrix::inst()->getText(defaultString, id);
+    }
 }

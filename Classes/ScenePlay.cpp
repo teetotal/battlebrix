@@ -4,6 +4,7 @@
 #include "ui/ui_ext.h"
 #include "library/util.h"
 #include "battleBrix.h"
+#include <functional>
 
 #define SEPPED 1.0f
 #define PHYSICSMATERIAL             PhysicsMaterial(.1f, 1.f, 0.f)
@@ -13,6 +14,7 @@
 //#define GRID_AREA Vec2(2.f, 3.f)
 #define RATIO_OBSTACLE_PER_GRID 0.6f
 #define _ID_BOTTOM 0
+#define BRIX_ID_START 100
 
 enum _PLAYER_ID {
     _PLAYER_ID_ME = 0,
@@ -52,7 +54,7 @@ enum ID_NODE {
 //    ui_wizard_share::inst()->getPalette()->getColor("PURPLE_LIGHT")
 //};
 // ----------------------------------------------------------------------------------------------------------------
-void ScenePlay::PLAYER::init(ScenePlay* p, int layerId, int hpId, int mpId, int ballId) {
+void ScenePlay::PLAYER::init(ScenePlay* p, int layerId, int hpId, int mpId, int ballId, int fnId) {
     pScene = p;
     this->ballId = ballId;
     layer = p->getNodeById(layerId);
@@ -75,10 +77,13 @@ void ScenePlay::PLAYER::init(ScenePlay* p, int layerId, int hpId, int mpId, int 
     
     //create brix layer
     createLayerBrix();
-    for(int n=0; n < 8; n = n + 2) {
-        addObstacle(Vec2(0, n), obstacleId++);
-    }
-    attachLayerBrix();
+    
+    std::function<void()> f[] =  {
+        std::bind( &ScenePlay::PLAYER::addBrix1, this)
+        , std::bind( &ScenePlay::PLAYER::addBrix2, this)
+    };
+    
+    f[fnId]();
 }
 //createLayerBrix ===========================================================================
 void ScenePlay::PLAYER::createLayerBrix() {
@@ -87,9 +92,7 @@ void ScenePlay::PLAYER::createLayerBrix() {
     
     layerBrix = Layer::create();
     layerBrix->setContentSize(layer->getContentSize());
-}
-
-void ScenePlay::PLAYER::attachLayerBrix() {
+    
     layer->addChild(layerBrix);
 }
 //createBall ===========================================================================
@@ -153,74 +156,13 @@ void ScenePlay::PLAYER::createBottom() {
                              , _PHYSICS_ID_MY_BALL
                              );
 }
-// add Obstacle ===========================================================================
-void ScenePlay::PLAYER::addObstacle() {
-    //전체 삭제
-    createLayerBrix();
-    vector<Vec2> vec;
-    
-    for(map<int, Vec2>::iterator it = obstaclesPos.begin(); it != obstaclesPos.end(); ++it) {
-        Vec2 pos = it->second;
-        if(pos.y < 6) {
-            pos.y += 1;
-            vec.push_back(pos);
-        }
-    }
-    obstaclesPos.clear();
-    
-    for(int n = 0; n < vec.size(); n++ ) {
-        addObstacle(vec[n], obstacleId++);
-    }
-    vec.clear();
-    
-    //신규 추가
-    Vec2 pos = Vec2(getRandValue(8), 0);
-    addObstacle(pos, obstacleId++);
-    
-    attachLayerBrix();
-}
 
-void ScenePlay::PLAYER::addObstacle(Vec2 pos, int id) {
-    
-    Vec2 position = gui::inst()->getPointVec2(pos.x, pos.y, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-    auto rect = guiExt::drawRectForPhysics(layerBrix, position, obstacleSize, pScene->mColors[(int)pos.y], true, .1f);
-    pScene->setPhysicsBodyRect(rect
-                               , PHYSICSMATERIAL_OBSTACLE
-                               , false
-                               , id
-                               , -1
-                               , -1 //_PHYSICS_ID_MY_BALL
-                               , ballId
-                               );
-    int d = max(10, getRandValue(30));
-    float f = (float)d / 10.f;
-    auto seq = Sequence::create(MoveTo::create(f, Vec2(layerBrix->getContentSize().width - rect->getContentSize().width, rect->getPosition().y)), MoveTo::create(f, Vec2(0, rect->getPosition().y)), NULL);
-    rect->runAction(RepeatForever::create(seq));
-    obstaclesPos[id] = pos;
-}
-// delete Obstacle ===========================================================================
-void ScenePlay::PLAYER::deleteObstacle(int id) {
-    layer->removeChildByTag(id);
-    obstaclesPos.erase(id);
-//    CCASSERT(p, "INVALID Obstacle");
-    
-}
 // vibrate ===========================================================================
 void ScenePlay::PLAYER::vibrate() {
     if(lockShake)
         return;
     lockShake = true;
-    
-    Vec2 pos = layer->getPosition();
-    float duration = 0.1f;
-    float width = 5.f;
-    layer->runAction(Sequence::create( MoveTo::create(duration, Vec2(pos.x - width, pos.y - width))
-                                      , MoveTo::create(duration, Vec2(pos.x + width, pos.y + width))
-                                      , MoveTo::create(duration, Vec2(pos.x - width, pos.y))
-                                      , MoveTo::create(duration, Vec2(pos.x + width, pos.y))
-                                      , MoveTo::create(duration, pos)
-                                      , CallFunc::create([=]() { lockShake = false; })
-                                      , NULL));
+    guiExt::addVibrateEffect(layer, CallFunc::create([=]() { lockShake = false; }));
 }
 // decreseHP ===========================================================================
 void ScenePlay::PLAYER::decreseHP() {
@@ -233,7 +175,6 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
     if(ball == NULL)
         return false;
     
-    CCLOG("id %d", id);
     bool ret = false;
     
     const Vec2 ballPosition = ball->getPosition();
@@ -305,6 +246,12 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
         label->setPosition(ballPosition);
         label->runAction( Sequence::create(ScaleBy::create(0.3, 1.5), RemoveSelf::create(), NULL) );
         
+        //brix vibration
+        if(!brixEffectFlagMap[id]) {
+            brixEffectFlagMap[id] = true;
+            guiExt::addVibrateEffect(layerBrix->getChildByTag(id), CallFunc::create([=](){ brixEffectFlagMap[id] = false; }));
+        }
+        
         if(mp->setValueIncrese(fIncrease) >= 1.f) {
             mp->setValue(0.f);
             mp->blink();
@@ -321,7 +268,59 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
     
     return ret;
 }
-
+// addBrix1 ===========================================================================
+void ScenePlay::PLAYER::addBrix1() {
+    
+    int brixId = BRIX_ID_START;
+    for(int n=0; n < 8; n = n + 2)
+    {
+        Vec2 position = gui::inst()->getPointVec2(0, n, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+        auto rect = guiExt::drawRectForPhysics(layerBrix, position, obstacleSize, pScene->mColors[(int)n], true, .1f);
+        pScene->setPhysicsBodyRect(rect
+                                   , PHYSICSMATERIAL_OBSTACLE
+                                   , false
+                                   , brixId
+                                   , -1
+                                   , -1 //_PHYSICS_ID_MY_BALL
+                                   , ballId
+                                   );
+        int d = max(10, getRandValue(30));
+        float f = (float)d / 10.f;
+        auto seq = Sequence::create(MoveTo::create(f, Vec2(layerBrix->getContentSize().width - rect->getContentSize().width, rect->getPosition().y)), MoveTo::create(f, Vec2(0, rect->getPosition().y)), NULL);
+        rect->runAction(RepeatForever::create(seq));
+        
+        brixEffectFlagMap[brixId] = false;
+        brixId++;
+    }
+}
+// addBrix2 ===========================================================================
+void ScenePlay::PLAYER::addBrix2() {
+    
+    float yEnd = gui::inst()->getPointVec2(0, 7, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO).y;
+    float yStart = gui::inst()->getPointVec2(0, 0, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO).y;
+    
+    int brixId = BRIX_ID_START;
+    for(int n=0; n < 8; n = n + 2)
+    {
+        Vec2 position = gui::inst()->getPointVec2(n, 0, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+        auto rect = guiExt::drawRectForPhysics(layerBrix, position, obstacleSize, pScene->mColors[(int)n], true, .1f);
+        pScene->setPhysicsBodyRect(rect
+                                   , PHYSICSMATERIAL_OBSTACLE
+                                   , false
+                                   , brixId
+                                   , -1
+                                   , -1 //_PHYSICS_ID_MY_BALL
+                                   , ballId
+                                   );
+        int d = max(10, getRandValue(30));
+        float f = (float)d / 10.f;
+        auto seq = Sequence::create(MoveTo::create(f, Vec2(rect->getPosition().x, yEnd)), MoveTo::create(f, Vec2(rect->getPosition().x, yStart)), NULL);
+        rect->runAction(RepeatForever::create(seq));
+        
+        brixEffectFlagMap[brixId] = false;
+        brixId++;
+    }
+}
 /* ----------------------------------------------------------------------------------------------------------------
  
  ScenePlay
@@ -348,8 +347,10 @@ bool ScenePlay::init()
     PHYSICS_CONTACT(ScenePlay);
     
     mIsEnd = 0;
-    mPlayers[_PLAYER_ID_ME].init(this, ID_NODE_MY_AREA, ID_HP_MY, ID_MP_MY, _PHYSICS_ID_MY_BALL);
-    mPlayers[_PLAYER_ID_OTHER].init(this, ID_NODE_OTHER_AREA, ID_HP_OTHER, ID_MP_OTHER, _PHYSICS_ID_1_BALL);
+    int fnId = getRandValue(2);
+    
+    mPlayers[_PLAYER_ID_ME].init(this, ID_NODE_MY_AREA, ID_HP_MY, ID_MP_MY, _PHYSICS_ID_MY_BALL, fnId);
+    mPlayers[_PLAYER_ID_OTHER].init(this, ID_NODE_OTHER_AREA, ID_HP_OTHER, ID_MP_OTHER, _PHYSICS_ID_1_BALL, fnId);
     
 //    gui::inst()->drawGrid(mLayer, mLayer->getContentSize(), GRID_AREA, Size::ZERO, Size::ZERO);
     
@@ -397,14 +398,13 @@ void ScenePlay::callback(Ref* pSender, int from, int link) {
                                     , ui_wizard_share::inst()->getPalette()->getColor("YELLOW")
                                     , false
                                     , 1.5f
-                                    , CallFunc::create([=]()
-            {
-                mPlayers[_PLAYER_ID_ME].hp->setValueIncrese(0.2);
-                auto p = ((MenuItem*)this->getNodeById(ID_NODE_SKILL_POTION));
-                p->setEnabled(false);
-                p->setColor(ui_wizard_share::inst()->getPalette()->getColor3B("DARKGRAY"));
-            })
+                                    , NULL
                                     );
+            mPlayers[_PLAYER_ID_ME].hp->setValueIncrese(0.2);
+            auto p = ((MenuItem*)this->getNodeById(ID_NODE_SKILL_POTION));
+            p->setEnabled(false);
+            p->setColor(ui_wizard_share::inst()->getPalette()->getColor3B("DARKGRAY"));
+            
             break;
         }
         case 3:

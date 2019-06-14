@@ -65,10 +65,11 @@ private:
         Node * ball;
         Node * board;
         
-        int obstacleStartId, obstacleId, ballId;
+        int ballId;
         int combo;
         
-        map<int, Vec2> obstaclesPos;
+        //map<int, Vec2> obstaclesPos;
+        map<int, bool> brixEffectFlagMap;
         
         ui_progressbar * hp, * mp;
         bool lockShake;
@@ -82,27 +83,26 @@ private:
             lockShake = false;
             latestCollisionWithBoard = 0;
             combo = 0;
-            obstacleId = 100;
-            obstacleStartId = obstacleId;
             layerBrix = NULL;
         };
-        void init(ScenePlay* p, int layerId, int hpId, int mpId, int ballId);
+        void init(ScenePlay* p, int layerId, int hpId, int mpId, int ballId, int fnId);
         void vibrate();
         bool onContact(int id, bool toRight = false);
         void decreseHP();
         void createBall();
         void createBoard();
         void createBottom();
-        void addObstacle();
-        void addObstacle(Vec2 pos, int id);
+        void addBrix1();
+        void addBrix2();
+        void addBrix3();
+        void addBrix4();
+        void addBrix5();
+        
         const float getHPValue() {
             return hp->getValue();
         };
-        void deleteObstacle(int id);
         
         void createLayerBrix();
-        void attachLayerBrix();
-        
     };
     
     PLAYER mPlayers[2];
