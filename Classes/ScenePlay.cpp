@@ -63,7 +63,7 @@ void ScenePlay::PLAYER::init(ScenePlay* p, int layerId, int hpId, int mpId, int 
     mp = (ui_progressbar*)p->getNodeById(mpId);
     hp->setValue(1.f);
     mp->setValue(0.f);
-    p->initPhysicsBody(layer, PHYSICSMATERIAL_OBSTACLE, true, SEPPED);
+    p->initPhysicsBody(layer, PHYSICSMATERIAL_OBSTACLE, false, SEPPED);
     
     gridSize   = gui::inst()->getGridSize(layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO);
     obstacleSize = gridSize;
