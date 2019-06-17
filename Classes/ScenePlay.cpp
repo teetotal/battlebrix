@@ -2,11 +2,11 @@
 #include "ScenePlay.h"
 #include "Scenes.h"
 #include "ui/ui_ext.h"
-#include "library/util.h"
+#include "library/pch.h"
 #include "battleBrix.h"
 #include <functional>
 
-#define SEPPED 1.0f
+#define SEPPED 1.2f
 #define PHYSICSMATERIAL             PhysicsMaterial(.1f, 1.f, 0.f)
 #define PHYSICSMATERIAL_OBSTACLE    PhysicsMaterial(.1f, 1.f, 0.f)
 #define PHYSICSMATERIAL_BOARD    PhysicsMaterial(.1f, 1.f, 0.f)
@@ -28,14 +28,6 @@ enum _BOARD_ID {
     _BOARD_ID_R
 };
 
-enum _PHYSICS_ID {
-    _PHYSICS_ID_MY_BALL = 0x01 << 0,
-    _PHYSICS_ID_MY_BOARD = 0x01 << 1,
-    _PHYSICS_ID_MY_OBSTACLE_1 = 0x01 << 2,
-    
-    _PHYSICS_ID_1_BALL = 0x01 << 3
-};
-
 const int _BALL_ID[] = {
     0x01 << 0,
     0x01 << 1,
@@ -52,12 +44,15 @@ enum ID_NODE {
     ID_NODE_MY_AREA,
     ID_NODE_MY_ALERT,
     ID_NODE_MY_LABEL,
+    ID_NODE_MY_LABEL_NAME,
     
     ID_NODE_OTHER = 11,
     ID_NODE_OTHER_HP,
     ID_NODE_OTHER_MP,
     ID_NODE_OTHER_AREA,
     ID_NODE_OTHER_ALERT,
+    ID_NODE_OTHER_LABEL,
+    ID_NODE_OTHER_LABEL_NAME,
     
     ID_NODE_CPU_1 = 21,
     ID_NODE_CPU_2 = 31,
@@ -86,6 +81,8 @@ void ScenePlay::PLAYER::init(ScenePlay* p, const string& name, int layerId, int 
     mp = (ui_progressbar*)p->getNodeById(mpId);
     alert = p->getNodeById(alertId);
     label = (Label*)p->getNodeById(labelId);
+    labelName = (Label*)p->getNodeById(labelId+1);
+    labelName->setString(name);
     
     hp->setValue(1.f);
     mp->setValue(0.f);
@@ -160,7 +157,7 @@ void ScenePlay::PLAYER::createBall() {
                                  , ballId
                                  , -1
                                  , -1 // _PHYSICS_ID_MY_BOARD | _PHYSICS_ID_MY_OBSTACLE_1
-                                 , _PHYSICS_ID_MY_OBSTACLE_1
+                                 , -1 //_PHYSICS_ID_MY_OBSTACLE_1
                                  );
     ball->getPhysicsBody()->setVelocityLimit(layer->getContentSize().width * 1.f);
 }
@@ -208,7 +205,7 @@ void ScenePlay::PLAYER::createBottom() {
                              , _ID_BOTTOM
                              , -1
                              , -1 //_PHYSICS_ID_MY_BALL
-                             , _PHYSICS_ID_MY_BALL
+                             , -1 //_PHYSICS_ID_MY_BALL
                              );
 }
 
@@ -333,8 +330,39 @@ void ScenePlay::PLAYER::onTimer(float f) {
     if(ball) {
         Vec2 pos = Vec2(ball->getPosition().x, board->getPosition().y);
         pos.x -= board->getContentSize().width / 2.f;
+        if(pos.x <= 0)
+            pos.x = 0;
+        if(pos.x >= layer->getContentSize().width - board->getContentSize().width)
+            pos.x = layer->getContentSize().width - board->getContentSize().width;
+
         board->runAction(MoveTo::create(f * 0.5f, pos));
     }
+}
+// setRanking ===========================================================================
+void ScenePlay::PLAYER::setRanking(int ranking) {
+    if(isEnd)
+        return;
+    if(getHPValue() <= 0.f) {
+        isEnd = true;
+        layer->removeChild(ball);
+        ball = NULL;
+        layerBrix->removeAllChildren();
+        layer->removeChild(board);
+        label->setColor(ui_wizard_share::inst()->getPalette()->getColor3B("BLACK"));
+        
+        alert->stopAllActions();
+        alert->setVisible(false);
+//        for(int n=0; n<layerBrix->getChildren().size(); n++) {
+//            layerBrix->getChildren().at(n)->stopAllActions();
+//        }
+        
+    }
+    if(this->ranking != ranking) {
+        this->ranking = ranking;
+        label->setString(to_string(ranking));
+        label->runAction(Sequence::create(ScaleTo::create(0.1, 1.5), ScaleTo::create(0.1, 1.f), NULL));
+    }
+    
 }
 // addBrix0 ===========================================================================
 void ScenePlay::PLAYER::addBrix0() {
@@ -560,7 +588,7 @@ bool ScenePlay::init()
     int fnId = getRandValue(5);
     
     PLAYER me;
-    me.init(this, "ME", ID_NODE_MY_AREA, ID_NODE_MY_HP, ID_NODE_MY_MP, _PHYSICS_ID_MY_BALL, ID_NODE_MY_ALERT, ID_NODE_MY_LABEL, fnId);
+    me.init(this, "ME", ID_NODE_MY_AREA, ID_NODE_MY_HP, ID_NODE_MY_MP, _BALL_ID[0], ID_NODE_MY_ALERT, ID_NODE_MY_LABEL, fnId);
     mPlayers.push_back(me);
     
     for(int n=0; n<4; n++) {
@@ -600,7 +628,8 @@ bool ScenePlay::init()
 // timer ===========================================================================
 void ScenePlay::timer(float f) {
     for(int n= 1; n < mPlayers.size(); n++) {
-        mPlayers[n].onTimer(f);
+        if(!mPlayers[n].isEnd)
+            mPlayers[n].onTimer(f);
     }
 }
 // callback ===========================================================================
@@ -648,6 +677,9 @@ bool ScenePlay::onTouchEnded(Touch* touch, Event* event) {
 }
 
 void ScenePlay::onTouchMoved(Touch *touch, Event *event) {
+    if(mPlayers[_PLAYER_ID_ME].isEnd)
+        return;
+    
     auto posLayer = mPlayers[_PLAYER_ID_ME].layer->getParent()->getPosition();
     Vec2 pos = Vec2(touch->getLocation().x - posLayer.x, mPlayers[_PLAYER_ID_ME].board->getPosition().y);
     pos.x -= mPlayers[_PLAYER_ID_ME].board->getContentSize().width / 2.f;
@@ -662,13 +694,13 @@ void ScenePlay::onTouchMoved(Touch *touch, Event *event) {
 bool ScenePlay::onContactBegin(PhysicsContact &contact) {
     int other;
 //    bitmask st = getBitmask(contact);
-    if(isCollosion(contact, _PHYSICS_ID_MY_BALL, other)) {
+//    if(isCollosion(contact, _PHYSICS_ID_MY_BALL, other)) {
 //        CCLOG("Collision %d with %d, Category %d, %d, Collision %d, %d"
 //              , _PHYSICS_ID_MY_BALL, other
 //              , st.categoryA, st.categoryB
 //              , st.collisionA, st.collisionB
 //              );
-    }
+//    }
     
 //    bool isChangedRanking = false;
     for(int n = 0; n < mPlayers.size(); n++) {
@@ -690,11 +722,19 @@ bool ScenePlay::onContactBegin(PhysicsContact &contact) {
                 ranking ++;
             }
         }
-        mPlayers[n].label->setString(to_string(ranking));
+        mPlayers[n].setRanking(ranking);
+    }
+    //내가 끝나거나 다른게 모두 끝났거나
+    bool isEndAll = true;
+    for(int n=1; n<mPlayers.size(); n++){
+        if(!mPlayers[n].isEnd) {
+            isEndAll = false;
+            break;
+        }
     }
     
-    if(mIsEnd)
-        return true;
+    if(isEndAll || mPlayers[_PLAYER_ID_ME].isEnd)
+        mIsEnd = true;
     
 //    if(mPlayers[_PLAYER_ID_OTHER].getHPValue() <= 0.3f) {
 //        auto alert = this->getNodeById(500);
@@ -731,16 +771,9 @@ bool ScenePlay::onContactBegin(PhysicsContact &contact) {
 
 void ScenePlay::onEnd(float f) {
     
-    string szEnd, szColor;
-    if(mIsWin) {
-        szEnd = "YOU WIN";
-        szColor = "ORANGE";
-        battleBrix::inst()->mUserData.win++;
-    } else {
-        szEnd = "YOU LOSE";
-        szColor = "BLACK";
-        battleBrix::inst()->mUserData.lose++;
-    }
+    string szEnd = getRankString(mPlayers[_PLAYER_ID_ME].ranking);
+    string szColor ="ORANGE";
+    
     
     guiExt::addMovingEffect(this->getNodeById(0)
                             , ui_wizard_share::inst()->getPalette()->getColor("WHITE_OPACITY_DEEP")

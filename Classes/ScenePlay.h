@@ -66,7 +66,7 @@ private:
         Node * ball;
         Node * board;
         Node * alert;
-        Label * label;
+        Label * label, * labelName;
         
         int ballId;
         int combo;
@@ -82,6 +82,9 @@ private:
         Size gridSize, obstacleSize;
         float fontSizeCombo;
         
+        bool isEnd;
+        int ranking;
+        
         PLAYER(){
             lockShake = false;
             latestCollisionWithBoard = 0;
@@ -92,6 +95,7 @@ private:
             layer = NULL;
             alert = NULL;
             label = NULL;
+            isEnd = false;
         };
         void init(ScenePlay* p, const string& name, int layerId, int hpId, int mpId, int ballId, int alertId, int labelId, int fnId);
         void vibrate();
@@ -111,11 +115,11 @@ private:
             return hp->getValue();
         };
         void onTimer(float f);
-        
+        void setRanking(int ranking);
         void createLayerBrix();
     };
     vector<PLAYER> mPlayers;
-    bool mIsEnd, mIsWin;
+    bool mIsEnd;
     
 };
 #endif // __SCENE_PLAY_H__
