@@ -61,9 +61,12 @@ private:
     };
     
     struct PLAYER {
+        string name;
         Node * layer, * layerBrix;
         Node * ball;
         Node * board;
+        Node * alert;
+        Label * label;
         
         int ballId;
         int combo;
@@ -84,8 +87,13 @@ private:
             latestCollisionWithBoard = 0;
             combo = 0;
             layerBrix = NULL;
+            ball = NULL;
+            board = NULL;
+            layer = NULL;
+            alert = NULL;
+            label = NULL;
         };
-        void init(ScenePlay* p, int layerId, int hpId, int mpId, int ballId, int fnId);
+        void init(ScenePlay* p, const string& name, int layerId, int hpId, int mpId, int ballId, int alertId, int labelId, int fnId);
         void vibrate();
         bool onContact(int id, bool toRight = false);
         void decreseHP();
@@ -102,11 +110,11 @@ private:
         const float getHPValue() {
             return hp->getValue();
         };
+        void onTimer(float f);
         
         void createLayerBrix();
     };
-    
-    PLAYER mPlayers[2];
+    vector<PLAYER> mPlayers;
     bool mIsEnd, mIsWin;
     
 };

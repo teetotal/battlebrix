@@ -10,75 +10,6 @@
     },
     "nodes": [
     {
-      "comment": "vs",
-      "dimension": [ 0, 0, 8, 1 ],
-      "margin": [ 10, 5 ],
-      "innerMargin": [ 5, 5 ],
-      "gridSize": [ 1, 1 ],
-      "img": null,
-      "color": 0,
-      "objects": [
-        {
-            "position": [ 0, 0 ],
-            "alignment": "center",
-            "type": "label",
-            "color": "GRAY",
-            "text": "VS",
-            "fontSize": -1
-        }
-      ]
-    },
-    {
-      "comment": "cpu loading bars",
-      "dimension": [ 0, 0, 4, 1 ],
-      "margin": [ 10, 5 ],
-      "innerMargin": [ 0, 1 ],
-      "gridSize": [ 1, 2 ],
-      "img": null,
-      "color": 0,
-      "objects": [
-        {
-          "id": 3,
-          "position": [ 0, 0 ],
-          "alignment": "right",
-          "type": "progressbar",
-          "color": [ "YELLOW", "BLACK" ]
-        },
-        {
-          "id": 4,
-          "position": [ 0, 1 ],
-          "alignment": "right",
-          "type": "progressbar",
-          "color": [ "BLUE", "BLACK" ]
-        }
-      ]
-    },
-    {
-      "comment": "my loading bars",
-      "dimension": [ 4, 0, 8, 1 ],
-      "margin": [ 10, 5 ],
-      "innerMargin": [ 0, 1 ],
-      "gridSize": [ 1, 2 ],
-      "img": null,
-      "color": 0,
-      "objects": [
-        {
-          "id": 1,
-          "position": [ 0, 0 ],
-          "alignment": "center",
-          "type": "progressbar",
-          "color": [ "YELLOW", "BLACK" ]
-        },
-        {
-          "id": 2,
-          "position": [ 0, 1 ],
-          "alignment": "center",
-          "type": "progressbar",
-          "color": [ "BLUE", "BLACK" ]
-        }
-      ]
-    },
-    {
         "comment": "exit",
         "dimension": [ 8, 0, 9, 1 ],
         "margin": [ 5, 5 ],
@@ -100,6 +31,7 @@
     },
     {
         "comment": "CPU name",
+        "visible": false,
         "dimension": [ 0, 6, 4, 7 ],
         "margin": [ 10, 5 ],
         "innerMargin": [ 0, 1 ],
@@ -137,48 +69,326 @@
         ]
     },
     {
+        "comment": "cpu 1",
+        "id": 21,
+        "visible": true,
+        "dimension": [ 0, 0, 2, 3 ],
+        "margin": [ 5, 5 ],
+        "innerMargin": [ 0, 1 ],
+        "gridSize": [ 1, 20 ],
+        "img": null,
+        "color": 0,
+        "objects": [
+            {
+                "id": 22,
+                "position": [ 0, 0 ],
+                "alignment": "right",
+                "type": "progressbar",
+                "color": [ "YELLOW", "BLACK" ]
+            },
+            {
+                "id": 23,
+                "position": [ 0, 1 ],
+                "alignment": "right",
+                "type": "progressbar",
+                "color": [ "BLUE", "BLACK" ]
+            },
+            {
+                "id": 26,
+                "position": [ 0, 2 ],
+                "alignment": "center",
+                "type": "label",
+                "fontSize": -2,
+                "color": "WHITE_OPACITY_LIGHT",
+                "span": [0, 18]
+            },
+            {
+                "id": 24,
+                "position": [ 0, 2 ],
+                "alignment": "center",
+                "type": "layer",
+                "color": 150,
+                "span": [0, 18]
+            },
+            {
+                "id": 25,
+                "visible": false,
+                "position": [ 0, 2 ],
+                "alignment": "center",
+                "type": "rectangle_line",
+                "color": "RED",
+                "span": [0, 18]
+            }
+        ]
+    },
+    {
+        "comment": "cpu 2",
+        "id": 31,
+        "visible": true,
+        "dimension": [ 2, 0, 4, 3 ],
+        "margin": [ 5, 5 ],
+        "innerMargin": [ 0, 1 ],
+        "gridSize": [ 1, 20 ],
+        "img": null,
+        "color": 0,
+        "objects": [
+            {
+                "id": 32,
+                "position": [ 0, 0 ],
+                "alignment": "right",
+                "type": "progressbar",
+                "color": [ "YELLOW", "BLACK" ]
+            },
+            {
+                "id": 33,
+                "position": [ 0, 1 ],
+                "alignment": "right",
+                "type": "progressbar",
+                "color": [ "BLUE", "BLACK" ]
+            },
+            {
+                "id": 36,
+                "position": [ 0, 2 ],
+                "alignment": "center",
+                "type": "label",
+                "fontSize": -2,
+                "color": "WHITE_OPACITY_LIGHT",
+                "span": [0, 18]
+            },
+            {
+                "id": 34,
+                "position": [ 0, 2 ],
+                "alignment": "center",
+                "type": "layer",
+                "color": 150,
+                "span": [0, 18]
+            },
+            {
+                "id": 35,
+                "visible": false,
+                "position": [ 0, 2 ],
+                "alignment": "center",
+                "type": "rectangle_line",
+                "color": "RED",
+                "span": [0, 18]
+            }
+        ]
+    },
+    {
+        "comment": "cpu 3",
+        "id": 41,
+        "visible": true,
+        "dimension": [ 0, 3, 2, 6 ],
+        "margin": [ 5, 5 ],
+        "innerMargin": [ 0, 1 ],
+        "gridSize": [ 1, 20 ],
+        "img": null,
+        "color": 0,
+        "objects": [
+            {
+                "id": 42,
+                "position": [ 0, 0 ],
+                "alignment": "right",
+                "type": "progressbar",
+                "color": [ "YELLOW", "BLACK" ]
+            },
+            {
+                "id": 43,
+                "position": [ 0, 1 ],
+                "alignment": "right",
+                "type": "progressbar",
+                "color": [ "BLUE", "BLACK" ]
+            },
+            {
+                "id": 46,
+                "position": [ 0, 2 ],
+                "alignment": "center",
+                "type": "label",
+                "fontSize": -2,
+                "color": "WHITE_OPACITY_LIGHT",
+                "span": [0, 18]
+            },
+            {
+                "id": 44,
+                "position": [ 0, 2 ],
+                "alignment": "center",
+                "type": "layer",
+                "color": 150,
+                "span": [0, 18]
+            },
+            {
+                "id": 45,
+                "visible": false,
+                "position": [ 0, 2 ],
+                "alignment": "center",
+                "type": "rectangle_line",
+                "color": "RED",
+                "span": [0, 18]
+            }
+        ]
+    },
+    {
+        "comment": "cpu 4",
+        "id": 51,
+        "visible": true,
+        "dimension": [ 2, 3, 4, 6 ],
+        "margin": [ 5, 5 ],
+        "innerMargin": [ 0, 1 ],
+        "gridSize": [ 1, 20 ],
+        "img": null,
+        "color": 0,
+        "objects": [
+            {
+                "id": 52,
+                "position": [ 0, 0 ],
+                "alignment": "right",
+                "type": "progressbar",
+                "color": [ "YELLOW", "BLACK" ]
+            },
+            {
+                "id": 53,
+                "position": [ 0, 1 ],
+                "alignment": "right",
+                "type": "progressbar",
+                "color": [ "BLUE", "BLACK" ]
+            },
+            {
+                "id": 56,
+                "position": [ 0, 2 ],
+                "alignment": "center",
+                "type": "label",
+                "fontSize": -2,
+                "color": "WHITE_OPACITY_LIGHT",
+                "span": [0, 18]
+            },
+            {
+                "id": 54,
+                "position": [ 0, 2 ],
+                "alignment": "center",
+                "type": "layer",
+                "color": 150,
+                "span": [0, 18]
+            },
+            {
+                "id": 55,
+                "visible": false,
+                "position": [ 0, 2 ],
+                "alignment": "center",
+                "type": "rectangle_line",
+                "color": "RED",
+                "span": [0, 18]
+            }
+        ]
+    },
+    {
       "comment": "cpu area",
       "id": 11,
-      "dimension": [ 0, 1, 4, 6 ],
+      "visible": false,
+      "dimension": [ 0, 0, 4, 6 ],
       "margin": [ 10, 5 ],
-      "innerMargin": [ 0, 0 ],
-      "gridSize": [ 1, 1 ],
+      "innerMargin": [ 0, 1 ],
+      "gridSize": [ 1, 20 ],
       "img": null,
-      "color": 150,
+      "color": 0,
       "objects": [
           {
-              "id": 500,
-              "visible": false,
+              "id": 12,
               "position": [ 0, 0 ],
+              "alignment": "right",
+              "type": "progressbar",
+              "color": [ "YELLOW", "BLACK" ]
+          },
+          {
+              "id": 13,
+              "position": [ 0, 1 ],
+              "alignment": "right",
+              "type": "progressbar",
+              "color": [ "BLUE", "BLACK" ]
+          },
+          {
+              "id": 16,
+              "visible": false,
+              "position": [ 0, 2 ],
+              "alignment": "center",
+              "type": "label",
+              "fontSize": -2,
+              "color": "WHITE_OPACITY_LIGHT",
+              "span": [0, 18]
+          },
+          {
+              "id": 14,
+              "position": [ 0, 2 ],
+              "alignment": "center",
+              "type": "layer",
+              "color": 150,
+              "span": [0, 18]
+          },
+          {
+              "id": 15,
+              "visible": false,
+              "position": [ 0, 2 ],
               "alignment": "center",
               "type": "rectangle_line",
-              "color": "RED"
+              "color": "RED",
+              "span": [0, 18]
           }
       ]
     },
     {
       "comment": "my area",
-      "id": 10,
-      "dimension": [ 4, 1, 8, 6 ],
+      "id": 1,
+      "dimension": [ 4, 0, 8, 6 ],
       "margin": [ 10, 5 ],
-      "innerMargin": [ 0, 0 ],
-      "gridSize": [ 1, 1 ],
+      "innerMargin": [ 0, 1 ],
+      "gridSize": [ 1, 20 ],
       "img": null,
-      "color": 150,
+      "color": 0,
       "objects": [
           {
-              "id": 501,
-              "visible": false,
+              "id": 2,
               "position": [ 0, 0 ],
+              "alignment": "left",
+              "type": "progressbar",
+              "color": [ "YELLOW", "BLACK" ]
+          },
+          {
+              "id": 3,
+              "position": [ 0, 1 ],
+              "alignment": "left",
+              "type": "progressbar",
+              "color": [ "BLUE", "BLACK" ]
+          },
+          {
+              "id": 6,
+              "position": [ 0, 2 ],
+              "alignment": "center",
+              "type": "label",
+              "fontSize": -2,
+              "color": "WHITE_OPACITY_LIGHT",
+              "span": [0, 18]
+          },
+          {
+              "id": 4,
+              "position": [ 0, 2 ],
+              "alignment": "center",
+              "type": "layer",
+              "color": 150,
+              "span": [0, 18]
+          },
+          {
+              "id": 5,
+              "visible": false,
+              "position": [ 0, 2 ],
               "alignment": "center",
               "type": "rectangle_line",
-              "color": "RED"
+              "color": "RED",
+              "span": [0, 18]
           }
       ]
     },
     {
       "comment": "skill",
-      "id": 30,
+      "id": 100,
       "dimension": [ 8, 2, 9, 6 ],
       "margin": [ 0, 0 ],
       "innerMargin": [ 0, 5 ],
@@ -187,7 +397,7 @@
       "color": 0,
       "objects": [
         {
-          "id": 31,
+          "id": 101,
           "position": [ 0, 0 ],
           "alignment": "left",
           "type": "sprite_button_circle",
@@ -196,7 +406,7 @@
           "color": "BLUE"
         },
         {
-          "id": 32,
+          "id": 102,
           "position": [ 0, 1 ],
           "alignment": "left",
           "type": "sprite_button_circle",
@@ -205,7 +415,7 @@
           "color": "YELLOW"
         },
         {
-          "id": 33,
+          "id": 103,
           "position": [ 0, 2 ],
           "alignment": "left",
           "type": "sprite_button_circle",

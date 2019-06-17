@@ -36,15 +36,37 @@ enum _PHYSICS_ID {
     _PHYSICS_ID_1_BALL = 0x01 << 3
 };
 
+const int _BALL_ID[] = {
+    0x01 << 0,
+    0x01 << 1,
+    0x01 << 2,
+    0x01 << 3,
+    0x01 << 4
+};
+
 enum ID_NODE {
     ID_NODE_BG = 0,
-    ID_HP_MY,
-    ID_MP_MY,
-    ID_HP_OTHER,
-    ID_MP_OTHER,
-    ID_NODE_MY_AREA = 10,
+    ID_NODE_MY = 1,
+    ID_NODE_MY_HP,
+    ID_NODE_MY_MP,
+    ID_NODE_MY_AREA,
+    ID_NODE_MY_ALERT,
+    ID_NODE_MY_LABEL,
+    
+    ID_NODE_OTHER = 11,
+    ID_NODE_OTHER_HP,
+    ID_NODE_OTHER_MP,
     ID_NODE_OTHER_AREA,
-    ID_NODE_SKILL_POTION = 32,
+    ID_NODE_OTHER_ALERT,
+    
+    ID_NODE_CPU_1 = 21,
+    ID_NODE_CPU_2 = 31,
+    ID_NODE_CPU_3 = 41,
+    ID_NODE_CPU_4 = 51,
+    
+    ID_NODE_SKILL = 100,
+    ID_NODE_SKILL_1,
+    ID_NODE_SKILL_POTION,
 };
 
 //static COLOR_RGB colors[5] = {
@@ -55,12 +77,16 @@ enum ID_NODE {
 //    ui_wizard_share::inst()->getPalette()->getColor("PURPLE_LIGHT")
 //};
 // ----------------------------------------------------------------------------------------------------------------
-void ScenePlay::PLAYER::init(ScenePlay* p, int layerId, int hpId, int mpId, int ballId, int fnId) {
+void ScenePlay::PLAYER::init(ScenePlay* p, const string& name, int layerId, int hpId, int mpId, int ballId, int alertId, int labelId, int fnId) {
+    this->name = name;
     pScene = p;
     this->ballId = ballId;
     layer = p->getNodeById(layerId);
     hp = (ui_progressbar*)p->getNodeById(hpId);
     mp = (ui_progressbar*)p->getNodeById(mpId);
+    alert = p->getNodeById(alertId);
+    label = (Label*)p->getNodeById(labelId);
+    
     hp->setValue(1.f);
     mp->setValue(0.f);
     p->initPhysicsBody(layer, PHYSICSMATERIAL_OBSTACLE, false, SEPPED);
@@ -134,7 +160,7 @@ void ScenePlay::PLAYER::createBall() {
                                  , ballId
                                  , -1
                                  , -1 // _PHYSICS_ID_MY_BOARD | _PHYSICS_ID_MY_OBSTACLE_1
-                                 ,  _PHYSICS_ID_MY_OBSTACLE_1
+                                 , _PHYSICS_ID_MY_OBSTACLE_1
                                  );
     ball->getPhysicsBody()->setVelocityLimit(layer->getContentSize().width * 1.f);
 }
@@ -162,7 +188,7 @@ void ScenePlay::PLAYER::createBoard() {
                                  , _BOARD_ID_L + n
                                  , -1
                                  , -1 //_PHYSICS_ID_MY_BALL
-                                 , _PHYSICS_ID_MY_BALL
+                                 , ballId//_PHYSICS_ID_MY_BALL
                                  );
     }
     
@@ -195,9 +221,14 @@ void ScenePlay::PLAYER::vibrate() {
 }
 // decreseHP ===========================================================================
 void ScenePlay::PLAYER::decreseHP() {
-    hp->setValueDecrese(0.1);
+    auto val = hp->setValueDecrese(0.1);
     hp->blink();
     vibrate();
+    
+    if(val <= 0.3f) {
+        alert->setVisible(true);
+        alert->runAction(RepeatForever::create(Blink::create(0.4f, 1)));
+    }
 }
 // onContact ===========================================================================
 bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
@@ -283,7 +314,8 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
         if(mp->setValueIncrese(fIncrease) >= 1.f) {
             mp->setValue(0.f);
             mp->blink();
-            guiExt::addMovingEffect(pScene->getNodeById(0)
+            //pScene->getNodeById(0)
+            guiExt::addMovingEffect(layer
                                     , ui_wizard_share::inst()->getPalette()->getColor("TRANSPARENT")
                                     , "icons8-action-96.png"
                                     , szAttack
@@ -295,6 +327,14 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
     }
     
     return ret;
+}
+// setAutoPlay ===========================================================================
+void ScenePlay::PLAYER::onTimer(float f) {
+    if(ball) {
+        Vec2 pos = Vec2(ball->getPosition().x, board->getPosition().y);
+        pos.x -= board->getContentSize().width / 2.f;
+        board->runAction(MoveTo::create(f * 0.5f, pos));
+    }
 }
 // addBrix0 ===========================================================================
 void ScenePlay::PLAYER::addBrix0() {
@@ -491,7 +531,9 @@ void ScenePlay::PLAYER::addBrix4() {
 }
 /* ----------------------------------------------------------------------------------------------------------------
  
+ 
  ScenePlay
+
  
  ---------------------------------------------------------------------------------------------------------------- */
 bool ScenePlay::init()
@@ -517,8 +559,23 @@ bool ScenePlay::init()
     mIsEnd = 0;
     int fnId = getRandValue(5);
     
-    mPlayers[_PLAYER_ID_ME].init(this, ID_NODE_MY_AREA, ID_HP_MY, ID_MP_MY, _PHYSICS_ID_MY_BALL, fnId);
-    mPlayers[_PLAYER_ID_OTHER].init(this, ID_NODE_OTHER_AREA, ID_HP_OTHER, ID_MP_OTHER, _PHYSICS_ID_1_BALL, fnId);
+    PLAYER me;
+    me.init(this, "ME", ID_NODE_MY_AREA, ID_NODE_MY_HP, ID_NODE_MY_MP, _PHYSICS_ID_MY_BALL, ID_NODE_MY_ALERT, ID_NODE_MY_LABEL, fnId);
+    mPlayers.push_back(me);
+    
+    for(int n=0; n<4; n++) {
+        PLAYER p;
+        int id = ((n  + 1) * 10) + 11;
+        getNodeById(id++)->setVisible(true);
+        
+        int hpId = id++;
+        int mpId = id++;
+        int areaId = id++;
+        int alertId = id++;
+        int labelId = id;
+        p.init(this, "CPU" + to_string(n+1), areaId, hpId, mpId, _BALL_ID[n+1], alertId, labelId, fnId);
+        mPlayers.push_back(p);
+    }
     
 //    gui::inst()->drawGrid(mLayer, mLayer->getContentSize(), GRID_AREA, Size::ZERO, Size::ZERO);
     
@@ -531,20 +588,22 @@ bool ScenePlay::init()
                             , 1.5f
                             , CallFunc::create([=]()
     {
-        mPlayers[_PLAYER_ID_ME].createBall();
-        mPlayers[_PLAYER_ID_OTHER].createBall();
+        for(int n=0; n < mPlayers.size(); n++)
+            mPlayers[n].createBall();
         
-        this->schedule(schedule_selector(ScenePlay::timer), .1f);
+        this->schedule(schedule_selector(ScenePlay::timer), 0.1f);
+//        mPlayers[_PLAYER_ID_OTHER].createBall();
     }));
    
     return true;
 }
-
+// timer ===========================================================================
 void ScenePlay::timer(float f) {
-    Vec2 pos = Vec2(mPlayers[_PLAYER_ID_OTHER].ball->getPosition().x, mPlayers[_PLAYER_ID_OTHER].board->getPosition().y);
-    mPlayers[_PLAYER_ID_OTHER].board->runAction(MoveTo::create(f, pos));
+    for(int n= 1; n < mPlayers.size(); n++) {
+        mPlayers[n].onTimer(f);
+    }
 }
-
+// callback ===========================================================================
 void ScenePlay::callback(Ref* pSender, int from, int link) {
     switch(link) {
         case 1:
@@ -589,14 +648,15 @@ bool ScenePlay::onTouchEnded(Touch* touch, Event* event) {
 }
 
 void ScenePlay::onTouchMoved(Touch *touch, Event *event) {
-    Vec2 pos = Vec2(touch->getLocation().x - mPlayers[_PLAYER_ID_ME].layer->getPosition().x, mPlayers[_PLAYER_ID_ME].board->getPosition().y);
+    auto posLayer = mPlayers[_PLAYER_ID_ME].layer->getParent()->getPosition();
+    Vec2 pos = Vec2(touch->getLocation().x - posLayer.x, mPlayers[_PLAYER_ID_ME].board->getPosition().y);
     pos.x -= mPlayers[_PLAYER_ID_ME].board->getContentSize().width / 2.f;
     
     if(pos.x <= 0)
         pos.x = 0;
     if(pos.x >= mPlayers[_PLAYER_ID_ME].layer->getContentSize().width - mPlayers[_PLAYER_ID_ME].board->getContentSize().width)
         pos.x = mPlayers[_PLAYER_ID_ME].layer->getContentSize().width - mPlayers[_PLAYER_ID_ME].board->getContentSize().width;
-    
+
     mPlayers[_PLAYER_ID_ME].board->setPosition(pos);
 }
 bool ScenePlay::onContactBegin(PhysicsContact &contact) {
@@ -610,44 +670,53 @@ bool ScenePlay::onContactBegin(PhysicsContact &contact) {
 //              );
     }
     
-    if(isContact(contact, _PHYSICS_ID_MY_BALL, other))
-    {
-        if(mPlayers[_PLAYER_ID_ME].onContact(other)) {
-            mPlayers[_PLAYER_ID_OTHER].decreseHP();
+//    bool isChangedRanking = false;
+    for(int n = 0; n < mPlayers.size(); n++) {
+        if(isContact(contact, mPlayers[n].ballId, other)) {
+            if(mPlayers[n].onContact(other)) {
+                for(int i=0; i< mPlayers.size(); i++) {
+                    if(i != n)
+                        mPlayers[i].decreseHP();
+                }
+            }
         }
     }
-    
-    if(isContact(contact, _PHYSICS_ID_1_BALL, other))
-    {
-        if(mPlayers[_PLAYER_ID_OTHER].onContact(other, true)) {
-            mPlayers[_PLAYER_ID_ME].decreseHP();
+    //순위
+    for(int n = 0; n < mPlayers.size(); n++) {
+        int ranking = 1;
+        float val = mPlayers[n].getHPValue();
+        for(int i = 0; i < mPlayers.size(); i++) {
+            if(n != i && val < mPlayers[i].getHPValue()) {
+                ranking ++;
+            }
         }
+        mPlayers[n].label->setString(to_string(ranking));
     }
     
     if(mIsEnd)
         return true;
     
-    if(mPlayers[_PLAYER_ID_OTHER].getHPValue() <= 0.3f) {
-        auto alert = this->getNodeById(500);
-        alert->setVisible(true);
-        alert->runAction(RepeatForever::create(Blink::create(0.4f, 1)));
-    }
+//    if(mPlayers[_PLAYER_ID_OTHER].getHPValue() <= 0.3f) {
+//        auto alert = this->getNodeById(500);
+//        alert->setVisible(true);
+//        alert->runAction(RepeatForever::create(Blink::create(0.4f, 1)));
+//    }
+//
+//    if(mPlayers[_PLAYER_ID_ME].getHPValue() <= 0.3f) {
+//        auto alert = this->getNodeById(ID_NODE_MY_ALERT);
+//        alert->setVisible(true);
+//        alert->runAction(RepeatForever::create(Blink::create(0.4f, 1)));
+//    }
     
-    if(mPlayers[_PLAYER_ID_ME].getHPValue() <= 0.3f) {
-        auto alert = this->getNodeById(501);
-        alert->setVisible(true);
-        alert->runAction(RepeatForever::create(Blink::create(0.4f, 1)));
-    }
-    
-    if(mPlayers[_PLAYER_ID_OTHER].getHPValue() <= 0.f) {
-        //WIN
-        mIsWin = true;
-        mIsEnd = true;
-    } else if(mPlayers[_PLAYER_ID_ME].getHPValue() <= 0.f) {
-        //Lose
-        mIsWin = false;
-        mIsEnd = true;
-    }
+//    if(mPlayers[_PLAYER_ID_OTHER].getHPValue() <= 0.f) {
+//        //WIN
+//        mIsWin = true;
+//        mIsEnd = true;
+//    } else if(mPlayers[_PLAYER_ID_ME].getHPValue() <= 0.f) {
+//        //Lose
+//        mIsWin = false;
+//        mIsEnd = true;
+//    }
     
     if(mIsEnd) {
         this->getPhysicsWorld()->setAutoStep(false);
