@@ -39,7 +39,14 @@ bool SceneMain::init()
         p->setValue(0.f);
     else
         p->setValue((float)battleBrix::inst()->mUserData.win / (float)total);
-//    auto bg = getNodeById(0);
+    
+    auto bg = getNodeById(0);
+    Vec2 center = gui::inst()->getCenter();
+//    gui::inst()->drawRectCircle(this, center, Size(40, 20), Color4F::WHITE);
+//    gui::inst()->drawRectCircle(this, center, Size(36, 16), Color4F::RED);
+//    gui::inst()->drawRectCircle(this, Vec2(center.x, center.y + 1), Size(36, 15), Color4F::ORANGE);
+    auto d = gui::inst()->drawRectCircleButton(this, center, Size(40, 20), Color4F::WHITE, Color4F::RED, Color4F::ORANGE);
+    
     
 //    guiExt::drawCircleForPhysics(bg, Vec2(50, 50), 100, Color4F(0.5, 0.5, 0.5, 0.5))
 //    gui::inst()->drawCircle(bg, Vec2::ZERO, 100, Color4F(1, 1, 1, 0.5))->runAction(
