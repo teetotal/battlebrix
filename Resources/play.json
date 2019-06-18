@@ -496,6 +496,46 @@
         "innerMargin": [ 0, 0 ],
         "gridSize": [ 1, 1 ],
         "color": 0
+    },
+    {
+        "comment": "for ending",
+        "id": 90,
+        "visible": false,
+        "dimension": [ 0, 0, 9, 7 ],
+        "margin": [ 0, 0 ],
+        "innerMargin": [ 0, 0 ],
+        "gridSize": [ 5, 7 ],
+        "color": 150,
+        "objects": [
+            {
+                "id": 91,
+                "position": [ 0, 0 ],
+                "alignment": "center",
+                "type": "label",
+                "color": "GRAY",
+                "bgColor": "BG_MAIN",
+                "text": "1st",
+                "fontSize": -1,
+                "span": [4, 1]
+            },
+            {
+                "id": 92,
+                "position": [ 2, 3 ],
+                "alignment": "center",
+                "type": "label",
+                "color": "BLUE",
+                "text": "+150",
+                "fontSize": 0
+            },
+            {
+                "position": [ 2, 5 ],
+                "alignment": "center",
+                "type": "button_rectangle_round_shadow",
+                "link": 999,
+                "color": [ "WHITE", "YELLOW" ],
+                "text": "OK"
+            }
+        ]
     }
   ]
 }

@@ -40,6 +40,7 @@ public:
     CREATE_FUNC_PHYSICS(ScenePlay);
     
     COLOR_RGB mColors[10];
+    float mBrixLayerRatio;
     
 protected:
     virtual void callback(Ref* pSender, int from, int link);
@@ -98,6 +99,7 @@ private:
             isEnd = false;
         };
         void init(ScenePlay* p, const string& name, int layerId, int hpId, int mpId, int ballId, int alertId, int labelId, int fnId);
+        void finish();
         void vibrate();
         bool onContact(int id, bool toRight = false);
         void decreseHP();
@@ -120,6 +122,5 @@ private:
     };
     vector<PLAYER> mPlayers;
     bool mIsEnd;
-    
 };
 #endif // __SCENE_PLAY_H__

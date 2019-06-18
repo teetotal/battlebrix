@@ -6,10 +6,10 @@
 #include "battleBrix.h"
 #include <functional>
 
-#define SEPPED 1.2f
-#define PHYSICSMATERIAL             PhysicsMaterial(.1f, 1.f, 0.f)
-#define PHYSICSMATERIAL_OBSTACLE    PhysicsMaterial(.1f, 1.f, 0.f)
-#define PHYSICSMATERIAL_BOARD    PhysicsMaterial(.1f, 1.f, 0.f)
+#define SEPPED .85f
+#define PHYSICSMATERIAL             PhysicsMaterial(0.5f, 1.f, 0.f)
+#define PHYSICSMATERIAL_OBSTACLE    PhysicsMaterial(0.f, 1.f, 0.f)
+#define PHYSICSMATERIAL_BOARD    PhysicsMaterial(0.f, 1.f, 0.f)
 #define GRID_AREA Vec2(8.f, 13.f)
 //#define GRID_AREA Vec2(2.f, 3.f)
 #define RATIO_OBSTACLE_PER_GRID 0.6f
@@ -59,6 +59,10 @@ enum ID_NODE {
     ID_NODE_CPU_3 = 41,
     ID_NODE_CPU_4 = 51,
     
+    ID_NODE_ENDING = 90,
+    ID_NODE_ENDING_RANKING,
+    ID_NODE_ENDING_REWARD,
+    
     ID_NODE_SKILL = 100,
     ID_NODE_SKILL_1,
     ID_NODE_SKILL_POTION,
@@ -76,7 +80,16 @@ void ScenePlay::PLAYER::init(ScenePlay* p, const string& name, int layerId, int 
     this->name = name;
     pScene = p;
     this->ballId = ballId;
-    layer = p->getNodeById(layerId);
+    
+    if(p->mBrixLayerRatio == -1.f)
+        layer = p->getNodeById(layerId);
+    else {
+        auto pLayer = p->getNodeById(layerId);
+        layer = gui::inst()->createLayout(Size(pLayer->getContentSize().height * p->mBrixLayerRatio, pLayer->getContentSize().height), "", false, Color3B::MAGENTA);
+        pLayer->addChild(layer);
+    }
+    
+    
     hp = (ui_progressbar*)p->getNodeById(hpId);
     mp = (ui_progressbar*)p->getNodeById(mpId);
     alert = p->getNodeById(alertId);
@@ -142,8 +155,7 @@ void ScenePlay::PLAYER::createLayerBrix() {
     if(layerBrix)
         layer->removeChild(layerBrix);
     
-    layerBrix = Layer::create();
-    layerBrix->setContentSize(layer->getContentSize());
+    layerBrix = gui::inst()->createLayout(layer->getContentSize(), "", false, Color3B::MAGENTA);
     
     layer->addChild(layerBrix);
 }
@@ -153,13 +165,9 @@ void ScenePlay::PLAYER::createBall() {
     
     Vec2 position = gui::inst()->getPointVec2(2, 7, ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
     ball = guiExt::drawCircleForPhysics(layer, position, obstacleSize.height / 2.f, color);
-    pScene->setPhysicsBodyCircle(ball, PHYSICSMATERIAL, true
-                                 , ballId
-                                 , -1
-                                 , -1 // _PHYSICS_ID_MY_BOARD | _PHYSICS_ID_MY_OBSTACLE_1
-                                 , -1 //_PHYSICS_ID_MY_OBSTACLE_1
-                                 );
-    ball->getPhysicsBody()->setVelocityLimit(layer->getContentSize().width * 1.f);
+    pScene->setPhysicsBodyCircle(ball, PHYSICSMATERIAL, true, ballId);
+    
+//    ball->getPhysicsBody()->setVelocityLimit(layerBrix->getContentSize().height * 2.f);
 }
 //createBoard ===========================================================================
 void ScenePlay::PLAYER::createBoard() {
@@ -196,7 +204,7 @@ void ScenePlay::PLAYER::createBottom() {
     auto rect = guiExt::drawRectForPhysics(layer
                                            , Vec2(layer->getContentSize().width / 2.f, gridSize.height / 4.f)
                                            , Size(layer->getContentSize().width, gridSize.height / 4.f)
-                                           , ui_wizard_share::inst()->getPalette()->getColor("BLACK")
+                                           , ui_wizard_share::inst()->getPalette()->getColor("TRANSPARENT")
                                            , true
                                            , 0.f);
     pScene->setPhysicsBodyRect(rect
@@ -245,8 +253,8 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
     else if(id >= _BOARD_ID_L && id <= _BOARD_ID_R) {
         //동시 충돌 방지
         clock_t now = clock();
-        if(now - latestCollisionWithBoard < 10) {
-            CCLOG("%lf concurrent collision %d", (double)latestCollisionWithBoard, id);
+        if(now - latestCollisionWithBoard < 100) {
+            CCLOG("%s %lf concurrent collision %d",name.c_str(), (double)latestCollisionWithBoard, id);
             return false;
         }
         else
@@ -257,29 +265,37 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
             return false;
         
         combo = 0;
+        Vec2 vel = layer->getContentSize();
         
+        //board에서 부터 top까지
+//        vel.y -= (board->getPosition().y + board->getContentSize().height);
+        vel.y *= 1.5f;
         switch((_BOARD_ID)id) {
             case _BOARD_ID_L:
-                ball->getPhysicsBody()->setVelocity(Vec2(layer->getContentSize().width * -1.f, layer->getContentSize().height));
+                vel.x *= -1.f;
                 break;
             case _BOARD_ID_LM:
-                ball->getPhysicsBody()->setVelocity(Vec2(layer->getContentSize().width * -0.2f, layer->getContentSize().height));
+                vel.x *= -0.2f;
                 break;
             case _BOARD_ID_RM:
-                ball->getPhysicsBody()->setVelocity(Vec2(layer->getContentSize().width * 0.2f, layer->getContentSize().height));
+                vel.x *= 0.2f;
                 break;
             case _BOARD_ID_R:
-                ball->getPhysicsBody()->setVelocity(Vec2(layer->getContentSize()));
+                vel.x *= 1.f;
                 break;
             default:
                 break;
         }
+//        vel = Vec2(0, 130);
+        ball->getPhysicsBody()->setVelocity(vel);
+//        CCLOG("%s \t Vel =[%f, %f] Ball = [%f, %f]",this->name.c_str(), vel.x, vel.y, ball->getPhysicsBody()->getVelocity().x, ball->getPhysicsBody()->getVelocity().y);
+        
     } else if(id >= _ID_BRIX_START) {
         combo++;
         
         string sz = (combo > 1) ? to_string(combo) + "COMBO" : "Cool";
         string color;
-        string szAttack = toRight ? "ATTACK >" : "< ATTACK";
+    
         float fIncrease = 0.05;
         if(combo == 1) {
             color = "YELLOW";
@@ -307,18 +323,13 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
             brixEffectFlagMap[id] = true;
             guiExt::addVibrateEffect(layerBrix->getChildByTag(id), CallFunc::create([=](){ brixEffectFlagMap[id] = false; }));
         }
-        
+        //attack
         if(mp->setValueIncrese(fIncrease) >= 1.f) {
             mp->setValue(0.f);
             mp->blink();
             //pScene->getNodeById(0)
-            guiExt::addMovingEffect(layer
-                                    , ui_wizard_share::inst()->getPalette()->getColor("TRANSPARENT")
-                                    , "icons8-action-96.png"
-                                    , szAttack
-                                    , ui_wizard_share::inst()->getPalette()->getColor("GRAY")
-                                    , toRight
-                                    );
+            guiExt::addScaleEffect(layer, "icons8-action-96.png", "ATTACK", ui_wizard_share::inst()->getPalette()->getColor("GRAY"));
+
             ret = true;
         }
     }
@@ -343,19 +354,7 @@ void ScenePlay::PLAYER::setRanking(int ranking) {
     if(isEnd)
         return;
     if(getHPValue() <= 0.f) {
-        isEnd = true;
-        layer->removeChild(ball);
-        ball = NULL;
-        layerBrix->removeAllChildren();
-        layer->removeChild(board);
-        label->setColor(ui_wizard_share::inst()->getPalette()->getColor3B("BLACK"));
-        
-        alert->stopAllActions();
-        alert->setVisible(false);
-//        for(int n=0; n<layerBrix->getChildren().size(); n++) {
-//            layerBrix->getChildren().at(n)->stopAllActions();
-//        }
-        
+        finish();
     }
     if(this->ranking != ranking) {
         this->ranking = ranking;
@@ -363,6 +362,21 @@ void ScenePlay::PLAYER::setRanking(int ranking) {
         label->runAction(Sequence::create(ScaleTo::create(0.1, 1.5), ScaleTo::create(0.1, 1.f), NULL));
     }
     
+}
+// finish ===========================================================================
+void ScenePlay::PLAYER::finish() {
+    if(isEnd)
+        return;
+    
+    isEnd = true;
+    layer->removeChild(ball);
+    ball = NULL;
+    layerBrix->removeAllChildren();
+    layer->removeChild(board);
+    label->setColor(ui_wizard_share::inst()->getPalette()->getColor3B("BLACK"));
+    
+    alert->stopAllActions();
+    alert->setVisible(false);
 }
 // addBrix0 ===========================================================================
 void ScenePlay::PLAYER::addBrix0() {
@@ -584,12 +598,21 @@ bool ScenePlay::init()
     TOUCH_INIT(ScenePlay);
     PHYSICS_CONTACT(ScenePlay);
     
-    mIsEnd = 0;
+    mIsEnd = false;
+    mBrixLayerRatio = -1;
+    
     int fnId = getRandValue(5);
     
     PLAYER me;
     me.init(this, "ME", ID_NODE_MY_AREA, ID_NODE_MY_HP, ID_NODE_MY_MP, _BALL_ID[0], ID_NODE_MY_ALERT, ID_NODE_MY_LABEL, fnId);
     mPlayers.push_back(me);
+    
+    Size s1 = mPlayers[_PLAYER_ID_ME].layer->getContentSize(); //193.3333, 208.247
+    //s1.width : s1.height = x : s2.height
+    // = s1.width * s2.height / s1.height
+    // = s1.width / s1.height * s2.height
+    mBrixLayerRatio = s1.width / s1.height;
+    
     
     for(int n=0; n<4; n++) {
         PLAYER p;
@@ -627,7 +650,7 @@ bool ScenePlay::init()
 }
 // timer ===========================================================================
 void ScenePlay::timer(float f) {
-    for(int n= 1; n < mPlayers.size(); n++) {
+    for(int n = 1; n < mPlayers.size(); n++) {
         if(!mPlayers[n].isEnd)
             mPlayers[n].onTimer(f);
     }
@@ -677,7 +700,7 @@ bool ScenePlay::onTouchEnded(Touch* touch, Event* event) {
 }
 
 void ScenePlay::onTouchMoved(Touch *touch, Event *event) {
-    if(mPlayers[_PLAYER_ID_ME].isEnd)
+    if(mIsEnd)
         return;
     
     auto posLayer = mPlayers[_PLAYER_ID_ME].layer->getParent()->getPosition();
@@ -736,34 +759,24 @@ bool ScenePlay::onContactBegin(PhysicsContact &contact) {
     if(isEndAll || mPlayers[_PLAYER_ID_ME].isEnd)
         mIsEnd = true;
     
-//    if(mPlayers[_PLAYER_ID_OTHER].getHPValue() <= 0.3f) {
-//        auto alert = this->getNodeById(500);
-//        alert->setVisible(true);
-//        alert->runAction(RepeatForever::create(Blink::create(0.4f, 1)));
-//    }
-//
-//    if(mPlayers[_PLAYER_ID_ME].getHPValue() <= 0.3f) {
-//        auto alert = this->getNodeById(ID_NODE_MY_ALERT);
-//        alert->setVisible(true);
-//        alert->runAction(RepeatForever::create(Blink::create(0.4f, 1)));
-//    }
-    
-//    if(mPlayers[_PLAYER_ID_OTHER].getHPValue() <= 0.f) {
-//        //WIN
-//        mIsWin = true;
-//        mIsEnd = true;
-//    } else if(mPlayers[_PLAYER_ID_ME].getHPValue() <= 0.f) {
-//        //Lose
-//        mIsWin = false;
-//        mIsEnd = true;
-//    }
-    
     if(mIsEnd) {
-        this->getPhysicsWorld()->setAutoStep(false);
-        this->getPhysicsWorld()->step(0.0f);
+        //각 player에서 해야됨.
+        for(int n=0; n < mPlayers.size(); n++) {
+            mPlayers[n].finish();
+        }
+//        this->getPhysicsWorld()->setAutoStep(false);
+//        this->getPhysicsWorld()->step(0.0f);
         this->getNodeById(99)->setVisible(true);
         
-        this->scheduleOnce(schedule_selector(ScenePlay::onEnd), 0.5f);
+        guiExt::addMovingEffect(this->getNodeById(0)
+                                , ui_wizard_share::inst()->getPalette()->getColor("WHITE_OPACITY_DEEP")
+                                , ""
+                                , "FINISH"
+                                , ui_wizard_share::inst()->getPalette()->getColor("BLACK")
+                                , false
+                                , 1.5f
+                                , CallFunc::create([=](){ this->onEnd(0.f); })
+                                );
     }
     
     return true;
@@ -771,17 +784,67 @@ bool ScenePlay::onContactBegin(PhysicsContact &contact) {
 
 void ScenePlay::onEnd(float f) {
     
-    string szEnd = getRankString(mPlayers[_PLAYER_ID_ME].ranking);
-    string szColor ="ORANGE";
+    string szRanking = getRankString(mPlayers[_PLAYER_ID_ME].ranking);
+    string szColor = "GRAY";
+    string szColorReward = "BLUE";
+    string szImg = "";
+    int reward = 0;
+    bool isParticle = false;
+    switch(mPlayers[_PLAYER_ID_ME].ranking) {
+        case 1:
+            szColor = "RED";
+            szImg = "icons8-crown-480.png";
+            reward = 150;
+            isParticle = true;
+            break;
+        case 2:
+            szColor = "ORANGE";
+            reward = 50;
+//            isParticle = true;
+            break;
+        case 3:
+            szColor = "YELLOW";
+            szColorReward = "GRAY";
+            reward = 0;
+            break;
+        case 4:
+            reward = -50;
+            szColorReward = "RED";
+            break;
+        case 5:
+            reward = -150;
+            szColorReward = "RED";
+            break;
+        default:
+            break;
+    }
+    
+    auto bg = this->getNodeById(0);
+    if(isParticle) {
+        auto particle = gui::inst()->createParticle("firework.plist", gui::inst()->getCenter(bg));
+        bg->addChild(particle);
+    }
+    
+    string szReward = (reward >= 0) ? "+"+to_string(reward) : to_string(reward);
+    
+    ((Label*)getNodeById(ID_NODE_ENDING_RANKING))->setString(szRanking);
+    auto pReward = ((Label*)getNodeById(ID_NODE_ENDING_REWARD));
+    pReward->setString(szReward);
+    pReward->setColor(ui_wizard_share::inst()->getPalette()->getColor3B(szColorReward));
+    
+    guiExt::addScaleEffect(bg
+                           , szImg
+                           , szRanking
+                           , ui_wizard_share::inst()->getPalette()->getColor(szColor)
+                           , CallFunc::create([=]()
+    {
+        this->getNodeById(ID_NODE_ENDING)->setVisible(true);
+        guiExt::runScaleEffect(this->getNodeById(ID_NODE_ENDING_REWARD));
+    })
+                           , 0.8
+                           , 0.5
+                           );
     
     
-    guiExt::addMovingEffect(this->getNodeById(0)
-                            , ui_wizard_share::inst()->getPalette()->getColor("WHITE_OPACITY_DEEP")
-                            , ""
-                            , szEnd
-                            , ui_wizard_share::inst()->getPalette()->getColor(szColor)
-                            , false
-                            , 1.5f
-                            , CallFunc::create([=](){ this->replaceScene(SceneMain::create()); })
-                            );
+   
 }
