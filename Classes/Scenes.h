@@ -27,6 +27,7 @@
 
 #include "ui/ui_wizard.h"
 #include "ui/ui_roulette.h"
+#include "battleBrix.h"
 USING_NS_CC;
 
 enum eLINK {
@@ -49,6 +50,7 @@ public:
 protected:
     virtual void callback(Ref* pSender, int from, int link);
     virtual const string getText(const string& defaultString, int id);
+    virtual const float getProgressValue(int id) { return battleBrix::inst()->getProgressValue(id); };
 };
 // SceneDaily ==================================
 class SceneDaily : public ui_wizard
@@ -63,6 +65,7 @@ public:
 protected:
     virtual void callback(Ref* pSender, int from, int link);
     virtual const string getText(const string& defaultString, int id);
+    virtual const float getProgressValue(int id) { return 0.f; };
 private:
     void actionFinished();
     int mTodayIdx;
@@ -82,20 +85,6 @@ class SceneShop : public ui_wizard
     protected:
     virtual void callback(Ref* pSender, int from, int link);
     virtual const string getText(const string& defaultString, int id);
-};
-
-class testComponent : public Node {
-public:
-    static testComponent* create() {
-        auto ret = new (std::nothrow) testComponent;
-        
-        if (ret)
-        {
-            ret->autorelease();
-        }
-        
-        return ret;
-    };
-    void setProgress(float f);
+    virtual const float getProgressValue(int id) { return battleBrix::inst()->getProgressValue(id); };
 };
 #endif // __SCENES_H__

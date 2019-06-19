@@ -117,13 +117,6 @@
         "color": 0,
         "objects": [
             {
-                "id": 13,
-                "position": [ 0, 3 ],
-                "alignment": "center",
-                "type": "progressbar",
-                "color": [ "BLUE_LIGHT", "BLUE_DARK" ]
-            },
-            {
                 "id": 14,
                 "position": [ 0, 3 ],
                 "alignment": "center",

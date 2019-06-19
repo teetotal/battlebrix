@@ -27,6 +27,7 @@
 
 #include "ui/ui_wizard.h"
 #include "ui/ui_progressbar.h"
+#include "battleBrix.h"
 USING_NS_CC;
 
 // ScenePlay ==================================
@@ -45,7 +46,7 @@ public:
 protected:
     virtual void callback(Ref* pSender, int from, int link);
     virtual const string getText(const string& defaultString, int id);
-    
+    virtual const float getProgressValue(int id) { return 0; };
 private:
     bool onTouchBegan(Touch* touch, Event* event) ;
     bool onTouchEnded(Touch* touch, Event* event);
@@ -53,7 +54,8 @@ private:
     bool onContactBegin(PhysicsContact &contact);
     
     void timer(float f);
-    void onEnd(float f);
+    void onFinish();
+    void onEnd();
     
     struct OBSTACLE {
         DrawNode * pDrawNode;

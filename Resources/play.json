@@ -503,8 +503,8 @@
         "visible": false,
         "dimension": [ 0, 0, 9, 7 ],
         "margin": [ 0, 0 ],
-        "innerMargin": [ 0, 0 ],
-        "gridSize": [ 5, 7 ],
+        "innerMargin": [ 0, 5 ],
+        "gridSize": [ 6, 8 ],
         "color": 150,
         "objects": [
             {
@@ -512,28 +512,63 @@
                 "position": [ 0, 0 ],
                 "alignment": "center",
                 "type": "label",
-                "color": "GRAY",
+                "color": ["GRAY", "BLACK"],
                 "bgColor": "BG_MAIN",
                 "text": "1st",
                 "fontSize": -1,
-                "span": [4, 1]
+                "span": [ 5, 1 ]
+            },
+            {
+                "position": [ 0, 1 ],
+                "alignment": "left_bottom",
+                "type": "line",
+                "color": "GRAY",
+                "span": [ 5, 0 ]
             },
             {
                 "id": 92,
-                "position": [ 2, 3 ],
+                "position": [ 2, 4 ],
                 "alignment": "center",
-                "type": "label",
-                "color": "BLUE",
-                "text": "+150",
-                "fontSize": 0
+                "type": "progressbar",
+                "color": ["BLUE", "GRAY"],
+                "span": [ 1, 0 ],
+                "text": "ROYAL"
             },
             {
-                "position": [ 2, 5 ],
+                "id": 93,
+                "position": [ 3, 4 ],
                 "alignment": "center",
-                "type": "button_rectangle_round_shadow",
+                "type": "label",
+                "color": "DARKGRAY",
+                "text": "+150",
+                "fontSize": -1
+            },
+            {
+                "id": 94,
+                "position": [ 2, 3 ],
+                "alignment": "center",
+                "type": "icon_point",
+                "color": "GRAY",
+                "text": "+100",
+                "fontSize": -2
+            },
+            {
+                "id": 95,
+                "position": [ 3, 3 ],
+                "alignment": "center",
+                "type": "icon_heart",
+                "color": "GRAY",
+                "fontSize": 0,
+                "text": "+1"
+            },
+            {
+                "position": [ 2, 6 ],
+                "alignment": "center",
+                "type": "button_rectangle_circle_shadow_2",
                 "link": 999,
-                "color": [ "WHITE", "YELLOW" ],
-                "text": "OK"
+                "color": [ "WHITE", "ORANGE" ],
+                "text": "OK",
+                "span": [1, 0]
             }
         ]
     }

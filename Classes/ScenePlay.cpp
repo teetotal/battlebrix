@@ -2,8 +2,8 @@
 #include "ScenePlay.h"
 #include "Scenes.h"
 #include "ui/ui_ext.h"
+#include "ui/ui_icon.h"
 #include "library/pch.h"
-#include "battleBrix.h"
 #include <functional>
 
 #define SEPPED .85f
@@ -16,6 +16,9 @@
 #define _ID_BOTTOM 0
 #define _ID_BRIX_START 101
 #define _ID_GIFT 100
+#define BALL_INIT_POSITION_Y 7
+
+#define DECRESE_HP 0.05f
 
 enum _PLAYER_ID {
     _PLAYER_ID_ME = 0,
@@ -61,7 +64,11 @@ enum ID_NODE {
     
     ID_NODE_ENDING = 90,
     ID_NODE_ENDING_RANKING,
+    ID_NODE_ENDING_PROGRESSBAR,
     ID_NODE_ENDING_REWARD,
+    ID_NODE_ENDING_REWARD_POINT,
+    ID_NODE_ENDING_REWARD_HEART,
+    
     
     ID_NODE_SKILL = 100,
     ID_NODE_SKILL_1,
@@ -163,7 +170,7 @@ void ScenePlay::PLAYER::createLayerBrix() {
 void ScenePlay::PLAYER::createBall() {
     COLOR_RGB color = ui_wizard_share::inst()->getPalette()->getColor("WHITE");
     
-    Vec2 position = gui::inst()->getPointVec2(2, 7, ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+    Vec2 position = gui::inst()->getPointVec2(2, BALL_INIT_POSITION_Y, ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
     ball = guiExt::drawCircleForPhysics(layer, position, obstacleSize.height / 2.f, color);
     pScene->setPhysicsBodyCircle(ball, PHYSICSMATERIAL, true, ballId);
     
@@ -226,7 +233,7 @@ void ScenePlay::PLAYER::vibrate() {
 }
 // decreseHP ===========================================================================
 void ScenePlay::PLAYER::decreseHP() {
-    auto val = hp->setValueDecrese(0.1);
+    auto val = hp->setValueDecrese(DECRESE_HP);
     hp->blink();
     vibrate();
     
@@ -382,7 +389,7 @@ void ScenePlay::PLAYER::finish() {
 void ScenePlay::PLAYER::addBrix0() {
     
     int brixId = _ID_BRIX_START;
-    for(int n=0; n < 8; n++)
+    for(int n=0; n < BALL_INIT_POSITION_Y; n++)
     {
         Vec2 position = gui::inst()->getPointVec2(getRandValue(8), n, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
         auto rect = guiExt::drawRectForPhysics(layerBrix, position, obstacleSize, pScene->mColors[(int)n], true, .1f);
@@ -407,7 +414,7 @@ void ScenePlay::PLAYER::addBrix0() {
 void ScenePlay::PLAYER::addBrix1() {
     
     int brixId = _ID_BRIX_START;
-    for(int n=0; n < 8; n = n + 2)
+    for(int n=0; n < BALL_INIT_POSITION_Y; n = n + 2)
     {
         Vec2 position = gui::inst()->getPointVec2(0, n, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
         auto rect = guiExt::drawRectForPhysics(layerBrix, position, obstacleSize, pScene->mColors[(int)n], true, .1f);
@@ -775,76 +782,108 @@ bool ScenePlay::onContactBegin(PhysicsContact &contact) {
                                 , ui_wizard_share::inst()->getPalette()->getColor("BLACK")
                                 , false
                                 , 1.5f
-                                , CallFunc::create([=](){ this->onEnd(0.f); })
+                                , CallFunc::create([=](){ this->onFinish(); })
                                 );
     }
     
     return true;
 }
 
-void ScenePlay::onEnd(float f) {
-    
-    string szRanking = getRankString(mPlayers[_PLAYER_ID_ME].ranking);
-    string szColor = "GRAY";
-    string szColorReward = "BLUE";
-    string szImg = "";
-    int reward = 0;
-    bool isParticle = false;
-    switch(mPlayers[_PLAYER_ID_ME].ranking) {
-        case 1:
-            szColor = "RED";
-            szImg = "icons8-crown-480.png";
-            reward = 150;
-            isParticle = true;
-            break;
-        case 2:
-            szColor = "ORANGE";
-            reward = 50;
-//            isParticle = true;
-            break;
-        case 3:
-            szColor = "YELLOW";
-            szColorReward = "GRAY";
-            reward = 0;
-            break;
-        case 4:
-            reward = -50;
-            szColorReward = "RED";
-            break;
-        case 5:
-            reward = -150;
-            szColorReward = "RED";
-            break;
-        default:
-            break;
-    }
-    
+void ScenePlay::onFinish() {
+    int nRanking = mPlayers[_PLAYER_ID_ME].ranking;
     auto bg = this->getNodeById(0);
-    if(isParticle) {
+    
+    if(nRanking == 1) {
         auto particle = gui::inst()->createParticle("firework.plist", gui::inst()->getCenter(bg));
         bg->addChild(particle);
-    }
-    
-    string szReward = (reward >= 0) ? "+"+to_string(reward) : to_string(reward);
-    
-    ((Label*)getNodeById(ID_NODE_ENDING_RANKING))->setString(szRanking);
-    auto pReward = ((Label*)getNodeById(ID_NODE_ENDING_REWARD));
-    pReward->setString(szReward);
-    pReward->setColor(ui_wizard_share::inst()->getPalette()->getColor3B(szColorReward));
-    
-    guiExt::addScaleEffect(bg
-                           , szImg
-                           , szRanking
-                           , ui_wizard_share::inst()->getPalette()->getColor(szColor)
-                           , CallFunc::create([=]()
-    {
-        this->getNodeById(ID_NODE_ENDING)->setVisible(true);
-        guiExt::runScaleEffect(this->getNodeById(ID_NODE_ENDING_REWARD));
-    })
-                           , 0.8
-                           , 0.5
+        guiExt::addScaleEffect(bg
+                               , "icons8-crown-480.png"
+                               , getRankString(nRanking)
+                               , ui_wizard_share::inst()->getPalette()->getColor("RED")
+                               , CallFunc::create([=]() { onEnd(); })
+                               , 0.8
+                               , 0.5
                            );
+    } else {
+        onEnd();
+    }
+}
+
+void ScenePlay::onEnd(){
+    int nRanking = mPlayers[_PLAYER_ID_ME].ranking;
+    string szRanking = getRankString(nRanking);
     
+    battleBrix::rewardData reward = battleBrix::inst()->getReward(nRanking);
+//
+//
+//    string szColor = "GRAY";
+//    string szColorReward = "BLUE";
+//    int reward = 0;
+//
+//    switch(mPlayers[_PLAYER_ID_ME].ranking) {
+//        case 1:
+//            szColor = "RED";
+//            reward = 150;
+//            break;
+//        case 2:
+//            szColor = "ORANGE";
+//            reward = 50;
+//            //            isParticle = true;
+//            break;
+//        case 3:
+//            szColor = "YELLOW";
+//            szColorReward = "GRAY";
+//            reward = 0;
+//            break;
+//        case 4:
+//            reward = -50;
+//            szColorReward = "RED";
+//            break;
+//        case 5:
+//            reward = -150;
+//            szColorReward = "RED";
+//            break;
+//        default:
+//            break;
+//    }
+    //    ID_NODE_ENDING = 90,
+    this->getNodeById(ID_NODE_ENDING)->setVisible(true);
     
-   
+    //    ID_NODE_ENDING_RANKING,
+    ((Label*)getNodeById(ID_NODE_ENDING_RANKING))->setString(szRanking);
+    
+    //    ID_NODE_ENDING_PROGRESSBAR,
+    ((ui_progressbar*)getNodeById(ID_NODE_ENDING_PROGRESSBAR))->setValue(battleBrix::inst()->getGrowthPercentage());
+    ((ui_progressbar*)getNodeById(ID_NODE_ENDING_PROGRESSBAR))->setText(battleBrix::inst()->getLevelString());
+    
+    //    ID_NODE_ENDING_REWARD,
+    auto pReward =((Label*)getNodeById(ID_NODE_ENDING_REWARD));
+    pReward->setString((reward.growth > 0) ? "+" + to_string(reward.growth) : to_string(reward.growth));
+    
+//    pReward->setColor(ui_wizard_share::inst()->getPalette()->getColor3B(szColorReward));
+    //    ID_NODE_ENDING_REWARD_POINT,
+    auto pPoint = ((ui_icon*)this->getNodeById(ID_NODE_ENDING_REWARD_POINT));
+    pPoint->setText((reward.point > 0) ? "+" + to_string(reward.point) : to_string(reward.point));
+    
+    //    ID_NODE_ENDING_REWARD_HEART,
+    auto pHeart = ((ui_icon*)this->getNodeById(ID_NODE_ENDING_REWARD_HEART));
+    pHeart->setText((reward.heart > 0) ? "+" + to_string(reward.heart) : to_string(reward.heart));
+    
+    //effect
+    guiExt::runFlyEffect(this->getNodeById(ID_NODE_ENDING_REWARD), CallFunc::create([=](){
+        if(battleBrix::inst()->applyReward(nRanking)) {
+            //level up
+            auto bg = this->getNodeById(0);
+            auto particle = gui::inst()->createParticle("firework.plist", gui::inst()->getCenter(bg));
+            bg->addChild(particle);
+        }
+        ((ui_progressbar*)getNodeById(ID_NODE_ENDING_PROGRESSBAR))->setValue(battleBrix::inst()->getGrowthPercentage());
+        ((ui_progressbar*)getNodeById(ID_NODE_ENDING_PROGRESSBAR))->setText(battleBrix::inst()->getLevelString());
+    }));
+    
+    if(reward.point > 0)
+        guiExt::runScaleEffect(this->getNodeById(ID_NODE_ENDING_REWARD_POINT));
+    
+    if(reward.heart > 0)
+        guiExt::runScaleEffect(this->getNodeById(ID_NODE_ENDING_REWARD_HEART));
 }

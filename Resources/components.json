@@ -104,45 +104,37 @@
             },
             {
                 "id": 12,
-                "position": [ 0, 1 ],
+                "position": [ 2, 0 ],
                 "alignment": "left",
-                "type": "button",
+                "type": "label",
                 "color": "YELLOW",
                 "text": "Lv.16",
                 "fontSize": 0
             },
             {
-                "position": [ 14, 0 ],
-                "alignment": "right",
-                "type": "icon_circle",
-                "color": "YELLOW",
-                "text": "P"
-            },
-            {
-                "position": [ 14, 1 ],
-                "alignment": "right",
-                "type": "icon_heart",
-                "color": "GREEN"
+                "id": 13,
+                "position": [ 0, 1 ],
+                "alignment": "center",
+                "type": "progressbar",
+                "color": [ "BLUE", "GRAY" ],
+                "span": [ 2, 0 ],
+                "text": "ROYAL"
             },
             {
                 "id": 3,
-                "position": [ 15, 0 ],
+                "position": [ 14, 0 ],
                 "alignment": "left",
-                "type": "button",
-                "link": 1,
+                "type": "icon_point",
                 "color": "GRAY",
-                "text": "575,211",
-                "fontSize": 0
+                "text": "575,211"
             },
             {
                 "id": 4,
-                "position": [ 15, 1 ],
+                "position": [ 14, 1 ],
                 "alignment": "left",
-                "type": "button_sprite",
-                "link": 1,
+                "type": "icon_heart",
                 "color": "GRAY",
-                "text": "5 / 5",
-                "fontSize": 0
+                "text": "5 / 5"
             },
             {
                 "position": [ 18, 0 ],

@@ -24,6 +24,7 @@
 
 #include "AppDelegate.h"
 #include "Scenes.h"
+#include "battleBrix.h"
 
 // #define USE_AUDIO_ENGINE 1
 // #define USE_SIMPLE_AUDIO_ENGINE 1
@@ -124,10 +125,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // create a scene. it's an autorelease object
     // run
+    battleBrix::inst()->init();
     ui_wizard_share::inst()->loadPaletteFromJson("palette.json");
     ui_wizard_share::inst()->loadComponentFromJson("components.json");
-//    director->runWithScene(SceneDaily::createScene());
-    director->runWithScene(SceneMain::createScene());
+    director->runWithScene(SceneDaily::createScene());
+//    director->runWithScene(SceneMain::createScene());
 
     return true;
 }

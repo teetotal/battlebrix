@@ -27,25 +27,19 @@
 #include "ScenePlay.h"
 #include "ui/ui_ext.h"
 #include "library/pch.h"
-#include "battleBrix.h"
 
 bool SceneMain::init()
 {
     gui::inst()->initDefaultWithSpriteCache("fonts/SDSwaggerTTF.ttf");
 	this->loadFromJson("main", "main.json");
-    auto p = (ui_progressbar *) getNodeById(_ID_NODE_PROGRESSBAR);
-    int total = battleBrix::inst()->mUserData.win + battleBrix::inst()->mUserData.lose;
-    if(total == 0)
-        p->setValue(0.f);
-    else
-        p->setValue((float)battleBrix::inst()->mUserData.win / (float)total);
     
     auto bg = getNodeById(0);
     Vec2 center = gui::inst()->getCenter();
-//    gui::inst()->drawRectCircle(this, center, Size(40, 20), Color4F::WHITE);
-//    gui::inst()->drawRectCircle(this, center, Size(36, 16), Color4F::RED);
-//    gui::inst()->drawRectCircle(this, Vec2(center.x, center.y + 1), Size(36, 15), Color4F::ORANGE);
-    auto d = gui::inst()->drawRectCircleButton(this, center, Size(40, 20), Color4F::WHITE, Color4F::RED, Color4F::ORANGE);
+
+//    auto d = guiExt::drawRectCircleButton(this, center, Size(300, 200)
+//                                          , ui_wizard_share::inst()->getPalette()->getColor("ORANGE")
+//                                          //, ui_wizard_share::inst()->getPalette()->getColor("WHITE")
+//                                          );
     
     
 //    guiExt::drawCircleForPhysics(bg, Vec2(50, 50), 100, Color4F(0.5, 0.5, 0.5, 0.5))
@@ -168,6 +162,9 @@ const string SceneDaily::getText(const string& defaultString, int id) {
 //    } else if(id < mTodayId && id < 10 && id > 0) {
 //        return "Done";
 //    }
+    if(id >= 1000)
+        return defaultString;
+    
     int nDay = id / 10;
     int nPart = id % 10;
     switch (nPart) {

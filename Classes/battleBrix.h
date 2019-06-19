@@ -31,6 +31,8 @@ public:
           hInstance = new battleBrix;
         return hInstance;
     };
+    void init();
+    
     struct userData {
         int win;
         int lose;
@@ -40,17 +42,42 @@ public:
         int heart;
         int heartMax;
         int point;
+        
+        int maxGrowth;
+        int growth;
         string id;
         
-        userData() : win(0), lose(0), ranking(532340), level(1), grade(0), heart(0), heartMax(5), point(1000) {
+        userData() : win(0), lose(0), ranking(532340), level(1), grade(0), heart(0), heartMax(5), point(1000), maxGrowth(128), growth(10) {
             id = "teetotal";
         };
         
     } mUserData;
     
+    struct rewardData {
+        int growth;
+        int point;
+        int heart;
+        
+        void init(int nGrowth, int nPoint, int nHeart) {
+            growth = nGrowth;
+            point = nPoint;
+            heart = nHeart;
+        }
+    };
+    
     const string getText(const string& defaultString, int id);
+    const float getProgressValue(int id);
+    rewardData getReward(int ranking);
+    bool applyReward(int ranking);
+    inline float getGrowthPercentage() {
+        return (float)mUserData.growth / (float)mUserData.maxGrowth;
+    };
+    // level up 이면 true
+    bool increseGrowth(int val);
+    const string getLevelString();
+    
 private:
     static battleBrix * hInstance;
-    
+    rewardData mRewards[6];
 };
 #endif /* battleBrix_h */

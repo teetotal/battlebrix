@@ -296,7 +296,7 @@
                     "alignment": "left_bottom",
                     "type": "line",
                     "color": "BLACK",
-                     "visible": false
+                    "visible": false
                 },
                 {
                     "id": 3001,
