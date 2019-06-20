@@ -74,9 +74,13 @@ bool battleBrix::increseGrowth(int val) {
         return true;
         
     } else if(mUserData.growth < 0) {
+        bool isReset = false;
+        if(mUserData.level - 1 < 1)
+            isReset = true;
+        
         mUserData.level = max(1,  mUserData.level - 1);
-        mUserData.growth = 0;
         mUserData.maxGrowth = mUserData.level * GROWTH_PER_LEVEL;
+        mUserData.growth = isReset ? 0 : mUserData.maxGrowth + mUserData.growth;
     }
     return false;
 }
