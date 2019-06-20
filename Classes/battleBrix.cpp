@@ -15,9 +15,9 @@ battleBrix * battleBrix::hInstance = NULL;
 void battleBrix::init() {
     mRewards[1].init(GROWTH_PER_LEVEL / 2, 100, 1);
     mRewards[2].init(GROWTH_PER_LEVEL / 4, 50, 1);
-    mRewards[3].init(0, 0, 0);
-    mRewards[4].init(GROWTH_PER_LEVEL / 4 * -1, 0, 0);
-    mRewards[5].init(GROWTH_PER_LEVEL / 2 * -1, 0, 0);
+    mRewards[3].init(GROWTH_PER_LEVEL / 8, 0, 0);
+    mRewards[4].init(0, 0, 0);
+    mRewards[5].init(GROWTH_PER_LEVEL / 4 * -1, 0, 0);
 }
 
 const string battleBrix::getText(const string& defaultString, int id) {

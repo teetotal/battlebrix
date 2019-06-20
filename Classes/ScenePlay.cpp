@@ -6,7 +6,7 @@
 #include "library/pch.h"
 #include <functional>
 
-#define SEPPED .85f
+//#define SPEED .85f
 #define PHYSICSMATERIAL             PhysicsMaterial(0.5f, 1.f, 0.f)
 #define PHYSICSMATERIAL_OBSTACLE    PhysicsMaterial(0.f, 1.f, 0.f)
 #define PHYSICSMATERIAL_BOARD    PhysicsMaterial(0.f, 1.f, 0.f)
@@ -106,7 +106,8 @@ void ScenePlay::PLAYER::init(ScenePlay* p, const string& name, int layerId, int 
     
     hp->setValue(1.f);
     mp->setValue(0.f);
-    p->initPhysicsBody(layer, PHYSICSMATERIAL_OBSTACLE, false, SEPPED);
+    float speed = 0.6f + (battleBrix::inst()->mUserData.level * 0.1f);
+    p->initPhysicsBody(layer, PHYSICSMATERIAL_OBSTACLE, false, speed);
     
     gridSize   = gui::inst()->getGridSize(layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO);
     obstacleSize = gridSize;
@@ -174,7 +175,7 @@ void ScenePlay::PLAYER::createBall() {
     ball = guiExt::drawCircleForPhysics(layer, position, obstacleSize.height / 2.f, color);
     pScene->setPhysicsBodyCircle(ball, PHYSICSMATERIAL, true, ballId);
     
-//    ball->getPhysicsBody()->setVelocityLimit(layerBrix->getContentSize().height * 2.f);
+    ball->getPhysicsBody()->setVelocityLimit(layerBrix->getContentSize().height * 2.f);
 }
 //createBoard ===========================================================================
 void ScenePlay::PLAYER::createBoard() {
@@ -335,7 +336,8 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
             mp->setValue(0.f);
             mp->blink();
             //pScene->getNodeById(0)
-            guiExt::addScaleEffect(layer, "icons8-action-96.png", "ATTACK", ui_wizard_share::inst()->getPalette()->getColor("GRAY"));
+            Vec2 pos = Vec2(layer->getContentSize().width / 2.f, layer->getContentSize().height * .75f);
+            guiExt::addScaleEffect(layer, "icons8-action-96.png", "ATTACK", ui_wizard_share::inst()->getPalette()->getColor("GRAY"), NULL, .4f, .4f, pos);
 
             ret = true;
         }
@@ -353,7 +355,10 @@ void ScenePlay::PLAYER::onTimer(float f) {
         if(pos.x >= layer->getContentSize().width - board->getContentSize().width)
             pos.x = layer->getContentSize().width - board->getContentSize().width;
 
-        board->runAction(MoveTo::create(f * 0.5f, pos));
+        int randVal = getRandValue(100);
+        float duration = f * (0.4f + ((float)randVal / 100.f));
+//        CCLOG("Moving Speed: %s - %f", name.c_str(), duration);
+        board->runAction(MoveTo::create(duration, pos));
     }
 }
 // setRanking ===========================================================================
@@ -858,24 +863,24 @@ void ScenePlay::onEnd(){
     
     //    ID_NODE_ENDING_REWARD,
     auto pReward =((Label*)getNodeById(ID_NODE_ENDING_REWARD));
-    pReward->setString((reward.growth > 0) ? "+" + to_string(reward.growth) : to_string(reward.growth));
+    pReward->setString((reward.growth >= 0) ? "+" + to_string(reward.growth) : to_string(reward.growth));
     
 //    pReward->setColor(ui_wizard_share::inst()->getPalette()->getColor3B(szColorReward));
     //    ID_NODE_ENDING_REWARD_POINT,
     auto pPoint = ((ui_icon*)this->getNodeById(ID_NODE_ENDING_REWARD_POINT));
-    pPoint->setText((reward.point > 0) ? "+" + to_string(reward.point) : to_string(reward.point));
+    pPoint->setText((reward.point >= 0) ? "+" + to_string(reward.point) : to_string(reward.point));
     
     //    ID_NODE_ENDING_REWARD_HEART,
     auto pHeart = ((ui_icon*)this->getNodeById(ID_NODE_ENDING_REWARD_HEART));
-    pHeart->setText((reward.heart > 0) ? "+" + to_string(reward.heart) : to_string(reward.heart));
+    pHeart->setText((reward.heart >= 0) ? "+" + to_string(reward.heart) : to_string(reward.heart));
     
     //effect
     guiExt::runFlyEffect(this->getNodeById(ID_NODE_ENDING_REWARD), CallFunc::create([=](){
         if(battleBrix::inst()->applyReward(nRanking)) {
             //level up
-            auto bg = this->getNodeById(0);
-            auto particle = gui::inst()->createParticle("firework.plist", gui::inst()->getCenter(bg));
-            bg->addChild(particle);
+            //auto bg = this->getNodeById(0);
+            auto particle = gui::inst()->createParticle("firework.plist", gui::inst()->getCenter());
+            this->addChild(particle);
         }
         ((ui_progressbar*)getNodeById(ID_NODE_ENDING_PROGRESSBAR))->setValue(battleBrix::inst()->getGrowthPercentage());
         ((ui_progressbar*)getNodeById(ID_NODE_ENDING_PROGRESSBAR))->setText(battleBrix::inst()->getLevelString());
