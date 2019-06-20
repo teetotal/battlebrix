@@ -91,13 +91,13 @@
         "color": "BLUE_OPACITY",
         "objects": [
             {
-                "id": 11,
+                "id": 101,
                 "position": [ 0, 0 ],
                 "alignment": "left",
                 "type": "label",
-                "color": "GRAY",
+                "color": [ "GRAY", "BLACK" ],
                 "bgColor": "BLUE_DARK",
-                "text": "SEMI PRO III",
+                "text": "GRADE",
                 "fontSize": 0
             },
             {
@@ -110,6 +110,7 @@
     },
     {
         "comment": "play",
+        "visible": false,
         "dimension": [ 1, 2, 5, 6 ],
         "margin": [ 10, 20 ],
         "innerMargin": [ 0, 1 ],
@@ -133,16 +134,6 @@
                 "type": "label",
                 "color": "GRAY",
                 "text": "3 Win / 3 Lose",
-                "fontSize": 0
-            },
-            {
-                "visible": false,
-                "id": 16,
-                "position": [ 0, 3 ],
-                "alignment": "left",
-                "type": "label",
-                "color": "GRAY",
-                "text": "53%",
                 "fontSize": 0
             },
             {

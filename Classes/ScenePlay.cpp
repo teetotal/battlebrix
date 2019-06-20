@@ -73,6 +73,7 @@ enum ID_NODE {
     ID_NODE_SKILL = 100,
     ID_NODE_SKILL_1,
     ID_NODE_SKILL_POTION,
+    ID_NODE_SKILL_BOMB,
 };
 
 //static COLOR_RGB colors[5] = {
@@ -262,7 +263,7 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
         //동시 충돌 방지
         clock_t now = clock();
         if(now - latestCollisionWithBoard < 100) {
-            CCLOG("%s %lf concurrent collision %d",name.c_str(), (double)latestCollisionWithBoard, id);
+//            CCLOG("%s %lf concurrent collision %d",name.c_str(), (double)latestCollisionWithBoard, id);
             return false;
         }
         else
@@ -337,13 +338,18 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
             mp->blink();
             //pScene->getNodeById(0)
             Vec2 pos = Vec2(layer->getContentSize().width / 2.f, layer->getContentSize().height * .75f);
-            guiExt::addScaleEffect(layer, "icons8-action-96.png", "ATTACK", ui_wizard_share::inst()->getPalette()->getColor("GRAY"), NULL, .4f, .4f, pos);
+            guiExt::addScaleEffect(layer, "icons8-action-96.png", "ATTACK", ui_wizard_share::inst()->getPalette()->getColor("GRAY"), NULL, .4f, .4f, pos, 150);
 
             ret = true;
         }
     }
     
     return ret;
+}
+// onBomb ===========================================================================
+void ScenePlay::PLAYER::onBomb() {
+    Vec2 pos = Vec2(layer->getContentSize().width / 2.f, layer->getContentSize().height * .75f);
+    guiExt::addScaleEffect(layer, "icons8-atomic-bomb-96.png", "BOMB", ui_wizard_share::inst()->getPalette()->getColor("GRAY"), NULL, .4f, .4f, pos, 150);
 }
 // setAutoPlay ===========================================================================
 void ScenePlay::PLAYER::onTimer(float f) {
@@ -607,7 +613,7 @@ bool ScenePlay::init()
     
     this->loadFromJson("play", "play.json");
     
-    TOUCH_INIT(ScenePlay);
+    MULTITOUCH_INIT(ScenePlay);
     PHYSICS_CONTACT(ScenePlay);
     
     mIsEnd = false;
@@ -680,17 +686,36 @@ void ScenePlay::callback(Ref* pSender, int from, int link) {
                                     , ui_wizard_share::inst()->getPalette()->getColor("YELLOW")
                                     , false
                                     , 1.5f
-                                    , NULL
+                                    , CallFunc::create([=](){ mPlayers[_PLAYER_ID_ME].hp->setValueIncrese(DECRESE_HP * 4); })
                                     );
-            mPlayers[_PLAYER_ID_ME].hp->setValueIncrese(0.2);
             auto p = ((MenuItem*)this->getNodeById(ID_NODE_SKILL_POTION));
             p->setEnabled(false);
             p->setColor(ui_wizard_share::inst()->getPalette()->getColor3B("DARKGRAY"));
             
             break;
         }
-        case 3:
+        case 3: { //bomb
+            guiExt::addMovingEffect(this->getNodeById(0)
+                                    , ui_wizard_share::inst()->getPalette()->getColor("WHITE_OPACITY_LIGHT2")
+                                    , "icons8-atomic-bomb-96.png"
+                                    , "BOMB"
+                                    , ui_wizard_share::inst()->getPalette()->getColor("YELLOW")
+                                    , false
+                                    , 1.5f
+                                    , CallFunc::create([=](){
+                                        for(int n = 1; n < mPlayers.size(); n++) {
+                                            mPlayers[n].onBomb();
+                                            mPlayers[n].decreseHP();
+                                        }
+                                    })
+                                    );
+            
+            
+            auto p = ((MenuItem*)this->getNodeById(ID_NODE_SKILL_BOMB));
+            p->setEnabled(false);
+            p->setColor(ui_wizard_share::inst()->getPalette()->getColor3B("DARKGRAY"));
             break;
+        }
         case 999:
             this->replaceScene(SceneMain::create());
             break;
@@ -863,7 +888,12 @@ void ScenePlay::onEnd(){
     
     //    ID_NODE_ENDING_REWARD,
     auto pReward =((Label*)getNodeById(ID_NODE_ENDING_REWARD));
-    pReward->setString((reward.growth >= 0) ? "+" + to_string(reward.growth) : to_string(reward.growth));
+    if(reward.growth >= 0) {
+        pReward->setString("+" + to_string(reward.growth));
+    } else {
+        pReward->setString(to_string(reward.growth));
+        pReward->setColor(ui_wizard_share::inst()->getPalette()->getColor3B("RED_DARK"));
+    }
     
 //    pReward->setColor(ui_wizard_share::inst()->getPalette()->getColor3B(szColorReward));
     //    ID_NODE_ENDING_REWARD_POINT,
@@ -875,16 +905,18 @@ void ScenePlay::onEnd(){
     pHeart->setText((reward.heart >= 0) ? "+" + to_string(reward.heart) : to_string(reward.heart));
     
     //effect
-    guiExt::runFlyEffect(this->getNodeById(ID_NODE_ENDING_REWARD), CallFunc::create([=](){
-        if(battleBrix::inst()->applyReward(nRanking)) {
-            //level up
-            //auto bg = this->getNodeById(0);
-            auto particle = gui::inst()->createParticle("firework.plist", gui::inst()->getCenter());
-            this->addChild(particle);
-        }
-        ((ui_progressbar*)getNodeById(ID_NODE_ENDING_PROGRESSBAR))->setValue(battleBrix::inst()->getGrowthPercentage());
-        ((ui_progressbar*)getNodeById(ID_NODE_ENDING_PROGRESSBAR))->setText(battleBrix::inst()->getLevelString());
-    }));
+    guiExt::runFlyEffect(this->getNodeById(ID_NODE_ENDING_REWARD)
+                         , CallFunc::create([=]() {
+                                if(battleBrix::inst()->applyReward(nRanking)) {
+                                    //level up
+                                    //auto bg = this->getNodeById(0);
+                                    auto particle = gui::inst()->createParticle("firework.plist", gui::inst()->getCenter());
+                                    this->addChild(particle);
+                                }
+                                ((ui_progressbar*)getNodeById(ID_NODE_ENDING_PROGRESSBAR))->setValue(battleBrix::inst()->getGrowthPercentage());
+                                ((ui_progressbar*)getNodeById(ID_NODE_ENDING_PROGRESSBAR))->setText(battleBrix::inst()->getLevelString());
+                            })
+                         , 1.f, (reward.growth < 0) ? true : false);
     
     if(reward.point > 0)
         guiExt::runScaleEffect(this->getNodeById(ID_NODE_ENDING_REWARD_POINT));

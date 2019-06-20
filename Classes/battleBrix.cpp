@@ -37,12 +37,6 @@ const string battleBrix::getText(const string& defaultString, int id) {
         case _ID_NODE_PROGRESSBAR:
             return getLevelString();
             
-        case _ID_NODE_PROGRESSBAR_LABEL_WINNING_RATE:
-            return to_string(battleBrix::inst()->mUserData.win) + " / " + to_string(battleBrix::inst()->mUserData.win + battleBrix::inst()->mUserData.lose);
-            
-        case _ID_NODE_LABEL_WINNING_RATE:
-            return to_string(battleBrix::inst()->mUserData.win) + " Win / " + to_string(battleBrix::inst()->mUserData.lose) + " Lose";
-            
         case _ID_NODE_LABEL_RANKING:
             return numberFormat(battleBrix::inst()->mUserData.ranking) + "th";
             

@@ -53,6 +53,16 @@ private:
     void onTouchMoved(Touch *touch, Event *event);
     bool onContactBegin(PhysicsContact &contact);
     
+    void onTouchesBegan(const vector<Touch*>&touches, Event* event) {
+        for(int n=0; n<touches.size(); n++) onTouchBegan(touches[n], event);
+    };
+    void onTouchesEnded(const vector<Touch*>&touches, Event* event) {
+        for(int n=0; n<touches.size(); n++) onTouchEnded(touches[n], event);
+    };
+    void onTouchesMoved(const vector<Touch*>&touches, Event* event) {
+        for(int n=0; n<touches.size(); n++) onTouchMoved(touches[n], event);
+    };
+    
     void timer(float f);
     void onFinish();
     void onEnd();
@@ -119,6 +129,7 @@ private:
             return hp->getValue();
         };
         void onTimer(float f);
+        void onBomb();
         void setRanking(int ranking);
         void createLayerBrix();
     };

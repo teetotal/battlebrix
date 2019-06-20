@@ -75,6 +75,8 @@ void SceneMain::callback(Ref* pSender, int from, int link) {
 
 const string SceneMain::getText(const string& defaultString, int id) {
     switch(id) {
+        case ID_NODE_GRADE:
+            return battleBrix::inst()->getLevelString();
         default:
             return battleBrix::inst()->getText(defaultString, id);
     }

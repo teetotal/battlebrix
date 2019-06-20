@@ -51,6 +51,10 @@ protected:
     virtual void callback(Ref* pSender, int from, int link);
     virtual const string getText(const string& defaultString, int id);
     virtual const float getProgressValue(int id) { return battleBrix::inst()->getProgressValue(id); };
+private:
+    enum ID_NODE {
+        ID_NODE_GRADE = 101,
+    };
 };
 // SceneDaily ==================================
 class SceneDaily : public ui_wizard
