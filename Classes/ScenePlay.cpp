@@ -2,7 +2,6 @@
 #include "ScenePlay.h"
 #include "Scenes.h"
 #include "ui/ui_ext.h"
-#include "ui/ui_icon.h"
 #include "library/pch.h"
 #include <functional>
 
@@ -72,8 +71,10 @@ enum ID_NODE {
     
     ID_NODE_SKILL = 100,
     ID_NODE_SKILL_1,
-    ID_NODE_SKILL_POTION,
-    ID_NODE_SKILL_BOMB,
+    ID_NODE_SKILL_2,
+    ID_NODE_SKILL_3,
+    
+    ID_NODE_CONTROLBAR = 200,
 };
 
 //static COLOR_RGB colors[5] = {
@@ -96,7 +97,6 @@ void ScenePlay::PLAYER::init(ScenePlay* p, const string& name, int layerId, int 
         layer = gui::inst()->createLayout(Size(pLayer->getContentSize().height * p->mBrixLayerRatio, pLayer->getContentSize().height), "", false, Color3B::MAGENTA);
         pLayer->addChild(layer);
     }
-    
     
     hp = (ui_progressbar*)p->getNodeById(hpId);
     mp = (ui_progressbar*)p->getNodeById(mpId);
@@ -616,6 +616,13 @@ bool ScenePlay::init()
     MULTITOUCH_INIT(ScenePlay);
     PHYSICS_CONTACT(ScenePlay);
     
+    //skills
+    mSkillParentNode = getNodeById(ID_NODE_SKILL);
+    mSkills.push_back((ui_icon*)getNodeById(ID_NODE_SKILL_1));
+    mSkills.push_back((ui_icon*)getNodeById(ID_NODE_SKILL_2));
+    mSkills.push_back((ui_icon*)getNodeById(ID_NODE_SKILL_3));
+    mControlBar = getNodeById(ID_NODE_CONTROLBAR);
+    
     mIsEnd = false;
     mBrixLayerRatio = -1;
     
@@ -676,9 +683,19 @@ void ScenePlay::timer(float f) {
 // callback ===========================================================================
 void ScenePlay::callback(Ref* pSender, int from, int link) {
     switch(link) {
-        case 1:
+        case 999:
+            this->replaceScene(SceneMain::create());
             break;
-        case 2: { //potion
+        default:
+            break;
+    }
+}
+// onSkill ===========================================================================
+void ScenePlay::onSkill(int idx) {
+    switch(idx) {
+        case 0:
+            break;
+        case 1: { //potion
             guiExt::addMovingEffect(this->getNodeById(0)
                                     , ui_wizard_share::inst()->getPalette()->getColor("WHITE_OPACITY_LIGHT2")
                                     , "icons8-hyper-potion-96.png"
@@ -688,13 +705,10 @@ void ScenePlay::callback(Ref* pSender, int from, int link) {
                                     , 1.5f
                                     , CallFunc::create([=](){ mPlayers[_PLAYER_ID_ME].hp->setValueIncrese(DECRESE_HP * 4); })
                                     );
-            auto p = ((MenuItem*)this->getNodeById(ID_NODE_SKILL_POTION));
-            p->setEnabled(false);
-            p->setColor(ui_wizard_share::inst()->getPalette()->getColor3B("DARKGRAY"));
             
             break;
         }
-        case 3: { //bomb
+        case 2: { //bomb
             guiExt::addMovingEffect(this->getNodeById(0)
                                     , ui_wizard_share::inst()->getPalette()->getColor("WHITE_OPACITY_LIGHT2")
                                     , "icons8-atomic-bomb-96.png"
@@ -703,27 +717,17 @@ void ScenePlay::callback(Ref* pSender, int from, int link) {
                                     , false
                                     , 1.5f
                                     , CallFunc::create([=](){
-                                        for(int n = 1; n < mPlayers.size(); n++) {
-                                            mPlayers[n].onBomb();
-                                            mPlayers[n].decreseHP();
-                                        }
-                                    })
+                for(int n = 1; n < mPlayers.size(); n++) {
+                    mPlayers[n].onBomb();
+                    mPlayers[n].decreseHP();
+                }
+            })
                                     );
-            
-            
-            auto p = ((MenuItem*)this->getNodeById(ID_NODE_SKILL_BOMB));
-            p->setEnabled(false);
-            p->setColor(ui_wizard_share::inst()->getPalette()->getColor3B("DARKGRAY"));
             break;
         }
-        case 999:
-            this->replaceScene(SceneMain::create());
-            break;
-        default:
-            break;
     }
 }
-
+// getText ===========================================================================
 const string ScenePlay::getText(const string& defaultString, int id) {
     return defaultString;
 }
@@ -733,11 +737,20 @@ bool ScenePlay::onTouchBegan(Touch* touch, Event* event) {
     return true;
 }
 bool ScenePlay::onTouchEnded(Touch* touch, Event* event) {
-    return true;
+    for(int n=0; n<mSkills.size(); n++) {
+        if(mSkills[n]->getBoundingBox().containsPoint(mSkillParentNode->convertTouchToNodeSpace(touch))) {
+            if(mSkills[n]->isEnabled()) {
+                mSkills[n]->runScaleAndDisable();
+                onSkill(n);
+            }
+            return true;
+        }
+    }
+    return false;
 }
 
 void ScenePlay::onTouchMoved(Touch *touch, Event *event) {
-    if(mIsEnd)
+    if(mIsEnd || mControlBar->convertTouchToNodeSpace(touch).y > mControlBar->getContentSize().height)
         return;
     
     auto posLayer = mPlayers[_PLAYER_ID_ME].layer->getParent()->getPosition();
@@ -751,6 +764,7 @@ void ScenePlay::onTouchMoved(Touch *touch, Event *event) {
 
     mPlayers[_PLAYER_ID_ME].board->setPosition(pos);
 }
+
 bool ScenePlay::onContactBegin(PhysicsContact &contact) {
     int other;
 //    bitmask st = getBitmask(contact);

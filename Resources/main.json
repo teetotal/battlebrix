@@ -91,13 +91,12 @@
         "color": "BLUE_OPACITY",
         "objects": [
             {
-                "id": 101,
                 "position": [ 0, 0 ],
                 "alignment": "left",
                 "type": "label",
                 "color": [ "GRAY", "BLACK" ],
                 "bgColor": "BLUE_DARK",
-                "text": "GRADE",
+                "text": "LEAGUE MODE",
                 "fontSize": 0
             },
             {
@@ -109,56 +108,62 @@
         ]
     },
     {
-        "comment": "play",
-        "visible": false,
-        "dimension": [ 1, 2, 5, 6 ],
+        "comment": "main",
+        "dimension": [ 1, 1, 8, 6 ],
         "margin": [ 10, 20 ],
-        "innerMargin": [ 0, 1 ],
-        "gridSize": [ 1, 8 ],
+        "innerMargin": [ 5, 5 ],
+        "gridSize": [ 5, 5 ],
         "color": 0,
         "objects": [
             {
-                "id": 14,
-                "position": [ 0, 3 ],
+                "id": 10000,
+                "position": [ 0, 1 ],
+                "span": [0, 3],
+                "type": "component",
+                "component": "play_item"
+            },
+            {
+                "id": 11000,
+                "position": [ 1, 1 ],
+                "span": [0, 3],
+                "type": "component",
+                "component": "play_item"
+            },
+            {
+                "id": 12000,
+                "position": [ 2, 1 ],
+                "span": [0, 3],
+                "type": "component",
+                "component": "play_item"
+            },
+            {
+                "id": 13000,
+                "position": [ 3, 1 ],
+                "span": [0, 3],
+                "type": "component",
+                "component": "play_item"
+            },
+            {
+                "position": [ 4, 4 ],
+                "alignment": "center",
+                "type": "button_rectangle_circle_shadow_2",
+                "link": 0,
+                "color": [ "WHITE", "ORANGE" ],
+                "text": "PLAY"
+            },
+            {
+                "id": 101,
+                "position": [ 4, 1 ],
                 "alignment": "center",
                 "type": "label",
-                "color": "GRAY",
-                "text": " 5 / 12",
-                "fontSize": 0
-            },
-            {
-                "visible": true,
-                "id": 15,
-                "position": [ 0, 0 ],
-                "alignment": "left",
-                "type": "label",
-                "color": "GRAY",
-                "text": "3 Win / 3 Lose",
-                "fontSize": 0
-            },
-            {
-                "visible": true,
-                "id": 17,
-                "position": [ 0, 1 ],
-                "alignment": "left",
-                "type": "label_sprite",
-                "color": "GRAY",
-                "img": "icons8-crown-480.png",
-                "text": "1,614th",
-                "fontSize": 0
-            },
-            {
-                "visible": true,
-                "position": [ 0, 7 ],
-                "alignment": "left",
-                "type": "label",
-                "color": "GRAY",
-                "text": "BEGINNER > AMATEUR > SEMI PRO > PRO > WORLD CLASS",
+                "color": [ "GRAY", "BLACK" ],
+                "text": "GRADE",
                 "fontSize": -1
             }
         ]
     },
     {
+        "visible": false,
         "comment": "play image",
         "dimension": [ 5, 1, 8, 6 ],
         "margin": [ 10, 35 ],

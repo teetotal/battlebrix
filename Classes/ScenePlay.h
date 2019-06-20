@@ -27,7 +27,9 @@
 
 #include "ui/ui_wizard.h"
 #include "ui/ui_progressbar.h"
+#include "ui/ui_icon.h"
 #include "battleBrix.h"
+
 USING_NS_CC;
 
 // ScenePlay ==================================
@@ -66,6 +68,7 @@ private:
     void timer(float f);
     void onFinish();
     void onEnd();
+    void onSkill(int idx);
     
     struct OBSTACLE {
         DrawNode * pDrawNode;
@@ -134,6 +137,10 @@ private:
         void createLayerBrix();
     };
     vector<PLAYER> mPlayers;
+    vector<ui_icon*> mSkills;
+    Node * mSkillParentNode; //for multi touch
+    Node * mControlBar; //for check multi touch
+    
     bool mIsEnd;
 };
 #endif // __SCENE_PLAY_H__
