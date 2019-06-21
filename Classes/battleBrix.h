@@ -45,7 +45,7 @@ public:
         int growth;
         string id;
         
-        userData() : win(0), lose(0), ranking(532340), level(1), grade(0), heart(0), heartMax(5), point(1000), maxGrowth(128), growth(10) {
+        userData() : win(0), lose(0), ranking(532340), level(1), grade(0), heart(0), heartMax(5), point(15000), maxGrowth(128), growth(10) {
             id = "teetotal";
         };
         
@@ -63,6 +63,18 @@ public:
         }
     };
     
+    struct itemData {
+        int price;
+        string img;
+        string name;
+        
+        void set(const string name, int price, const string img) {
+            this->name = name;
+            this->price = price;
+            this->img = img;
+        };
+    };
+    
     const string getText(const string& defaultString, int id);
     const float getProgressValue(int id);
     rewardData getReward(int ranking);
@@ -74,8 +86,10 @@ public:
     bool increseGrowth(int val);
     const string getLevelString();
     
+    rewardData mRewards[6];
+    itemData mItems[3];
+    
 private:
     static battleBrix * hInstance;
-    rewardData mRewards[6];
 };
 #endif /* battleBrix_h */

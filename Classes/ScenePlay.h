@@ -30,6 +30,7 @@
 #include "ui/ui_icon.h"
 #include "battleBrix.h"
 
+#define DECREASE_HP 0.05f
 USING_NS_CC;
 
 // ScenePlay ==================================
@@ -117,7 +118,7 @@ private:
         void finish();
         void vibrate();
         bool onContact(int id, bool toRight = false);
-        void decreseHP();
+        void decreseHP(float val = DECREASE_HP);
         void createBall();
         void createBoard();
         void createBottom();

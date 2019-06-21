@@ -458,7 +458,7 @@
           "alignment": "right",
           "type": "icon_circle",
           "link": 1,
-          "img": "icons8-synchronize-480.png",
+          "img": "icons8-snail-80.png",
           "color": "BLUE"
         },
         {
@@ -468,7 +468,7 @@
           "type": "icon_circle",
           "link": 2,
           "img": "icons8-hyper-potion-96.png",
-          "color": "YELLOW"
+          "color": "BLUE"
         },
         {
           "id": 103,
@@ -477,7 +477,7 @@
           "type": "icon_circle",
           "link": 3,
           "img": "icons8-atomic-bomb-96.png",
-          "color": "GREEN"
+          "color": "BLUE"
         }
       ]
     },
@@ -553,7 +553,7 @@
                 "type": "icon_point",
                 "color": "GRAY",
                 "text": "+100",
-                "fontSize": -2
+                "fontSize": 0
             },
             {
                 "id": 95,
@@ -572,6 +572,26 @@
                 "color": [ "WHITE", "ORANGE" ],
                 "text": "OK",
                 "span": [1, 0]
+            }
+        ]
+    },
+    {
+        "comment": "for levelup",
+        "dimension": [ 0, 0, 9, 7 ],
+        "margin": [ 0, 0 ],
+        "innerMargin": [ 0, 0 ],
+        "gridSize": [ 1, 1 ],
+        "color": 0,
+        "objects": [
+            {
+                "id": 1000,
+                "visible": false,
+                "position": [ 0, 0 ],
+                "alignment": "center",
+                "type": "label",
+                "color": ["ORANGE", "BLACK"],
+                "text": "BRONZE",
+                "fontSize": -3
             }
         ]
     }

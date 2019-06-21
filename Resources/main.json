@@ -123,11 +123,29 @@
                 "component": "play_item"
             },
             {
+                "position": [ 0, 1 ],
+                "span": [0, 3],
+                "type": "button",
+                "text": "M",
+                "link": 10000,
+                "color": 0,
+                "fontSize": 0
+            },
+            {
                 "id": 11000,
                 "position": [ 1, 1 ],
                 "span": [0, 3],
                 "type": "component",
                 "component": "play_item"
+            },
+            {
+                "position": [ 1, 1 ],
+                "span": [0, 3],
+                "type": "button",
+                "text": "M",
+                "link": 11000,
+                "color": 0,
+                "fontSize": 0
             },
             {
                 "id": 12000,
@@ -137,13 +155,13 @@
                 "component": "play_item"
             },
             {
-                "id": 1234,
-                "position": [ 3, 4 ],
-                "alignment": "center",
-                "type": "button_rectangle_circle_shadow_2",
-                "link": 0,
-                "color": [ "WHITE", "ORANGE" ],
-                "text": "PLAY"
+                "position": [ 2, 1 ],
+                "span": [0, 3],
+                "type": "button",
+                "text": "M",
+                "link": 12000,
+                "color": 0,
+                "fontSize": 0
             },
             {
                 "id": 101,
@@ -151,7 +169,7 @@
                 "alignment": "right",
                 "type": "icon_point",
                 "color": [ "GRAY", "BLACK" ],
-                "text": "15,000",
+                "text": "0",
                 "fontSize": -1
             },
             {
@@ -160,7 +178,7 @@
                 "alignment": "right",
                 "type": "label",
                 "color": [ "GRAY", "BLACK" ],
-                "text": "- 1,000",
+                "text": "0",
                 "fontSize": -1
             },
             {
@@ -175,8 +193,17 @@
                 "alignment": "right",
                 "type": "icon_point",
                 "color": [ "GRAY", "BLACK" ],
-                "text": "14,000",
+                "text": "0",
                 "fontSize": -1
+            },
+            {
+                "id": 104,
+                "position": [ 3, 4 ],
+                "alignment": "center",
+                "type": "button_rectangle_round_shadow",
+                "link": 0,
+                "color": [ "GRAY", "YELLOW" ],
+                "text": "PLAY"
             }
         ]
     },

@@ -33,13 +33,26 @@ bool SceneMain::init()
     gui::inst()->initDefaultWithSpriteCache("fonts/SDSwaggerTTF.ttf");
 	this->loadFromJson("main", "main.json");
     
-    auto bg = getNodeById(0);
-    Vec2 center = gui::inst()->getCenter();
+    for(int n=0; n<3; n++) {
+        battleBrix::itemData item = battleBrix::inst()->mItems[n];
+        auto sprite = gui::inst()->getSprite(item.img);
+        
+        int id = ID_NODE_ITEM_1 + (n*1000);
+        
+        ((ui_checkbox*)getNodeById(id+1))->setText(item.name);
+        ((Sprite*)getNodeById(id+2))->setTexture(sprite->getTexture());
+        ((ui_icon*)getNodeById(id+3))->setText(numberFormat(item.price));
+    }
+
+    sumPrice();
     
-    COLOR_RGB color, colorFont, colorBack;
-    color.set(Color3B::MAGENTA);
-    colorFont.set(Color3B::BLUE);
-    colorBack.set(Color3B::WHITE);
+//    auto bg = getNodeById(0);
+//    Vec2 center = gui::inst()->getCenter();
+//    
+//    COLOR_RGB color, colorFont, colorBack;
+//    color.set(Color3B::MAGENTA);
+//    colorFont.set(Color3B::BLUE);
+//    colorBack.set(Color3B::WHITE);
 //
 //    ui_button::create(1234
 //              , 12345
@@ -58,13 +71,21 @@ bool SceneMain::init()
 //              );
  
     
-    pCheckbox = ui_checkbox::create(this, center, ALIGNMENT_CENTER, Size(100, 50), "Check box", color, colorFont);
+//    pCheckbox = ui_checkbox::create(this, center, ALIGNMENT_CENTER, Size(100, 50), "Check box", color, colorFont);
 
     return true;
 }
 
 void SceneMain::callback(Ref* pSender, int from, int link) {
-    switch((eLINK)link) {
+    if(link >= ID_NODE_ITEM_1 && link <= ID_NODE_ITEM_3) {
+        auto p = (ui_checkbox*)getNodeById(link+1);
+        p->setToggle();
+        ((ui_checkbox*)getNodeById(link+4))->setVisible(p->isChecked());
+        
+        sumPrice();
+        return;
+    }
+    switch(link) {
         case eLINK_PLAY:
             this->replaceScene(ScenePlay::create());
             break;
@@ -76,7 +97,6 @@ void SceneMain::callback(Ref* pSender, int from, int link) {
         case eLINK_FRIENDS:
             break;
         case eLINK_BAG:
-            pCheckbox->setToggle();
             break;
         default:
             break;
@@ -85,10 +105,35 @@ void SceneMain::callback(Ref* pSender, int from, int link) {
 
 const string SceneMain::getText(const string& defaultString, int id) {
     switch(id) {
-//        case ID_NODE_GRADE:
-//            return battleBrix::inst()->getLevelString();
+        case ID_NODE_POINT:
+            return numberFormat(battleBrix::inst()->mUserData.point);
+        case ID_NODE_POINT_SUBTRACT:
+        case ID_NODE_POINT_REMAIN:
         default:
             return battleBrix::inst()->getText(defaultString, id);
+    }
+}
+
+void SceneMain::sumPrice() {
+    int price = 0;
+    for(int n=0; n<3; n++) {
+        int id = ID_NODE_ITEM_1 + (n*1000);
+        if(((ui_checkbox*)getNodeById(id+1))->isChecked())
+            price += battleBrix::inst()->mItems[n].price;
+    }
+    
+    ((Label*)getNodeById(ID_NODE_POINT_SUBTRACT))->setString("- " + numberFormat(price));
+    int remain = battleBrix::inst()->mUserData.point - price;
+    
+    if(remain < 0) {
+//        ((Label*)getNodeById(ID_NODE_POINT_REMAIN))->setString("- " + numberFormat(remain * -1));
+        ((ui_icon*)getNodeById(ID_NODE_POINT_REMAIN))->setText("- " + numberFormat(remain * -1));
+        ((ui_button *)getNodeById(ID_NODE_START))->setEnabled(false);
+    }
+    else {
+//        ((Label*)getNodeById(ID_NODE_POINT_REMAIN))->setString(numberFormat(remain));
+        ((ui_icon*)getNodeById(ID_NODE_POINT_REMAIN))->setText(numberFormat(remain));
+        ((ui_button *)getNodeById(ID_NODE_START))->setEnabled(true);
     }
 }
 

@@ -5,7 +5,7 @@
 #include "library/pch.h"
 #include <functional>
 
-#define SPEED_BASE .5f
+#define SPEED_BASE .55f
 #define PHYSICSMATERIAL             PhysicsMaterial(0.5f, 1.f, 0.f)
 #define PHYSICSMATERIAL_OBSTACLE    PhysicsMaterial(0.f, 1.f, 0.f)
 #define PHYSICSMATERIAL_BOARD    PhysicsMaterial(0.f, 1.f, 0.f)
@@ -16,8 +16,6 @@
 #define _ID_BRIX_START 101
 #define _ID_GIFT 100
 #define BALL_INIT_POSITION_Y 7
-
-#define DECRESE_HP 0.05f
 
 enum _PLAYER_ID {
     _PLAYER_ID_ME = 0,
@@ -75,6 +73,8 @@ enum ID_NODE {
     ID_NODE_SKILL_3,
     
     ID_NODE_CONTROLBAR = 200,
+    
+    ID_NODE_LEVELUP = 1000,
 };
 
 //static COLOR_RGB colors[5] = {
@@ -110,7 +110,7 @@ void ScenePlay::PLAYER::init(ScenePlay* p, const string& name, int layerId, int 
     mp->setValue(0.f);
     
     //speed
-    float speed = SPEED_BASE + (battleBrix::inst()->mUserData.level * 0.1f);
+    float speed = SPEED_BASE + (battleBrix::inst()->mUserData.level * 0.05f);
     p->initPhysicsBody(layer, PHYSICSMATERIAL_OBSTACLE, false, speed);
     
     gridSize   = gui::inst()->getGridSize(layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO);
@@ -237,8 +237,8 @@ void ScenePlay::PLAYER::vibrate() {
     guiExt::addVibrateEffect(layer, CallFunc::create([=]() { lockShake = false; }));
 }
 // decreseHP ===========================================================================
-void ScenePlay::PLAYER::decreseHP() {
-    auto val = hp->setValueDecrese(DECRESE_HP);
+void ScenePlay::PLAYER::decreseHP(float f) {
+    auto val = hp->setValueDecrese(f);
     hp->blink();
     vibrate();
     
@@ -697,41 +697,48 @@ void ScenePlay::callback(Ref* pSender, int from, int link) {
 void ScenePlay::onSkill(int idx) {
     if(mIsEnd)
         return;
-    
+    CallFunc * pFn = NULL;
     switch(idx) {
-        case 0:
+        case 0: {
+            pFn = CallFunc::create([=]()
+            {
+                mPlayers[_PLAYER_ID_ME].hp->setValueIncrese(DECREASE_HP * 2);
+                for(int n = 1; n < mPlayers.size(); n++) {
+                    mPlayers[n].onBomb();
+                    mPlayers[n].decreseHP(DECREASE_HP / 2.f);
+                }
+            });
             break;
+        }
         case 1: { //potion
-            guiExt::addMovingEffect(this->getNodeById(0)
-                                    , ui_wizard_share::inst()->getPalette()->getColor("WHITE_OPACITY_LIGHT2")
-                                    , "icons8-hyper-potion-96.png"
-                                    , "POTION"
-                                    , ui_wizard_share::inst()->getPalette()->getColor("YELLOW")
-                                    , false
-                                    , 1.5f
-                                    , CallFunc::create([=](){ mPlayers[_PLAYER_ID_ME].hp->setValueIncrese(DECRESE_HP * 4); })
-                                    );
-            
+            pFn = CallFunc::create([=]()
+            {
+                mPlayers[_PLAYER_ID_ME].hp->setValueIncrese(DECREASE_HP * 4);
+            });
             break;
         }
         case 2: { //bomb
-            guiExt::addMovingEffect(this->getNodeById(0)
-                                    , ui_wizard_share::inst()->getPalette()->getColor("WHITE_OPACITY_LIGHT2")
-                                    , "icons8-atomic-bomb-96.png"
-                                    , "BOMB"
-                                    , ui_wizard_share::inst()->getPalette()->getColor("YELLOW")
-                                    , false
-                                    , 1.5f
-                                    , CallFunc::create([=](){
+            pFn = CallFunc::create([=]()
+            {
                 for(int n = 1; n < mPlayers.size(); n++) {
                     mPlayers[n].onBomb();
                     mPlayers[n].decreseHP();
                 }
-            })
-                                    );
+            });
             break;
         }
     }
+    
+    if(pFn)
+        guiExt::addMovingEffect(this->getNodeById(0)
+                                , ui_wizard_share::inst()->getPalette()->getColor("WHITE_OPACITY_LIGHT2")
+                                , battleBrix::inst()->mItems[idx].img
+                                , battleBrix::inst()->mItems[idx].name
+                                , ui_wizard_share::inst()->getPalette()->getColor("YELLOW")
+                                , false
+                                , 1.5f
+                                , pFn
+                                );
 }
 // getText ===========================================================================
 const string ScenePlay::getText(const string& defaultString, int id) {
@@ -931,6 +938,9 @@ void ScenePlay::onEnd(){
                          , CallFunc::create([=]() {
                                 if(battleBrix::inst()->applyReward(nRanking)) {
                                     //level up
+                                    auto levelup = this->getNodeById(ID_NODE_LEVELUP);
+                                    levelup->setVisible(true);
+                                    guiExt::runScaleEffect(levelup, NULL, 0.8f, true);
                                     //auto bg = this->getNodeById(0);
                                     auto particle = gui::inst()->createParticle("firework.plist", gui::inst()->getCenter());
                                     this->addChild(particle);

@@ -323,7 +323,7 @@
                 "id": 1,
                 "position": [ 0, 0 ],
                 "alignment": "center",
-                "type": "label",
+                "type": "checkbox",
                 "color": [ "DARKGRAY", "BLACK"],
                 "text": "BOMB",
                 "fontSize": -1
@@ -350,6 +350,14 @@
                 "color": [ "DARKGRAY", "YELLOW" ],
                 "text": "100",
                 "fontSize": -1
+            },
+            {
+                "id": 4,
+                "position": [ 0, 0 ],
+                "alignment": "center",
+                "type": "rectangle_line",
+                "color": "BLACK",
+                "span": [0, 3]
             }
         ]
     }

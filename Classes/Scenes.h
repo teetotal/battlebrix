@@ -54,10 +54,28 @@ protected:
     virtual const float getProgressValue(int id) { return battleBrix::inst()->getProgressValue(id); };
 private:
     enum ID_NODE {
-        ID_NODE_GRADE = 101,
+        ID_NODE_POINT = 101,
+        ID_NODE_POINT_SUBTRACT,
+        ID_NODE_POINT_REMAIN,
+        
+        ID_NODE_START,
+        
+        ID_NODE_ITEM_1 = 10000,
+        ID_NODE_ITEM_1_CHECKBOX,
+        ID_NODE_ITEM_1_SPRITE,
+        ID_NODE_ITEM_1_PRICE,
+        ID_NODE_ITEM_1_OUTLINE,
+        
+        ID_NODE_ITEM_2 = 11000,
+        ID_NODE_ITEM_2_CHECKBOX,
+        ID_NODE_ITEM_2_SPRITE,
+        
+        ID_NODE_ITEM_3 = 12000,
+        ID_NODE_ITEM_3_CHECKBOX,
+        ID_NODE_ITEM_3_SPRITE,
     };
     
-    ui_checkbox * pCheckbox;
+    void sumPrice();
 };
 // SceneDaily ==================================
 class SceneDaily : public ui_wizard

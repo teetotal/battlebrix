@@ -18,6 +18,10 @@ void battleBrix::init() {
     mRewards[3].init(GROWTH_PER_LEVEL / 8, 0, 0);
     mRewards[4].init(0, 0, 0);
     mRewards[5].init(GROWTH_PER_LEVEL / 4 * -1, 0, 0);
+    
+    mItems[0].set("Combo", 150, "icons8-snail-80.png");
+    mItems[1].set("Potion", 100, "icons8-hyper-potion-96.png");
+    mItems[2].set("Bomb", 100, "icons8-atomic-bomb-96.png");
 }
 
 const string battleBrix::getText(const string& defaultString, int id) {
