@@ -137,6 +137,7 @@
                 "component": "play_item"
             },
             {
+                "id": 1234,
                 "position": [ 3, 4 ],
                 "alignment": "center",
                 "type": "button_rectangle_circle_shadow_2",

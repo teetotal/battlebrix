@@ -27,7 +27,6 @@
 #include "ScenePlay.h"
 #include "ui/ui_ext.h"
 #include "library/pch.h"
-#include "ui/ui_button.h"
 
 bool SceneMain::init()
 {
@@ -36,57 +35,31 @@ bool SceneMain::init()
     
     auto bg = getNodeById(0);
     Vec2 center = gui::inst()->getCenter();
-    /*
-     void init(int target
-     , const string text
-     , Node * p
-     , Vec2 pos
-     , ALIGNMENT align
-     , Size size
-     , TYPE type
-     , std::function<void(int)> callback
-     , COLOR_RGB color
-     , COLOR_RGB colorFont
-     , COLOR_RGB colorBack = COLOR_RGB()
-     , const string img = ""
-     , TOUCH_TYPE touchType = TOUCH_TYPE_NORMAL);
-     */
-    auto btn = ui_button::create();
+    
     COLOR_RGB color, colorFont, colorBack;
     color.set(Color3B::MAGENTA);
     colorFont.set(Color3B::BLUE);
     colorBack.set(Color3B::WHITE);
-    
-    btn->init(1234
-              , "TESTj"
-              , this
-              , center
-              , ALIGNMENT_CENTER
-              , Size(200, 100)
-              , ui_button::TYPE_CIRCLE
-              , std::bind(&SceneMain::fn, this, std::placeholders::_1)
-              , color
-              , colorFont
-              , colorBack
-              , ""
-              , ui_button::TOUCH_TYPE_AUTO_DISABLE
-              );
-
-//    auto d = guiExt::drawRectCircleButton(this, center, Size(300, 200)
-//                                          , ui_wizard_share::inst()->getPalette()->getColor("ORANGE")
-//                                          //, ui_wizard_share::inst()->getPalette()->getColor("WHITE")
-//                                          );
-    
-    
-//    guiExt::drawCircleForPhysics(bg, Vec2(50, 50), 100, Color4F(0.5, 0.5, 0.5, 0.5))
-//    gui::inst()->drawCircle(bg, Vec2::ZERO, 100, Color4F(1, 1, 1, 0.5))->runAction(
-//       RepeatForever::create(
-//                             Sequence::create(
-//                                              MoveTo::create(30, Vec2(bg->getContentSize().width, bg->getContentSize().height))
-//                                              , MoveTo::create(30, Vec2::ZERO)
-//                                              , NULL)
-//       ));
 //
+//    ui_button::create(1234
+//              , 12345
+//              , "TESTj"
+//              , this
+//              , center
+//              , ALIGNMENT_CENTER
+//              , Size(50, 25)
+//              , ui_button::TYPE_CIRCLE
+//                      , std::bind(&SceneMain::fn, this, std::placeholders::_1, std::placeholders::_2)
+//              , color
+//              , colorFont
+//              , colorBack
+//              , ""//icons8-wedding-gift-96.png"
+//              , ui_button::TOUCH_TYPE_AUTO_DISABLE
+//              );
+ 
+    
+    pCheckbox = ui_checkbox::create(this, center, ALIGNMENT_CENTER, Size(100, 50), "Check box", color, colorFont);
+
     return true;
 }
 
@@ -103,6 +76,7 @@ void SceneMain::callback(Ref* pSender, int from, int link) {
         case eLINK_FRIENDS:
             break;
         case eLINK_BAG:
+            pCheckbox->setToggle();
             break;
         default:
             break;

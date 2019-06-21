@@ -27,6 +27,7 @@
 
 #include "ui/ui_wizard.h"
 #include "ui/ui_roulette.h"
+#include "ui/ui_button.h"
 #include "battleBrix.h"
 USING_NS_CC;
 
@@ -56,9 +57,7 @@ private:
         ID_NODE_GRADE = 101,
     };
     
-    void fn(int n) {
-        CCLOG("fn %d", n);
-    };
+    ui_checkbox * pCheckbox;
 };
 // SceneDaily ==================================
 class SceneDaily : public ui_wizard
