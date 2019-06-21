@@ -5,7 +5,7 @@
 #include "library/pch.h"
 #include <functional>
 
-//#define SPEED .85f
+#define SPEED_BASE .5f
 #define PHYSICSMATERIAL             PhysicsMaterial(0.5f, 1.f, 0.f)
 #define PHYSICSMATERIAL_OBSTACLE    PhysicsMaterial(0.f, 1.f, 0.f)
 #define PHYSICSMATERIAL_BOARD    PhysicsMaterial(0.f, 1.f, 0.f)
@@ -105,9 +105,12 @@ void ScenePlay::PLAYER::init(ScenePlay* p, const string& name, int layerId, int 
     labelName = (Label*)p->getNodeById(labelId+1);
     labelName->setString(name);
     
+    //progressbar
     hp->setValue(1.f);
     mp->setValue(0.f);
-    float speed = 0.6f + (battleBrix::inst()->mUserData.level * 0.1f);
+    
+    //speed
+    float speed = SPEED_BASE + (battleBrix::inst()->mUserData.level * 0.1f);
     p->initPhysicsBody(layer, PHYSICSMATERIAL_OBSTACLE, false, speed);
     
     gridSize   = gui::inst()->getGridSize(layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO);
@@ -692,6 +695,9 @@ void ScenePlay::callback(Ref* pSender, int from, int link) {
 }
 // onSkill ===========================================================================
 void ScenePlay::onSkill(int idx) {
+    if(mIsEnd)
+        return;
+    
     switch(idx) {
         case 0:
             break;
@@ -743,14 +749,16 @@ bool ScenePlay::onTouchEnded(Touch* touch, Event* event) {
                 mSkills[n]->runScaleAndDisable();
                 onSkill(n);
             }
-            return true;
+            return false;
         }
     }
     return false;
 }
 
 void ScenePlay::onTouchMoved(Touch *touch, Event *event) {
-    if(mIsEnd || mControlBar->convertTouchToNodeSpace(touch).y > mControlBar->getContentSize().height)
+    if(mIsEnd ||
+//       mControlBar->convertTouchToNodeSpace(touch).y > mControlBar->getContentSize().height
+       mControlBar->convertTouchToNodeSpace(touch).x < 0)
         return;
     
     auto posLayer = mPlayers[_PLAYER_ID_ME].layer->getParent()->getPosition();

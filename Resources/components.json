@@ -317,16 +317,14 @@
         "margin": [ 0, 0 ],
         "innerMargin": [ 2, 4 ],
         "gridSize": [ 1, 4 ],
-        "img": null,
-        "color": "GRAY",
+        "color": [ "BLUE_LIGHT", "GRAY"],
         "objects": [
             {
                 "id": 1,
                 "position": [ 0, 0 ],
                 "alignment": "center",
                 "type": "label",
-                "color": [ "GRAY", "BLACK"],
-                "bgColor": "BLUE_DARK",
+                "color": [ "DARKGRAY", "BLACK"],
                 "text": "BOMB",
                 "fontSize": -1
             },
@@ -334,7 +332,7 @@
                 "position": [ 0, 0 ],
                 "alignment": "left_bottom",
                 "type": "line",
-                "color": "BLUE_LIGHT"
+                "color": "DARKGRAY"
             },
             {
                 "id": 2,
@@ -348,9 +346,10 @@
                 "id": 3,
                 "position": [ 0, 3 ],
                 "alignment": "center",
-                "type": "button_rectangle_round_shadow",
-                "color": [ "WHITE", "YELLOW" ],
-                "text": "P100"
+                "type": "icon_point",
+                "color": [ "DARKGRAY", "YELLOW" ],
+                "text": "100",
+                "fontSize": -1
             }
         ]
     }

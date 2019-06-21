@@ -27,6 +27,7 @@
 #include "ScenePlay.h"
 #include "ui/ui_ext.h"
 #include "library/pch.h"
+#include "ui/ui_button.h"
 
 bool SceneMain::init()
 {
@@ -35,6 +36,41 @@ bool SceneMain::init()
     
     auto bg = getNodeById(0);
     Vec2 center = gui::inst()->getCenter();
+    /*
+     void init(int target
+     , const string text
+     , Node * p
+     , Vec2 pos
+     , ALIGNMENT align
+     , Size size
+     , TYPE type
+     , std::function<void(int)> callback
+     , COLOR_RGB color
+     , COLOR_RGB colorFont
+     , COLOR_RGB colorBack = COLOR_RGB()
+     , const string img = ""
+     , TOUCH_TYPE touchType = TOUCH_TYPE_NORMAL);
+     */
+    auto btn = ui_button::create();
+    COLOR_RGB color, colorFont, colorBack;
+    color.set(Color3B::MAGENTA);
+    colorFont.set(Color3B::BLUE);
+    colorBack.set(Color3B::WHITE);
+    
+    btn->init(1234
+              , "TESTj"
+              , this
+              , center
+              , ALIGNMENT_CENTER
+              , Size(200, 100)
+              , ui_button::TYPE_CIRCLE
+              , std::bind(&SceneMain::fn, this, std::placeholders::_1)
+              , color
+              , colorFont
+              , colorBack
+              , ""
+              , ui_button::TOUCH_TYPE_AUTO_DISABLE
+              );
 
 //    auto d = guiExt::drawRectCircleButton(this, center, Size(300, 200)
 //                                          , ui_wizard_share::inst()->getPalette()->getColor("ORANGE")
@@ -75,8 +111,8 @@ void SceneMain::callback(Ref* pSender, int from, int link) {
 
 const string SceneMain::getText(const string& defaultString, int id) {
     switch(id) {
-        case ID_NODE_GRADE:
-            return battleBrix::inst()->getLevelString();
+//        case ID_NODE_GRADE:
+//            return battleBrix::inst()->getLevelString();
         default:
             return battleBrix::inst()->getText(defaultString, id);
     }

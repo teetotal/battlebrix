@@ -31,6 +31,7 @@
 		46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
 		46880B8A19C43A87006E1F66 /* Scenes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8619C43A87006E1F66 /* Scenes.cpp */; };
 		46880B8B19C43A87006E1F66 /* Scenes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8619C43A87006E1F66 /* Scenes.cpp */; };
+		4D01227722BC851600AAAF2F /* ui_button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D01227522BC851600AAAF2F /* ui_button.cpp */; };
 		4D1BB911228FA27000F51D57 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 4D1BB8F6228FA26D00F51D57 /* .gitkeep */; };
 		4D1BB942228FA34800F51D57 /* icons8-leaderboard-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D1BB927228FA34700F51D57 /* icons8-leaderboard-100.png */; };
 		4D1BB944228FA34800F51D57 /* icons8-shopping-bag-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D1BB929228FA34700F51D57 /* icons8-shopping-bag-100.png */; };
@@ -188,6 +189,8 @@
 		46880B8519C43A87006E1F66 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		46880B8619C43A87006E1F66 /* Scenes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Scenes.cpp; sourceTree = "<group>"; };
 		46880B8719C43A87006E1F66 /* Scenes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scenes.h; sourceTree = "<group>"; };
+		4D01227522BC851600AAAF2F /* ui_button.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ui_button.cpp; path = ../../library/ui/ui_button.cpp; sourceTree = "<group>"; };
+		4D01227622BC851600AAAF2F /* ui_button.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_button.h; path = ../../library/ui/ui_button.h; sourceTree = "<group>"; };
 		4D1BB8F6228FA26D00F51D57 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = .gitkeep; path = res/.gitkeep; sourceTree = "<group>"; };
 		4D1BB927228FA34700F51D57 /* icons8-leaderboard-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-leaderboard-100.png"; sourceTree = "<group>"; };
 		4D1BB929228FA34700F51D57 /* icons8-shopping-bag-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-shopping-bag-100.png"; sourceTree = "<group>"; };
@@ -509,6 +512,8 @@
 				4D574B04228CFCCC001B8F7F /* ui_ext.cpp */,
 				4D693AC122BA04DA0014D0B9 /* ui_icon.cpp */,
 				4D693AC222BA04DA0014D0B9 /* ui_icon.h */,
+				4D01227522BC851600AAAF2F /* ui_button.cpp */,
+				4D01227622BC851600AAAF2F /* ui_button.h */,
 			);
 			name = ui;
 			sourceTree = "<group>";
@@ -757,6 +762,7 @@
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				1AF87B8A1F6F7822007BE51C /* main.m in Sources */,
 				4D480993227A9E370046472F /* ui.cpp in Sources */,
+				4D01227722BC851600AAAF2F /* ui_button.cpp in Sources */,
 				4D480992227A9E370046472F /* ui_wizard.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* Scenes.cpp in Sources */,
 			);

@@ -110,9 +110,9 @@
     {
         "comment": "main",
         "dimension": [ 1, 1, 8, 6 ],
-        "margin": [ 10, 20 ],
+        "margin": [ 10, 25 ],
         "innerMargin": [ 5, 5 ],
-        "gridSize": [ 5, 5 ],
+        "gridSize": [ 4, 5 ],
         "color": 0,
         "objects": [
             {
@@ -137,14 +137,7 @@
                 "component": "play_item"
             },
             {
-                "id": 13000,
-                "position": [ 3, 1 ],
-                "span": [0, 3],
-                "type": "component",
-                "component": "play_item"
-            },
-            {
-                "position": [ 4, 4 ],
+                "position": [ 3, 4 ],
                 "alignment": "center",
                 "type": "button_rectangle_circle_shadow_2",
                 "link": 0,
@@ -153,11 +146,35 @@
             },
             {
                 "id": 101,
-                "position": [ 4, 1 ],
-                "alignment": "center",
+                "position": [ 3, 1 ],
+                "alignment": "right",
+                "type": "icon_point",
+                "color": [ "GRAY", "BLACK" ],
+                "text": "15,000",
+                "fontSize": -1
+            },
+            {
+                "id": 102,
+                "position": [ 3, 2 ],
+                "alignment": "right",
                 "type": "label",
                 "color": [ "GRAY", "BLACK" ],
-                "text": "GRADE",
+                "text": "- 1,000",
+                "fontSize": -1
+            },
+            {
+                "position": [ 3, 2 ],
+                "alignment": "left_bottom",
+                "type": "line",
+                "color": "GRAY"
+            },
+            {
+                "id": 103,
+                "position": [ 3, 3 ],
+                "alignment": "right",
+                "type": "icon_point",
+                "color": [ "GRAY", "BLACK" ],
+                "text": "14,000",
                 "fontSize": -1
             }
         ]

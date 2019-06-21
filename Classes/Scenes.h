@@ -55,6 +55,10 @@ private:
     enum ID_NODE {
         ID_NODE_GRADE = 101,
     };
+    
+    void fn(int n) {
+        CCLOG("fn %d", n);
+    };
 };
 // SceneDaily ==================================
 class SceneDaily : public ui_wizard
