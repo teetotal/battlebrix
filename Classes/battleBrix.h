@@ -45,7 +45,7 @@ public:
         int growth;
         string id;
         
-        userData() : win(0), lose(0), ranking(532340), level(1), grade(0), heart(0), heartMax(5), point(15000), maxGrowth(128), growth(10) {
+        userData() : win(0), lose(0), ranking(532340), level(1), grade(0), heart(50), heartMax(8), point(15000), maxGrowth(128), growth(10) {
             id = "teetotal";
         };
         
@@ -85,9 +85,12 @@ public:
     // level up 이면 true
     bool increseGrowth(int val);
     const string getLevelString();
+    //play 비용
+    bool payForPlay(int point, int heart = 1);
     
     rewardData mRewards[6];
     itemData mItems[3];
+    int mLastRanking;
     
 private:
     static battleBrix * hInstance;

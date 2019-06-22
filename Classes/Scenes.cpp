@@ -87,8 +87,7 @@ void SceneMain::callback(Ref* pSender, int from, int link) {
     }
     switch(link) {
         case eLINK_PLAY:
-            this->replaceScene(ScenePlay::create());
-            break;
+            return runPlay();
         case eLINK_SHOP:
             this->replaceScene(SceneShop::create());
             break;
@@ -115,25 +114,50 @@ const string SceneMain::getText(const string& defaultString, int id) {
 }
 
 void SceneMain::sumPrice() {
-    int price = 0;
+    //맘에 안드는 코드일세
     for(int n=0; n<3; n++) {
-        int id = ID_NODE_ITEM_1 + (n*1000);
+        mItemSelected.mItemSelected[n] = false;
+        int id = ID_NODE_ITEM_1 + (n * 1000);
         if(((ui_checkbox*)getNodeById(id+1))->isChecked())
-            price += battleBrix::inst()->mItems[n].price;
+            mItemSelected.mItemSelected[n] = true;
     }
+    
+    int price = mItemSelected.getTotalPoint();
     
     ((Label*)getNodeById(ID_NODE_POINT_SUBTRACT))->setString("- " + numberFormat(price));
     int remain = battleBrix::inst()->mUserData.point - price;
     
     if(remain < 0) {
-//        ((Label*)getNodeById(ID_NODE_POINT_REMAIN))->setString("- " + numberFormat(remain * -1));
-        ((ui_icon*)getNodeById(ID_NODE_POINT_REMAIN))->setText("- " + numberFormat(remain * -1));
         ((ui_button *)getNodeById(ID_NODE_START))->setEnabled(false);
     }
     else {
-//        ((Label*)getNodeById(ID_NODE_POINT_REMAIN))->setString(numberFormat(remain));
-        ((ui_icon*)getNodeById(ID_NODE_POINT_REMAIN))->setText(numberFormat(remain));
         ((ui_button *)getNodeById(ID_NODE_START))->setEnabled(true);
+    }
+    ((ui_icon*)getNodeById(ID_NODE_POINT_REMAIN))->setText(numberFormat(remain));
+}
+
+void SceneMain::runPlay() {
+    int totalPoint = mItemSelected.getTotalPoint();
+    // check validation
+    if(battleBrix::inst()->mUserData.heart < 1) {
+        //alert
+    }
+    
+//    if(battleBrix::inst()->mUserData.point < totalPoint) {
+//    }
+    
+    // pay and change scene
+    if(battleBrix::inst()->payForPlay(totalPoint))
+    {
+        // 효과
+        ((ui_icon*)getNodeById(_ID_NODE_LABEL_POINT))->setText(battleBrix::inst()->getText("", _ID_NODE_LABEL_POINT));
+        guiExt::runScaleEffect(getNodeById(_ID_NODE_LABEL_POINT));
+        
+        ((ui_icon*)getNodeById(_ID_NODE_LABEL_HEART))->setText(battleBrix::inst()->getText("", _ID_NODE_LABEL_HEART));
+        guiExt::runScaleEffect(getNodeById(_ID_NODE_LABEL_HEART), CallFunc::create([=]() {
+            this->replaceScene(ScenePlay::create());
+//            this->replaceScene(SceneEnding::create());
+        } ));
     }
 }
 

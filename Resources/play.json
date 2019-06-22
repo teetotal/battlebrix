@@ -1,5 +1,6 @@
 {
     "background": {
+        "grid": [ 9, 14 ],
         "img": null,
         "bgColor": "BG_MAIN",
         "tile": {
@@ -10,41 +11,39 @@
     },
     "nodes": [
     {
-        "comment": "exit",
-        "dimension": [ 4, 0, 5, 1 ],
-        "margin": [ 5, 5 ],
-        "innerMargin": [ 0, 0 ],
-        "gridSize": [ 3, 1 ],
-        "img": null,
-        "color": 0,
+        "comment": "TOP",
+        "dimension": [ 0, 0, 9, 1 ],
+        "margin": [ 0, 0 ],
+        "innerMargin": [ 5, 4 ],
+        "gridSize": [ 10, 1 ],
+        "color": "BG_TOP",
         "objects": [
             {
-                "link": 999,
-                "position": [ 2, 0 ],
-                "alignment": "center_top",
-                "type": "button_circle",
-                "color": [ "WHITE", "DARKGRAY"],
-                "text": "x",
-                "fontSize": -1
-            }
-        ]
-    },
-    {
-        "comment": "CPU name",
-        "visible": false,
-        "dimension": [ 0, 6, 4, 7 ],
-        "margin": [ 10, 5 ],
-        "innerMargin": [ 0, 1 ],
-        "gridSize": [ 1, 1 ],
-        "img": null,
-        "color": [ 255, 255, 255, 150 ],
-        "objects": [
-            {
+                "id": 10000,
                 "position": [ 0, 0 ],
-                "alignment": "center",
+                "alignment": "left",
                 "type": "label",
-                "color": "GRAY",
-                "text": "CPU Lv.17",
+                "color": [ "GRAY", "BLACK"],
+                "text": "MULTI PLAY",
+                "fontSize": 0
+            },
+            {
+                "id": 10001,
+                "position": [ 8, 0 ],
+                "alignment": "right_bottom",
+                "type": "label",
+                "color": [ "YELLOW", "BLACK"],
+                "text": "ROYAL",
+                "fontSize": -1
+            },
+            {
+                "id": 10002,
+                "link": 999,
+                "position": [ 9, 0 ],
+                "alignment": "right_bottom",
+                "type": "button",
+                "color": [ "GRAY", "BLACK"],
+                "text": "MAP-3",
                 "fontSize": -1
             }
         ]
@@ -52,7 +51,7 @@
     {
         "id": 200,
         "comment": "my touch bars",
-        "dimension": [ 5, 6, 9, 7 ],
+        "dimension": [ 5, 12, 9, 14 ],
         "margin": [ 10, 5 ],
         "innerMargin": [ 0, 0 ],
         "gridSize": [ 1, 1 ],
@@ -73,7 +72,7 @@
         "comment": "cpu 1",
         "id": 21,
         "visible": true,
-        "dimension": [ 0, 0, 2, 3 ],
+        "dimension": [ 0, 1, 2, 7 ],
         "margin": [ 5, 5 ],
         "innerMargin": [ 0, 1 ],
         "gridSize": [ 1, 20 ],
@@ -135,7 +134,7 @@
         "comment": "cpu 2",
         "id": 31,
         "visible": true,
-        "dimension": [ 2, 0, 4, 3 ],
+        "dimension": [ 2, 1, 4, 7 ],
         "margin": [ 5, 5 ],
         "innerMargin": [ 0, 1 ],
         "gridSize": [ 1, 20 ],
@@ -197,7 +196,7 @@
         "comment": "cpu 3",
         "id": 41,
         "visible": true,
-        "dimension": [ 0, 3, 2, 6 ],
+        "dimension": [ 0, 7, 2, 13 ],
         "margin": [ 5, 5 ],
         "innerMargin": [ 0, 1 ],
         "gridSize": [ 1, 20 ],
@@ -259,7 +258,7 @@
         "comment": "cpu 4",
         "id": 51,
         "visible": true,
-        "dimension": [ 2, 3, 4, 6 ],
+        "dimension": [ 2, 7, 4, 13 ],
         "margin": [ 5, 5 ],
         "innerMargin": [ 0, 1 ],
         "gridSize": [ 1, 20 ],
@@ -382,7 +381,7 @@
     {
       "comment": "my area",
       "id": 1,
-      "dimension": [ 5, 0, 9, 6 ],
+      "dimension": [ 5, 1, 9, 12 ],
       "margin": [ 10, 5 ],
       "innerMargin": [ 0, 1 ],
       "gridSize": [ 1, 20 ],
@@ -445,9 +444,9 @@
     {
       "comment": "skill",
       "id": 100,
-      "dimension": [ 4, 2, 5, 6 ],
+      "dimension": [ 4, 6, 5, 12 ],
       "margin": [ 0, 0 ],
-      "innerMargin": [ 0, 5 ],
+      "innerMargin": [ 0, 2 ],
       "gridSize": [ 1, 3 ],
       "img": null,
       "color": 0,
@@ -485,7 +484,7 @@
         "comment": "for end",
         "id": 99,
         "visible": false,
-        "dimension": [ 0, 0, 9, 7 ],
+        "dimension": [ 0, 0, 9, 14 ],
         "margin": [ 0, 0 ],
         "innerMargin": [ 0, 0 ],
         "gridSize": [ 1, 1 ],
@@ -494,106 +493,11 @@
     {
         "comment": "for effect",
         "id": 0,
-        "dimension": [ 0, 0, 9, 7 ],
+        "dimension": [ 0, 0, 9, 14 ],
         "margin": [ 0, 0 ],
         "innerMargin": [ 0, 0 ],
         "gridSize": [ 1, 1 ],
         "color": 0
-    },
-    {
-        "comment": "for ending",
-        "id": 90,
-        "visible": false,
-        "dimension": [ 0, 0, 9, 7 ],
-        "margin": [ 0, 0 ],
-        "innerMargin": [ 0, 5 ],
-        "gridSize": [ 6, 8 ],
-        "color": 150,
-        "objects": [
-            {
-                "id": 91,
-                "position": [ 0, 0 ],
-                "alignment": "center",
-                "type": "label",
-                "color": ["GRAY", "BLACK"],
-                "bgColor": "BG_MAIN",
-                "text": "1st",
-                "fontSize": -1,
-                "span": [ 5, 1 ]
-            },
-            {
-                "position": [ 0, 1 ],
-                "alignment": "left_bottom",
-                "type": "line",
-                "color": "GRAY",
-                "span": [ 5, 0 ]
-            },
-            {
-                "id": 92,
-                "position": [ 2, 4 ],
-                "alignment": "center",
-                "type": "progressbar",
-                "color": ["BLUE", "GRAY"],
-                "span": [ 1, 0 ],
-                "text": "ROYAL"
-            },
-            {
-                "id": 93,
-                "position": [ 3, 4 ],
-                "alignment": "center",
-                "type": "label",
-                "color": "GREEN",
-                "text": "+150",
-                "fontSize": -1
-            },
-            {
-                "id": 94,
-                "position": [ 2, 3 ],
-                "alignment": "center",
-                "type": "icon_point",
-                "color": "GRAY",
-                "text": "+100",
-                "fontSize": 0
-            },
-            {
-                "id": 95,
-                "position": [ 3, 3 ],
-                "alignment": "center",
-                "type": "icon_heart",
-                "color": "GRAY",
-                "fontSize": 0,
-                "text": "+1"
-            },
-            {
-                "position": [ 2, 6 ],
-                "alignment": "center",
-                "type": "button_rectangle_circle_shadow_2",
-                "link": 999,
-                "color": [ "WHITE", "ORANGE" ],
-                "text": "OK",
-                "span": [1, 0]
-            }
-        ]
-    },
-    {
-        "comment": "for levelup",
-        "dimension": [ 0, 0, 9, 7 ],
-        "margin": [ 0, 0 ],
-        "innerMargin": [ 0, 0 ],
-        "gridSize": [ 1, 1 ],
-        "color": 0,
-        "objects": [
-            {
-                "id": 1000,
-                "visible": false,
-                "position": [ 0, 0 ],
-                "alignment": "center",
-                "type": "label",
-                "color": ["ORANGE", "BLACK"],
-                "text": "BRONZE",
-                "fontSize": -3
-            }
-        ]
     }
   ]
 }

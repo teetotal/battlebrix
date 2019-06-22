@@ -59,14 +59,6 @@ enum ID_NODE {
     ID_NODE_CPU_3 = 41,
     ID_NODE_CPU_4 = 51,
     
-    ID_NODE_ENDING = 90,
-    ID_NODE_ENDING_RANKING,
-    ID_NODE_ENDING_PROGRESSBAR,
-    ID_NODE_ENDING_REWARD,
-    ID_NODE_ENDING_REWARD_POINT,
-    ID_NODE_ENDING_REWARD_HEART,
-    
-    
     ID_NODE_SKILL = 100,
     ID_NODE_SKILL_1,
     ID_NODE_SKILL_2,
@@ -74,7 +66,15 @@ enum ID_NODE {
     
     ID_NODE_CONTROLBAR = 200,
     
-    ID_NODE_LEVELUP = 1000,
+    //for ending
+    ID_NODE_ENDING = 0,
+    ID_NODE_ENDING_RANKING,
+    ID_NODE_ENDING_PROGRESSBAR,
+    ID_NODE_ENDING_REWARD,
+    ID_NODE_ENDING_REWARD_POINT,
+    ID_NODE_ENDING_REWARD_HEART,
+    ID_NODE_LEVELUP = 10,
+    ID_NODE_LEVELUP_GRADE,
 };
 
 //static COLOR_RGB colors[5] = {
@@ -868,44 +868,76 @@ void ScenePlay::onFinish() {
     }
 }
 
-void ScenePlay::onEnd(){
-    int nRanking = mPlayers[_PLAYER_ID_ME].ranking;
-    string szRanking = getRankString(nRanking);
-    
-    battleBrix::rewardData reward = battleBrix::inst()->getReward(nRanking);
-//
-//
-//    string szColor = "GRAY";
-//    string szColorReward = "BLUE";
-//    int reward = 0;
-//
-//    switch(mPlayers[_PLAYER_ID_ME].ranking) {
-//        case 1:
-//            szColor = "RED";
-//            reward = 150;
-//            break;
-//        case 2:
-//            szColor = "ORANGE";
-//            reward = 50;
-//            //            isParticle = true;
-//            break;
-//        case 3:
-//            szColor = "YELLOW";
-//            szColorReward = "GRAY";
-//            reward = 0;
-//            break;
-//        case 4:
-//            reward = -50;
-//            szColorReward = "RED";
-//            break;
-//        case 5:
-//            reward = -150;
-//            szColorReward = "RED";
-//            break;
-//        default:
-//            break;
+void ScenePlay::onEnd()
+{
+    battleBrix::inst()->mLastRanking = mPlayers[_PLAYER_ID_ME].ranking;
+    this->replaceScene(SceneEnding::create());
+}
+//    int nRanking = mPlayers[_PLAYER_ID_ME].ranking;
+//    string szRanking = getRankString(nRanking);
+//    
+//    battleBrix::rewardData reward = battleBrix::inst()->getReward(nRanking);
+//    //    ID_NODE_ENDING = 90,
+//    this->getNodeById(ID_NODE_ENDING)->setVisible(true);
+//    
+//    //    ID_NODE_ENDING_RANKING,
+//    ((Label*)getNodeById(ID_NODE_ENDING_RANKING))->setString(szRanking);
+//    
+//    //    ID_NODE_ENDING_PROGRESSBAR,
+//    ((ui_progressbar*)getNodeById(ID_NODE_ENDING_PROGRESSBAR))->setValue(battleBrix::inst()->getGrowthPercentage());
+//    ((ui_progressbar*)getNodeById(ID_NODE_ENDING_PROGRESSBAR))->setText(battleBrix::inst()->getLevelString());
+//    
+//    //    ID_NODE_ENDING_REWARD,
+//    auto pReward =((Label*)getNodeById(ID_NODE_ENDING_REWARD));
+//    if(reward.growth >= 0) {
+//        pReward->setString("+" + to_string(reward.growth));
+//    } else {
+//        pReward->setString(to_string(reward.growth));
+//        pReward->setColor(ui_wizard_share::inst()->getPalette()->getColor3B("RED_DARK"));
 //    }
-    //    ID_NODE_ENDING = 90,
+//    
+////    pReward->setColor(ui_wizard_share::inst()->getPalette()->getColor3B(szColorReward));
+//    //    ID_NODE_ENDING_REWARD_POINT,
+//    auto pPoint = ((ui_icon*)this->getNodeById(ID_NODE_ENDING_REWARD_POINT));
+//    pPoint->setText((reward.point >= 0) ? "+" + to_string(reward.point) : to_string(reward.point));
+//    
+//    //    ID_NODE_ENDING_REWARD_HEART,
+//    auto pHeart = ((ui_icon*)this->getNodeById(ID_NODE_ENDING_REWARD_HEART));
+//    pHeart->setText((reward.heart >= 0) ? "+" + to_string(reward.heart) : to_string(reward.heart));
+//    
+//    //effect
+//    guiExt::runFlyEffect(this->getNodeById(ID_NODE_ENDING_REWARD)
+//                         , CallFunc::create([=]() {
+//                                if(battleBrix::inst()->applyReward(nRanking)) {
+//                                    //level up
+//                                    auto levelup = this->getNodeById(ID_NODE_LEVELUP);
+//                                    levelup->setVisible(true);
+//                                    guiExt::runScaleEffect(levelup, NULL, 0.8f, true);
+//                                    //auto bg = this->getNodeById(0);
+//                                    auto particle = gui::inst()->createParticle("firework.plist", gui::inst()->getCenter());
+//                                    this->addChild(particle);
+//                                }
+//                                ((ui_progressbar*)getNodeById(ID_NODE_ENDING_PROGRESSBAR))->setValue(battleBrix::inst()->getGrowthPercentage());
+//                                ((ui_progressbar*)getNodeById(ID_NODE_ENDING_PROGRESSBAR))->setText(battleBrix::inst()->getLevelString());
+//                            })
+//                         , 1.f, (reward.growth < 0) ? true : false);
+//    
+//    if(reward.point > 0)
+//        guiExt::runScaleEffect(this->getNodeById(ID_NODE_ENDING_REWARD_POINT));
+//    
+//    if(reward.heart > 0)
+//        guiExt::runScaleEffect(this->getNodeById(ID_NODE_ENDING_REWARD_HEART));
+//}
+
+//====================================================================
+bool SceneEnding::init()
+{
+    this->loadFromJson("ending", "ending.json");
+    
+    int nRanking = battleBrix::inst()->mLastRanking;
+    string szRanking = getRankString(nRanking);
+    battleBrix::rewardData reward = battleBrix::inst()->getReward(nRanking);
+   
     this->getNodeById(ID_NODE_ENDING)->setVisible(true);
     
     //    ID_NODE_ENDING_RANKING,
@@ -924,7 +956,7 @@ void ScenePlay::onEnd(){
         pReward->setColor(ui_wizard_share::inst()->getPalette()->getColor3B("RED_DARK"));
     }
     
-//    pReward->setColor(ui_wizard_share::inst()->getPalette()->getColor3B(szColorReward));
+    //    pReward->setColor(ui_wizard_share::inst()->getPalette()->getColor3B(szColorReward));
     //    ID_NODE_ENDING_REWARD_POINT,
     auto pPoint = ((ui_icon*)this->getNodeById(ID_NODE_ENDING_REWARD_POINT));
     pPoint->setText((reward.point >= 0) ? "+" + to_string(reward.point) : to_string(reward.point));
@@ -936,23 +968,37 @@ void ScenePlay::onEnd(){
     //effect
     guiExt::runFlyEffect(this->getNodeById(ID_NODE_ENDING_REWARD)
                          , CallFunc::create([=]() {
-                                if(battleBrix::inst()->applyReward(nRanking)) {
-                                    //level up
-                                    auto levelup = this->getNodeById(ID_NODE_LEVELUP);
-                                    levelup->setVisible(true);
-                                    guiExt::runScaleEffect(levelup, NULL, 0.8f, true);
-                                    //auto bg = this->getNodeById(0);
-                                    auto particle = gui::inst()->createParticle("firework.plist", gui::inst()->getCenter());
-                                    this->addChild(particle);
-                                }
-                                ((ui_progressbar*)getNodeById(ID_NODE_ENDING_PROGRESSBAR))->setValue(battleBrix::inst()->getGrowthPercentage());
-                                ((ui_progressbar*)getNodeById(ID_NODE_ENDING_PROGRESSBAR))->setText(battleBrix::inst()->getLevelString());
-                            })
+        if(battleBrix::inst()->applyReward(nRanking)) {
+            //level up
+            this->getNodeById(ID_NODE_ENDING)->setVisible(false);
+            
+            auto particle = gui::inst()->createParticle("firework.plist", gui::inst()->getCenter());
+            this->addChild(particle);
+            this->getNodeById(ID_NODE_LEVELUP)->setVisible(true);
+            auto levelup = (Label *)this->getNodeById(ID_NODE_LEVELUP_GRADE);
+            levelup->setString(battleBrix::inst()->getLevelString());
+            guiExt::runScaleEffect(levelup, NULL, .8f, false);
+        }
+        ((ui_progressbar*)getNodeById(ID_NODE_ENDING_PROGRESSBAR))->setValue(battleBrix::inst()->getGrowthPercentage());
+        ((ui_progressbar*)getNodeById(ID_NODE_ENDING_PROGRESSBAR))->setText(battleBrix::inst()->getLevelString());
+    })
                          , 1.f, (reward.growth < 0) ? true : false);
     
     if(reward.point > 0)
-        guiExt::runScaleEffect(this->getNodeById(ID_NODE_ENDING_REWARD_POINT));
+        guiExt::runScaleEffect(this->getNodeById(ID_NODE_ENDING_REWARD_POINT), NULL, .8f);
     
     if(reward.heart > 0)
-        guiExt::runScaleEffect(this->getNodeById(ID_NODE_ENDING_REWARD_HEART));
+        guiExt::runScaleEffect(this->getNodeById(ID_NODE_ENDING_REWARD_HEART), NULL, .8f);
+    return true;
+}
+
+void SceneEnding::callback(Ref* pSender, int from, int link) {
+    switch(link) {
+        case 0:
+            this->replaceScene(SceneMain::create());
+            break;
+        case 1:
+            this->replaceScene(ScenePlay::create());
+            break;
+    }
 }

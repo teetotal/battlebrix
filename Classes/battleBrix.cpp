@@ -105,3 +105,13 @@ const string battleBrix::getLevelString() {
             return "GOD";
     }
 }
+
+bool battleBrix::payForPlay(int point, int heart) {
+    if(mUserData.point < point || mUserData.heart < heart) {
+        return false;
+    }
+    mUserData.point -= point;
+    mUserData.heart -= heart;
+    
+    return true;
+}

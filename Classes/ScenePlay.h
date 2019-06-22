@@ -144,4 +144,19 @@ private:
     
     bool mIsEnd;
 };
+// SceneEnding ==================================
+class SceneEnding : public ui_wizard
+{
+public:
+    static Scene* createScene() {
+        return SceneEnding::create();
+    };
+    virtual bool init();
+    CREATE_FUNC(SceneEnding);
+    
+protected:
+    virtual void callback(Ref* pSender, int from, int link);
+    virtual const string getText(const string& defaultString, int id) { return defaultString; };
+    virtual const float getProgressValue(int id) { return battleBrix::inst()->getProgressValue(id); };
+};
 #endif // __SCENE_PLAY_H__

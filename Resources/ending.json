@@ -1,0 +1,142 @@
+{
+    "background": {
+        "img": null,
+        "bgColor": "BG_MAIN",
+        "tile": {
+            "color": "BG_MAIN_PATTERN",
+            "num": [ 14, 10 ]
+        },
+        "isDrawGrid": false
+    },
+    "nodes": [
+        {
+            "id": 0,
+            "visible": true,
+            "comment": "for ending",
+            "dimension": [ 0, 0, 9, 7 ],
+            "margin": [ 0, 0 ],
+            "innerMargin": [ 5, 5 ],
+            "gridSize": [ 6, 8 ],
+            "color": 150,
+            "objects": [
+                {
+                    "id": 1,
+                    "position": [ 0, 0 ],
+                    "alignment": "center",
+                    "type": "label",
+                    "color": ["GRAY", "BLACK"],
+                    "bgColor": "BLUE",
+                    "text": "1st",
+                    "fontSize": -1,
+                    "span": [ 5, 1 ]
+                },
+                {
+                    "position": [ 0, 1 ],
+                    "alignment": "left_bottom",
+                    "type": "line",
+                    "color": "GRAY",
+                    "span": [ 5, 0 ]
+                },
+                {
+                    "id": 2,
+                    "position": [ 2, 4 ],
+                    "alignment": "center",
+                    "type": "progressbar",
+                    "color": ["BLUE", "GRAY"],
+                    "span": [ 1, 0 ],
+                    "text": "ROYAL"
+                },
+                {
+                    "id": 3,
+                    "position": [ 3, 4 ],
+                    "alignment": "right",
+                    "type": "label",
+                    "color": ["GREEN", "BLACK"],
+                    "text": "+150",
+                    "fontSize": -1
+                },
+                {
+                    "id": 4,
+                    "position": [ 2, 3 ],
+                    "alignment": "center",
+                    "type": "icon_point",
+                    "color": "GRAY",
+                    "text": "+100",
+                    "fontSize": 0
+                },
+                {
+                    "id": 5,
+                    "position": [ 3, 3 ],
+                    "alignment": "center",
+                    "type": "icon_heart",
+                    "color": "GRAY",
+                    "fontSize": 0,
+                    "text": "+1"
+                },
+                {
+                    "position": [ 2, 6 ],
+                    "alignment": "center",
+                    "type": "button_rectangle_circle_shadow_2",
+                    "link": 1,
+                    "color": [ "GRAY", "YELLOW" ],
+                    "text": "AGAIN"
+                },
+                {
+                    "position": [ 3, 6 ],
+                    "alignment": "center",
+                    "type": "button_rectangle_circle_shadow_2",
+                    "link": 0,
+                    "color": [ "GRAY", "BLUE" ],
+                    "text": "OK"
+                }
+            ]
+        },
+        {
+            "id": 10,
+            "visible": false,
+            "comment": "for levelup",
+            "dimension": [ 0, 0, 9, 7 ],
+            "margin": [ 0, 0 ],
+            "innerMargin": [ 5, 5 ],
+            "gridSize": [ 6, 8 ],
+            "color": 150,
+            "objects": [
+                {
+                    "position": [ 2, 1 ],
+                    "alignment": "center",
+                    "type": "label",
+                    "color": ["PINK", "BLACK"],
+                    "text": "LEVEL UP",
+                    "fontSize": -1,
+                    "span": [1,1]
+                },
+                {
+                    "id": 11,
+                    "position": [ 2, 3 ],
+                    "alignment": "center_top",
+                    "type": "label",
+                    "color": ["YELLOW", "BLACK"],
+                    "text": "BRONZE",
+                    "fontSize": 0,
+                    "span": [1,0]
+                },
+                {
+                    "position": [ 2, 6 ],
+                    "alignment": "center",
+                    "type": "button_rectangle_circle_shadow_2",
+                    "link": 1,
+                    "color": [ "GRAY", "YELLOW" ],
+                    "text": "AGAIN"
+                },
+                {
+                    "position": [ 3, 6 ],
+                    "alignment": "center",
+                    "type": "button_rectangle_circle_shadow_2",
+                    "link": 0,
+                    "color": [ "GRAY", "BLUE" ],
+                    "text": "OK"
+                }
+            ]
+        }
+    ]
+}

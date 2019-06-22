@@ -58,7 +58,7 @@
 		4D1BB95B228FA34800F51D57 /* icons8-alarm-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D1BB940228FA34800F51D57 /* icons8-alarm-100.png */; };
 		4D1BB95F228FC9D500F51D57 /* ui_progressbar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D1BB95D228FC9D500F51D57 /* ui_progressbar.cpp */; };
 		4D2563252294FDE400421986 /* ui_roulette.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D2563222294FDE300421986 /* ui_roulette.cpp */; };
-		4D2563272295012D00421986 /* roulette.json in Resources */ = {isa = PBXBuildFile; fileRef = 4D2563262295012D00421986 /* roulette.json */; };
+		4D2563272295012D00421986 /* ending.json in Resources */ = {isa = PBXBuildFile; fileRef = 4D2563262295012D00421986 /* ending.json */; };
 		4D45F6D622BD310300977CC1 /* icons8-snail-80.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D45F6D522BD310200977CC1 /* icons8-snail-80.png */; };
 		4D480991227A9E370046472F /* ui_cultivation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D48098A227A9E360046472F /* ui_cultivation.cpp */; };
 		4D480992227A9E370046472F /* ui_wizard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D48098B227A9E370046472F /* ui_wizard.cpp */; };
@@ -220,7 +220,7 @@
 		4D1BB95E228FC9D500F51D57 /* ui_progressbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ui_progressbar.h; path = ../../library/ui/ui_progressbar.h; sourceTree = "<group>"; };
 		4D2563222294FDE300421986 /* ui_roulette.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ui_roulette.cpp; path = ../../library/ui/ui_roulette.cpp; sourceTree = "<group>"; };
 		4D2563242294FDE400421986 /* ui_roulette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ui_roulette.h; path = ../../library/ui/ui_roulette.h; sourceTree = "<group>"; };
-		4D2563262295012D00421986 /* roulette.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = roulette.json; sourceTree = "<group>"; };
+		4D2563262295012D00421986 /* ending.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ending.json; sourceTree = "<group>"; };
 		4D2563282295032200421986 /* ui_deco.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ui_deco.h; path = ../../library/ui/ui_deco.h; sourceTree = "<group>"; };
 		4D45F6D522BD310200977CC1 /* icons8-snail-80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-snail-80.png"; sourceTree = "<group>"; };
 		4D48098A227A9E360046472F /* ui_cultivation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ui_cultivation.cpp; path = ../../library/ui/ui_cultivation.cpp; sourceTree = "<group>"; };
@@ -430,13 +430,13 @@
 				4D68FA78229CEE0C00900F5E /* icons8-atomic-bomb-96.png */,
 				4D68FA7B229CEE0C00900F5E /* icons8-hyper-potion-96.png */,
 				4D68FA7A229CEE0C00900F5E /* icons8-synchronize-480.png */,
-				4D2563262295012D00421986 /* roulette.json */,
 				4DAA62772293E1BB00E25318 /* icons8-checkmark2-480.png */,
 				4DAA62752293E13100E25318 /* icons8-ok-480.png */,
 				4DAA62722293DFBF00E25318 /* icons8-checkmark-480.png */,
 				4DAD0ACB22928A410042F1E6 /* icons8-heart-outline-80.png */,
 				4D4EDBD4229160B400F375BF /* icons8-defense-80.png */,
 				4D4809B1227AA4070046472F /* palette.json */,
+				4D2563262295012D00421986 /* ending.json */,
 				4DB682AC228AC490007A1E22 /* shop.json */,
 				4D7EFBF7227C22A300E19181 /* play.json */,
 				4D4809B2227AA4070046472F /* main.json */,
@@ -687,7 +687,7 @@
 				4D1BB911228FA27000F51D57 /* .gitkeep in Resources */,
 				4D4EDBD022915B0200F375BF /* Daeko_400.png in Resources */,
 				4D1BB944228FA34800F51D57 /* icons8-shopping-bag-100.png in Resources */,
-				4D2563272295012D00421986 /* roulette.json in Resources */,
+				4D2563272295012D00421986 /* ending.json in Resources */,
 				4D1BB959228FA34800F51D57 /* icons8-leaderboard-filled-100.png in Resources */,
 				4D1BB957228FA34800F51D57 /* icons8-expensive-price-80.png in Resources */,
 				4D1BB948228FA34800F51D57 /* icons8-shopping-cart-filled-100.png in Resources */,
