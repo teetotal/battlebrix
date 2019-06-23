@@ -69,7 +69,7 @@ enum ID_NODE {
     //for ending
     ID_NODE_ENDING = 10000,
     ID_NODE_ENDING_RANKING,
-    ID_NODE_ENDING_PROGRESSBAR, //?
+    ID_NODE_ENDING_AGAIN,
     ID_NODE_ENDING_REWARD,
     ID_NODE_ENDING_REWARD_POINT,
     ID_NODE_ENDING_REWARD_HEART,
@@ -938,15 +938,9 @@ bool SceneEnding::init()
     int nRanking = battleBrix::inst()->mLastRanking;
     string szRanking = getRankString(nRanking);
     battleBrix::rewardData reward = battleBrix::inst()->getReward(nRanking);
-   
-    this->getNodeById(ID_NODE_ENDING)->setVisible(true);
     
     //    ID_NODE_ENDING_RANKING,
     ((Label*)getNodeById(ID_NODE_ENDING_RANKING))->setString(szRanking);
-    
-    //    ID_NODE_ENDING_PROGRESSBAR,
-//    ((ui_progressbar*)getNodeById(ID_NODE_ENDING_PROGRESSBAR))->setValue(battleBrix::inst()->getGrowthPercentage());
-//    ((ui_progressbar*)getNodeById(ID_NODE_ENDING_PROGRESSBAR))->setText(battleBrix::inst()->getLevelString());
     
     //    ID_NODE_ENDING_REWARD,
     auto pReward =((Label*)getNodeById(ID_NODE_ENDING_REWARD));
@@ -958,6 +952,7 @@ bool SceneEnding::init()
     }
     
     //    pReward->setColor(ui_wizard_share::inst()->getPalette()->getColor3B(szColorReward));
+    
     //    ID_NODE_ENDING_REWARD_POINT,
     auto pPoint = ((Label*)this->getNodeById(ID_NODE_ENDING_REWARD_POINT));
     pPoint->setString((reward.point >= 0) ? "+" + to_string(reward.point) : to_string(reward.point));
@@ -966,11 +961,17 @@ bool SceneEnding::init()
     auto pHeart = ((Label*)this->getNodeById(ID_NODE_ENDING_REWARD_HEART));
     pHeart->setString((reward.heart >= 0) ? "+" + to_string(reward.heart) : to_string(reward.heart));
     
+    bool isLevelup = battleBrix::inst()->applyReward(nRanking);
+    //다시하기 활성화 체크
+    if(!battleBrix::inst()->checkPayForPlay(battleBrix::inst()->mItemSelected.getTotalPoint())) {
+        ((ui_button*)getNodeById(ID_NODE_ENDING_AGAIN))->setEnabled(false);
+    }
+    
     //effect
     guiExt::runFlyEffect(this->getNodeById(ID_NODE_ENDING_REWARD)
                          , CallFunc::create([=]()
                                             {
-                                                if(battleBrix::inst()->applyReward(nRanking)) {
+                                                if(isLevelup) {
                                                     //level up
                                                     this->getNodeById(ID_NODE_ENDING)->setVisible(false);
                                                     this->getNodeById(0)->addChild(gui::inst()->createParticle("firework.plist", gui::inst()->getCenter()));
@@ -1014,7 +1015,21 @@ void SceneEnding::callback(Ref* pSender, int from, int link) {
             this->replaceScene(SceneMain::create());
             break;
         case 1:
-            this->replaceScene(ScenePlay::create());
+            onAgain();
             break;
     }
+}
+
+void SceneEnding::onAgain() {
+    if(battleBrix::inst()->payForPlay(battleBrix::inst()->mItemSelected.getTotalPoint())) {
+        ((ui_icon*)this->getNodeById(_ID_NODE_LABEL_POINT))->setText(battleBrix::inst()->getText("", _ID_NODE_LABEL_POINT));
+        ((ui_icon*)this->getNodeById(_ID_NODE_LABEL_HEART))->setText(battleBrix::inst()->getText("", _ID_NODE_LABEL_HEART));
+        guiExt::runScaleEffect(this->getNodeById(_ID_NODE_LABEL_POINT));
+        guiExt::runScaleEffect(this->getNodeById(_ID_NODE_LABEL_HEART), CallFunc::create([=](){
+            this->replaceScene(ScenePlay::create());
+        }));
+    } else {
+        //alert
+    }
+    
 }

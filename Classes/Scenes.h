@@ -78,25 +78,25 @@ private:
     void sumPrice();
     void runPlay();
     
-    struct itemSelected {
-        // 선택된 아이템
-        bool mItemSelected[3];
-        
-        itemSelected() {
-            for(int n=0; n<3; n++) {
-                mItemSelected[n] = true;
-            }
-        };
-        
-        int getTotalPoint() {
-            int total = 0;
-            for(int n=0; n<3; n++) {
-                if(mItemSelected[n])
-                    total += battleBrix::inst()->mItems[n].price;
-            }
-            return total;
-        };
-    } mItemSelected;
+//    struct itemSelected {
+//        // 선택된 아이템
+//        bool mItemSelected[3];
+//        
+//        itemSelected() {
+//            for(int n=0; n<3; n++) {
+//                mItemSelected[n] = true;
+//            }
+//        };
+//        
+//        int getTotalPoint() {
+//            int total = 0;
+//            for(int n=0; n<3; n++) {
+//                if(mItemSelected[n])
+//                    total += battleBrix::inst()->mItems[n].price;
+//            }
+//            return total;
+//        };
+//    } mItemSelected;
    
 };
 // SceneDaily ==================================

@@ -31,6 +31,7 @@ public:
     };
     void init();
     
+    //user data
     struct userData {
         int win;
         int lose;
@@ -52,7 +53,7 @@ public:
         , grade(0)
         , heart(50)
         , heartMax(8)
-        , point(15000)
+        , point(350)
         , maxGrowth(128)
         , growth(10)
         {
@@ -61,6 +62,7 @@ public:
         
     } mUserData;
     
+    // reward meta
     struct rewardData {
         int growth;
         int point;
@@ -73,6 +75,7 @@ public:
         }
     };
     
+    // item meta
     struct itemData {
         int price;
         string img;
@@ -84,6 +87,26 @@ public:
             this->img = img;
         };
     };
+    
+    // selected
+    struct itemSelected {
+        bool isSelected[3];
+        
+        itemSelected() {
+            for(int n=0; n<3; n++) {
+                isSelected[n] = true;
+            }
+        };
+        
+        int getTotalPoint() {
+            int total = 0;
+            for(int n=0; n<3; n++) {
+                if(isSelected[n])
+                    total += battleBrix::inst()->mItems[n].price;
+            }
+            return total;
+        };
+    } mItemSelected;
     
     const string getText(const string& defaultString, int id);
     const float getProgressValue(int id);
@@ -97,6 +120,7 @@ public:
     const string getLevelString();
     //play 비용
     bool payForPlay(int point, int heart = 1);
+    bool checkPayForPlay(int point, int heart = 1);
     
     rewardData mRewards[6];
     itemData mItems[3];

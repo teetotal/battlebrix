@@ -107,11 +107,18 @@ const string battleBrix::getLevelString() {
 }
 
 bool battleBrix::payForPlay(int point, int heart) {
-    if(mUserData.point < point || mUserData.heart < heart) {
+    if(!checkPayForPlay(point, heart))
         return false;
-    }
+    
     mUserData.point -= point;
     mUserData.heart -= heart;
     
+    return true;
+}
+
+bool battleBrix::checkPayForPlay(int point, int heart) {
+    if(mUserData.point < point || mUserData.heart < heart) {
+        return false;
+    }
     return true;
 }
