@@ -156,7 +156,7 @@ public:
     
 protected:
     virtual void callback(Ref* pSender, int from, int link);
-    virtual const string getText(const string& defaultString, int id) { return defaultString; };
+    virtual const string getText(const string& defaultString, int id) { return battleBrix::inst()->getText(defaultString, id); };
     virtual const float getProgressValue(int id) { return battleBrix::inst()->getProgressValue(id); };
 };
 #endif // __SCENE_PLAY_H__

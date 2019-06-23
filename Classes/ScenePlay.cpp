@@ -67,13 +67,14 @@ enum ID_NODE {
     ID_NODE_CONTROLBAR = 200,
     
     //for ending
-    ID_NODE_ENDING = 0,
+    ID_NODE_ENDING = 10000,
     ID_NODE_ENDING_RANKING,
-    ID_NODE_ENDING_PROGRESSBAR,
+    ID_NODE_ENDING_PROGRESSBAR, //?
     ID_NODE_ENDING_REWARD,
     ID_NODE_ENDING_REWARD_POINT,
     ID_NODE_ENDING_REWARD_HEART,
-    ID_NODE_LEVELUP = 10,
+    ID_NODE_LEVELUP = 20000,
+    ID_NODE_LEVELUP_LABEL,
     ID_NODE_LEVELUP_GRADE,
 };
 
@@ -944,8 +945,8 @@ bool SceneEnding::init()
     ((Label*)getNodeById(ID_NODE_ENDING_RANKING))->setString(szRanking);
     
     //    ID_NODE_ENDING_PROGRESSBAR,
-    ((ui_progressbar*)getNodeById(ID_NODE_ENDING_PROGRESSBAR))->setValue(battleBrix::inst()->getGrowthPercentage());
-    ((ui_progressbar*)getNodeById(ID_NODE_ENDING_PROGRESSBAR))->setText(battleBrix::inst()->getLevelString());
+//    ((ui_progressbar*)getNodeById(ID_NODE_ENDING_PROGRESSBAR))->setValue(battleBrix::inst()->getGrowthPercentage());
+//    ((ui_progressbar*)getNodeById(ID_NODE_ENDING_PROGRESSBAR))->setText(battleBrix::inst()->getLevelString());
     
     //    ID_NODE_ENDING_REWARD,
     auto pReward =((Label*)getNodeById(ID_NODE_ENDING_REWARD));
@@ -958,37 +959,52 @@ bool SceneEnding::init()
     
     //    pReward->setColor(ui_wizard_share::inst()->getPalette()->getColor3B(szColorReward));
     //    ID_NODE_ENDING_REWARD_POINT,
-    auto pPoint = ((ui_icon*)this->getNodeById(ID_NODE_ENDING_REWARD_POINT));
-    pPoint->setText((reward.point >= 0) ? "+" + to_string(reward.point) : to_string(reward.point));
+    auto pPoint = ((Label*)this->getNodeById(ID_NODE_ENDING_REWARD_POINT));
+    pPoint->setString((reward.point >= 0) ? "+" + to_string(reward.point) : to_string(reward.point));
     
     //    ID_NODE_ENDING_REWARD_HEART,
-    auto pHeart = ((ui_icon*)this->getNodeById(ID_NODE_ENDING_REWARD_HEART));
-    pHeart->setText((reward.heart >= 0) ? "+" + to_string(reward.heart) : to_string(reward.heart));
+    auto pHeart = ((Label*)this->getNodeById(ID_NODE_ENDING_REWARD_HEART));
+    pHeart->setString((reward.heart >= 0) ? "+" + to_string(reward.heart) : to_string(reward.heart));
     
     //effect
     guiExt::runFlyEffect(this->getNodeById(ID_NODE_ENDING_REWARD)
-                         , CallFunc::create([=]() {
-        if(battleBrix::inst()->applyReward(nRanking)) {
-            //level up
-            this->getNodeById(ID_NODE_ENDING)->setVisible(false);
-            
-            auto particle = gui::inst()->createParticle("firework.plist", gui::inst()->getCenter());
-            this->addChild(particle);
-            this->getNodeById(ID_NODE_LEVELUP)->setVisible(true);
-            auto levelup = (Label *)this->getNodeById(ID_NODE_LEVELUP_GRADE);
-            levelup->setString(battleBrix::inst()->getLevelString());
-            guiExt::runScaleEffect(levelup, NULL, .8f, false);
-        }
-        ((ui_progressbar*)getNodeById(ID_NODE_ENDING_PROGRESSBAR))->setValue(battleBrix::inst()->getGrowthPercentage());
-        ((ui_progressbar*)getNodeById(ID_NODE_ENDING_PROGRESSBAR))->setText(battleBrix::inst()->getLevelString());
-    })
+                         , CallFunc::create([=]()
+                                            {
+                                                if(battleBrix::inst()->applyReward(nRanking)) {
+                                                    //level up
+                                                    this->getNodeById(ID_NODE_ENDING)->setVisible(false);
+                                                    this->getNodeById(0)->addChild(gui::inst()->createParticle("firework.plist", gui::inst()->getCenter()));
+                                                    this->getNodeById(ID_NODE_LEVELUP)->setVisible(true);
+                                                    auto levelGrade = (Label *)this->getNodeById(ID_NODE_LEVELUP_GRADE);
+                                                    levelGrade->setString(battleBrix::inst()->getLevelString());
+                                                    guiExt::runScaleEffect(this->getNodeById(ID_NODE_LEVELUP_LABEL), CallFunc::create([=]() {
+                                                        guiExt::runScaleEffect(levelGrade, CallFunc::create([=]() {
+                                                            this->getNodeById(ID_NODE_LEVELUP)->setVisible(false);
+                                                            this->getNodeById(ID_NODE_ENDING)->setVisible(true);
+                                                        }), .6f, false);
+                                                    }), .3f, false);
+                                                }
+                                                // progressbar
+                                                ((ui_progressbar*)getNodeById(_ID_NODE_PROGRESSBAR))->setValue(battleBrix::inst()->getGrowthPercentage());
+                                                ((ui_progressbar*)getNodeById(_ID_NODE_PROGRESSBAR))->setText(battleBrix::inst()->getLevelString());
+                                            })
                          , 1.f, (reward.growth < 0) ? true : false);
     
-    if(reward.point > 0)
-        guiExt::runScaleEffect(this->getNodeById(ID_NODE_ENDING_REWARD_POINT), NULL, .8f);
+    if(reward.point > 0) {
+        this->getNodeById(ID_NODE_ENDING_REWARD_POINT)->setVisible(true);
+        guiExt::runFlyEffect(this->getNodeById(ID_NODE_ENDING_REWARD_POINT)
+                             , CallFunc::create([=]() {
+            ((ui_icon*)this->getNodeById(_ID_NODE_LABEL_POINT))->setText(battleBrix::inst()->getText("", _ID_NODE_LABEL_POINT));
+                                }), 1.2f);
+    }
     
-    if(reward.heart > 0)
-        guiExt::runScaleEffect(this->getNodeById(ID_NODE_ENDING_REWARD_HEART), NULL, .8f);
+    if(reward.heart > 0) {
+        this->getNodeById(ID_NODE_ENDING_REWARD_HEART)->setVisible(true);
+        guiExt::runFlyEffect(this->getNodeById(ID_NODE_ENDING_REWARD_HEART)
+                             , CallFunc::create([=]() {
+            ((ui_icon*)this->getNodeById(_ID_NODE_LABEL_HEART))->setText(battleBrix::inst()->getText("", _ID_NODE_LABEL_HEART));
+        }), 1.2f);
+    }
     return true;
 }
 

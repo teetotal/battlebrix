@@ -155,8 +155,8 @@ void SceneMain::runPlay() {
         
         ((ui_icon*)getNodeById(_ID_NODE_LABEL_HEART))->setText(battleBrix::inst()->getText("", _ID_NODE_LABEL_HEART));
         guiExt::runScaleEffect(getNodeById(_ID_NODE_LABEL_HEART), CallFunc::create([=]() {
-            this->replaceScene(ScenePlay::create());
-//            this->replaceScene(SceneEnding::create());
+//            this->replaceScene(ScenePlay::create());
+            this->replaceScene(SceneEnding::create());
         } ));
     }
 }

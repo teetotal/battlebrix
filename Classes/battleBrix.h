@@ -22,7 +22,7 @@ enum _ID_NODE {
 
 class battleBrix {
 public:
-    battleBrix() {};
+    battleBrix() : mLastRanking(1) {};
     virtual ~battleBrix() {};
     static battleBrix * inst() {
       if(hInstance == NULL)
@@ -45,7 +45,17 @@ public:
         int growth;
         string id;
         
-        userData() : win(0), lose(0), ranking(532340), level(1), grade(0), heart(50), heartMax(8), point(15000), maxGrowth(128), growth(10) {
+        userData() : win(0)
+        , lose(0)
+        , ranking(532340)
+        , level(1)
+        , grade(0)
+        , heart(50)
+        , heartMax(8)
+        , point(15000)
+        , maxGrowth(128)
+        , growth(10)
+        {
             id = "teetotal";
         };
         
