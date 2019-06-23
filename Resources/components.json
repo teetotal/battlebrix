@@ -186,7 +186,7 @@
                 "alignment": "center_bottom",
                 "type": "label",
                 "color": "BLACK",
-                "text": "x1,000",
+                "text": "x10,000",
                 "fontSize": -1
             },
             {
@@ -194,9 +194,8 @@
                 "position": [ 0, 2 ],
                 "span": [0, 1],
                 "alignment": "center",
-                "type": "icon_circle",
-                "color": "YELLOW",
-                "text": "P"
+                "type": "icon_point",
+                "color": "YELLOW"
             },
             {
                 "id": 3,
@@ -246,9 +245,8 @@
                 "position": [ 0, 2 ],
                 "span": [0, 1],
                 "alignment": "center",
-                "type": "icon_circle",
-                "color": "YELLOW",
-                "text": "P"
+                "type": "icon_point",
+                "color": "YELLOW"
             },
             {
                 "id": 3,
@@ -261,7 +259,7 @@
             }
         ]
     },
-    "shop_item": {
+    "shop_heart_ad": {
         "dimension": [ 0, 0, 1, 1 ],
         "margin": [ 0, 0 ],
         "innerMargin": [ 2, 4 ],
@@ -276,7 +274,7 @@
                 "type": "label",
                 "color": [ "GRAY", "BLACK"],
                 "bgColor": "BLUE_DARK",
-                "text": "ITEM",
+                "text": "HEART",
                 "fontSize": 0
             },
             {
@@ -291,7 +289,7 @@
                 "alignment": "center_bottom",
                 "type": "label",
                 "color": "BLACK",
-                "text": "Bomb Attack",
+                "text": "x1",
                 "fontSize": -1
             },
             {
@@ -299,16 +297,66 @@
                 "position": [ 0, 2 ],
                 "span": [0, 1],
                 "alignment": "center",
-                "type": "sprite",
-                "img": "icons8-atomic-bomb-96.png"
+                "type": "icon_heart"
             },
             {
                 "id": 3,
                 "position": [ 0, 4 ],
                 "alignment": "center",
                 "type": "button_rectangle_round_shadow",
-                "color": [ "WHITE", "YELLOW" ],
-                "text": "P100"
+                "color": [ "WHITE", "GREEN" ],
+                "img": "icons8-video-100.png"
+            }
+        ]
+    },
+    "shop_heart": {
+        "dimension": [ 0, 0, 1, 1 ],
+        "margin": [ 0, 0 ],
+        "innerMargin": [ 2, 4 ],
+        "gridSize": [ 1, 5 ],
+        "img": null,
+        "color": "GRAY",
+        "objects": [
+            {
+                "id": 1,
+                "position": [ 0, 0 ],
+                "alignment": "center",
+                "type": "label",
+                "color": [ "GRAY", "BLACK"],
+                "bgColor": "BLUE_DARK",
+                "text": "HEART",
+                "fontSize": 0
+            },
+            {
+                "position": [ 0, 0 ],
+                "alignment": "left_bottom",
+                "type": "line",
+                "color": "BLUE_LIGHT"
+            },
+            {
+                "id": 1,
+                "position": [ 0, 1 ],
+                "alignment": "center_bottom",
+                "type": "label",
+                "color": "BLACK",
+                "text": "x10",
+                "fontSize": -1
+            },
+            {
+                "id": 2,
+                "position": [ 0, 2 ],
+                "span": [0, 1],
+                "alignment": "center",
+                "type": "icon_heart"
+            },
+            {
+                "id": 3,
+                "position": [ 0, 4 ],
+                "alignment": "center",
+                "type": "button_rectangle_round_shadow",
+                "color": [ "WHITE", "GREEN" ],
+                "text": "₩5,000",
+                "fontSize": 0
             }
         ]
     },

@@ -96,7 +96,7 @@
                 "type": "label",
                 "color": [ "GRAY", "BLACK" ],
                 "bgColor": "BLUE_DARK",
-                "text": "LEAGUE MODE",
+                "text": "MULTI PLAY",
                 "fontSize": 0
             },
             {

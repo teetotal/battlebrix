@@ -13,9 +13,9 @@ battleBrix * battleBrix::hInstance = NULL;
 #define GROWTH_PER_LEVEL 128
 
 void battleBrix::init() {
-    mRewards[1].init(GROWTH_PER_LEVEL / 2, 100, 1);
-    mRewards[2].init(GROWTH_PER_LEVEL / 4, 50, 1);
-    mRewards[3].init(GROWTH_PER_LEVEL / 8, 0, 0);
+    mRewards[1].init(GROWTH_PER_LEVEL / 2, 500, 2);
+    mRewards[2].init(GROWTH_PER_LEVEL / 4, 350, 2);
+    mRewards[3].init(GROWTH_PER_LEVEL / 8, 350, 1);
     mRewards[4].init(0, 0, 0);
     mRewards[5].init(GROWTH_PER_LEVEL / 4 * -1, 0, 0);
     

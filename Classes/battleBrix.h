@@ -20,6 +20,8 @@ enum _ID_NODE {
     _ID_NODE_LABEL_RANKING = 17,
 };
 
+#define PLAY_ITEM_CNT 3
+
 class battleBrix {
 public:
     battleBrix() : mLastRanking(1) {};
@@ -53,7 +55,7 @@ public:
         , grade(0)
         , heart(50)
         , heartMax(8)
-        , point(350)
+        , point(5000)
         , maxGrowth(128)
         , growth(10)
         {
@@ -90,17 +92,17 @@ public:
     
     // selected
     struct itemSelected {
-        bool isSelected[3];
+        bool isSelected[PLAY_ITEM_CNT];
         
         itemSelected() {
-            for(int n=0; n<3; n++) {
+            for(int n = 0; n < PLAY_ITEM_CNT; n++) {
                 isSelected[n] = true;
             }
         };
         
         int getTotalPoint() {
             int total = 0;
-            for(int n=0; n<3; n++) {
+            for(int n = 0; n < PLAY_ITEM_CNT; n++) {
                 if(isSelected[n])
                     total += battleBrix::inst()->mItems[n].price;
             }

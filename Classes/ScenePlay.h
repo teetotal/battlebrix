@@ -144,6 +144,8 @@ private:
     
     bool mIsEnd;
 };
+
+
 // SceneEnding ==================================
 class SceneEnding : public ui_wizard
 {

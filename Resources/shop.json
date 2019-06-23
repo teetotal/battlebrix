@@ -90,10 +90,10 @@
         "comment": "scrollview",
         "id": -1,
         "dimension": [ 0, 1, 9, 6 ],
-        "dimensionInner": [ 0, 1, 16, 6 ],
+        "dimensionInner": [ 0, 1, 9, 6 ],
         "margin": [ 15, 15 ],
         "innerMargin": [ 5, 10 ],
-        "gridSize": [ 6, 1 ],
+        "gridSize": [ 4, 1 ],
         "img": null,
         "color": "BLUE",
         "objects": [
@@ -113,19 +113,13 @@
                 "id": 1001,
                 "position": [ 2, 0 ],
                 "type": "component",
-                "component": "shop_item"
+                "component": "shop_heart_ad"
             },
             {
                 "id": 1002,
                 "position": [ 3, 0 ],
                 "type": "component",
-                "component": "shop_item"
-            },
-            {
-                "id": -1,
-                "position": [ 4, 0 ],
-                "type": "component",
-                "component": "shop_item"
+                "component": "shop_heart"
             }
         ]
     }

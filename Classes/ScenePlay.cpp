@@ -66,6 +66,11 @@ enum ID_NODE {
     
     ID_NODE_CONTROLBAR = 200,
     
+    //top
+    ID_NODE_TOP_TYPE = 300, // multi play or 1 on 1
+    ID_NODE_TOP_GRADE,
+    ID_NODE_TOP_MAP_TYPE,
+    
     //for ending
     ID_NODE_ENDING = 10000,
     ID_NODE_ENDING_RANKING,
@@ -91,12 +96,22 @@ void ScenePlay::PLAYER::init(ScenePlay* p, const string& name, int layerId, int 
     pScene = p;
     this->ballId = ballId;
     
-    if(p->mBrixLayerRatio == -1.f)
-        layer = p->getNodeById(layerId);
-    else {
-        auto pLayer = p->getNodeById(layerId);
-        layer = gui::inst()->createLayout(Size(pLayer->getContentSize().height * p->mBrixLayerRatio, pLayer->getContentSize().height), "", false, Color3B::MAGENTA);
-        pLayer->addChild(layer);
+    
+    //layer 비율을 똑같이 맞출것인가
+//    if(p->mBrixLayerRatio == -1.f)
+//        layer = p->getNodeById(layerId);
+//    else {
+//        auto pLayer = p->getNodeById(layerId);
+//        layer = gui::inst()->createLayout(Size(pLayer->getContentSize().height * p->mBrixLayerRatio, pLayer->getContentSize().height), "", false, Color3B::MAGENTA);
+//        pLayer->addChild(layer);
+//    }
+    layer = p->getNodeById(layerId);
+    
+    //enable skill
+    for(int n = 0; n < PLAY_ITEM_CNT; n++) {
+        if(!battleBrix::inst()->mItemSelected.isSelected[n])
+            ((ui_icon*)p->getNodeById(ID_NODE_SKILL_1 + n))->setEnabled(false);
+            
     }
     
     hp = (ui_progressbar*)p->getNodeById(hpId);
@@ -632,6 +647,12 @@ bool ScenePlay::init()
     
     int fnId = getRandValue(5);
     
+    // grade
+    ((Label*)getNodeById(ID_NODE_TOP_GRADE))->setString(battleBrix::inst()->getLevelString());
+    // map type
+    ((MenuItemLabel*)getNodeById(ID_NODE_TOP_MAP_TYPE))->setString("MAP-"
+                                                        +to_string(fnId));
+    
     PLAYER me;
     me.init(this, "ME", ID_NODE_MY_AREA, ID_NODE_MY_HP, ID_NODE_MY_MP, _BALL_ID[0], ID_NODE_MY_ALERT, ID_NODE_MY_LABEL, fnId);
     mPlayers.push_back(me);
@@ -934,6 +955,9 @@ void ScenePlay::onEnd()
 bool SceneEnding::init()
 {
     this->loadFromJson("ending", "ending.json");
+    //init bold
+    ((Label*)this->getNodeById(ID_NODE_LEVELUP_LABEL))->enableBold();
+    ((Label*)this->getNodeById(ID_NODE_LEVELUP_GRADE))->enableBold();
     
     int nRanking = battleBrix::inst()->mLastRanking;
     string szRanking = getRankString(nRanking);
@@ -996,7 +1020,7 @@ bool SceneEnding::init()
         guiExt::runFlyEffect(this->getNodeById(ID_NODE_ENDING_REWARD_POINT)
                              , CallFunc::create([=]() {
             ((ui_icon*)this->getNodeById(_ID_NODE_LABEL_POINT))->setText(battleBrix::inst()->getText("", _ID_NODE_LABEL_POINT));
-                                }), 1.2f);
+        }), 1.2f);
     }
     
     if(reward.heart > 0) {

@@ -19,7 +19,7 @@
         "color": "BG_TOP",
         "objects": [
             {
-                "id": 10000,
+                "id": 300,
                 "position": [ 0, 0 ],
                 "alignment": "left",
                 "type": "label",
@@ -28,7 +28,7 @@
                 "fontSize": 0
             },
             {
-                "id": 10001,
+                "id": 301,
                 "position": [ 8, 0 ],
                 "alignment": "right_bottom",
                 "type": "label",
@@ -37,7 +37,7 @@
                 "fontSize": -1
             },
             {
-                "id": 10002,
+                "id": 302,
                 "link": 999,
                 "position": [ 9, 0 ],
                 "alignment": "right_bottom",

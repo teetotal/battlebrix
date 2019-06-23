@@ -33,7 +33,7 @@ bool SceneMain::init()
     gui::inst()->initDefaultWithSpriteCache("fonts/SDSwaggerTTF.ttf");
 	this->loadFromJson("main", "main.json");
     
-    for(int n=0; n<3; n++) {
+    for(int n = 0; n < PLAY_ITEM_CNT; n++) {
         battleBrix::itemData item = battleBrix::inst()->mItems[n];
         auto sprite = gui::inst()->getSprite(item.img);
         
@@ -120,7 +120,7 @@ const string SceneMain::getText(const string& defaultString, int id) {
 
 void SceneMain::sumPrice() {
     //맘에 안드는 코드일세
-    for(int n=0; n<3; n++) {
+    for(int n = 0; n < PLAY_ITEM_CNT; n++) {
         battleBrix::inst()->mItemSelected.isSelected[n] = false;
         int id = ID_NODE_ITEM_1 + (n * 1000);
         if(((ui_checkbox*)getNodeById(id+1))->isChecked())
@@ -160,8 +160,8 @@ void SceneMain::runPlay() {
         
         ((ui_icon*)getNodeById(_ID_NODE_LABEL_HEART))->setText(battleBrix::inst()->getText("", _ID_NODE_LABEL_HEART));
         guiExt::runScaleEffect(getNodeById(_ID_NODE_LABEL_HEART), CallFunc::create([=]() {
-//            this->replaceScene(ScenePlay::create());
-            this->replaceScene(SceneEnding::create());
+            this->replaceScene(ScenePlay::create());
+//            this->replaceScene(SceneEnding::create());
         } ));
     }
 }

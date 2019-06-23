@@ -57,28 +57,8 @@
                     "fontSize": -1
                 },
                 {
-                    "id": 3,
-                    "position": [ 2, 2 ],
-                    "alignment": "center",
-                    "type": "icon_point",
-                    "color": "GRAY",
-                    "text": "100",
-                    "fontSize": -1,
-                    "span": [ 1, 0 ]
-                },
-                {
-                    "id": 10004,
-                    "visible": false,
-                    "position": [ 2, 2 ],
-                    "alignment": "right",
-                    "type": "label",
-                    "color": [ "BLUE_LIGHT", "BLACK" ],
-                    "text": "+100",
-                    "fontSize": -2
-                },
-                {
                     "id": 4,
-                    "position": [ 2, 3 ],
+                    "position": [ 2, 2 ],
                     "alignment": "center",
                     "type": "icon_heart",
                     "color": "GRAY",
@@ -89,11 +69,31 @@
                 {
                     "id": 10005,
                     "visible": false,
-                    "position": [ 2, 3 ],
+                    "position": [ 2, 2 ],
                     "alignment": "right",
                     "type": "label",
                     "color": [ "BLUE_LIGHT", "BLACK"],
                     "text": "+1",
+                    "fontSize": -2
+                },
+                {
+                    "id": 3,
+                    "position": [ 2, 3 ],
+                    "alignment": "center",
+                    "type": "icon_point",
+                    "color": "GRAY",
+                    "text": "100",
+                    "fontSize": -1,
+                    "span": [ 1, 0 ]
+                },
+                {
+                    "id": 10004,
+                    "visible": false,
+                    "position": [ 2, 3 ],
+                    "alignment": "right",
+                    "type": "label",
+                    "color": [ "BLUE_LIGHT", "BLACK" ],
+                    "text": "+100",
                     "fontSize": -2
                 },
                 {
