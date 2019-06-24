@@ -25,7 +25,6 @@ enum _ID_NODE {
 };
 
 #define PLAY_ITEM_CNT 3
-#define RECHARGE_TIME 300
 
 class battleBrix {
 public:
@@ -53,6 +52,8 @@ public:
         int growth;
         string id;
         
+        int rechargeTime;
+        
         userData() : win(0)
         , lose(0)
         , ranking(532340)
@@ -69,7 +70,7 @@ public:
         };
         
         time_t getRechargeRemainTime() {
-            return RECHARGE_TIME - (getNow() - heartTimerStart);
+            return rechargeTime - (getNow() - heartTimerStart);
         };
         string getRechargeRemainTimeString(){
             if(heart >= heartMax)
@@ -87,9 +88,9 @@ public:
             bool ret = false;
             time_t now = getNow();
             while(heart < heartMax) {
-                if(now - heartTimerStart >= RECHARGE_TIME) {
+                if(now - heartTimerStart >= rechargeTime) {
                     heart++;
-                    heartTimerStart += RECHARGE_TIME;
+                    heartTimerStart += rechargeTime;
                     ret = true;
                 } else {
                     break;
@@ -162,10 +163,12 @@ public:
     bool checkPayForPlay(int point, int heart = 1);
     
     rewardData mRewards[6];
-    itemData mItems[3];
+    itemData mItems[PLAY_ITEM_CNT];
     int mLastRanking;
     
 private:
     static battleBrix * hInstance;
+    vector<string> mGradeTitles;
+    int mGrowthPerLevel;
 };
 #endif /* battleBrix_h */

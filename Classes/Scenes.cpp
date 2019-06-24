@@ -28,6 +28,15 @@
 #include "ui/ui_ext.h"
 #include "library/pch.h"
 
+#define HEART_TIMER     this->schedule([=](float f){\
+if(battleBrix::inst()->mUserData.recharge()){\
+    auto p = ((ui_icon*)getNodeById(_ID_NODE_LABEL_HEART));\
+    p->setText(battleBrix::inst()->getText("", _ID_NODE_LABEL_HEART));\
+    guiExt::runScaleEffect(p);\
+}\
+((ui_button*)getNodeById(_ID_NODE_TIMER_HEART))->setText(battleBrix::inst()->mUserData.getRechargeRemainTimeString());\
+}, 1.f, "heartTimer");
+
 bool SceneMain::init()
 {
     gui::inst()->initDefaultWithSpriteCache("fonts/SDSwaggerTTF.ttf");
@@ -52,33 +61,8 @@ bool SceneMain::init()
     sumPrice();
     
     //timer
-    this->schedule(schedule_selector(SceneMain::onTimer), 1.f);
-//    auto bg = getNodeById(0);
-//    Vec2 center = gui::inst()->getCenter();
-//    
-//    COLOR_RGB color, colorFont, colorBack;
-//    color.set(Color3B::MAGENTA);
-//    colorFont.set(Color3B::BLUE);
-//    colorBack.set(Color3B::WHITE);
-//
-//    ui_button::create(1234
-//              , 12345
-//              , "TESTj"
-//              , this
-//              , center
-//              , ALIGNMENT_CENTER
-//              , Size(50, 25)
-//              , ui_button::TYPE_CIRCLE
-//                      , std::bind(&SceneMain::fn, this, std::placeholders::_1, std::placeholders::_2)
-//              , color
-//              , colorFont
-//              , colorBack
-//              , ""//icons8-wedding-gift-96.png"
-//              , ui_button::TOUCH_TYPE_AUTO_DISABLE
-//              );
- 
-    
-//    pCheckbox = ui_checkbox::create(this, center, ALIGNMENT_CENTER, Size(100, 50), "Check box", color, colorFont);
+    HEART_TIMER
+
 
     return true;
 }
@@ -166,16 +150,6 @@ void SceneMain::runPlay() {
 //            this->replaceScene(SceneEnding::create());
         } ));
     }
-}
-
-void SceneMain::onTimer(float f) {
-    if(battleBrix::inst()->mUserData.recharge()){
-        //이벤트
-        auto p = ((ui_icon*)getNodeById(_ID_NODE_LABEL_HEART));
-        p->setText(battleBrix::inst()->getText("", _ID_NODE_LABEL_HEART));
-        guiExt::runScaleEffect(p);
-    }
-    ((ui_button*)getNodeById(_ID_NODE_TIMER_HEART))->setText(battleBrix::inst()->mUserData.getRechargeRemainTimeString());
 }
 
 //====================================================================
@@ -288,13 +262,14 @@ void SceneDaily::actionFinished() {
 bool SceneShop::init()
 {
     this->loadFromJson("shop", "shop.json");
-    
+    //timer
+    HEART_TIMER
     return true;
 }
 
 void SceneShop::callback(Ref* pSender, int from, int link) {
     CCLOG("from = %d, link = %d", from, link);
-//    this->replaceScene(SceneMain::create());
+    this->replaceScene(SceneMain::create());
 }
 
 const string SceneShop::getText(const string& defaultString, int id) {

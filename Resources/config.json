@@ -1,0 +1,99 @@
+{
+    "growthPerLevel": 128,
+    "rechargeInterval": 300,
+    "gradeTitles": [
+        "INVALID GRADE",
+        "BEGINNER",
+        "BRONZE",
+        "SILVER",
+        "GOLD",
+        "ROYAL",
+        "GOD"
+    ],
+    "play": {
+        "items": [
+            {
+                "name": "Combo",
+                "price": 150,
+                "img": "icons8-snail-80.png"
+            },
+            {
+                "name": "Potion",
+                "price": 100,
+                "img": "icons8-hyper-potion-96.png"
+            },
+            {
+                "name": "Bomb",
+                "price": 100,
+                "img": "icons8-atomic-bomb-96.png"
+            }
+        ],
+        "rewards": [
+            {
+                "growth": 64,
+                "point": 500,
+                "heart": 2
+            },
+            {
+                "growth": 32,
+                "point": 350,
+                "heart": 2
+            },
+            {
+                "growth": 16,
+                "point": 350,
+                "heart": 1
+            },
+            {
+                "growth": 0,
+                "point": 0,
+                "heart": 0
+            },
+            {
+                "growth": -32,
+                "point": 0,
+                "heart": 0
+            }
+        ]
+    },
+    "shop": {
+        "goods": [
+            {
+                "id": 1,
+                "type": 0,
+                "name": "POINT ad",
+                "price": 1,
+                "currency": "AD",
+                "quantity": 1000,
+                "description": ""
+            },
+            {
+                "id": 2,
+                "type": 1,
+                "name": "HEART ad",
+                "price": 1,
+                "currency": "AD",
+                "quantity": 1,
+                "description": ""
+            },
+            {
+                "id": 3,
+                "type": 0,
+                "name": "POINT Cash",
+                "price": 4900,
+                "currency": "KR",
+                "quantity": 10000,
+                "description": ""
+            },
+            {
+                "id": 4,
+                "type": 1,
+                "name": "HEART Cash",
+                "price": 4900,
+                "currency": "KR",
+                "quantity": 10,
+                "description": ""
+            }
+        ]
+    }
+}

@@ -9,18 +9,37 @@
 
 battleBrix * battleBrix::hInstance = NULL;
 
-#define GROWTH_PER_LEVEL 128
-
 void battleBrix::init() {
-    mRewards[1].init(GROWTH_PER_LEVEL / 2, 500, 2);
-    mRewards[2].init(GROWTH_PER_LEVEL / 4, 350, 2);
-    mRewards[3].init(GROWTH_PER_LEVEL / 8, 350, 1);
-    mRewards[4].init(0, 0, 0);
-    mRewards[5].init(GROWTH_PER_LEVEL / 4 * -1, 0, 0);
     
-    mItems[0].set("Combo", 150, "icons8-snail-80.png");
-    mItems[1].set("Potion", 100, "icons8-hyper-potion-96.png");
-    mItems[2].set("Bomb", 100, "icons8-atomic-bomb-96.png");
+    rapidjson::Document d = getJsonValue("config.json");
+    
+    mUserData.rechargeTime = d["rechargeInterval"].GetInt();
+    mGrowthPerLevel = d["growthPerLevel"].GetInt();
+    
+    //reward
+    const rapidjson::Value& rewards = d["play"]["rewards"];
+    for (rapidjson::SizeType i = 0; i < rewards.Size(); i++)
+    {
+        int growth = rewards[rapidjson::SizeType(i)]["growth"].GetInt();
+        int point = rewards[rapidjson::SizeType(i)]["point"].GetInt();
+        int heart = rewards[rapidjson::SizeType(i)]["heart"].GetInt();
+        mRewards[i+1].init(growth, point, heart);
+    }
+    
+    //play item
+    const rapidjson::Value& playItems = d["play"]["items"];
+    for (rapidjson::SizeType i = 0; i < playItems.Size(); i++) {
+        const string name = playItems[rapidjson::SizeType(i)]["name"].GetString();
+        const string img = playItems[rapidjson::SizeType(i)]["img"].GetString();
+        int price = playItems[rapidjson::SizeType(i)]["price"].GetInt();
+        mItems[i].set(name, price, img);
+    }
+    
+    //Grade titles
+    const rapidjson::Value& gradeTitles = d["gradeTitles"];
+    for (rapidjson::SizeType i = 0; i < gradeTitles.Size(); i++) {
+        mGradeTitles.push_back(gradeTitles[rapidjson::SizeType(i)].GetString());
+    }
 }
 
 const string battleBrix::getText(const string& defaultString, int id) {
@@ -33,6 +52,7 @@ const string battleBrix::getText(const string& defaultString, int id) {
             
         case _ID_NODE_LABEL_HEART:
             return to_string(battleBrix::inst()->mUserData.heart) + " / " + to_string(battleBrix::inst()->mUserData.heartMax);
+            
         case _ID_NODE_TIMER_HEART:
             return mUserData.getRechargeRemainTimeString();
             
@@ -74,7 +94,7 @@ bool battleBrix::increseGrowth(int val) {
     if(mUserData.growth >= mUserData.maxGrowth) {
         mUserData.growth = mUserData.growth - mUserData.maxGrowth;
         mUserData.level++;
-        mUserData.maxGrowth = mUserData.level * GROWTH_PER_LEVEL;
+        mUserData.maxGrowth = mUserData.level * mGrowthPerLevel;
         
         return true;
         
@@ -84,32 +104,22 @@ bool battleBrix::increseGrowth(int val) {
             isReset = true;
         
         mUserData.level = max(1,  mUserData.level - 1);
-        mUserData.maxGrowth = mUserData.level * GROWTH_PER_LEVEL;
+        mUserData.maxGrowth = mUserData.level * mGrowthPerLevel;
         mUserData.growth = isReset ? 0 : mUserData.maxGrowth + mUserData.growth;
     }
     return false;
 }
 
 const string battleBrix::getLevelString() {
-    switch(mUserData.level) {
-        case 1:
-            return "BEGINNER";
-        case 2:
-            return "BRONZE";
-        case 3:
-            return "SILVER";
-        case 4:
-            return "GOLD";
-        case 5:
-            return "ROYAL";
-        default:
-            return "GOD";
-    }
+    return mGradeTitles[mUserData.level];
 }
 
 bool battleBrix::payForPlay(int point, int heart) {
     if(!checkPayForPlay(point, heart))
         return false;
+    
+    if(mUserData.heart >= mUserData.heartMax)
+        mUserData.heartTimerStart = getNow();
     
     mUserData.point -= point;
     mUserData.heart -= heart;
