@@ -51,6 +51,8 @@ bool SceneMain::init()
 
     sumPrice();
     
+    //timer
+    this->schedule(schedule_selector(SceneMain::onTimer), 1.f);
 //    auto bg = getNodeById(0);
 //    Vec2 center = gui::inst()->getCenter();
 //    
@@ -164,6 +166,16 @@ void SceneMain::runPlay() {
 //            this->replaceScene(SceneEnding::create());
         } ));
     }
+}
+
+void SceneMain::onTimer(float f) {
+    if(battleBrix::inst()->mUserData.recharge()){
+        //이벤트
+        auto p = ((ui_icon*)getNodeById(_ID_NODE_LABEL_HEART));
+        p->setText(battleBrix::inst()->getText("", _ID_NODE_LABEL_HEART));
+        guiExt::runScaleEffect(p);
+    }
+    ((ui_button*)getNodeById(_ID_NODE_TIMER_HEART))->setText(battleBrix::inst()->mUserData.getRechargeRemainTimeString());
 }
 
 //====================================================================
@@ -281,7 +293,8 @@ bool SceneShop::init()
 }
 
 void SceneShop::callback(Ref* pSender, int from, int link) {
-    this->replaceScene(SceneMain::create());
+    CCLOG("from = %d, link = %d", from, link);
+//    this->replaceScene(SceneMain::create());
 }
 
 const string SceneShop::getText(const string& defaultString, int id) {

@@ -9,18 +9,23 @@
 #define battleBrix_h
 
 #include <string>
+#include "library/pch.h"
+
 using namespace std;
 
 enum _ID_NODE {
     _ID_NODE_LABEL_ID = 1,
     _ID_NODE_LABEL_POINT = 3,
     _ID_NODE_LABEL_HEART = 4,
+    _ID_NODE_TIMER_HEART = 5,
     _ID_NODE_LABEL_LEVEL = 12,
     _ID_NODE_PROGRESSBAR = 13,
+    
     _ID_NODE_LABEL_RANKING = 17,
 };
 
 #define PLAY_ITEM_CNT 3
+#define RECHARGE_TIME 300
 
 class battleBrix {
 public:
@@ -42,8 +47,8 @@ public:
         int grade;
         int heart;
         int heartMax;
+        time_t heartTimerStart;
         int point;
-        
         int maxGrowth;
         int growth;
         string id;
@@ -53,13 +58,45 @@ public:
         , ranking(532340)
         , level(1)
         , grade(0)
-        , heart(50)
+        , heart(5)
         , heartMax(8)
         , point(5000)
         , maxGrowth(128)
         , growth(10)
         {
             id = "teetotal";
+            heartTimerStart = getNow();
+        };
+        
+        time_t getRechargeRemainTime() {
+            return RECHARGE_TIME - (getNow() - heartTimerStart);
+        };
+        string getRechargeRemainTimeString(){
+            if(heart >= heartMax)
+                return "0:00";
+            
+            time_t t = getRechargeRemainTime();
+            int min = (int)t / 60;
+            int sec = t % 60;
+            
+                
+            return to_string(min) + ":" + ((sec < 10) ? "0" : "") + to_string(sec);
+        };
+        // 변화가 있으면 true
+        bool recharge() {
+            bool ret = false;
+            time_t now = getNow();
+            while(heart < heartMax) {
+                if(now - heartTimerStart >= RECHARGE_TIME) {
+                    heart++;
+                    heartTimerStart += RECHARGE_TIME;
+                    ret = true;
+                } else {
+                    break;
+                }
+            }
+            
+            return ret;
         };
         
     } mUserData;

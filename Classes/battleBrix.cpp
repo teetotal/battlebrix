@@ -6,7 +6,6 @@
 //
 
 #include "battleBrix.h"
-#include "library/pch.h"
 
 battleBrix * battleBrix::hInstance = NULL;
 
@@ -34,6 +33,8 @@ const string battleBrix::getText(const string& defaultString, int id) {
             
         case _ID_NODE_LABEL_HEART:
             return to_string(battleBrix::inst()->mUserData.heart) + " / " + to_string(battleBrix::inst()->mUserData.heartMax);
+        case _ID_NODE_TIMER_HEART:
+            return mUserData.getRechargeRemainTimeString();
             
         case _ID_NODE_LABEL_LEVEL:
             return "Lv." + to_string(battleBrix::inst()->mUserData.level);
