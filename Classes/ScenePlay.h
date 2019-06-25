@@ -118,17 +118,19 @@ private:
         void finish();
         void vibrate();
         bool onContact(int id, bool toRight = false);
-        void decreseHP(float val = DECREASE_HP);
+        void decreseHP(const string from, float val = DECREASE_HP);
         void createBall();
         void createBoard();
         void createBottom();
         
         void addBrix(int idx);
-        void addBrix0();
-        void addBrix1();
-        void addBrix2();
-        void addBrix3();
-        void addBrix4();
+        DrawNode * createBrix(brixMap::position pos, int id);
+        void createGift();
+//        void addBrix0();
+//        void addBrix1();
+//        void addBrix2();
+//        void addBrix3();
+//        void addBrix4();
         
         const float getHPValue() {
             return hp->getValue();
@@ -144,6 +146,7 @@ private:
     Node * mControlBar; //for check multi touch
     
     bool mIsEnd;
+    mutex mLock;
 };
 
 

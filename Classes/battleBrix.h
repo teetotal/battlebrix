@@ -49,6 +49,8 @@ public:
     };
     //brix brixPosition
     struct brixPosition {
+        int minGrade;
+        int maxGrade;
         string title;
         vector<position> statics;
         vector<brixMovement> movements;
@@ -58,9 +60,7 @@ public:
     
     vector<brixPosition> mBrixMap;
     
-    inline int getMapRandom() {
-        return getRandValue((int)mBrixMap.size());
-    };
+    int getMapRandom();
     
     inline const brixPosition getMap(int idx) {
         return mBrixMap[idx];
@@ -97,12 +97,13 @@ public:
         string id;
         
         int rechargeTime;
+        std::mutex lock;
         
         userData() : win(0)
         , lose(0)
         , ranking(532340)
-        , grade(5)
-        , heart(5)
+        , grade(1)
+        , heart(8)
         , heartMax(8)
         , point(5000)
         , maxGrowth(128)
@@ -132,8 +133,8 @@ public:
             time_t now = getNow();
             while(heart < heartMax) {
                 if(now - heartTimerStart >= rechargeTime) {
-                    heart++;
-                    heartTimerStart += rechargeTime;
+                    increaseHeart();
+                    setHeartTimerStart(heartTimerStart + rechargeTime);
                     ret = true;
                 } else {
                     break;
@@ -141,6 +142,24 @@ public:
             }
             
             return ret;
+        };
+        
+        void increaseHeart(int n=1) {
+            lock.lock();
+            heart += n;
+            lock.unlock();
+        };
+        
+        void increasePoint(int n) {
+            lock.lock();
+            point += n;
+            lock.unlock();
+        };
+        
+        void setHeartTimerStart(time_t t) {
+            lock.lock();
+            heartTimerStart = t;
+            lock.unlock();
         };
         
     } mUserData;

@@ -15,7 +15,7 @@
 #define _ID_BOTTOM 0
 #define _ID_BRIX_START 101
 #define _ID_GIFT 100
-#define BALL_INIT_POSITION_Y 7
+#define BALL_INIT_POSITION_Y 8
 
 enum _PLAYER_ID {
     _PLAYER_ID_ME = 0,
@@ -153,30 +153,30 @@ void ScenePlay::PLAYER::init(ScenePlay* p, const string& name, int layerId, int 
     
     //f[fnId]();
     addBrix(fnId);
+    //createGift();
     
-    //add gift 좀더 생각해 봐야겠당
+}
+//gift 좀더 생각해 봐야겠당
+void ScenePlay::PLAYER::createGift(){
+    auto gift = gui::inst()->addSpriteAutoDimension(getRandValue(GRID_AREA.x), getRandValue(GRID_AREA.x), "icons8-wedding-gift-96.png", layerBrix, ALIGNMENT_CENTER, GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+    gui::inst()->setScale(gift, gridSize.width * 0.75f);
+    auto posStart = gift->getPosition();
+    pScene->setPhysicsBodyRect(gift
+                               , PHYSICSMATERIAL_OBSTACLE
+                               , false
+                               , _ID_GIFT
+                               , -1
+                               , -1 //_PHYSICS_ID_MY_BALL
+                               , ballId
+                               );
+    float d = (float)(max(50, getRandValue(100))) / 10.f;
+    ccBezierConfig c;
+    c.controlPoint_1 = gui::inst()->getPointVec2(getRandValue(GRID_AREA.x), getRandValue(GRID_AREA.x), ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+    c.controlPoint_2 = gui::inst()->getPointVec2(getRandValue(GRID_AREA.x), getRandValue(GRID_AREA.x), ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+    c.endPosition = gui::inst()->getPointVec2(getRandValue(GRID_AREA.x), getRandValue(GRID_AREA.x), ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+    auto bezier = BezierTo::create(d, c);
     
-//    auto gift = gui::inst()->addSpriteAutoDimension(3, 1, "icons8-wedding-gift-96.png", layerBrix, ALIGNMENT_CENTER, GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-//    gui::inst()->setScale(gift, gridSize.width * 0.75f);
-//    auto posStart = gift->getPosition();
-//    pScene->setPhysicsBodyRect(gift
-//                               , PHYSICSMATERIAL_OBSTACLE
-//                               , false
-//                               , _ID_GIFT
-//                               , -1
-//                               , -1 //_PHYSICS_ID_MY_BALL
-//                               , ballId
-//                               );
-//    float d = (float)(max(10, getRandValue(20))) / 10.f;
-//    auto seq = Sequence::create(
-//                                Hide::create()
-//                                , MoveTo::create(d, Vec2(0, layerBrix->getContentSize().height * 1.5))
-//                                , DelayTime::create(3.f)
-//                                , Show::create()
-//                                , MoveTo::create(d, posStart)
-//                                , DelayTime::create(3.f)
-//                                , NULL);
-//    gift->runAction(RepeatForever::create(seq));
+    gift->runAction(Sequence::create(bezier, RemoveSelf::create(), NULL));
     
 }
 //createLayerBrix ===========================================================================
@@ -254,10 +254,18 @@ void ScenePlay::PLAYER::vibrate() {
     guiExt::addVibrateEffect(layer, CallFunc::create([=]() { lockShake = false; }));
 }
 // decreseHP ===========================================================================
-void ScenePlay::PLAYER::decreseHP(float f) {
+void ScenePlay::PLAYER::decreseHP(const string from, float f) {
+    if(this->isEnd)
+        return;
+    
     auto val = hp->setValueDecrese(f);
     hp->blink();
     vibrate();
+    
+    if(from.size() > 0) {
+        Vec2 pos = Vec2(layer->getContentSize().width / 2.f, layer->getContentSize().height * .75f);
+        guiExt::addScaleEffect(layer, "icons8-action-96.png", from, ui_wizard_share::inst()->getPalette()->getColor("GRAY"), NULL, .4f, .4f, pos, 150);
+    }
     
     if(val <= 0.3f) {
         alert->setVisible(true);
@@ -357,9 +365,13 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
             mp->setValue(0.f);
             mp->blink();
             //pScene->getNodeById(0)
-            Vec2 pos = Vec2(layer->getContentSize().width / 2.f, layer->getContentSize().height * .75f);
-            guiExt::addScaleEffect(layer, "icons8-action-96.png", "ATTACK", ui_wizard_share::inst()->getPalette()->getColor("GRAY"), NULL, .4f, .4f, pos, 150);
 
+            auto particle = gui::inst()->createParticle("star.plist"
+                                                        , Vec2(this->mp->getPosition().x + (mp->getContentSize().width * 0.8f), this->mp->getPosition().y+ (mp->getContentSize().height * 0.5f)));
+            // 1: gui::inst()->mVisibleX = x : layerSize
+            // x = layerSize / gui::inst()->mVisibleX
+            particle->setScale(layer->getContentSize().width / gui::inst()->mVisibleX);
+            layer->addChild(particle);
             ret = true;
         }
     }
@@ -416,50 +428,42 @@ void ScenePlay::PLAYER::finish() {
     alert->stopAllActions();
     alert->setVisible(false);
 }
-// addBrix0 ===========================================================================
+//
+DrawNode * ScenePlay::PLAYER::createBrix(brixMap::position pos, int id)
+{
+    int x = (pos.x == -1) ? getRandValue(GRID_AREA.x) : pos.x;
+    int y = (pos.y == -1) ? getRandValue(BALL_INIT_POSITION_Y) : pos.y;
+    
+    Vec2 position = gui::inst()->getPointVec2(x, y, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+    auto rect = guiExt::drawRectForPhysics(layerBrix, position, obstacleSize, pScene->mColors[id%10], true, .1f);
+    pScene->setPhysicsBodyRect(rect
+                               , PHYSICSMATERIAL_OBSTACLE
+                               , false
+                               , id
+                               , -1
+                               , -1 //_PHYSICS_ID_MY_BALL
+                               , ballId
+                               );
+    
+    brixEffectFlagMap[id] = false;
+    
+    return rect;
+}
+// addBrix ===========================================================================
 void ScenePlay::PLAYER::addBrix(int idx) {
     brixMap::brixPosition brix = brixMap::inst()->getMap(idx);
     int brixId = _ID_BRIX_START;
     //static
     for(int n=0; n < brix.statics.size(); n++)
     {
-        int x = (brix.statics[n].x == -1) ? getRandValue(GRID_AREA.x-1) : brix.statics[n].x;
-        int y = (brix.statics[n].y == -1) ? getRandValue(BALL_INIT_POSITION_Y) : brix.statics[n].y;
-        
-        Vec2 position = gui::inst()->getPointVec2(x, y, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-        auto rect = guiExt::drawRectForPhysics(layerBrix, position, obstacleSize, pScene->mColors[(int)n], true, .1f);
-        pScene->setPhysicsBodyRect(rect
-                                   , PHYSICSMATERIAL_OBSTACLE
-                                   , false
-                                   , brixId
-                                   , -1
-                                   , -1 //_PHYSICS_ID_MY_BALL
-                                   , ballId
-                                   );
-        
-        brixEffectFlagMap[brixId] = false;
-        brixId++;
+        createBrix(brix.statics[n], brixId++);
     }
     //movement
     for(int n=0; n < brix.movements.size(); n++)
     {
         //type
-        
-        int x = (brix.movements[n].path[0].x == -1) ? getRandValue(GRID_AREA.x-1) : brix.movements[n].path[0].x;
-        int y = (brix.movements[n].path[0].y == -1) ? getRandValue(BALL_INIT_POSITION_Y) : brix.movements[n].path[0].y;
-        
-        Vec2 position = gui::inst()->getPointVec2(x, y, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-        auto rect = guiExt::drawRectForPhysics(layerBrix, position, obstacleSize, pScene->mColors[(int)n], true, .1f);
-        pScene->setPhysicsBodyRect(rect
-                                   , PHYSICSMATERIAL_OBSTACLE
-                                   , false
-                                   , brixId
-                                   , -1
-                                   , -1 //_PHYSICS_ID_MY_BALL
-                                   , ballId
-                                   );
-        brixEffectFlagMap[brixId] = false;
-        brixId++;
+        int last = (int)brix.movements[n].path.size() - 1;
+        auto rect = createBrix(brix.movements[n].path[last], brixId++);
         
         //path
         Sequence * seq;
@@ -468,211 +472,211 @@ void ScenePlay::PLAYER::addBrix(int idx) {
             
             int d = max(10, getRandValue(30));
             float f = (float)d / 10.f;
-            x = (brix.movements[n].path[0].x == -1) ? getRandValue(GRID_AREA.x-1) : brix.movements[n].path[i].x;
-            y = (brix.movements[n].path[0].y == -1) ? getRandValue(BALL_INIT_POSITION_Y) : brix.movements[n].path[i].y;
-            Vec2 position = gui::inst()->getPointVec2(x, y, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+            int x = (brix.movements[n].path[i].x == -1) ? getRandValue(GRID_AREA.x) : brix.movements[n].path[i].x;
+            int y = (brix.movements[n].path[i].y == -1) ? getRandValue(BALL_INIT_POSITION_Y) : brix.movements[n].path[i].y;
+            
+            Vec2 position = gui::inst()->getPointVec2(x, y, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+            //anchor point가 0,0
+            position.x -= obstacleSize.width / 2;
+            position.y -= obstacleSize.height / 2;
+            
             auto move = MoveTo::create(f, position);
             arr.pushBack(move);
         }
         seq = Sequence::create(arr);
         rect->runAction(RepeatForever::create(seq));
-        
     }
 }
 // addBrix0 ===========================================================================
-void ScenePlay::PLAYER::addBrix0() {
-    
-    int brixId = _ID_BRIX_START;
-    for(int n=0; n < BALL_INIT_POSITION_Y; n++)
-    {
-        Vec2 position = gui::inst()->getPointVec2(getRandValue(8), n, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-        auto rect = guiExt::drawRectForPhysics(layerBrix, position, obstacleSize, pScene->mColors[(int)n], true, .1f);
-        pScene->setPhysicsBodyRect(rect
-                                   , PHYSICSMATERIAL_OBSTACLE
-                                   , false
-                                   , brixId
-                                   , -1
-                                   , -1 //_PHYSICS_ID_MY_BALL
-                                   , ballId
-                                   );
+//void ScenePlay::PLAYER::addBrix0() {
+//
+//    int brixId = _ID_BRIX_START;
+//    for(int n=0; n < BALL_INIT_POSITION_Y; n++)
+//    {
+//        Vec2 position = gui::inst()->getPointVec2(getRandValue(8), n, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+//        auto rect = guiExt::drawRectForPhysics(layerBrix, position, obstacleSize, pScene->mColors[(int)n], true, .1f);
+//        pScene->setPhysicsBodyRect(rect
+//                                   , PHYSICSMATERIAL_OBSTACLE
+//                                   , false
+//                                   , brixId
+//                                   , -1
+//                                   , -1 //_PHYSICS_ID_MY_BALL
+//                                   , ballId
+//                                   );
+//
+//        brixEffectFlagMap[brixId] = false;
+//        brixId++;
+//    }
+//
+//}
+//// addBrix1 ===========================================================================
+//void ScenePlay::PLAYER::addBrix1() {
+//
+//    int brixId = _ID_BRIX_START;
+//    for(int n=0; n < BALL_INIT_POSITION_Y; n = n + 2)
+//    {
+//        Vec2 position = gui::inst()->getPointVec2(0, n, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+//        auto rect = guiExt::drawRectForPhysics(layerBrix, position, obstacleSize, pScene->mColors[(int)n], true, .1f);
+//        pScene->setPhysicsBodyRect(rect
+//                                   , PHYSICSMATERIAL_OBSTACLE
+//                                   , false
+//                                   , brixId
+//                                   , -1
+//                                   , -1 //_PHYSICS_ID_MY_BALL
+//                                   , ballId
+//                                   );
 //        int d = max(10, getRandValue(30));
 //        float f = (float)d / 10.f;
 //        auto seq = Sequence::create(MoveTo::create(f, Vec2(layerBrix->getContentSize().width - rect->getContentSize().width, rect->getPosition().y)), MoveTo::create(f, Vec2(0, rect->getPosition().y)), NULL);
 //        rect->runAction(RepeatForever::create(seq));
-        
-        brixEffectFlagMap[brixId] = false;
-        brixId++;
-    }
-    
-}
-// addBrix1 ===========================================================================
-void ScenePlay::PLAYER::addBrix1() {
-    
-    int brixId = _ID_BRIX_START;
-    for(int n=0; n < BALL_INIT_POSITION_Y; n = n + 2)
-    {
-        Vec2 position = gui::inst()->getPointVec2(0, n, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-        auto rect = guiExt::drawRectForPhysics(layerBrix, position, obstacleSize, pScene->mColors[(int)n], true, .1f);
-        pScene->setPhysicsBodyRect(rect
-                                   , PHYSICSMATERIAL_OBSTACLE
-                                   , false
-                                   , brixId
-                                   , -1
-                                   , -1 //_PHYSICS_ID_MY_BALL
-                                   , ballId
-                                   );
-        int d = max(10, getRandValue(30));
-        float f = (float)d / 10.f;
-        auto seq = Sequence::create(MoveTo::create(f, Vec2(layerBrix->getContentSize().width - rect->getContentSize().width, rect->getPosition().y)), MoveTo::create(f, Vec2(0, rect->getPosition().y)), NULL);
-        rect->runAction(RepeatForever::create(seq));
-        
-        brixEffectFlagMap[brixId] = false;
-        brixId++;
-    }
-}
-// addBrix2 ===========================================================================
-void ScenePlay::PLAYER::addBrix2() {
-    
-    float yEnd = gui::inst()->getPointVec2(0, 7, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO).y;
-    float yStart = gui::inst()->getPointVec2(0, 0, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO).y;
-    
-    int brixId = _ID_BRIX_START;
-    for(int n=0; n < 8; n = n + 2)
-    {
-        Vec2 position = gui::inst()->getPointVec2(n, 0, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-        auto rect = guiExt::drawRectForPhysics(layerBrix, position, obstacleSize, pScene->mColors[(int)n], true, .1f);
-        pScene->setPhysicsBodyRect(rect
-                                   , PHYSICSMATERIAL_OBSTACLE
-                                   , false
-                                   , brixId
-                                   , -1
-                                   , -1 //_PHYSICS_ID_MY_BALL
-                                   , ballId
-                                   );
-        int d = max(10, getRandValue(30));
-        float f = (float)d / 10.f;
-        auto seq = Sequence::create(MoveTo::create(f, Vec2(rect->getPosition().x, yEnd)), MoveTo::create(f, Vec2(rect->getPosition().x, yStart)), NULL);
-        rect->runAction(RepeatForever::create(seq));
-        
-        brixEffectFlagMap[brixId] = false;
-        brixId++;
-    }
-}
-// addBrix3 ===========================================================================
-void ScenePlay::PLAYER::addBrix3() {
-    
-    float yEnd = gui::inst()->getPointVec2(0, 7, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO).y;
-    float yStart = gui::inst()->getPointVec2(0, 0, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO).y;
-    float xStart = gui::inst()->getPointVec2(1, 0, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO).x;
-    float xEnd = gui::inst()->getPointVec2(6, 0, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO).x;
-    
-    
-    int brixId = _ID_BRIX_START;
-    int colorIdx = 0;
-    
-    //양쪽 side
-    
-    for(int n=0; n < 8; n = n + 7)
-    {
-        Vec2 position = gui::inst()->getPointVec2(n, 0, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-        auto rect = guiExt::drawRectForPhysics(layerBrix, position, obstacleSize, pScene->mColors[colorIdx++], true, .1f);
-        pScene->setPhysicsBodyRect(rect
-                                   , PHYSICSMATERIAL_OBSTACLE
-                                   , false
-                                   , brixId
-                                   , -1
-                                   , -1 //_PHYSICS_ID_MY_BALL
-                                   , ballId
-                                   );
-        int d = max(10, getRandValue(30));
-        float f = (float)d / 10.f;
-        auto seq = Sequence::create(MoveTo::create(f, Vec2(rect->getPosition().x, yEnd)), MoveTo::create(f, Vec2(rect->getPosition().x, yStart)), NULL);
-        rect->runAction(RepeatForever::create(seq));
-        
-        brixEffectFlagMap[brixId] = false;
-        brixId++;
-    }
-    
-    for(int n=0; n <= 6; n = n + 3)
-    {
-        Vec2 position = gui::inst()->getPointVec2(0, n, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-        auto rect = guiExt::drawRectForPhysics(layerBrix, position, obstacleSize, pScene->mColors[colorIdx++], true, .1f);
-        pScene->setPhysicsBodyRect(rect
-                                   , PHYSICSMATERIAL_OBSTACLE
-                                   , false
-                                   , brixId
-                                   , -1
-                                   , -1 //_PHYSICS_ID_MY_BALL
-                                   , ballId
-                                   );
-        int d = max(10, getRandValue(30));
-        float f = (float)d / 10.f;
-        auto seq = Sequence::create(MoveTo::create(f, Vec2(xEnd, rect->getPosition().y)), MoveTo::create(f, Vec2(xStart, rect->getPosition().y)), NULL);
-        rect->runAction(RepeatForever::create(seq));
-        
-        brixEffectFlagMap[brixId] = false;
-        brixId++;
-    }
-}
-// addBrix4 ===========================================================================
-void ScenePlay::PLAYER::addBrix4() {
-    
-    float yEnd = gui::inst()->getPointVec2(0, 7, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO).y;
-    float yStart = gui::inst()->getPointVec2(0, 0, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO).y;
-    Vec2 start1 = gui::inst()->getPointVec2(1, 0, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-    Vec2 start2 = gui::inst()->getPointVec2(6, 0, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-    Vec2 end1 = gui::inst()->getPointVec2(6, 7, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-    Vec2 end2 = gui::inst()->getPointVec2(1, 7, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-    
-    
-    int brixId = _ID_BRIX_START;
-    int colorIdx = 0;
-    
-    //양쪽 side
-    
-    for(int n=0; n < 8; n = n + 7)
-    {
-        Vec2 position = gui::inst()->getPointVec2(n, 0, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-        auto rect = guiExt::drawRectForPhysics(layerBrix, position, obstacleSize, pScene->mColors[colorIdx++], true, .1f);
-        pScene->setPhysicsBodyRect(rect
-                                   , PHYSICSMATERIAL_OBSTACLE
-                                   , false
-                                   , brixId
-                                   , -1
-                                   , -1 //_PHYSICS_ID_MY_BALL
-                                   , ballId
-                                   );
-        int d = max(10, getRandValue(30));
-        float f = (float)d / 10.f;
-        auto seq = Sequence::create(MoveTo::create(f, Vec2(rect->getPosition().x, yEnd)), MoveTo::create(f, Vec2(rect->getPosition().x, yStart)), NULL);
-        rect->runAction(RepeatForever::create(seq));
-        
-        brixEffectFlagMap[brixId] = false;
-        brixId++;
-    }
-    
-    for(int n=0; n < 2; n++)
-    {
-        Vec2 positionStart = (n==0) ? start1 : start2;
-        Vec2 positionEnd = (n==0) ? end1 : end2;
-        auto rect = guiExt::drawRectForPhysics(layerBrix, positionStart, obstacleSize, pScene->mColors[colorIdx++], true, .1f);
-        pScene->setPhysicsBodyRect(rect
-                                   , PHYSICSMATERIAL_OBSTACLE
-                                   , false
-                                   , brixId
-                                   , -1
-                                   , -1 //_PHYSICS_ID_MY_BALL
-                                   , ballId
-                                   );
-        int d = max(10, getRandValue(30));
-        float f = (float)d / 10.f;
-        auto seq = Sequence::create(MoveTo::create(f, positionEnd), MoveTo::create(f, positionStart), NULL);
-        rect->runAction(RepeatForever::create(seq));
-        
-        brixEffectFlagMap[brixId] = false;
-        brixId++;
-    }
-}
+//
+//        brixEffectFlagMap[brixId] = false;
+//        brixId++;
+//    }
+//}
+//// addBrix2 ===========================================================================
+//void ScenePlay::PLAYER::addBrix2() {
+//
+//    float yEnd = gui::inst()->getPointVec2(0, 7, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO).y;
+//    float yStart = gui::inst()->getPointVec2(0, 0, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO).y;
+//
+//    int brixId = _ID_BRIX_START;
+//    for(int n=0; n < 8; n = n + 2)
+//    {
+//        Vec2 position = gui::inst()->getPointVec2(n, 0, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+//        auto rect = guiExt::drawRectForPhysics(layerBrix, position, obstacleSize, pScene->mColors[(int)n], true, .1f);
+//        pScene->setPhysicsBodyRect(rect
+//                                   , PHYSICSMATERIAL_OBSTACLE
+//                                   , false
+//                                   , brixId
+//                                   , -1
+//                                   , -1 //_PHYSICS_ID_MY_BALL
+//                                   , ballId
+//                                   );
+//        int d = max(10, getRandValue(30));
+//        float f = (float)d / 10.f;
+//        auto seq = Sequence::create(MoveTo::create(f, Vec2(rect->getPosition().x, yEnd)), MoveTo::create(f, Vec2(rect->getPosition().x, yStart)), NULL);
+//        rect->runAction(RepeatForever::create(seq));
+//
+//        brixEffectFlagMap[brixId] = false;
+//        brixId++;
+//    }
+//}
+//// addBrix3 ===========================================================================
+//void ScenePlay::PLAYER::addBrix3() {
+//
+//    float yEnd = gui::inst()->getPointVec2(0, 7, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO).y;
+//    float yStart = gui::inst()->getPointVec2(0, 0, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO).y;
+//    float xStart = gui::inst()->getPointVec2(1, 0, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO).x;
+//    float xEnd = gui::inst()->getPointVec2(6, 0, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO).x;
+//
+//
+//    int brixId = _ID_BRIX_START;
+//    int colorIdx = 0;
+//
+//    //양쪽 side
+//
+//    for(int n=0; n < 8; n = n + 7)
+//    {
+//        Vec2 position = gui::inst()->getPointVec2(n, 0, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+//        auto rect = guiExt::drawRectForPhysics(layerBrix, position, obstacleSize, pScene->mColors[colorIdx++], true, .1f);
+//        pScene->setPhysicsBodyRect(rect
+//                                   , PHYSICSMATERIAL_OBSTACLE
+//                                   , false
+//                                   , brixId
+//                                   , -1
+//                                   , -1 //_PHYSICS_ID_MY_BALL
+//                                   , ballId
+//                                   );
+//        int d = max(10, getRandValue(30));
+//        float f = (float)d / 10.f;
+//        auto seq = Sequence::create(MoveTo::create(f, Vec2(rect->getPosition().x, yEnd)), MoveTo::create(f, Vec2(rect->getPosition().x, yStart)), NULL);
+//        rect->runAction(RepeatForever::create(seq));
+//
+//        brixEffectFlagMap[brixId] = false;
+//        brixId++;
+//    }
+//
+//    for(int n=0; n <= 6; n = n + 3)
+//    {
+//        Vec2 position = gui::inst()->getPointVec2(0, n, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+//        auto rect = guiExt::drawRectForPhysics(layerBrix, position, obstacleSize, pScene->mColors[colorIdx++], true, .1f);
+//        pScene->setPhysicsBodyRect(rect
+//                                   , PHYSICSMATERIAL_OBSTACLE
+//                                   , false
+//                                   , brixId
+//                                   , -1
+//                                   , -1 //_PHYSICS_ID_MY_BALL
+//                                   , ballId
+//                                   );
+//        int d = max(10, getRandValue(30));
+//        float f = (float)d / 10.f;
+//        auto seq = Sequence::create(MoveTo::create(f, Vec2(xEnd, rect->getPosition().y)), MoveTo::create(f, Vec2(xStart, rect->getPosition().y)), NULL);
+//        rect->runAction(RepeatForever::create(seq));
+//
+//        brixEffectFlagMap[brixId] = false;
+//        brixId++;
+//    }
+//}
+//// addBrix4 ===========================================================================
+//void ScenePlay::PLAYER::addBrix4() {
+//
+//    float yEnd = gui::inst()->getPointVec2(0, 7, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO).y;
+//    float yStart = gui::inst()->getPointVec2(0, 0, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO).y;
+//    Vec2 start1 = gui::inst()->getPointVec2(1, 0, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+//    Vec2 start2 = gui::inst()->getPointVec2(6, 0, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+//    Vec2 end1 = gui::inst()->getPointVec2(6, 7, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+//    Vec2 end2 = gui::inst()->getPointVec2(1, 7, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+//
+//
+//    int brixId = _ID_BRIX_START;
+//    int colorIdx = 0;
+//
+//    //양쪽 side
+//
+//    for(int n=0; n < 8; n = n + 7)
+//    {
+//        Vec2 position = gui::inst()->getPointVec2(n, 0, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+//        auto rect = guiExt::drawRectForPhysics(layerBrix, position, obstacleSize, pScene->mColors[colorIdx++], true, .1f);
+//        pScene->setPhysicsBodyRect(rect
+//                                   , PHYSICSMATERIAL_OBSTACLE
+//                                   , false
+//                                   , brixId
+//                                   , -1
+//                                   , -1 //_PHYSICS_ID_MY_BALL
+//                                   , ballId
+//                                   );
+//        int d = max(10, getRandValue(30));
+//        float f = (float)d / 10.f;
+//        auto seq = Sequence::create(MoveTo::create(f, Vec2(rect->getPosition().x, yEnd)), MoveTo::create(f, Vec2(rect->getPosition().x, yStart)), NULL);
+//        rect->runAction(RepeatForever::create(seq));
+//
+//        brixEffectFlagMap[brixId] = false;
+//        brixId++;
+//    }
+//
+//    for(int n=0; n < 2; n++)
+//    {
+//        Vec2 positionStart = (n==0) ? start1 : start2;
+//        Vec2 positionEnd = (n==0) ? end1 : end2;
+//        auto rect = guiExt::drawRectForPhysics(layerBrix, positionStart, obstacleSize, pScene->mColors[colorIdx++], true, .1f);
+//        pScene->setPhysicsBodyRect(rect
+//                                   , PHYSICSMATERIAL_OBSTACLE
+//                                   , false
+//                                   , brixId
+//                                   , -1
+//                                   , -1 //_PHYSICS_ID_MY_BALL
+//                                   , ballId
+//                                   );
+//        int d = max(10, getRandValue(30));
+//        float f = (float)d / 10.f;
+//        auto seq = Sequence::create(MoveTo::create(f, positionEnd), MoveTo::create(f, positionStart), NULL);
+//        rect->runAction(RepeatForever::create(seq));
+//
+//        brixEffectFlagMap[brixId] = false;
+//        brixId++;
+//    }
+//}
 /* ----------------------------------------------------------------------------------------------------------------
  
  
@@ -718,7 +722,7 @@ bool ScenePlay::init()
     ((MenuItemLabel*)getNodeById(ID_NODE_TOP_MAP_TYPE))->setString(brixMap::inst()->getMap(fnId).title);
     
     PLAYER me;
-    me.init(this, "ME", ID_NODE_MY_AREA, ID_NODE_MY_HP, ID_NODE_MY_MP, _BALL_ID[0], ID_NODE_MY_ALERT, ID_NODE_MY_LABEL, fnId);
+    me.init(this, battleBrix::inst()->mUserData.id, ID_NODE_MY_AREA, ID_NODE_MY_HP, ID_NODE_MY_MP, _BALL_ID[0], ID_NODE_MY_ALERT, ID_NODE_MY_LABEL, fnId);
     mPlayers.push_back(me);
     
     Size s1 = mPlayers[_PLAYER_ID_ME].layer->getContentSize(); //193.3333, 208.247
@@ -743,12 +747,12 @@ bool ScenePlay::init()
     }
     
 //    gui::inst()->drawGrid(mLayer, mLayer->getContentSize(), GRID_AREA, Size::ZERO, Size::ZERO);
-    
+    //Start
     guiExt::addMovingEffect(this->getNodeById(0)
                             , ui_wizard_share::inst()->getPalette()->getColor("WHITE_OPACITY_DEEP")
                             , ""
-                            , "MAP " + to_string(fnId)
-                            , ui_wizard_share::inst()->getPalette()->getColor("ORANGE")
+                            , "START"
+                            , ui_wizard_share::inst()->getPalette()->getColor("GREEN_DARK")
                             , false
                             , 1.5f
                             , CallFunc::create([=]()
@@ -791,7 +795,7 @@ void ScenePlay::onSkill(int idx) {
                 mPlayers[_PLAYER_ID_ME].hp->setValueIncrese(DECREASE_HP * 2);
                 for(int n = 1; n < mPlayers.size(); n++) {
                     mPlayers[n].onBomb();
-                    mPlayers[n].decreseHP(DECREASE_HP / 2.f);
+                    mPlayers[n].decreseHP("", DECREASE_HP / 2.f);
                 }
             });
             break;
@@ -808,7 +812,7 @@ void ScenePlay::onSkill(int idx) {
             {
                 for(int n = 1; n < mPlayers.size(); n++) {
                     mPlayers[n].onBomb();
-                    mPlayers[n].decreseHP();
+                    mPlayers[n].decreseHP("");
                 }
             });
             break;
@@ -867,6 +871,13 @@ void ScenePlay::onTouchMoved(Touch *touch, Event *event) {
 }
 
 bool ScenePlay::onContactBegin(PhysicsContact &contact) {
+    mLock.lock();
+    if(mIsEnd) {
+        mLock.unlock();
+        return true;
+    }
+    
+    
     int other;
 //    bitmask st = getBitmask(contact);
 //    if(isCollosion(contact, _PHYSICS_ID_MY_BALL, other)) {
@@ -881,9 +892,10 @@ bool ScenePlay::onContactBegin(PhysicsContact &contact) {
     for(int n = 0; n < mPlayers.size(); n++) {
         if(isContact(contact, mPlayers[n].ballId, other)) {
             if(mPlayers[n].onContact(other)) {
+                
                 for(int i=0; i< mPlayers.size(); i++) {
                     if(i != n)
-                        mPlayers[i].decreseHP();
+                        mPlayers[i].decreseHP(mPlayers[n].name);
                 }
             }
         }
@@ -924,13 +936,13 @@ bool ScenePlay::onContactBegin(PhysicsContact &contact) {
                                 , ui_wizard_share::inst()->getPalette()->getColor("WHITE_OPACITY_DEEP")
                                 , ""
                                 , "FINISH"
-                                , ui_wizard_share::inst()->getPalette()->getColor("BLACK")
+                                , ui_wizard_share::inst()->getPalette()->getColor("DARKGRAY")
                                 , false
                                 , 1.5f
                                 , CallFunc::create([=](){ this->onFinish(); })
                                 );
     }
-    
+    mLock.unlock();
     return true;
 }
 

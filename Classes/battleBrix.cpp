@@ -23,6 +23,8 @@ void brixMap::init() {
 //-------------------------------------------------------------------------------
 void brixMap::brixPosition::load(rapidjson::Value &p) {
     this->title = p["title"].GetString();
+    this->minGrade = p["minGrade"].GetInt();
+    this->maxGrade = p["maxGrade"].GetInt();
     //statics
     const rapidjson::Value& statics = p["static"];
     for (rapidjson::SizeType i = 0; i < statics.Size(); i++)
@@ -34,27 +36,51 @@ void brixMap::brixPosition::load(rapidjson::Value &p) {
         this->statics.push_back(pos);
     }
     //movement
-    brixMovement movement;
-    movement.load(p["movement"]);
-    this->movements.push_back(movement);
+    const rapidjson::Value& movements = p["movement"];
+    for (rapidjson::SizeType i = 0; i < movements.Size(); i++)
+    {
+        brixMovement movement;
+        movement.load(p["movement"][rapidjson::SizeType(i)]);
+        this->movements.push_back(movement);
+    }
+    
 }
 //-------------------------------------------------------------------------------
 void brixMap::brixMovement::load(rapidjson::Value &p) {
-    for (rapidjson::SizeType i = 0; i < p.Size(); i++)
+    
+    this->type = p["type"].GetInt();
+    
+    const rapidjson::Value& path = p["path"];
+    for (rapidjson::SizeType i = 0; i < path.Size(); i++)
     {
-        this->type = p[rapidjson::SizeType(i)]["type"].GetInt();
+        position pos;
+        pos.x = path[rapidjson::SizeType(i)][rapidjson::SizeType(0)].GetInt();
+        pos.y = path[rapidjson::SizeType(i)][rapidjson::SizeType(1)].GetInt();
         
-        const rapidjson::Value& path = p[rapidjson::SizeType(i)]["path"];
-        for (rapidjson::SizeType i = 0; i < path.Size(); i++)
-        {
-            position pos;
-            pos.x = path[rapidjson::SizeType(i)][rapidjson::SizeType(0)].GetInt();
-            pos.y = path[rapidjson::SizeType(i)][rapidjson::SizeType(1)].GetInt();
-            
-            this->path.push_back(pos);
+        this->path.push_back(pos);
+    }
+    
+}
+int brixMap::getMapRandom() {
+    vector<int> v;
+    int grade = battleBrix::inst()->mUserData.grade;
+    for(int n=0; n<mBrixMap.size(); n++) {
+        if(mBrixMap[n].minGrade <= grade) {
+            switch(mBrixMap[n].maxGrade)
+            {
+                case -1:
+                    v.push_back(n);
+                    break;
+                default:
+                    if(mBrixMap[n].maxGrade >= grade)
+                        v.push_back(n);
+                    break;
+            }
         }
     }
-}
+    CC_ASSERT(v.size() > 0);
+    return v[getRandValue((int)v.size())];
+};
 //===============================================================================
 void battleBrix::init() {
     
@@ -138,8 +164,9 @@ battleBrix::rewardData battleBrix::getReward(int ranking) {
 }
 bool battleBrix::applyReward(int ranking) {
     rewardData reward = getReward(ranking);
-    mUserData.heart += reward.heart;
-    mUserData.point += reward.point;
+    
+    mUserData.increaseHeart(reward.heart);
+    mUserData.increasePoint(reward.point);
     
     return increseGrowth(reward.growth);
 }
@@ -174,10 +201,10 @@ bool battleBrix::payForPlay(int point, int heart) {
         return false;
     
     if(mUserData.heart >= mUserData.heartMax)
-        mUserData.heartTimerStart = getNow();
+        mUserData.setHeartTimerStart(getNow());
     
-    mUserData.point -= point;
-    mUserData.heart -= heart;
+    mUserData.increasePoint(point * -1);
+    mUserData.increaseHeart(heart * -1);
     
     return true;
 }
