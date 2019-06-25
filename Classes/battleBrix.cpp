@@ -8,7 +8,54 @@
 #include "battleBrix.h"
 
 battleBrix * battleBrix::hInstance = NULL;
-
+brixMap * brixMap::hInstance = NULL;
+//===============================================================================
+void brixMap::init() {
+    rapidjson::Document d = getJsonValue("brix.json");
+    const rapidjson::Value& brix = d["brix"];
+    for (rapidjson::SizeType i = 0; i < brix.Size(); i++)
+    {
+        brixPosition b;
+        b.load(d["brix"][rapidjson::SizeType(i)]);
+        mBrixMap.push_back(b);
+    }
+}
+//-------------------------------------------------------------------------------
+void brixMap::brixPosition::load(rapidjson::Value &p) {
+    this->title = p["title"].GetString();
+    //statics
+    const rapidjson::Value& statics = p["static"];
+    for (rapidjson::SizeType i = 0; i < statics.Size(); i++)
+    {
+        position pos;
+        pos.x = statics[rapidjson::SizeType(i)][rapidjson::SizeType(0)].GetInt();
+        pos.y = statics[rapidjson::SizeType(i)][rapidjson::SizeType(1)].GetInt();
+        
+        this->statics.push_back(pos);
+    }
+    //movement
+    brixMovement movement;
+    movement.load(p["movement"]);
+    this->movements.push_back(movement);
+}
+//-------------------------------------------------------------------------------
+void brixMap::brixMovement::load(rapidjson::Value &p) {
+    for (rapidjson::SizeType i = 0; i < p.Size(); i++)
+    {
+        this->type = p[rapidjson::SizeType(i)]["type"].GetInt();
+        
+        const rapidjson::Value& path = p[rapidjson::SizeType(i)]["path"];
+        for (rapidjson::SizeType i = 0; i < path.Size(); i++)
+        {
+            position pos;
+            pos.x = path[rapidjson::SizeType(i)][rapidjson::SizeType(0)].GetInt();
+            pos.y = path[rapidjson::SizeType(i)][rapidjson::SizeType(1)].GetInt();
+            
+            this->path.push_back(pos);
+        }
+    }
+}
+//===============================================================================
 void battleBrix::init() {
     
     rapidjson::Document d = getJsonValue("config.json");
@@ -36,10 +83,18 @@ void battleBrix::init() {
     }
     
     //Grade titles
-    const rapidjson::Value& gradeTitles = d["gradeTitles"];
-    for (rapidjson::SizeType i = 0; i < gradeTitles.Size(); i++) {
-        mGradeTitles.push_back(gradeTitles[rapidjson::SizeType(i)].GetString());
+    const rapidjson::Value& grades = d["grades"];
+    for (rapidjson::SizeType i = 0; i < grades.Size(); i++) {
+        grade g;
+        g.grade = grades[rapidjson::SizeType(i)]["grade"].GetInt();
+        g.speed = grades[rapidjson::SizeType(i)]["speed"].GetFloat();
+        g.title = grades[rapidjson::SizeType(i)]["title"].GetString();
+        
+        mGrades.push_back(g);
     }
+    
+    //brix map
+    
 }
 
 const string battleBrix::getText(const string& defaultString, int id) {
@@ -57,7 +112,7 @@ const string battleBrix::getText(const string& defaultString, int id) {
             return mUserData.getRechargeRemainTimeString();
             
         case _ID_NODE_LABEL_LEVEL:
-            return "Lv." + to_string(battleBrix::inst()->mUserData.level);
+            return "GD." + to_string(battleBrix::inst()->mUserData.grade);
             
         case _ID_NODE_PROGRESSBAR:
             return getLevelString();
@@ -93,25 +148,25 @@ bool battleBrix::increseGrowth(int val) {
     mUserData.growth += val;
     if(mUserData.growth >= mUserData.maxGrowth) {
         mUserData.growth = mUserData.growth - mUserData.maxGrowth;
-        mUserData.level++;
-        mUserData.maxGrowth = mUserData.level * mGrowthPerLevel;
+        mUserData.grade++;
+        mUserData.maxGrowth = mUserData.grade * mGrowthPerLevel;
         
         return true;
         
     } else if(mUserData.growth < 0) {
         bool isReset = false;
-        if(mUserData.level - 1 < 1)
+        if(mUserData.grade - 1 < 1)
             isReset = true;
         
-        mUserData.level = max(1,  mUserData.level - 1);
-        mUserData.maxGrowth = mUserData.level * mGrowthPerLevel;
+        mUserData.grade = max(1,  mUserData.grade - 1);
+        mUserData.maxGrowth = mUserData.grade * mGrowthPerLevel;
         mUserData.growth = isReset ? 0 : mUserData.maxGrowth + mUserData.growth;
     }
     return false;
 }
 
 const string battleBrix::getLevelString() {
-    return mGradeTitles[mUserData.level];
+    return mGrades[mUserData.grade].title;
 }
 
 bool battleBrix::payForPlay(int point, int heart) {

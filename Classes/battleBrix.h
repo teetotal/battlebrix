@@ -25,7 +25,52 @@ enum _ID_NODE {
 };
 
 #define PLAY_ITEM_CNT 3
+//===============================================================
+class brixMap {
+public:
+    brixMap() {};
+    virtual ~brixMap() {};
+    static brixMap * inst() {
+        if(hInstance == NULL)
+            hInstance = new brixMap;
+        return hInstance;
+    };
+    void init();
 
+    struct position {
+        int x;
+        int y;
+    };
+    //brixMovement
+    struct brixMovement {
+        int type;
+        vector<position> path;
+        void load(rapidjson::Value &p);
+    };
+    //brix brixPosition
+    struct brixPosition {
+        string title;
+        vector<position> statics;
+        vector<brixMovement> movements;
+        
+        void load(rapidjson::Value &p);
+    };
+    
+    vector<brixPosition> mBrixMap;
+    
+    inline int getMapRandom() {
+        return getRandValue((int)mBrixMap.size());
+    };
+    
+    inline const brixPosition getMap(int idx) {
+        return mBrixMap[idx];
+    };
+    
+private:
+    static brixMap * hInstance;
+};
+
+//===============================================================
 class battleBrix {
 public:
     battleBrix() : mLastRanking(1) {};
@@ -42,7 +87,6 @@ public:
         int win;
         int lose;
         int ranking;
-        int level;
         int grade;
         int heart;
         int heartMax;
@@ -57,8 +101,7 @@ public:
         userData() : win(0)
         , lose(0)
         , ranking(532340)
-        , level(1)
-        , grade(0)
+        , grade(5)
         , heart(5)
         , heartMax(8)
         , point(5000)
@@ -148,6 +191,13 @@ public:
         };
     } mItemSelected;
     
+    //grade
+    struct grade {
+        int grade;
+        string title;
+        float speed;
+    };
+    
     const string getText(const string& defaultString, int id);
     const float getProgressValue(int id);
     rewardData getReward(int ranking);
@@ -161,14 +211,18 @@ public:
     //play 비용
     bool payForPlay(int point, int heart = 1);
     bool checkPayForPlay(int point, int heart = 1);
+    //get my grade
+    grade getMyGrade() {
+        return mGrades[mUserData.grade];
+    };
     
     rewardData mRewards[6];
     itemData mItems[PLAY_ITEM_CNT];
+    vector<grade> mGrades;
     int mLastRanking;
     
 private:
     static battleBrix * hInstance;
-    vector<string> mGradeTitles;
     int mGrowthPerLevel;
 };
 #endif /* battleBrix_h */

@@ -191,7 +191,7 @@ bool SceneDaily::init()
 
 void SceneDaily::callbackRoulette(Ref* pSender) {
     ui_roulette * roulette = (ui_roulette *)(pSender);
-    int idx = roulette->getResultIdx();
+//    int idx = roulette->getResultIdx();
     
     roulette->setVisible(false);
     getNodeById(3000)->setVisible(true);

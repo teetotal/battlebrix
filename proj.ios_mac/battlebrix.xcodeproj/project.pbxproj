@@ -82,6 +82,7 @@
 		4D7778C222B2352800CA2BC4 /* battleBrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D7778C022B2352800CA2BC4 /* battleBrix.cpp */; };
 		4D7EFBF8227C22A300E19181 /* play.json in Resources */ = {isa = PBXBuildFile; fileRef = 4D7EFBF7227C22A300E19181 /* play.json */; };
 		4DAD0ACC22928A410042F1E6 /* icons8-heart-outline-80.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DAD0ACB22928A410042F1E6 /* icons8-heart-outline-80.png */; };
+		4DAE09A822C1B618005E9560 /* brix.json in Resources */ = {isa = PBXBuildFile; fileRef = 4DAE09A622C1B618005E9560 /* brix.json */; };
 		4DB682AE228AC490007A1E22 /* shop.json in Resources */ = {isa = PBXBuildFile; fileRef = 4DB682AC228AC490007A1E22 /* shop.json */; };
 		4DB85BC622852A0D001C541A /* components.json in Resources */ = {isa = PBXBuildFile; fileRef = 4DB85BC422852A0C001C541A /* components.json */; };
 		4DB85BCE2285613F001C541A /* daily.json in Resources */ = {isa = PBXBuildFile; fileRef = 4DB85BCD2285613F001C541A /* daily.json */; };
@@ -242,6 +243,7 @@
 		4D7778C122B2352800CA2BC4 /* battleBrix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = battleBrix.h; sourceTree = "<group>"; };
 		4D7EFBF7227C22A300E19181 /* play.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = play.json; sourceTree = "<group>"; };
 		4DAD0ACB22928A410042F1E6 /* icons8-heart-outline-80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-heart-outline-80.png"; sourceTree = "<group>"; };
+		4DAE09A622C1B618005E9560 /* brix.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = brix.json; sourceTree = "<group>"; };
 		4DB682AC228AC490007A1E22 /* shop.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = shop.json; sourceTree = "<group>"; };
 		4DB85BC422852A0C001C541A /* components.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = components.json; sourceTree = "<group>"; };
 		4DB85BCD2285613F001C541A /* daily.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = daily.json; sourceTree = "<group>"; };
@@ -400,6 +402,7 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4DAE09A622C1B618005E9560 /* brix.json */,
 				4D3F128E22C0946F00535D07 /* config.json */,
 				4D45F6D522BD310200977CC1 /* icons8-snail-80.png */,
 				4DC8757622B8D91F007CF701 /* firework.plist */,
@@ -664,6 +667,7 @@
 				1AF87B891F6F781D007BE51C /* LaunchScreenBackground.png in Resources */,
 				46880B7B19C43A67006E1F66 /* CloseNormal.png in Resources */,
 				4D1BB946228FA34800F51D57 /* icons8-alarm-filled-100.png in Resources */,
+				4DAE09A822C1B618005E9560 /* brix.json in Resources */,
 				4D68FA82229D230600900F5E /* icons8-crown-480.png in Resources */,
 				4D7EFBF8227C22A300E19181 /* play.json in Resources */,
 				4DC8EEE922B39C03005101A9 /* icons8-wedding-gift-96.png in Resources */,

@@ -126,7 +126,7 @@ void ScenePlay::PLAYER::init(ScenePlay* p, const string& name, int layerId, int 
     mp->setValue(0.f);
     
     //speed
-    float speed = SPEED_BASE + (battleBrix::inst()->mUserData.level * 0.05f);
+    float speed = battleBrix::inst()->getMyGrade().speed;
     p->initPhysicsBody(layer, PHYSICSMATERIAL_OBSTACLE, false, speed);
     
     gridSize   = gui::inst()->getGridSize(layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO);
@@ -143,15 +143,16 @@ void ScenePlay::PLAYER::init(ScenePlay* p, const string& name, int layerId, int 
     //create brix layer
     createLayerBrix();
     
-    std::function<void()> f[] =  {
-        std::bind( &ScenePlay::PLAYER::addBrix0, this)
-        , std::bind( &ScenePlay::PLAYER::addBrix1, this)
-        , std::bind( &ScenePlay::PLAYER::addBrix2, this)
-        , std::bind( &ScenePlay::PLAYER::addBrix3, this)
-        , std::bind( &ScenePlay::PLAYER::addBrix4, this)
-    };
+//    std::function<void()> f[] =  {
+//        std::bind( &ScenePlay::PLAYER::addBrix0, this)
+//        , std::bind( &ScenePlay::PLAYER::addBrix1, this)
+//        , std::bind( &ScenePlay::PLAYER::addBrix2, this)
+//        , std::bind( &ScenePlay::PLAYER::addBrix3, this)
+//        , std::bind( &ScenePlay::PLAYER::addBrix4, this)
+//    };
     
-    f[fnId]();
+    //f[fnId]();
+    addBrix(fnId);
     
     //add gift 좀더 생각해 봐야겠당
     
@@ -416,6 +417,69 @@ void ScenePlay::PLAYER::finish() {
     alert->setVisible(false);
 }
 // addBrix0 ===========================================================================
+void ScenePlay::PLAYER::addBrix(int idx) {
+    brixMap::brixPosition brix = brixMap::inst()->getMap(idx);
+    int brixId = _ID_BRIX_START;
+    //static
+    for(int n=0; n < brix.statics.size(); n++)
+    {
+        int x = (brix.statics[n].x == -1) ? getRandValue(GRID_AREA.x-1) : brix.statics[n].x;
+        int y = (brix.statics[n].y == -1) ? getRandValue(BALL_INIT_POSITION_Y) : brix.statics[n].y;
+        
+        Vec2 position = gui::inst()->getPointVec2(x, y, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+        auto rect = guiExt::drawRectForPhysics(layerBrix, position, obstacleSize, pScene->mColors[(int)n], true, .1f);
+        pScene->setPhysicsBodyRect(rect
+                                   , PHYSICSMATERIAL_OBSTACLE
+                                   , false
+                                   , brixId
+                                   , -1
+                                   , -1 //_PHYSICS_ID_MY_BALL
+                                   , ballId
+                                   );
+        
+        brixEffectFlagMap[brixId] = false;
+        brixId++;
+    }
+    //movement
+    for(int n=0; n < brix.movements.size(); n++)
+    {
+        //type
+        
+        int x = (brix.movements[n].path[0].x == -1) ? getRandValue(GRID_AREA.x-1) : brix.movements[n].path[0].x;
+        int y = (brix.movements[n].path[0].y == -1) ? getRandValue(BALL_INIT_POSITION_Y) : brix.movements[n].path[0].y;
+        
+        Vec2 position = gui::inst()->getPointVec2(x, y, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+        auto rect = guiExt::drawRectForPhysics(layerBrix, position, obstacleSize, pScene->mColors[(int)n], true, .1f);
+        pScene->setPhysicsBodyRect(rect
+                                   , PHYSICSMATERIAL_OBSTACLE
+                                   , false
+                                   , brixId
+                                   , -1
+                                   , -1 //_PHYSICS_ID_MY_BALL
+                                   , ballId
+                                   );
+        brixEffectFlagMap[brixId] = false;
+        brixId++;
+        
+        //path
+        Sequence * seq;
+        Vector<FiniteTimeAction *> arr;
+        for(int i=0; i<brix.movements[n].path.size(); i++ ){
+            
+            int d = max(10, getRandValue(30));
+            float f = (float)d / 10.f;
+            x = (brix.movements[n].path[0].x == -1) ? getRandValue(GRID_AREA.x-1) : brix.movements[n].path[i].x;
+            y = (brix.movements[n].path[0].y == -1) ? getRandValue(BALL_INIT_POSITION_Y) : brix.movements[n].path[i].y;
+            Vec2 position = gui::inst()->getPointVec2(x, y, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+            auto move = MoveTo::create(f, position);
+            arr.pushBack(move);
+        }
+        seq = Sequence::create(arr);
+        rect->runAction(RepeatForever::create(seq));
+        
+    }
+}
+// addBrix0 ===========================================================================
 void ScenePlay::PLAYER::addBrix0() {
     
     int brixId = _ID_BRIX_START;
@@ -439,6 +503,7 @@ void ScenePlay::PLAYER::addBrix0() {
         brixEffectFlagMap[brixId] = false;
         brixId++;
     }
+    
 }
 // addBrix1 ===========================================================================
 void ScenePlay::PLAYER::addBrix1() {
@@ -645,13 +710,12 @@ bool ScenePlay::init()
     mIsEnd = false;
     mBrixLayerRatio = -1;
     
-    int fnId = getRandValue(5);
+    int fnId = brixMap::inst()->getMapRandom();
     
     // grade
     ((Label*)getNodeById(ID_NODE_TOP_GRADE))->setString(battleBrix::inst()->getLevelString());
     // map type
-    ((MenuItemLabel*)getNodeById(ID_NODE_TOP_MAP_TYPE))->setString("MAP-"
-                                                        +to_string(fnId));
+    ((MenuItemLabel*)getNodeById(ID_NODE_TOP_MAP_TYPE))->setString(brixMap::inst()->getMap(fnId).title);
     
     PLAYER me;
     me.init(this, "ME", ID_NODE_MY_AREA, ID_NODE_MY_HP, ID_NODE_MY_MP, _BALL_ID[0], ID_NODE_MY_ALERT, ID_NODE_MY_LABEL, fnId);

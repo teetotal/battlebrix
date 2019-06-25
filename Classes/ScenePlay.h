@@ -123,6 +123,7 @@ private:
         void createBoard();
         void createBottom();
         
+        void addBrix(int idx);
         void addBrix0();
         void addBrix1();
         void addBrix2();
