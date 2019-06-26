@@ -1,6 +1,6 @@
 {
     "growthPerLevel": 128,
-    "rechargeInterval": 300,
+    "rechargeInterval": 600,
     "grades": [
         {
             "grade": 0,

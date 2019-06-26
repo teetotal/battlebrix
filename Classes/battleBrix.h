@@ -28,6 +28,13 @@ enum _ID_NODE {
 //===============================================================
 class brixMap {
 public:
+    enum TYPE {
+        TYPE_NORMAL = 0,
+        TYPE_WALL,
+        TYPE_GIFT,
+        TYPE_TRAP
+    };
+    
     brixMap() {};
     virtual ~brixMap() {};
     static brixMap * inst() {
@@ -43,7 +50,7 @@ public:
     };
     //brixMovement
     struct brixMovement {
-        int type;
+        TYPE type;
         vector<position> path;
         void load(rapidjson::Value &p);
     };

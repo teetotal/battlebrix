@@ -70,6 +70,7 @@ private:
     void onFinish();
     void onEnd();
     void onSkill(int idx);
+    void bomb(int id, int val = DECREASE_HP);
     
     struct OBSTACLE {
         DrawNode * pDrawNode;
@@ -78,6 +79,7 @@ private:
     };
     
     struct PLAYER {
+        int idx;
         string name;
         Node * layer, * layerBrix;
         Node * ball;
@@ -114,7 +116,7 @@ private:
             label = NULL;
             isEnd = false;
         };
-        void init(ScenePlay* p, const string& name, int layerId, int hpId, int mpId, int ballId, int alertId, int labelId, int fnId);
+        void init(ScenePlay* p, int idx, const string& name, int layerId, int hpId, int mpId, int ballId, int alertId, int labelId, int fnId);
         void finish();
         void vibrate();
         bool onContact(int id, bool toRight = false);
@@ -125,7 +127,8 @@ private:
         
         void addBrix(int idx);
         DrawNode * createBrix(brixMap::position pos, int id);
-        void createGift();
+        Node * createGift(int id);
+        Sprite * createGiftOrTrapEffect(Vec2 pos, brixMap::TYPE type, CallFunc * fn);
 //        void addBrix0();
 //        void addBrix1();
 //        void addBrix2();
@@ -135,8 +138,9 @@ private:
         const float getHPValue() {
             return hp->getValue();
         };
+        bool onCombo(int id);
         void onTimer(float f);
-        void onBomb();
+        void onBomb(const string from = "BOMB");
         void setRanking(int ranking);
         void createLayerBrix();
     };

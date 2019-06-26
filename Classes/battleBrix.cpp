@@ -48,7 +48,7 @@ void brixMap::brixPosition::load(rapidjson::Value &p) {
 //-------------------------------------------------------------------------------
 void brixMap::brixMovement::load(rapidjson::Value &p) {
     
-    this->type = p["type"].GetInt();
+    this->type = (TYPE)p["type"].GetInt();
     
     const rapidjson::Value& path = p["path"];
     for (rapidjson::SizeType i = 0; i < path.Size(); i++)
@@ -126,25 +126,26 @@ void battleBrix::init() {
 const string battleBrix::getText(const string& defaultString, int id) {
     switch(id) {
         case _ID_NODE_LABEL_ID:
-            return battleBrix::inst()->mUserData.id;
+            return mUserData.id;
             
         case _ID_NODE_LABEL_POINT:
-            return numberFormat(battleBrix::inst()->mUserData.point);
+            return numberFormat(mUserData.point);
             
         case _ID_NODE_LABEL_HEART:
-            return to_string(battleBrix::inst()->mUserData.heart) + " / " + to_string(battleBrix::inst()->mUserData.heartMax);
+            mUserData.recharge();
+            return to_string(mUserData.heart) + " / " + to_string(mUserData.heartMax);
             
         case _ID_NODE_TIMER_HEART:
             return mUserData.getRechargeRemainTimeString();
             
         case _ID_NODE_LABEL_LEVEL:
-            return "GD." + to_string(battleBrix::inst()->mUserData.grade);
+            return "GD." + to_string(mUserData.grade);
             
         case _ID_NODE_PROGRESSBAR:
             return getLevelString();
             
         case _ID_NODE_LABEL_RANKING:
-            return numberFormat(battleBrix::inst()->mUserData.ranking) + "th";
+            return numberFormat(mUserData.ranking) + "th";
             
         default:
             return defaultString;

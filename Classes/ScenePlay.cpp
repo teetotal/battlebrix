@@ -14,7 +14,10 @@
 #define RATIO_OBSTACLE_PER_GRID 0.6f
 #define _ID_BOTTOM 0
 #define _ID_BRIX_START 101
-#define _ID_GIFT 100
+#define _ID_WALL 50
+#define _ID_GIFT_START 51
+#define _ID_TRAP_START 61
+
 #define BALL_INIT_POSITION_Y 8
 
 enum _PLAYER_ID {
@@ -91,7 +94,8 @@ enum ID_NODE {
 //    ui_wizard_share::inst()->getPalette()->getColor("PURPLE_LIGHT")
 //};
 // ----------------------------------------------------------------------------------------------------------------
-void ScenePlay::PLAYER::init(ScenePlay* p, const string& name, int layerId, int hpId, int mpId, int ballId, int alertId, int labelId, int fnId) {
+void ScenePlay::PLAYER::init(ScenePlay* p, int idx, const string& name, int layerId, int hpId, int mpId, int ballId, int alertId, int labelId, int fnId) {
+    this->idx = idx;
     this->name = name;
     pScene = p;
     this->ballId = ballId;
@@ -156,29 +160,7 @@ void ScenePlay::PLAYER::init(ScenePlay* p, const string& name, int layerId, int 
     //createGift();
     
 }
-//gift 좀더 생각해 봐야겠당
-void ScenePlay::PLAYER::createGift(){
-    auto gift = gui::inst()->addSpriteAutoDimension(getRandValue(GRID_AREA.x), getRandValue(GRID_AREA.x), "icons8-wedding-gift-96.png", layerBrix, ALIGNMENT_CENTER, GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-    gui::inst()->setScale(gift, gridSize.width * 0.75f);
-    auto posStart = gift->getPosition();
-    pScene->setPhysicsBodyRect(gift
-                               , PHYSICSMATERIAL_OBSTACLE
-                               , false
-                               , _ID_GIFT
-                               , -1
-                               , -1 //_PHYSICS_ID_MY_BALL
-                               , ballId
-                               );
-    float d = (float)(max(50, getRandValue(100))) / 10.f;
-    ccBezierConfig c;
-    c.controlPoint_1 = gui::inst()->getPointVec2(getRandValue(GRID_AREA.x), getRandValue(GRID_AREA.x), ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-    c.controlPoint_2 = gui::inst()->getPointVec2(getRandValue(GRID_AREA.x), getRandValue(GRID_AREA.x), ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-    c.endPosition = gui::inst()->getPointVec2(getRandValue(GRID_AREA.x), getRandValue(GRID_AREA.x), ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-    auto bezier = BezierTo::create(d, c);
-    
-    gift->runAction(Sequence::create(bezier, RemoveSelf::create(), NULL));
-    
-}
+
 //createLayerBrix ===========================================================================
 void ScenePlay::PLAYER::createLayerBrix() {
     if(layerBrix)
@@ -277,8 +259,6 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
     if(ball == NULL)
         return false;
     
-    bool ret = false;
-    
     const Vec2 ballPosition = ball->getPosition();
     
     if(id == _ID_BOTTOM) {
@@ -303,9 +283,6 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
         
         combo = 0;
         Vec2 vel = layer->getContentSize();
-        
-        //board에서 부터 top까지
-//        vel.y -= (board->getPosition().y + board->getContentSize().height);
         vel.y *= 1.5f;
         switch((_BOARD_ID)id) {
             case _BOARD_ID_L:
@@ -323,65 +300,96 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
             default:
                 break;
         }
-//        vel = Vec2(0, 130);
         ball->getPhysicsBody()->setVelocity(vel);
-//        CCLOG("%s \t Vel =[%f, %f] Ball = [%f, %f]",this->name.c_str(), vel.x, vel.y, ball->getPhysicsBody()->getVelocity().x, ball->getPhysicsBody()->getVelocity().y);
         
+    } else if(id >= _ID_GIFT_START && id < _ID_TRAP_START) {
+        auto pGift = layerBrix->getChildByTag(id);
+        if(pGift == NULL)
+            return false;
+        Vec2 pos = pGift->getPosition();
+        auto p = createGiftOrTrapEffect(pos, brixMap::TYPE_GIFT, CallFunc::create([=](){ pScene->bomb(this->idx, DECREASE_HP / 3.f); }));
+        //gift
+        layerBrix->removeChildByTag(id);
+        layerBrix->addChild(p);
+    } else if(id >= _ID_TRAP_START && id < _ID_BRIX_START) {
+        Vec2 pos = layerBrix->getChildByTag(id)->getPosition();
+        auto p = createGiftOrTrapEffect(pos, brixMap::TYPE_TRAP, NULL);
+        //gift
+        layerBrix->removeChildByTag(id);
+        layerBrix->addChild(p);
     } else if(id >= _ID_BRIX_START) {
-        combo++;
-        
-        string sz = (combo > 1) ? to_string(combo) + "COMBO" : "Cool";
-        string color;
-    
-        float fIncrease = 0.05;
-        if(combo == 1) {
-            color = "YELLOW";
-        }
-        else if(combo < 5) {
-            fIncrease *= 2.f;
-            color = "ORANGE";
-        }
-        else if(combo < 8) {
-            fIncrease *= 3.f;
-            color = "BLUE";
-        }
-        else {
-            fIncrease *= 4.f;
-            color = "GREEN";
-        }
-        
-        auto label = gui::inst()->addLabelAutoDimension(0, 0, sz, layer, fontSizeCombo, ALIGNMENT_CENTER, ui_wizard_share::inst()->getPalette()->getColor3B(color));
-        label->enableGlow(ui_wizard_share::inst()->getPalette()->getColor4B("BLACK"));
-        label->setPosition(ballPosition);
-        label->runAction( Sequence::create(ScaleBy::create(0.3, 1.5), RemoveSelf::create(), NULL) );
-        
-        //brix vibration
-        if(!brixEffectFlagMap[id]) {
-            brixEffectFlagMap[id] = true;
-            guiExt::addVibrateEffect(layerBrix->getChildByTag(id), CallFunc::create([=](){ brixEffectFlagMap[id] = false; }));
-        }
-        //attack
-        if(mp->setValueIncrese(fIncrease) >= 1.f) {
-            mp->setValue(0.f);
-            mp->blink();
-            //pScene->getNodeById(0)
-
-            auto particle = gui::inst()->createParticle("star.plist"
-                                                        , Vec2(this->mp->getPosition().x + (mp->getContentSize().width * 0.8f), this->mp->getPosition().y+ (mp->getContentSize().height * 0.5f)));
-            // 1: gui::inst()->mVisibleX = x : layerSize
-            // x = layerSize / gui::inst()->mVisibleX
-            particle->setScale(layer->getContentSize().width / gui::inst()->mVisibleX);
-            layer->addChild(particle);
-            ret = true;
-        }
+        //구조체에서는 mutex를 사용할 수 없다.
+        return onCombo(id);
     }
     
-    return ret;
+    return false;
+}
+Sprite * ScenePlay::PLAYER::createGiftOrTrapEffect(Vec2 pos, brixMap::TYPE type, CallFunc * fn) {
+    const string img = (type == brixMap::TYPE_GIFT) ? "icons8-wedding-gift-96.png" : "";
+    auto p = gui::inst()->getSprite(img);
+    gui::inst()->setScale(p, gridSize.width * 0.75f);
+    p->setPosition(pos);
+    guiExt::runScaleEffect(p, fn, 0.3f, true);
+    
+    return p;
+}
+// onCombo ===========================================================================
+bool ScenePlay::PLAYER::onCombo(int id) {
+    combo++;
+    const Vec2 ballPosition = ball->getPosition();
+    
+    string sz = (combo > 1) ? to_string(combo) + "COMBO" : "Cool";
+    string color;
+    
+    float fIncrease = 0.05;
+    if(combo == 1) {
+        color = "YELLOW";
+    }
+    else if(combo < 5) {
+        fIncrease *= 2.f;
+        color = "ORANGE";
+    }
+    else if(combo < 8) {
+        fIncrease *= 3.f;
+        color = "BLUE";
+    }
+    else {
+        fIncrease *= 4.f;
+        color = "GREEN";
+    }
+    
+    auto label = gui::inst()->addLabelAutoDimension(0, 0, sz, layer, fontSizeCombo, ALIGNMENT_CENTER, ui_wizard_share::inst()->getPalette()->getColor3B(color));
+    label->enableGlow(ui_wizard_share::inst()->getPalette()->getColor4B("BLACK"));
+    label->setPosition(ballPosition);
+    label->runAction( Sequence::create(ScaleBy::create(0.3, 1.5), RemoveSelf::create(), NULL) );
+    
+    //brix vibration
+    if(!brixEffectFlagMap[id]) {
+        brixEffectFlagMap[id] = true;
+        guiExt::addVibrateEffect(layerBrix->getChildByTag(id), CallFunc::create([=](){ brixEffectFlagMap[id] = false; }));
+    }
+    //attack
+    if(mp->setValueIncrese(fIncrease) >= 1.f) {
+        auto particle = gui::inst()->createParticle("star.plist"
+                                                    , Vec2(this->mp->getPosition().x + (mp->getContentSize().width * 0.9f), this->mp->getPosition().y+ (mp->getContentSize().height * 0.5f)));
+        // 1: gui::inst()->mVisibleX = x : layerSize
+        // x = layerSize / gui::inst()->mVisibleX
+        particle->setScale(layer->getContentSize().width / gui::inst()->mVisibleX);
+        layer->addChild(particle);
+        mp->setValue(0.f);
+        mp->blink();
+        
+        return true;
+    }
+    return false;
 }
 // onBomb ===========================================================================
-void ScenePlay::PLAYER::onBomb() {
+void ScenePlay::PLAYER::onBomb(const string from) {
+    if(isEnd)
+        return;
+    
     Vec2 pos = Vec2(layer->getContentSize().width / 2.f, layer->getContentSize().height * .75f);
-    guiExt::addScaleEffect(layer, "icons8-atomic-bomb-96.png", "BOMB", ui_wizard_share::inst()->getPalette()->getColor("GRAY"), NULL, .4f, .4f, pos, 150);
+    guiExt::addScaleEffect(layer, "icons8-atomic-bomb-96.png", from, ui_wizard_share::inst()->getPalette()->getColor("GRAY"), NULL, .4f, .4f, pos, 150);
 }
 // setAutoPlay ===========================================================================
 void ScenePlay::PLAYER::onTimer(float f) {
@@ -428,6 +436,29 @@ void ScenePlay::PLAYER::finish() {
     alert->stopAllActions();
     alert->setVisible(false);
 }
+//gift 좀더 생각해 봐야겠당
+Node * ScenePlay::PLAYER::createGift(int id){
+    auto gift = gui::inst()->addSpriteAutoDimension(getRandValue(GRID_AREA.x), getRandValue(GRID_AREA.x), "icons8-wedding-gift-96.png", layerBrix, ALIGNMENT_CENTER, GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+    gui::inst()->setScale(gift, gridSize.width * 0.75f);
+    auto posStart = gift->getPosition();
+    pScene->setPhysicsBodyRect(gift
+                               , PHYSICSMATERIAL_OBSTACLE
+                               , false
+                               , id
+                               , -1
+                               , -1 //_PHYSICS_ID_MY_BALL
+                               , ballId
+                               );
+    //    float d = (float)(max(50, getRandValue(100))) / 10.f;
+    //    ccBezierConfig c;
+    //    c.controlPoint_1 = gui::inst()->getPointVec2(getRandValue(GRID_AREA.x), getRandValue(GRID_AREA.x), ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+    //    c.controlPoint_2 = gui::inst()->getPointVec2(getRandValue(GRID_AREA.x), getRandValue(GRID_AREA.x), ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+    //    c.endPosition = gui::inst()->getPointVec2(getRandValue(GRID_AREA.x), getRandValue(GRID_AREA.x), ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+    //    auto bezier = BezierTo::create(d, c);
+    //
+    //    gift->runAction(Sequence::create(bezier, RemoveSelf::create(), NULL));
+    return gift;
+}
 //
 DrawNode * ScenePlay::PLAYER::createBrix(brixMap::position pos, int id)
 {
@@ -435,7 +466,13 @@ DrawNode * ScenePlay::PLAYER::createBrix(brixMap::position pos, int id)
     int y = (pos.y == -1) ? getRandValue(BALL_INIT_POSITION_Y) : pos.y;
     
     Vec2 position = gui::inst()->getPointVec2(x, y, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-    auto rect = guiExt::drawRectForPhysics(layerBrix, position, obstacleSize, pScene->mColors[id%10], true, .1f);
+    COLOR_RGB color;
+    if(id == _ID_WALL)
+        color.set(ui_wizard_share::inst()->getPalette()->getColor("DARKGRAY"));
+    else
+        color.set(pScene->mColors[id%10]);
+    
+    auto rect = guiExt::drawRectForPhysics(layerBrix, position, obstacleSize, color, true, .1f);
     pScene->setPhysicsBodyRect(rect
                                , PHYSICSMATERIAL_OBSTACLE
                                , false
@@ -453,6 +490,8 @@ DrawNode * ScenePlay::PLAYER::createBrix(brixMap::position pos, int id)
 void ScenePlay::PLAYER::addBrix(int idx) {
     brixMap::brixPosition brix = brixMap::inst()->getMap(idx);
     int brixId = _ID_BRIX_START;
+    int giftId = _ID_GIFT_START;
+    int trapId = _ID_TRAP_START;
     //static
     for(int n=0; n < brix.statics.size(); n++)
     {
@@ -461,9 +500,29 @@ void ScenePlay::PLAYER::addBrix(int idx) {
     //movement
     for(int n=0; n < brix.movements.size(); n++)
     {
-        //type
         int last = (int)brix.movements[n].path.size() - 1;
-        auto rect = createBrix(brix.movements[n].path[last], brixId++);
+        int id;
+        Node * pGiftOrTrap = NULL;
+        switch(brix.movements[n].type) {
+            case brixMap::TYPE_NORMAL:
+                id = brixId;
+                brixId++;
+                break;
+            case brixMap::TYPE_WALL:
+                id = _ID_WALL;
+                break;
+                //이러면 오직 한개의 gift와 trap만 있다.
+            case brixMap::TYPE_GIFT:
+                pGiftOrTrap = createGift(giftId++);
+                break;
+            case brixMap::TYPE_TRAP:
+//                pGiftOrTrap = createTrap(trapId++);
+                break;
+            default:
+                CCASSERT(false, "invalid type");
+                break;
+        }
+        auto rect = (pGiftOrTrap) ? pGiftOrTrap : createBrix(brix.movements[n].path[last], id);
         
         //path
         Sequence * seq;
@@ -722,7 +781,7 @@ bool ScenePlay::init()
     ((MenuItemLabel*)getNodeById(ID_NODE_TOP_MAP_TYPE))->setString(brixMap::inst()->getMap(fnId).title);
     
     PLAYER me;
-    me.init(this, battleBrix::inst()->mUserData.id, ID_NODE_MY_AREA, ID_NODE_MY_HP, ID_NODE_MY_MP, _BALL_ID[0], ID_NODE_MY_ALERT, ID_NODE_MY_LABEL, fnId);
+    me.init(this, _PLAYER_ID_ME, battleBrix::inst()->mUserData.id, ID_NODE_MY_AREA, ID_NODE_MY_HP, ID_NODE_MY_MP, _BALL_ID[0], ID_NODE_MY_ALERT, ID_NODE_MY_LABEL, fnId);
     mPlayers.push_back(me);
     
     Size s1 = mPlayers[_PLAYER_ID_ME].layer->getContentSize(); //193.3333, 208.247
@@ -742,7 +801,7 @@ bool ScenePlay::init()
         int areaId = id++;
         int alertId = id++;
         int labelId = id;
-        p.init(this, "CPU" + to_string(n+1), areaId, hpId, mpId, _BALL_ID[n+1], alertId, labelId, fnId);
+        p.init(this, n+1, "CPU" + to_string(n+1), areaId, hpId, mpId, _BALL_ID[n+1], alertId, labelId, fnId);
         mPlayers.push_back(p);
     }
     
@@ -752,7 +811,7 @@ bool ScenePlay::init()
                             , ui_wizard_share::inst()->getPalette()->getColor("WHITE_OPACITY_DEEP")
                             , ""
                             , "START"
-                            , ui_wizard_share::inst()->getPalette()->getColor("GREEN_DARK")
+                            , ui_wizard_share::inst()->getPalette()->getColor("DARKGRAY")
                             , false
                             , 1.5f
                             , CallFunc::create([=]()
@@ -783,6 +842,14 @@ void ScenePlay::callback(Ref* pSender, int from, int link) {
             break;
     }
 }
+void ScenePlay::bomb(int id, int val) {
+    for(int n = 0; n < mPlayers.size(); n++) {
+        if(n == id)
+            continue;
+        mPlayers[n].onBomb(mPlayers[id].name);
+        mPlayers[n].decreseHP("", val);
+    }
+}
 // onSkill ===========================================================================
 void ScenePlay::onSkill(int idx) {
     if(mIsEnd)
@@ -793,10 +860,7 @@ void ScenePlay::onSkill(int idx) {
             pFn = CallFunc::create([=]()
             {
                 mPlayers[_PLAYER_ID_ME].hp->setValueIncrese(DECREASE_HP * 2);
-                for(int n = 1; n < mPlayers.size(); n++) {
-                    mPlayers[n].onBomb();
-                    mPlayers[n].decreseHP("", DECREASE_HP / 2.f);
-                }
+                bomb(_PLAYER_ID_ME, DECREASE_HP / 2.f);
             });
             break;
         }
@@ -810,10 +874,7 @@ void ScenePlay::onSkill(int idx) {
         case 2: { //bomb
             pFn = CallFunc::create([=]()
             {
-                for(int n = 1; n < mPlayers.size(); n++) {
-                    mPlayers[n].onBomb();
-                    mPlayers[n].decreseHP("");
-                }
+                bomb(_PLAYER_ID_ME);
             });
             break;
         }
@@ -827,6 +888,7 @@ void ScenePlay::onSkill(int idx) {
                                 , ui_wizard_share::inst()->getPalette()->getColor("YELLOW")
                                 , false
                                 , 1.5f
+                                , NULL
                                 , pFn
                                 );
 }
@@ -1031,6 +1093,15 @@ void ScenePlay::onEnd()
 bool SceneEnding::init()
 {
     this->loadFromJson("ending", "ending.json");
+    //결과 화면에서도 타이머
+    this->schedule([=](float f){
+        if(battleBrix::inst()->mUserData.recharge()){
+            auto p = ((ui_icon*)getNodeById(_ID_NODE_LABEL_HEART));
+            p->setText(battleBrix::inst()->getText("", _ID_NODE_LABEL_HEART));
+            guiExt::runScaleEffect(p);
+        }
+    }, 1.f, "heartTimer");
+    
     //init bold
     ((Label*)this->getNodeById(ID_NODE_LEVELUP_LABEL))->enableBold();
     ((Label*)this->getNodeById(ID_NODE_LEVELUP_GRADE))->enableBold();
@@ -1121,6 +1192,7 @@ void SceneEnding::callback(Ref* pSender, int from, int link) {
 }
 
 void SceneEnding::onAgain() {
+    ((ui_icon*)this->getNodeById(_ID_NODE_LABEL_HEART))->setText(battleBrix::inst()->getText("", _ID_NODE_LABEL_HEART));
     if(battleBrix::inst()->payForPlay(battleBrix::inst()->mItemSelected.getTotalPoint())) {
         ((ui_icon*)this->getNodeById(_ID_NODE_LABEL_POINT))->setText(battleBrix::inst()->getText("", _ID_NODE_LABEL_POINT));
         ((ui_icon*)this->getNodeById(_ID_NODE_LABEL_HEART))->setText(battleBrix::inst()->getText("", _ID_NODE_LABEL_HEART));
