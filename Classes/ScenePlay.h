@@ -69,7 +69,7 @@ private:
     void timer(float f);
     void onFinish();
     void onEnd();
-    void onSkill(int idx);
+    void onSkill(int idx, int from);
     void bomb(int id, int val = DECREASE_HP);
     
     struct OBSTACLE {
@@ -127,7 +127,8 @@ private:
         
         void addBrix(int idx);
         DrawNode * createBrix(brixMap::position pos, int id);
-        Node * createGift(int id);
+        
+        Sprite * createBrixFromSprite(brixMap::position pos, int id, const string img);
         Sprite * createGiftOrTrapEffect(Vec2 pos, brixMap::TYPE type, CallFunc * fn);
 //        void addBrix0();
 //        void addBrix1();

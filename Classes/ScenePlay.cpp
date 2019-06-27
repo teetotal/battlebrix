@@ -307,13 +307,17 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
         if(pGift == NULL)
             return false;
         Vec2 pos = pGift->getPosition();
-        auto p = createGiftOrTrapEffect(pos, brixMap::TYPE_GIFT, CallFunc::create([=](){ pScene->bomb(this->idx, DECREASE_HP / 3.f); }));
+        auto p = createGiftOrTrapEffect(pos, brixMap::TYPE_GIFT, CallFunc::create([=](){
+            pScene->onSkill(getRandValue((int)battleBrix::inst()->mItems.size()), this->idx);
+        }));
         //gift
         layerBrix->removeChildByTag(id);
         layerBrix->addChild(p);
     } else if(id >= _ID_TRAP_START && id < _ID_BRIX_START) {
         Vec2 pos = layerBrix->getChildByTag(id)->getPosition();
-        auto p = createGiftOrTrapEffect(pos, brixMap::TYPE_TRAP, NULL);
+        auto p = createGiftOrTrapEffect(pos, brixMap::TYPE_TRAP, CallFunc::create([=](){
+            this->decreseHP("");
+        }));
         //gift
         layerBrix->removeChildByTag(id);
         layerBrix->addChild(p);
@@ -325,7 +329,7 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
     return false;
 }
 Sprite * ScenePlay::PLAYER::createGiftOrTrapEffect(Vec2 pos, brixMap::TYPE type, CallFunc * fn) {
-    const string img = (type == brixMap::TYPE_GIFT) ? "icons8-wedding-gift-96.png" : "";
+    const string img = (type == brixMap::TYPE_GIFT) ? "icons8-wedding-gift-96.png" : "icons8-bomb-96.png";
     auto p = gui::inst()->getSprite(img);
     gui::inst()->setScale(p, gridSize.width * 0.75f);
     p->setPosition(pos);
@@ -437,11 +441,11 @@ void ScenePlay::PLAYER::finish() {
     alert->setVisible(false);
 }
 //gift 좀더 생각해 봐야겠당
-Node * ScenePlay::PLAYER::createGift(int id){
-    auto gift = gui::inst()->addSpriteAutoDimension(getRandValue(GRID_AREA.x), getRandValue(GRID_AREA.x), "icons8-wedding-gift-96.png", layerBrix, ALIGNMENT_CENTER, GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-    gui::inst()->setScale(gift, gridSize.width * 0.75f);
-    auto posStart = gift->getPosition();
-    pScene->setPhysicsBodyRect(gift
+Sprite * ScenePlay::PLAYER::createBrixFromSprite(brixMap::position pos, int id, const string img){
+    auto p = gui::inst()->addSpriteAutoDimension(pos.x, pos.y, img, layerBrix, ALIGNMENT_CENTER, GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+    gui::inst()->setScale(p, gridSize.width * 0.75f);
+    auto posStart = p->getPosition();
+    pScene->setPhysicsBodyRect(p
                                , PHYSICSMATERIAL_OBSTACLE
                                , false
                                , id
@@ -449,15 +453,8 @@ Node * ScenePlay::PLAYER::createGift(int id){
                                , -1 //_PHYSICS_ID_MY_BALL
                                , ballId
                                );
-    //    float d = (float)(max(50, getRandValue(100))) / 10.f;
-    //    ccBezierConfig c;
-    //    c.controlPoint_1 = gui::inst()->getPointVec2(getRandValue(GRID_AREA.x), getRandValue(GRID_AREA.x), ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-    //    c.controlPoint_2 = gui::inst()->getPointVec2(getRandValue(GRID_AREA.x), getRandValue(GRID_AREA.x), ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-    //    c.endPosition = gui::inst()->getPointVec2(getRandValue(GRID_AREA.x), getRandValue(GRID_AREA.x), ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-    //    auto bezier = BezierTo::create(d, c);
-    //
-    //    gift->runAction(Sequence::create(bezier, RemoveSelf::create(), NULL));
-    return gift;
+    
+    return p;
 }
 //
 DrawNode * ScenePlay::PLAYER::createBrix(brixMap::position pos, int id)
@@ -513,10 +510,10 @@ void ScenePlay::PLAYER::addBrix(int idx) {
                 break;
                 //이러면 오직 한개의 gift와 trap만 있다.
             case brixMap::TYPE_GIFT:
-                pGiftOrTrap = createGift(giftId++);
+                pGiftOrTrap = createBrixFromSprite(brix.movements[n].path[last], giftId++, "icons8-wedding-gift-96.png");
                 break;
             case brixMap::TYPE_TRAP:
-//                pGiftOrTrap = createTrap(trapId++);
+                pGiftOrTrap = createBrixFromSprite(brix.movements[n].path[last], trapId++, "icons8-bomb-96.png");
                 break;
             default:
                 CCASSERT(false, "invalid type");
@@ -851,36 +848,22 @@ void ScenePlay::bomb(int id, int val) {
     }
 }
 // onSkill ===========================================================================
-void ScenePlay::onSkill(int idx) {
+void ScenePlay::onSkill(int idx, int from) {
     if(mIsEnd)
         return;
-    CallFunc * pFn = NULL;
-    switch(idx) {
-        case 0: {
-            pFn = CallFunc::create([=]()
-            {
-                mPlayers[_PLAYER_ID_ME].hp->setValueIncrese(DECREASE_HP * 2);
-                bomb(_PLAYER_ID_ME, DECREASE_HP / 2.f);
-            });
-            break;
-        }
-        case 1: { //potion
-            pFn = CallFunc::create([=]()
-            {
-                mPlayers[_PLAYER_ID_ME].hp->setValueIncrese(DECREASE_HP * 4);
-            });
-            break;
-        }
-        case 2: { //bomb
-            pFn = CallFunc::create([=]()
-            {
-                bomb(_PLAYER_ID_ME);
-            });
-            break;
-        }
-    }
     
-    if(pFn)
+    float recharge = battleBrix::inst()->mItems[idx].property.hpRecharge;
+    float attack = battleBrix::inst()->mItems[idx].property.hpAttack;
+    
+    //자신일 경우만
+    if(from == _PLAYER_ID_ME) {
+        CallFunc * pFn = CallFunc::create([=]()
+                                          {
+                                              if(recharge > 0.f)
+                                                  mPlayers[from].hp->setValueIncrese(recharge);
+                                              if(attack > 0.f)
+                                                  bomb(from, attack);
+                                          });
         guiExt::addMovingEffect(this->getNodeById(0)
                                 , ui_wizard_share::inst()->getPalette()->getColor("WHITE_OPACITY_LIGHT2")
                                 , battleBrix::inst()->mItems[idx].img
@@ -891,6 +874,13 @@ void ScenePlay::onSkill(int idx) {
                                 , NULL
                                 , pFn
                                 );
+    }
+    else {
+        if(recharge > 0.f)
+            mPlayers[from].hp->setValueIncrese(recharge);
+        if(attack > 0.f)
+            bomb(from, attack);
+    }
 }
 // getText ===========================================================================
 const string ScenePlay::getText(const string& defaultString, int id) {
@@ -906,7 +896,7 @@ bool ScenePlay::onTouchEnded(Touch* touch, Event* event) {
         if(mSkills[n]->getBoundingBox().containsPoint(mSkillParentNode->convertTouchToNodeSpace(touch))) {
             if(mSkills[n]->isEnabled()) {
                 mSkills[n]->runScaleAndDisable();
-                onSkill(n);
+                onSkill(n, _PLAYER_ID_ME);
             }
             return false;
         }
@@ -1033,62 +1023,6 @@ void ScenePlay::onEnd()
     battleBrix::inst()->mLastRanking = mPlayers[_PLAYER_ID_ME].ranking;
     this->replaceScene(SceneEnding::create());
 }
-//    int nRanking = mPlayers[_PLAYER_ID_ME].ranking;
-//    string szRanking = getRankString(nRanking);
-//    
-//    battleBrix::rewardData reward = battleBrix::inst()->getReward(nRanking);
-//    //    ID_NODE_ENDING = 90,
-//    this->getNodeById(ID_NODE_ENDING)->setVisible(true);
-//    
-//    //    ID_NODE_ENDING_RANKING,
-//    ((Label*)getNodeById(ID_NODE_ENDING_RANKING))->setString(szRanking);
-//    
-//    //    ID_NODE_ENDING_PROGRESSBAR,
-//    ((ui_progressbar*)getNodeById(ID_NODE_ENDING_PROGRESSBAR))->setValue(battleBrix::inst()->getGrowthPercentage());
-//    ((ui_progressbar*)getNodeById(ID_NODE_ENDING_PROGRESSBAR))->setText(battleBrix::inst()->getLevelString());
-//    
-//    //    ID_NODE_ENDING_REWARD,
-//    auto pReward =((Label*)getNodeById(ID_NODE_ENDING_REWARD));
-//    if(reward.growth >= 0) {
-//        pReward->setString("+" + to_string(reward.growth));
-//    } else {
-//        pReward->setString(to_string(reward.growth));
-//        pReward->setColor(ui_wizard_share::inst()->getPalette()->getColor3B("RED_DARK"));
-//    }
-//    
-////    pReward->setColor(ui_wizard_share::inst()->getPalette()->getColor3B(szColorReward));
-//    //    ID_NODE_ENDING_REWARD_POINT,
-//    auto pPoint = ((ui_icon*)this->getNodeById(ID_NODE_ENDING_REWARD_POINT));
-//    pPoint->setText((reward.point >= 0) ? "+" + to_string(reward.point) : to_string(reward.point));
-//    
-//    //    ID_NODE_ENDING_REWARD_HEART,
-//    auto pHeart = ((ui_icon*)this->getNodeById(ID_NODE_ENDING_REWARD_HEART));
-//    pHeart->setText((reward.heart >= 0) ? "+" + to_string(reward.heart) : to_string(reward.heart));
-//    
-//    //effect
-//    guiExt::runFlyEffect(this->getNodeById(ID_NODE_ENDING_REWARD)
-//                         , CallFunc::create([=]() {
-//                                if(battleBrix::inst()->applyReward(nRanking)) {
-//                                    //level up
-//                                    auto levelup = this->getNodeById(ID_NODE_LEVELUP);
-//                                    levelup->setVisible(true);
-//                                    guiExt::runScaleEffect(levelup, NULL, 0.8f, true);
-//                                    //auto bg = this->getNodeById(0);
-//                                    auto particle = gui::inst()->createParticle("firework.plist", gui::inst()->getCenter());
-//                                    this->addChild(particle);
-//                                }
-//                                ((ui_progressbar*)getNodeById(ID_NODE_ENDING_PROGRESSBAR))->setValue(battleBrix::inst()->getGrowthPercentage());
-//                                ((ui_progressbar*)getNodeById(ID_NODE_ENDING_PROGRESSBAR))->setText(battleBrix::inst()->getLevelString());
-//                            })
-//                         , 1.f, (reward.growth < 0) ? true : false);
-//    
-//    if(reward.point > 0)
-//        guiExt::runScaleEffect(this->getNodeById(ID_NODE_ENDING_REWARD_POINT));
-//    
-//    if(reward.heart > 0)
-//        guiExt::runScaleEffect(this->getNodeById(ID_NODE_ENDING_REWARD_HEART));
-//}
-
 //====================================================================
 bool SceneEnding::init()
 {

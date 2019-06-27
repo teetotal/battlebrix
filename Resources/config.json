@@ -83,17 +83,29 @@
             {
                 "name": "Combo",
                 "price": 150,
-                "img": "icons8-snail-80.png"
+                "img": "icons8-snail-80.png",
+                "property" : {
+                    "hpAttack": 0.025,
+                    "hpRecharge": 0.05
+                }
             },
             {
                 "name": "Potion",
                 "price": 100,
-                "img": "icons8-hyper-potion-96.png"
+                "img": "icons8-hyper-potion-96.png",
+                "property" : {
+                    "hpAttack": 0,
+                    "hpRecharge": 0.1
+                }
             },
             {
                 "name": "Bomb",
                 "price": 100,
-                "img": "icons8-atomic-bomb-96.png"
+                "img": "icons8-atomic-bomb-96.png",
+                "property" : {
+                    "hpAttack": 0.05,
+                    "hpRecharge": 0
+                }
             }
         ],
         "rewards": [

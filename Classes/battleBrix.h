@@ -107,14 +107,14 @@ public:
         std::mutex lock;
         
         userData() : win(0)
-        , lose(0)
-        , ranking(532340)
-        , grade(1)
-        , heart(8)
-        , heartMax(8)
-        , point(5000)
-        , maxGrowth(128)
-        , growth(10)
+                    , lose(0)
+                    , ranking(532340)
+                    , grade(1)
+                    , heart(8)
+                    , heartMax(8)
+                    , point(5000)
+                    , maxGrowth(128)
+                    , growth(10)
         {
             id = "teetotal";
             heartTimerStart = getNow();
@@ -184,11 +184,24 @@ public:
         }
     };
     
+    struct itemProperty {
+        float hpAttack; //공격 HP
+        float hpRecharge; // 충전 HP
+        
+        void set(float attack, float recharge) {
+            hpAttack = attack;
+            hpRecharge = recharge;
+        };
+    };
+    
     // item meta
     struct itemData {
         int price;
         string img;
         string name;
+        
+        //property
+        itemProperty property;
         
         void set(const string name, int price, const string img) {
             this->name = name;
@@ -199,17 +212,17 @@ public:
     
     // selected
     struct itemSelected {
-        bool isSelected[PLAY_ITEM_CNT];
+        vector<bool> isSelected;
         
-        itemSelected() {
-            for(int n = 0; n < PLAY_ITEM_CNT; n++) {
-                isSelected[n] = true;
+        void set(int cnt) {
+            for(int n = 0; n < cnt; n++) {
+                isSelected.push_back(true);
             }
         };
         
         int getTotalPoint() {
             int total = 0;
-            for(int n = 0; n < PLAY_ITEM_CNT; n++) {
+            for(int n = 0; n < isSelected.size(); n++) {
                 if(isSelected[n])
                     total += battleBrix::inst()->mItems[n].price;
             }
@@ -243,7 +256,7 @@ public:
     };
     
     rewardData mRewards[6];
-    itemData mItems[PLAY_ITEM_CNT];
+    vector<itemData> mItems;
     vector<grade> mGrades;
     int mLastRanking;
     

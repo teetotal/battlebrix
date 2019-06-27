@@ -81,6 +81,7 @@
 		4D71954022A7CF8700703A90 /* icons8-action-96.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D71953E22A7CF8700703A90 /* icons8-action-96.png */; };
 		4D7778C222B2352800CA2BC4 /* battleBrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D7778C022B2352800CA2BC4 /* battleBrix.cpp */; };
 		4D7EFBF8227C22A300E19181 /* play.json in Resources */ = {isa = PBXBuildFile; fileRef = 4D7EFBF7227C22A300E19181 /* play.json */; };
+		4D7F6CC522C4724E00355AC5 /* icons8-bomb-96.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D7F6CC322C4724E00355AC5 /* icons8-bomb-96.png */; };
 		4DAD0ACC22928A410042F1E6 /* icons8-heart-outline-80.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DAD0ACB22928A410042F1E6 /* icons8-heart-outline-80.png */; };
 		4DAE09A822C1B618005E9560 /* brix.json in Resources */ = {isa = PBXBuildFile; fileRef = 4DAE09A622C1B618005E9560 /* brix.json */; };
 		4DAE09AF22C1F2D1005E9560 /* star.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4DAE09AD22C1F2D0005E9560 /* star.plist */; };
@@ -244,6 +245,7 @@
 		4D7778C022B2352800CA2BC4 /* battleBrix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = battleBrix.cpp; sourceTree = "<group>"; };
 		4D7778C122B2352800CA2BC4 /* battleBrix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = battleBrix.h; sourceTree = "<group>"; };
 		4D7EFBF7227C22A300E19181 /* play.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = play.json; sourceTree = "<group>"; };
+		4D7F6CC322C4724E00355AC5 /* icons8-bomb-96.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-bomb-96.png"; sourceTree = "<group>"; };
 		4DAD0ACB22928A410042F1E6 /* icons8-heart-outline-80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-heart-outline-80.png"; sourceTree = "<group>"; };
 		4DAE09A622C1B618005E9560 /* brix.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = brix.json; sourceTree = "<group>"; };
 		4DAE09AD22C1F2D0005E9560 /* star.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = star.plist; sourceTree = "<group>"; };
@@ -406,6 +408,7 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4D7F6CC322C4724E00355AC5 /* icons8-bomb-96.png */,
 				4DAE09AD22C1F2D0005E9560 /* star.plist */,
 				4DAE09AE22C1F2D1005E9560 /* star.png */,
 				4DAE09A622C1B618005E9560 /* brix.json */,
@@ -662,6 +665,7 @@
 				4D1BB953228FA34800F51D57 /* icons8-find-user-male-100.png in Resources */,
 				4DC8757A22B8D91F007CF701 /* firework.png in Resources */,
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
+				4D7F6CC522C4724E00355AC5 /* icons8-bomb-96.png in Resources */,
 				4D1BB951228FA34800F51D57 /* icons8-settings-100.png in Resources */,
 				4D1BB911228FA27000F51D57 /* .gitkeep in Resources */,
 				4D4EDBD022915B0200F375BF /* Daeko_400.png in Resources */,

@@ -105,8 +105,17 @@ void battleBrix::init() {
         const string name = playItems[rapidjson::SizeType(i)]["name"].GetString();
         const string img = playItems[rapidjson::SizeType(i)]["img"].GetString();
         int price = playItems[rapidjson::SizeType(i)]["price"].GetInt();
-        mItems[i].set(name, price, img);
+        itemData item;
+        item.set(name, price, img);
+        //property
+        float attack = playItems[rapidjson::SizeType(i)]["property"]["hpAttack"].GetFloat();
+        float recharge = playItems[rapidjson::SizeType(i)]["property"]["hpRecharge"].GetFloat();
+        item.property.set(attack, recharge);
+        
+        mItems.push_back(item);
     }
+    
+    mItemSelected.set((int)mItems.size());
     
     //Grade titles
     const rapidjson::Value& grades = d["grades"];
