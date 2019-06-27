@@ -191,48 +191,48 @@
                     "visible": false,
                     "position": [ 0, 0 ],
                     "alignment": "center",
-                    "type": "sprite",
-                    "img": "icons8-checkmark2-480.png"
+                    "type": "layer",
+                    "color": "DARKGRAY_DISABLE"
                 },
                 {
                     "id": 102,
                     "visible": false,
                     "position": [ 1, 0 ],
                     "alignment": "center",
-                    "type": "sprite",
-                    "img": "icons8-checkmark2-480.png"
+                    "type": "layer",
+                    "color": "DARKGRAY_DISABLE"
                 },
                 {
                     "id": 103,
                     "visible": false,
                     "position": [ 2, 0 ],
                     "alignment": "center",
-                    "type": "sprite",
-                    "img": "icons8-checkmark2-480.png"
+                    "type": "layer",
+                    "color": "DARKGRAY_DISABLE"
                 },
                 {
                     "id": 104,
                     "visible": false,
                     "position": [ 0, 1 ],
                     "alignment": "center",
-                    "type": "sprite",
-                    "img": "icons8-checkmark2-480.png"
+                    "type": "layer",
+                    "color": "DARKGRAY_DISABLE"
                 },
                 {
                     "id": 105,
                     "visible": false,
                     "position": [ 1, 1 ],
                     "alignment": "center",
-                    "type": "sprite",
-                    "img": "icons8-checkmark2-480.png"
+                    "type": "layer",
+                    "color": "DARKGRAY_DISABLE"
                 },
                 {
                     "id": 106,
                     "visible": false,
                     "position": [ 2, 1 ],
                     "alignment": "center",
-                    "type": "sprite",
-                    "img": "icons8-checkmark2-480.png"
+                    "type": "layer",
+                    "color": "DARKGRAY_DISABLE"
                 }
             ]
         },

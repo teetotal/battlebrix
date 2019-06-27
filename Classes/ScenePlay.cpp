@@ -859,9 +859,9 @@ void ScenePlay::onSkill(int idx, int from) {
     if(from == _PLAYER_ID_ME) {
         CallFunc * pFn = CallFunc::create([=]()
                                           {
-                                              if(recharge > 0.f)
+                                              if(recharge > 0.f && !mPlayers[from].isEnd)
                                                   mPlayers[from].hp->setValueIncrese(recharge);
-                                              if(attack > 0.f)
+                                              if(attack > 0.f && !mPlayers[from].isEnd)
                                                   bomb(from, attack);
                                           });
         guiExt::addMovingEffect(this->getNodeById(0)

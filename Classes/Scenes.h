@@ -97,6 +97,7 @@ private:
     int mTodayIdx;
     ui_roulette * mRoulette;
     void callbackRoulette(Ref* pSender);
+    int mRewards[8];
 };
 // SceneShop ==================================
 class SceneShop : public ui_wizard
