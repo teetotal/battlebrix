@@ -6,6 +6,7 @@
 //
 
 #include "battleBrix.h"
+#define SQL_FILE_NAME "battleBrix.s3db"
 
 battleBrix * battleBrix::hInstance = NULL;
 brixMap * brixMap::hInstance = NULL;
@@ -81,13 +82,113 @@ int brixMap::getMapRandom() {
     CC_ASSERT(v.size() > 0);
     return v[getRandValue((int)v.size())];
 };
+//======================================================================
+// UserData
+//======================================================================
+void battleBrix::userData::increaseHeart(int n) {
+    lock.lock();
+    heart += n;
+    int r = Sql::inst()->exec("UPDATE userData SET heart = " + to_string(heart));
+    CCASSERT((r == 0), "sql failure");
+    r = Sql::inst()->exec("UPDATE userData SET crc = (heartTimerStart + grade + heart + heartMax + point + growth + maxGrowth + ranking) % 128");
+    CCASSERT((r == 0), "sql failure");
+    lock.unlock();
+};
+
+void battleBrix::userData::increasePoint(int n) {
+    lock.lock();
+    point += n;
+    int r = Sql::inst()->exec("UPDATE userData SET point = " + to_string(point));
+    CCASSERT((r == 0), "sql failure");
+    r = Sql::inst()->exec("UPDATE userData SET crc = (heartTimerStart + grade + heart + heartMax + point + growth + maxGrowth + ranking) % 128");
+    CCASSERT((r == 0), "sql failure");
+    lock.unlock();
+};
+
+void battleBrix::userData::setHeartTimerStart(time_t t) {
+    lock.lock();
+    heartTimerStart = t;
+    int r = Sql::inst()->exec("UPDATE userData SET heartTimerStart = " + to_string(heartTimerStart));
+    CCASSERT((r == 0), "sql failure");
+    r = Sql::inst()->exec("UPDATE userData SET crc = (heartTimerStart + grade + heart + heartMax + point + growth + maxGrowth + ranking) % 128");
+    CCASSERT((r == 0), "sql failure");
+    lock.unlock();
+};
+
+bool battleBrix::userData::increseGrowth(int val) {
+    bool ret = false;
+    growth += val;
+    if(growth >= maxGrowth) {
+        growth = growth - maxGrowth;
+        grade++;
+        maxGrowth = grade * growthPerLevel;
+        
+        ret = true;
+        
+    } else if(growth < 0) {
+        bool isReset = false;
+        if(grade - 1 < 1)
+            isReset = true;
+        
+        grade = max(1,  grade - 1);
+        maxGrowth = grade * growthPerLevel;
+        growth = isReset ? 0 : maxGrowth + growth;
+    }
+    int r = Sql::inst()->exec("UPDATE userData SET growth = " + to_string(growth) + " , maxGrowth = " + to_string(maxGrowth) + " ,grade = " + to_string(grade));
+    CCASSERT((r == 0), "sql failure");
+    r = Sql::inst()->exec("UPDATE userData SET crc = (heartTimerStart + grade + heart + heartMax + point + growth + maxGrowth + ranking) % 128");
+    CCASSERT((r == 0), "sql failure");
+    return ret;
+}
 //===============================================================================
-void battleBrix::init() {
+bool battleBrix::init() {
     
+    //sql
+    string sqliteFullPath = cocos2d::FileUtils::getInstance()->getWritablePath() + SQL_FILE_NAME;
+    if (!cocos2d::FileUtils::getInstance()->isFileExist(sqliteFullPath)) {
+        //writable 경로에 파일 복사
+        cocos2d::FileUtils::getInstance()->writeDataToFile(cocos2d::FileUtils::getInstance()->getDataFromFile(SQL_FILE_NAME), sqliteFullPath);
+    }
+    if(!Sql::inst()->init(sqliteFullPath)) {
+        CCLOG("SQL FILE INIT FAILURE");
+        return false;
+    }
+    
+    sqlite3_stmt * stmt = Sql::inst()->select("SELECT id, grade, heart, heartMax, heartTimerStart, point, growth, maxGrowth, ranking, crc FROM userData");
+    if (stmt == NULL)
+        return false;
+    
+    int result = sqlite3_step(stmt);
+    
+    if (result == SQLITE_ROW) {
+        int idx = 0;
+        mUserData.id = (const char*)sqlite3_column_text(stmt, idx++);
+        mUserData.grade = sqlite3_column_int(stmt, idx++);
+        mUserData.heart = sqlite3_column_int(stmt, idx++);
+        mUserData.heartMax = sqlite3_column_int(stmt, idx++);
+        mUserData.heartTimerStart = sqlite3_column_int64(stmt, idx++);
+        mUserData.point = sqlite3_column_int(stmt, idx++);
+        mUserData.growth = sqlite3_column_int(stmt, idx++);
+        mUserData.maxGrowth = sqlite3_column_int(stmt, idx++);
+        mUserData.ranking = sqlite3_column_int(stmt, idx++);
+        
+        int crc = sqlite3_column_int(stmt, idx++);
+        long crcCheck = mUserData.heartTimerStart + mUserData.grade + mUserData.heart + mUserData.heartMax + mUserData.point + mUserData.growth + mUserData.maxGrowth + mUserData.ranking;
+        crcCheck = (int)(crcCheck % 128);
+        CCLOG("CRC %d - %d", crc, (int)crcCheck);
+        if(crc != crcCheck) {
+            CCLOG("CRC ERROR");
+            return false;
+        }
+    }
+    else
+        return false;
+    
+    //config
     rapidjson::Document d = getJsonValue("config.json");
     
     mUserData.rechargeTime = d["rechargeInterval"].GetInt();
-    mGrowthPerLevel = d["growthPerLevel"].GetInt();
+    mUserData.growthPerLevel = d["growthPerLevel"].GetInt();
     
     //reward
     const rapidjson::Value& rewards = d["play"]["rewards"];
@@ -128,8 +229,7 @@ void battleBrix::init() {
         mGrades.push_back(g);
     }
     
-    //brix map
-    
+    return true;
 }
 
 const string battleBrix::getText(const string& defaultString, int id) {
@@ -178,28 +278,7 @@ bool battleBrix::applyReward(int ranking) {
     mUserData.increaseHeart(reward.heart);
     mUserData.increasePoint(reward.point);
     
-    return increseGrowth(reward.growth);
-}
-
-bool battleBrix::increseGrowth(int val) {
-    mUserData.growth += val;
-    if(mUserData.growth >= mUserData.maxGrowth) {
-        mUserData.growth = mUserData.growth - mUserData.maxGrowth;
-        mUserData.grade++;
-        mUserData.maxGrowth = mUserData.grade * mGrowthPerLevel;
-        
-        return true;
-        
-    } else if(mUserData.growth < 0) {
-        bool isReset = false;
-        if(mUserData.grade - 1 < 1)
-            isReset = true;
-        
-        mUserData.grade = max(1,  mUserData.grade - 1);
-        mUserData.maxGrowth = mUserData.grade * mGrowthPerLevel;
-        mUserData.growth = isReset ? 0 : mUserData.maxGrowth + mUserData.growth;
-    }
-    return false;
+    return mUserData.increseGrowth(reward.growth);
 }
 
 const string battleBrix::getLevelString() {

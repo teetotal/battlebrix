@@ -10,6 +10,7 @@
 
 #include <string>
 #include "library/pch.h"
+#include "library/sql.h"
 
 using namespace std;
 
@@ -87,12 +88,11 @@ public:
           hInstance = new battleBrix;
         return hInstance;
     };
-    void init();
+    bool init();
     
     //user data
     struct userData {
-        int win;
-        int lose;
+        string id;
         int ranking;
         int grade;
         int heart;
@@ -101,14 +101,14 @@ public:
         int point;
         int maxGrowth;
         int growth;
-        string id;
         
+        
+        int growthPerLevel;
         int rechargeTime;
         std::mutex lock;
         
-        userData() : win(0)
-                    , lose(0)
-                    , ranking(532340)
+        userData() :
+                     ranking(532340)
                     , grade(1)
                     , heart(8)
                     , heartMax(8)
@@ -151,23 +151,14 @@ public:
             return ret;
         };
         
-        void increaseHeart(int n=1) {
-            lock.lock();
-            heart += n;
-            lock.unlock();
-        };
+        void increaseHeart(int n=1);
         
-        void increasePoint(int n) {
-            lock.lock();
-            point += n;
-            lock.unlock();
-        };
+        void increasePoint(int n);
         
-        void setHeartTimerStart(time_t t) {
-            lock.lock();
-            heartTimerStart = t;
-            lock.unlock();
-        };
+        void setHeartTimerStart(time_t t);
+        
+        bool increseGrowth(int val);
+
         
     } mUserData;
     
@@ -245,7 +236,7 @@ public:
         return (float)mUserData.growth / (float)mUserData.maxGrowth;
     };
     // level up 이면 true
-    bool increseGrowth(int val);
+//    bool increseGrowth(int val);
     const string getLevelString();
     //play 비용
     bool payForPlay(int point, int heart = 1);
@@ -262,6 +253,5 @@ public:
     
 private:
     static battleBrix * hInstance;
-    int mGrowthPerLevel;
 };
 #endif /* battleBrix_h */

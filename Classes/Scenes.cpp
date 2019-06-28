@@ -27,6 +27,7 @@
 #include "ScenePlay.h"
 #include "ui/ui_ext.h"
 #include "library/pch.h"
+#include "ui/ui_character_animal.h"
 
 #define HEART_TIMER     this->schedule([=](float f){\
 if(battleBrix::inst()->mUserData.recharge()){\
@@ -206,6 +207,13 @@ bool SceneDaily::init()
     }
     
     roulette->setValue(getRandValue(360), CC_CALLBACK_1(SceneDaily::callbackRoulette, this));
+    
+    //animal
+    ui_character_animal * ani = ui_character_animal::create();
+    ani->init(Size(200, 200));
+    ani->setAnchorPoint(Vec2(0.5, 0.5));
+    ani->setPosition(gui::inst()->getCenter());
+//    this->addChild(ani);
     
     return true;
 }

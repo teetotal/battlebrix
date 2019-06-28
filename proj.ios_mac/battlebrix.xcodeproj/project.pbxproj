@@ -82,6 +82,9 @@
 		4D7778C222B2352800CA2BC4 /* battleBrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D7778C022B2352800CA2BC4 /* battleBrix.cpp */; };
 		4D7EFBF8227C22A300E19181 /* play.json in Resources */ = {isa = PBXBuildFile; fileRef = 4D7EFBF7227C22A300E19181 /* play.json */; };
 		4D7F6CC522C4724E00355AC5 /* icons8-bomb-96.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D7F6CC322C4724E00355AC5 /* icons8-bomb-96.png */; };
+		4D7F6CCB22C4C1C800355AC5 /* ui_character_animal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D7F6CC922C4C1C800355AC5 /* ui_character_animal.cpp */; };
+		4D94242B22C5AA560071A476 /* battleBrix.s3db in Resources */ = {isa = PBXBuildFile; fileRef = 4D94242A22C5AA560071A476 /* battleBrix.s3db */; };
+		4D94242D22C5AC2D0071A476 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D94242C22C5AC2D0071A476 /* libsqlite3.0.tbd */; };
 		4DAD0ACC22928A410042F1E6 /* icons8-heart-outline-80.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DAD0ACB22928A410042F1E6 /* icons8-heart-outline-80.png */; };
 		4DAE09A822C1B618005E9560 /* brix.json in Resources */ = {isa = PBXBuildFile; fileRef = 4DAE09A622C1B618005E9560 /* brix.json */; };
 		4DAE09AF22C1F2D1005E9560 /* star.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4DAE09AD22C1F2D0005E9560 /* star.plist */; };
@@ -246,6 +249,17 @@
 		4D7778C122B2352800CA2BC4 /* battleBrix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = battleBrix.h; sourceTree = "<group>"; };
 		4D7EFBF7227C22A300E19181 /* play.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = play.json; sourceTree = "<group>"; };
 		4D7F6CC322C4724E00355AC5 /* icons8-bomb-96.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-bomb-96.png"; sourceTree = "<group>"; };
+		4D7F6CC922C4C1C800355AC5 /* ui_character_animal.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ui_character_animal.cpp; path = ../../library/ui/ui_character_animal.cpp; sourceTree = "<group>"; };
+		4D7F6CCA22C4C1C800355AC5 /* ui_character_animal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_character_animal.h; path = ../../library/ui/ui_character_animal.h; sourceTree = "<group>"; };
+		4D94242122C5A5AE0071A476 /* sql.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sql.h; path = ../../library/library/sql.h; sourceTree = "<group>"; };
+		4D94242322C5A5AE0071A476 /* farming.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = farming.h; path = ../../library/library/farming.h; sourceTree = "<group>"; };
+		4D94242422C5A5AE0071A476 /* trade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = trade.h; path = ../../library/library/trade.h; sourceTree = "<group>"; };
+		4D94242522C5A5AE0071A476 /* achievement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = achievement.h; path = ../../library/library/achievement.h; sourceTree = "<group>"; };
+		4D94242622C5A5AE0071A476 /* inventory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = inventory.h; path = ../../library/library/inventory.h; sourceTree = "<group>"; };
+		4D94242722C5A5AE0071A476 /* quest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = quest.h; path = ../../library/library/quest.h; sourceTree = "<group>"; };
+		4D94242822C5A5EC0071A476 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/usr/lib/libsqlite3.tbd; sourceTree = DEVELOPER_DIR; };
+		4D94242A22C5AA560071A476 /* battleBrix.s3db */ = {isa = PBXFileReference; lastKnownFileType = file; path = battleBrix.s3db; sourceTree = "<group>"; };
+		4D94242C22C5AC2D0071A476 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/usr/lib/libsqlite3.0.tbd; sourceTree = DEVELOPER_DIR; };
 		4DAD0ACB22928A410042F1E6 /* icons8-heart-outline-80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-heart-outline-80.png"; sourceTree = "<group>"; };
 		4DAE09A622C1B618005E9560 /* brix.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = brix.json; sourceTree = "<group>"; };
 		4DAE09AD22C1F2D0005E9560 /* star.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = star.plist; sourceTree = "<group>"; };
@@ -287,6 +301,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D94242D22C5AC2D0071A476 /* libsqlite3.0.tbd in Frameworks */,
 				294D0D641D0D56D500F7F5D4 /* CoreText.framework in Frameworks */,
 				ED545A7C1B68A1F400C3958E /* libiconv.dylib in Frameworks */,
 				52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */,
@@ -381,6 +396,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4D94242C22C5AC2D0071A476 /* libsqlite3.0.tbd */,
+				4D94242822C5A5EC0071A476 /* libsqlite3.tbd */,
 				294D0D631D0D56D500F7F5D4 /* CoreText.framework */,
 				ED545A7D1B68A1FA00C3958E /* libiconv.dylib */,
 				ED545A7B1B68A1F400C3958E /* libiconv.dylib */,
@@ -408,6 +425,7 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4D94242A22C5AA560071A476 /* battleBrix.s3db */,
 				4D7F6CC322C4724E00355AC5 /* icons8-bomb-96.png */,
 				4DAE09AD22C1F2D0005E9560 /* star.plist */,
 				4DAE09AE22C1F2D1005E9560 /* star.png */,
@@ -498,6 +516,8 @@
 				4D693AC222BA04DA0014D0B9 /* ui_icon.h */,
 				4D01227522BC851600AAAF2F /* ui_button.cpp */,
 				4D01227622BC851600AAAF2F /* ui_button.h */,
+				4D7F6CC922C4C1C800355AC5 /* ui_character_animal.cpp */,
+				4D7F6CCA22C4C1C800355AC5 /* ui_character_animal.h */,
 			);
 			name = ui;
 			sourceTree = "<group>";
@@ -505,6 +525,12 @@
 		4D4809A0227A9E800046472F /* library */ = {
 			isa = PBXGroup;
 			children = (
+				4D94242522C5A5AE0071A476 /* achievement.h */,
+				4D94242322C5A5AE0071A476 /* farming.h */,
+				4D94242622C5A5AE0071A476 /* inventory.h */,
+				4D94242722C5A5AE0071A476 /* quest.h */,
+				4D94242122C5A5AE0071A476 /* sql.h */,
+				4D94242422C5A5AE0071A476 /* trade.h */,
 				4D3F129222C0AC1600535D07 /* pch.h */,
 				4D3F129122C0AC1600535D07 /* util.h */,
 				4DC392F622AA404700507DC7 /* PhysicsScene.h */,
@@ -649,6 +675,7 @@
 			files = (
 				46880B8119C43A67006E1F66 /* HelloWorld.png in Resources */,
 				4DC8757922B8D91F007CF701 /* firework.plist in Resources */,
+				4D94242B22C5AA560071A476 /* battleBrix.s3db in Resources */,
 				4DAE09AF22C1F2D1005E9560 /* star.plist in Resources */,
 				4D1BB942228FA34800F51D57 /* icons8-leaderboard-100.png in Resources */,
 				1A88B2641FC3D9C9005C14AE /* Images.xcassets in Resources */,
@@ -743,6 +770,7 @@
 				1AF87B8A1F6F7822007BE51C /* main.m in Sources */,
 				4D480993227A9E370046472F /* ui.cpp in Sources */,
 				4D01227722BC851600AAAF2F /* ui_button.cpp in Sources */,
+				4D7F6CCB22C4C1C800355AC5 /* ui_character_animal.cpp in Sources */,
 				4D480992227A9E370046472F /* ui_wizard.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* Scenes.cpp in Sources */,
 			);

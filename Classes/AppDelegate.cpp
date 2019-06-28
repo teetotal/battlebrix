@@ -126,12 +126,14 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // create a scene. it's an autorelease object
     // run
     brixMap::inst()->init();
-    battleBrix::inst()->init();
+    if(!battleBrix::inst()->init())
+        return false;
+    
     ui_wizard_share::inst()->loadPaletteFromJson("palette.json");
     ui_wizard_share::inst()->loadComponentFromJson("components.json");
     director->runWithScene(SceneDaily::createScene());
 //    director->runWithScene(SceneMain::createScene());
-
+    
     return true;
 }
 
