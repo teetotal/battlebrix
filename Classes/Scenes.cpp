@@ -156,6 +156,25 @@ void SceneMain::runPlay() {
 //====================================================================
 bool SceneDaily::init()
 {
+    //animal
+    ui_character_animal * ani = ui_character_animal::create();
+    ani->addRectangle(Size(300, 150)
+                   , ui_wizard_share::inst()->getPalette()->getColor3B("BLUE")
+                   , ui_wizard_share::inst()->getPalette()->getColor4F("YELLOW")
+                   , ui_wizard_share::inst()->getPalette()->getColor4F("DARKGRAY")
+                   , ui_wizard_share::inst()->getPalette()->getColor4F("PINK")
+                   );
+//    ani->addCircle(Size(125, 125)
+//                   , ui_wizard_share::inst()->getPalette()->getColor3B("BLUE")
+//                   , ui_wizard_share::inst()->getPalette()->getColor4F("YELLOW")
+//                   , ui_wizard_share::inst()->getPalette()->getColor4F("DARKGRAY")
+//                   , ui_wizard_share::inst()->getPalette()->getColor4F("PINK")
+//                   );
+    ani->setAnchorPoint(Vec2(0.5, 0.5));
+    ani->setPosition(gui::inst()->getCenter());
+    this->addChild(ani);
+    return true;
+    
     mTodayIdx = 2;
    
     gui::inst()->initDefaultWithSpriteCache("fonts/SDSwaggerTTF.ttf");
@@ -207,13 +226,6 @@ bool SceneDaily::init()
     }
     
     roulette->setValue(getRandValue(360), CC_CALLBACK_1(SceneDaily::callbackRoulette, this));
-    
-    //animal
-    ui_character_animal * ani = ui_character_animal::create();
-    ani->init(Size(200, 200));
-    ani->setAnchorPoint(Vec2(0.5, 0.5));
-    ani->setPosition(gui::inst()->getCenter());
-//    this->addChild(ani);
     
     return true;
 }
