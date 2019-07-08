@@ -3,14 +3,15 @@
 #include "Scenes.h"
 #include "ui/ui_ext.h"
 #include "library/pch.h"
+#include "ui/ui_character_animal.h"
 #include <functional>
 
 #define SPEED_BASE .55f
 #define PHYSICSMATERIAL             PhysicsMaterial(0.5f, 1.f, 0.f)
 #define PHYSICSMATERIAL_OBSTACLE    PhysicsMaterial(0.f, 1.f, 0.f)
 #define PHYSICSMATERIAL_BOARD    PhysicsMaterial(0.f, 1.f, 0.f)
-#define GRID_AREA Vec2(8.f, 13.f)
-//#define GRID_AREA Vec2(2.f, 3.f)
+//#define GRID_AREA Vec2(8.f, 13.f)
+#define GRID_AREA Vec2(8.f, 10.f)
 #define RATIO_OBSTACLE_PER_GRID 0.6f
 #define _ID_BOTTOM 0
 #define _ID_BRIX_START 101
@@ -175,7 +176,7 @@ void ScenePlay::PLAYER::createBall() {
     COLOR_RGB color = ui_wizard_share::inst()->getPalette()->getColor("WHITE");
     
     Vec2 position = gui::inst()->getPointVec2(2, BALL_INIT_POSITION_Y, ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-    ball = guiExt::drawCircleForPhysics(layer, position, obstacleSize.height / 2.f, color);
+    ball = guiExt::drawCircleForPhysics(layer, position, obstacleSize.height / 3.f, color);
     pScene->setPhysicsBodyCircle(ball, PHYSICSMATERIAL, true, ballId);
     
     ball->getPhysicsBody()->setVelocityLimit(layerBrix->getContentSize().height * 2.f);
@@ -184,7 +185,7 @@ void ScenePlay::PLAYER::createBall() {
 void ScenePlay::PLAYER::createBoard() {
     board = LayerColor::create(Color4B::RED);
     board->setContentSize(Size(gridSize.width * 2.f, gridSize.height / 3.f));
-    Vec2 pos = gui::inst()->getPointVec2(1, 11, ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+    Vec2 pos = gui::inst()->getPointVec2(1, GRID_AREA.y - 1, ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
     pos.x -= board->getContentSize().width / 2.f;
     pos.y -= board->getContentSize().height / 2.f;
     board->setPosition(pos);
@@ -457,19 +458,33 @@ Sprite * ScenePlay::PLAYER::createBrixFromSprite(brixMap::position pos, int id, 
     return p;
 }
 //
-DrawNode * ScenePlay::PLAYER::createBrix(brixMap::position pos, int id)
+Node * ScenePlay::PLAYER::createBrix(brixMap::position pos, int id)
 {
     int x = (pos.x == -1) ? getRandValue(GRID_AREA.x) : pos.x;
     int y = (pos.y == -1) ? getRandValue(BALL_INIT_POSITION_Y) : pos.y;
     
     Vec2 position = gui::inst()->getPointVec2(x, y, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-    COLOR_RGB color;
-    if(id == _ID_WALL)
+    COLOR_RGB color, colorBG;
+    if(id == _ID_WALL) {
         color.set(ui_wizard_share::inst()->getPalette()->getColor("DARKGRAY"));
-    else
+        colorBG.set(ui_wizard_share::inst()->getPalette()->getColor("BLACK"));
+    }
+    else {
         color.set(pScene->mColors[id%10]);
+        colorBG.set(pScene->mColors[(id + 1) %10]);
+    }
     
-    auto rect = guiExt::drawRectForPhysics(layerBrix, position, obstacleSize, color, true, .1f);
+//    auto rect = guiExt::drawRectForPhysics(layerBrix, position, obstacleSize, color, true, .1f);
+    
+    auto rect = ui_character_animal::create();
+    rect->addRectangle(obstacleSize
+                       , colorBG.getColor3B()
+                       , color.getColor4F()
+                       , ui_wizard_share::inst()->getPalette()->getColor4F("DARKGRAY")
+                       , ui_wizard_share::inst()->getPalette()->getColor4F("PINK"));
+    rect->setPosition(position);
+    rect->setAnchorPoint(Vec2(0.5f, 0.5f));
+    layerBrix->addChild(rect);
     pScene->setPhysicsBodyRect(rect
                                , PHYSICSMATERIAL_OBSTACLE
                                , false

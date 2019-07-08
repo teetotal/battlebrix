@@ -126,7 +126,7 @@ private:
         void createBottom();
         
         void addBrix(int idx);
-        DrawNode * createBrix(brixMap::position pos, int id);
+        Node * createBrix(brixMap::position pos, int id);
         
         Sprite * createBrixFromSprite(brixMap::position pos, int id, const string img);
         Sprite * createGiftOrTrapEffect(Vec2 pos, brixMap::TYPE type, CallFunc * fn);
