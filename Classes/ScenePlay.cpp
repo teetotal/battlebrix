@@ -468,11 +468,9 @@ Node * ScenePlay::PLAYER::createBrix(brixMap::position pos, int id)
     COLOR_RGB color, colorBG;
     if(id == _ID_WALL) {
         color.set(ui_wizard_share::inst()->getPalette()->getColor("DARKGRAY"));
-        colorBG.set(ui_wizard_share::inst()->getPalette()->getColor("BLACK"));
     }
     else {
         color.set(pScene->mColors[id % pScene->mColors.size()]);
-        colorBG.set(pScene->mColors[(id + 1) % pScene->mColors.size()]);
     }
     
 //    auto rect = guiExt::drawRectForPhysics(layerBrix, position, obstacleSize, color, true, .1f);
