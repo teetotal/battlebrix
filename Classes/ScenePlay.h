@@ -43,7 +43,7 @@ public:
     virtual bool init();
     CREATE_FUNC_PHYSICS(ScenePlay);
     
-    COLOR_RGB mColors[10];
+    vector<COLOR_RGB> mColors;
     float mBrixLayerRatio;
     
 protected:

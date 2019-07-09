@@ -11,8 +11,8 @@
 #define PHYSICSMATERIAL_OBSTACLE    PhysicsMaterial(0.f, 1.f, 0.f)
 #define PHYSICSMATERIAL_BOARD    PhysicsMaterial(0.f, 1.f, 0.f)
 //#define GRID_AREA Vec2(8.f, 13.f)
-#define GRID_AREA Vec2(8.f, 10.f)
-#define RATIO_OBSTACLE_PER_GRID 0.6f
+#define GRID_AREA Vec2(8.f, 11.f)
+#define RATIO_OBSTACLE_PER_GRID 0.65f
 #define _ID_BOTTOM 0
 #define _ID_BRIX_START 101
 #define _ID_WALL 50
@@ -176,7 +176,7 @@ void ScenePlay::PLAYER::createBall() {
     COLOR_RGB color = ui_wizard_share::inst()->getPalette()->getColor("WHITE");
     
     Vec2 position = gui::inst()->getPointVec2(2, BALL_INIT_POSITION_Y, ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-    ball = guiExt::drawCircleForPhysics(layer, position, obstacleSize.height / 3.f, color);
+    ball = guiExt::drawCircleForPhysics(layer, position, fmin(obstacleSize.width, obstacleSize.height) / 3.f, color);
     pScene->setPhysicsBodyCircle(ball, PHYSICSMATERIAL, true, ballId);
     
     ball->getPhysicsBody()->setVelocityLimit(layerBrix->getContentSize().height * 2.f);
@@ -184,7 +184,7 @@ void ScenePlay::PLAYER::createBall() {
 //createBoard ===========================================================================
 void ScenePlay::PLAYER::createBoard() {
     board = LayerColor::create(Color4B::RED);
-    board->setContentSize(Size(gridSize.width * 2.f, gridSize.height / 3.f));
+    board->setContentSize(Size(gridSize.width * 2.f, gridSize.width * .2f));
     Vec2 pos = gui::inst()->getPointVec2(1, GRID_AREA.y - 1, ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
     pos.x -= board->getContentSize().width / 2.f;
     pos.y -= board->getContentSize().height / 2.f;
@@ -196,7 +196,7 @@ void ScenePlay::PLAYER::createBoard() {
         auto rect = guiExt::drawRectForPhysics(board
                                                , gui::inst()->getPointVec2(n, 0, ALIGNMENT_CENTER, board->getContentSize(), Vec2(4,1), Vec2::ZERO, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO)
                                                , size
-                                               , ui_wizard_share::inst()->getPalette()->getColor("RED")
+                                               , (n ==0 || n == 3 ) ? ui_wizard_share::inst()->getPalette()->getColor("PINK"): ui_wizard_share::inst()->getPalette()->getColor("PINK_LIGHT")
                                                , true
                                                , 0.f);
         pScene->setPhysicsBodyRect(rect
@@ -365,6 +365,7 @@ bool ScenePlay::PLAYER::onCombo(int id) {
     
     auto label = gui::inst()->addLabelAutoDimension(0, 0, sz, layer, fontSizeCombo, ALIGNMENT_CENTER, ui_wizard_share::inst()->getPalette()->getColor3B(color));
     label->enableGlow(ui_wizard_share::inst()->getPalette()->getColor4B("BLACK"));
+    label->setOpacity(150);
     label->setPosition(ballPosition);
     label->runAction( Sequence::create(ScaleBy::create(0.3, 1.5), RemoveSelf::create(), NULL) );
     
@@ -470,21 +471,23 @@ Node * ScenePlay::PLAYER::createBrix(brixMap::position pos, int id)
         colorBG.set(ui_wizard_share::inst()->getPalette()->getColor("BLACK"));
     }
     else {
-        color.set(pScene->mColors[id%10]);
-        colorBG.set(pScene->mColors[(id + 1) %10]);
+        color.set(pScene->mColors[id % pScene->mColors.size()]);
+        colorBG.set(pScene->mColors[(id + 1) % pScene->mColors.size()]);
     }
     
 //    auto rect = guiExt::drawRectForPhysics(layerBrix, position, obstacleSize, color, true, .1f);
     
-    auto rect = ui_character_animal::create();
-    rect->addRectangle(obstacleSize
-                       , colorBG.getColor3B()
-                       , color.getColor4F()
-                       , ui_wizard_share::inst()->getPalette()->getColor4F("DARKGRAY")
-                       , ui_wizard_share::inst()->getPalette()->getColor4F("PINK"));
-    rect->setPosition(position);
-    rect->setAnchorPoint(Vec2(0.5f, 0.5f));
-    layerBrix->addChild(rect);
+    auto rect = ui_character_animal::create(layerBrix
+                                           , obstacleSize
+                                           , position
+                                           , ALIGNMENT_CENTER
+                                           , color
+                                           , ui_wizard_share::inst()->getPalette()->getColor("DARKGRAY")
+                                           , ui_wizard_share::inst()->getPalette()->getColor("PINK")
+                                           , colorBG
+                                           );
+    rect->addRectangle();
+    
     pScene->setPhysicsBodyRect(rect
                                , PHYSICSMATERIAL_OBSTACLE
                                , false
@@ -504,10 +507,34 @@ void ScenePlay::PLAYER::addBrix(int idx) {
     int brixId = _ID_BRIX_START;
     int giftId = _ID_GIFT_START;
     int trapId = _ID_TRAP_START;
+    
+    vector<brixMap::position> posHistory;
     //static
     for(int n=0; n < brix.statics.size(); n++)
     {
-        createBrix(brix.statics[n], brixId++);
+        brixMap::position posOriginal = brix.statics[n];
+        brixMap::position pos;
+        pos.x = posOriginal.x;
+        pos.y = posOriginal.y;
+        while(pos.x == -1 || pos.y == -1) {
+            if(pos.x == -1) pos.x = getRandValue(GRID_AREA.x);
+            if(pos.y == -1) pos.y = getRandValue(BALL_INIT_POSITION_Y);
+            bool isExist = false;
+            for(int i=0; i < posHistory.size(); i++) {
+                if(posHistory[i].x == pos.x && posHistory[i].y == pos.y) {
+                    isExist = true;
+                    //원래값으로 복구
+                    pos.x = posOriginal.x;
+                    pos.y = posOriginal.y;
+                    break;
+                }
+            }
+            
+            if(!isExist)
+                break;
+        }
+        createBrix(pos, brixId++);
+        posHistory.push_back(pos);
     }
     //movement
     for(int n=0; n < brix.movements.size(); n++)
@@ -757,18 +784,29 @@ void ScenePlay::PLAYER::addBrix(int idx) {
  ---------------------------------------------------------------------------------------------------------------- */
 bool ScenePlay::init()
 {
-    int n = 0;
-    mColors[n++] = ui_wizard_share::inst()->getPalette()->getColor("PINK_LIGHT");
-    mColors[n++] = ui_wizard_share::inst()->getPalette()->getColor("BLUE_LIGHT");
-    mColors[n++] = ui_wizard_share::inst()->getPalette()->getColor("YELLOW_LIGHT");
-    mColors[n++] = ui_wizard_share::inst()->getPalette()->getColor("PURPLE_LIGHT");
-    mColors[n++] = ui_wizard_share::inst()->getPalette()->getColor("GREEN_LIGHT");
+//    int n = 0;
+    mColors.push_back(ui_wizard_share::inst()->getPalette()->getColor("YELLOW_LIGHT"));
+    mColors.push_back(ui_wizard_share::inst()->getPalette()->getColor("YELLOW"));
+    mColors.push_back(ui_wizard_share::inst()->getPalette()->getColor("YELLOW_DARK"));
     
-    mColors[n++] = ui_wizard_share::inst()->getPalette()->getColor("PINK_LIGHT");
-    mColors[n++] = ui_wizard_share::inst()->getPalette()->getColor("BLUE_LIGHT");
-    mColors[n++] = ui_wizard_share::inst()->getPalette()->getColor("YELLOW_LIGHT");
-    mColors[n++] = ui_wizard_share::inst()->getPalette()->getColor("PURPLE_LIGHT");
-    mColors[n++] = ui_wizard_share::inst()->getPalette()->getColor("GREEN_LIGHT");
+    mColors.push_back(ui_wizard_share::inst()->getPalette()->getColor("BLUE_LIGHT"));
+    mColors.push_back(ui_wizard_share::inst()->getPalette()->getColor("BLUE"));
+    mColors.push_back(ui_wizard_share::inst()->getPalette()->getColor("BLUE_DARK"));
+    
+    
+//    mColors.push_back(ui_wizard_share::inst()->getPalette()->getColor("GREEN_LIGHT"));
+//    mColors.push_back(ui_wizard_share::inst()->getPalette()->getColor("GREEN"));
+//    mColors.push_back(ui_wizard_share::inst()->getPalette()->getColor("GREEN_DARK"));
+    
+//    mColors.push_back(ui_wizard_share::inst()->getPalette()->getColor("PURPLE_LIGHT"));
+//    mColors.push_back(ui_wizard_share::inst()->getPalette()->getColor("PURPLE"));
+//    mColors.push_back(ui_wizard_share::inst()->getPalette()->getColor("PURPLE_DARK"));
+    
+//    mColors[n++] = ui_wizard_share::inst()->getPalette()->getColor("PINK_LIGHT");
+//    mColors[n++] = ui_wizard_share::inst()->getPalette()->getColor("PINK");
+//    mColors[n++] = ui_wizard_share::inst()->getPalette()->getColor("PINK_DARK");
+//    mColors[n++] = ui_wizard_share::inst()->getPalette()->getColor("YELLOW_LIGHT");
+    //mColors[n++] = ui_wizard_share::inst()->getPalette()->getColor("GREEN_LIGHT");
     
     this->loadFromJson("play", "play.json");
     

@@ -395,8 +395,8 @@
                 "id": 3,
                 "position": [ 0, 3 ],
                 "alignment": "center",
-                "type": "icon_point",
-                "color": [ "DARKGRAY", "YELLOW" ],
+                "type": "icon_point2",
+                "color": [ "BLACK", "YELLOW" ],
                 "text": "100",
                 "fontSize": -1
             },

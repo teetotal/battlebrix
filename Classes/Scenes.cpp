@@ -157,21 +157,21 @@ void SceneMain::runPlay() {
 bool SceneDaily::init()
 {
     //animal
-    ui_character_animal * ani = ui_character_animal::create();
-    ani->addRectangle(Size(300, 200)
-                   , ui_wizard_share::inst()->getPalette()->getColor3B("BLUE")
-                   , ui_wizard_share::inst()->getPalette()->getColor4F("YELLOW")
-                   , ui_wizard_share::inst()->getPalette()->getColor4F("DARKGRAY")
-                   , ui_wizard_share::inst()->getPalette()->getColor4F("PINK")
-                   );
+//    ui_character_animal * ani = ui_character_animal::create();
+//    ani->addRectangle(Size(300, 200)
+//                   , ui_wizard_share::inst()->getPalette()->getColor3B("BLUE")
+//                   , ui_wizard_share::inst()->getPalette()->getColor4F("YELLOW")
+//                   , ui_wizard_share::inst()->getPalette()->getColor4F("DARKGRAY")
+//                   , ui_wizard_share::inst()->getPalette()->getColor4F("PINK")
+//                   );
 //    ani->addCircle(Size(125, 125)
 //                   , ui_wizard_share::inst()->getPalette()->getColor3B("BLUE")
 //                   , ui_wizard_share::inst()->getPalette()->getColor4F("YELLOW")
 //                   , ui_wizard_share::inst()->getPalette()->getColor4F("DARKGRAY")
 //                   , ui_wizard_share::inst()->getPalette()->getColor4F("PINK")
 //                   );
-    ani->setAnchorPoint(Vec2(0.5, 0.5));
-    ani->setPosition(gui::inst()->getCenter());
+//    ani->setAnchorPoint(Vec2(0.5, 0.5));
+//    ani->setPosition(gui::inst()->getCenter());
 //    this->addChild(ani);
 //    return true;
     
