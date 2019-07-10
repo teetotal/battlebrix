@@ -5,77 +5,137 @@
         {
             "grade": 0,
             "title": "INVALID GRADE",
-            "speed": 0
+            "speed": 0,
+            "AI": {
+                "delay": 0.3,
+                "maxRandomDuration": 1.5
+            }
         },
         {
             "grade": 1,
             "title": "BEGINNER",
-            "speed": 0.55
+            "speed": 0.55,
+            "AI": {
+                "delay": 0.3,
+                "maxRandomDuration": 1.5
+            }
         },
         {
             "grade": 2,
             "title": "BRONZE 1",
-            "speed": 0.6
+            "speed": 0.6,
+            "AI": {
+                "delay": 0.3,
+                "maxRandomDuration": 1.3
+            }
         },
         {
             "grade": 3,
             "title": "BRONZE 2",
-            "speed": 0.65
+            "speed": 0.62,
+            "AI": {
+                "delay": 0.25,
+                "maxRandomDuration": 1.3
+            }
         },
         {
             "grade": 4,
             "title": "BRONZE 3",
-            "speed": 0.7
+            "speed": 0.65,
+            "AI": {
+                "delay": 0.25,
+                "maxRandomDuration": 1.3
+            }
         },
         {
             "grade": 5,
             "title": "SILVER 1",
-            "speed": 0.9
+            "speed": 0.7,
+            "AI": {
+                "delay": 0.2,
+                "maxRandomDuration": 1.3
+            }
         },
         {
             "grade": 6,
             "title": "SILVER 2",
-            "speed": 0.95
+            "speed": 0.75,
+            "AI": {
+                "delay": 0.2,
+                "maxRandomDuration": 1.3
+            }
         },
         {
             "grade": 7,
             "title": "SILVER 3",
-            "speed": 1.0
+            "speed": 0.8,
+            "AI": {
+                "delay": 0.2,
+                "maxRandomDuration": 1.3
+            }
         },
         {
             "grade": 8,
             "title": "GOLD 1",
-            "speed": 1.2
+            "speed": 0.9,
+            "AI": {
+                "delay": 0.17,
+                "maxRandomDuration": 1.2
+            }
         },
         {
             "grade": 9,
             "title": "GOLD 2",
-            "speed": 1.3
+            "speed": 0.95,
+            "AI": {
+                "delay": 0.17,
+                "maxRandomDuration": 1.2
+            }
         },
         {
             "grade": 10,
             "title": "GOLD 3",
-            "speed": 1.4
+            "speed": 1.0,
+            "AI": {
+                "delay": 0.17,
+                "maxRandomDuration": 1.2
+            }
         },
         {
             "grade": 11,
             "title": "ROYAL 1",
-            "speed": 1.8
+            "speed": 1.1,
+            "AI": {
+                "delay": 0.15,
+                "maxRandomDuration": 1.0
+            }
         },
         {
             "grade": 12,
             "title": "ROYAL 2",
-            "speed": 1.9
+            "speed": 1.2,
+            "AI": {
+                "delay": 0.15,
+                "maxRandomDuration": 1.0
+            }
         },
         {
             "grade": 13,
             "title": "ROYAL 3",
-            "speed": 2
+            "speed": 1.3,
+            "AI": {
+                "delay": 0.15,
+                "maxRandomDuration": 1.0
+            }
         },
         {
             "grade": 14,
             "title": "GOD",
-            "speed": 3
+            "speed": 2,
+            "AI": {
+                "delay": 0.1,
+                "maxRandomDuration": 0.8
+            }
         }
     ],
     "play": {

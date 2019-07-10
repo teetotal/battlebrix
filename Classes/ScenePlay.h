@@ -86,7 +86,7 @@ private:
         Node * board;
         Node * alert;
         Label * label, * labelName;
-        
+        float maxRandomDuration;
         int ballId;
         int combo;
         
@@ -116,7 +116,7 @@ private:
             label = NULL;
             isEnd = false;
         };
-        void init(ScenePlay* p, int idx, const string& name, int layerId, int hpId, int mpId, int ballId, int alertId, int labelId, int fnId);
+        void init(ScenePlay* p, int idx, const string& name, int layerId, int hpId, int mpId, int ballId, int alertId, int labelId, int fnId, float maxRandomDuration);
         void finish();
         void vibrate();
         bool onContact(int id, bool toRight = false);

@@ -226,6 +226,8 @@ public:
         int grade;
         string title;
         float speed;
+        float delay;
+        float maxRandomDelay;
     };
     
     const string getText(const string& defaultString, int id);

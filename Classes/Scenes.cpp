@@ -258,10 +258,10 @@ void SceneDaily::callbackRoulette(Ref* pSender) {
     p->setVisible(true);
     
     p->runAction(Sequence::create(DelayTime::create(.2f)
-                                         , ScaleBy::create(.3f, 1.2f)
-                                         , ScaleBy::create(.2f, (1.f / 1.2f))
-                                         , DelayTime::create(0.5f)
-                                         , CallFunc::create([=]() {
+                                 , ScaleBy::create(.3f, 1.2f)
+                                 , ScaleBy::create(.2f, (1.f / 1.2f))
+                                 , DelayTime::create(0.5f)
+                                 , CallFunc::create([=]() {
         this->replaceScene(SceneMain::create());
     })
                                          , NULL));

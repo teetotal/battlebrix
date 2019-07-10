@@ -226,6 +226,8 @@ bool battleBrix::init() {
         g.speed = grades[rapidjson::SizeType(i)]["speed"].GetFloat();
         g.title = grades[rapidjson::SizeType(i)]["title"].GetString();
         
+        g.delay = grades[rapidjson::SizeType(i)]["AI"]["delay"].GetFloat();
+        g.maxRandomDelay = grades[rapidjson::SizeType(i)]["AI"]["maxRandomDuration"].GetFloat();
         mGrades.push_back(g);
     }
     
@@ -248,7 +250,7 @@ const string battleBrix::getText(const string& defaultString, int id) {
             return mUserData.getRechargeRemainTimeString();
             
         case _ID_NODE_LABEL_LEVEL:
-            return "GD." + to_string(mUserData.grade);
+            return "Lv." + to_string(mUserData.grade);
             
         case _ID_NODE_PROGRESSBAR:
             return getLevelString();
