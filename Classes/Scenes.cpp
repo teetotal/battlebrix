@@ -201,26 +201,33 @@ bool SceneDaily::init()
     Size size = Size(roulette->mRadius, roulette->mRadius);
     
     mRewards[0] = 100;
-    mRewards[1] = 50;
+    mRewards[1] = -1;
     mRewards[2] = 100;
-    mRewards[3] = 10;
+    mRewards[3] = -1;
     mRewards[4] = 150;
-    mRewards[5] = 5;
+    mRewards[5] = -2;
     mRewards[6] = 350;
-    mRewards[7] = 5;
+    mRewards[7] = -3;
     
     for(int n=0; n< 8; n++) {
         //float fontSize = gui::inst()->getFontSize(Size(roulette->mRadius, roulette->mRadius));
         //auto node = gui::inst()->createLabel(0, 0, to_string(100 + n), fontSize, ALIGNMENT_CENTER, Color3B::BLACK);
         auto node = ui_icon::create();
-        node->addCircle(NULL
-                        , size
-                        , Vec2::ZERO, ALIGNMENT_CENTER
-                        , ui_wizard_share::inst()->getPalette()->getColor("YELLOW")
-                        , "P"
-                        , ""
-                        , to_string(mRewards[n])
-                        , ui_wizard_share::inst()->getPalette()->getColor("DARKGRAY"));
+        node->setGlow(false);
+        if(mRewards[n] > 0) {
+            node->addCircle(NULL
+                            , size
+                            , Vec2::ZERO
+                            , ALIGNMENT_CENTER
+                            , ui_wizard_share::inst()->getPalette()->getColor("YELLOW")
+                            , "P"
+                            , ""
+                            , to_string(mRewards[n])
+                            , ui_wizard_share::inst()->getPalette()->getColor("DARKGRAY"));
+        } else {
+            node->addHeart(NULL, size, Vec2::ZERO, ALIGNMENT_CENTER, "x" + to_string(mRewards[n] * -1), ui_wizard_share::inst()->getPalette()->getColor("DARKGRAY"), -3);
+        }
+        
         
         roulette->insertItem(node);
     }
@@ -235,15 +242,26 @@ void SceneDaily::callbackRoulette(Ref* pSender) {
     
     roulette->setVisible(false);
     getNodeById(3000)->setVisible(true);
-//    auto todayImg = getNodeById(3001);
-    auto label = ((Label*)getNodeById(3002));
-    label->setString(to_string(mRewards[roulette->getResultIdx()]));
-    label->runAction(Sequence::create(DelayTime::create(.2f)
+    int val = mRewards[roulette->getResultIdx()];
+    ui_icon * p;
+    if(val > 0) {
+        p = (ui_icon*)getNodeById(3001);
+        battleBrix::inst()->mUserData.increasePoint(val);
+        p->setText(to_string(val));
+    } else {
+        p = (ui_icon*)getNodeById(3002);
+        val = val * -1;
+        battleBrix::inst()->mUserData.increaseHeart(val);
+        p->setText("x" + to_string(val));
+    }
+    
+    p->setVisible(true);
+    
+    p->runAction(Sequence::create(DelayTime::create(.2f)
                                          , ScaleBy::create(.3f, 1.2f)
                                          , ScaleBy::create(.2f, (1.f / 1.2f))
                                          , DelayTime::create(0.5f)
                                          , CallFunc::create([=]() {
-        battleBrix::inst()->mUserData.increasePoint(mRewards[roulette->getResultIdx()]);
         this->replaceScene(SceneMain::create());
     })
                                          , NULL));

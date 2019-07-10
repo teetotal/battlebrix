@@ -26,7 +26,7 @@ enum _PLAYER_ID {
     _PLAYER_ID_OTHER,
 };
 enum _BOARD_ID {
-    _BOARD_ID_L = 1,
+    _BOARD_ID_L = 40,
     _BOARD_ID_LM,
     _BOARD_ID_RM,
     _BOARD_ID_R
@@ -85,6 +85,28 @@ enum ID_NODE {
     ID_NODE_LEVELUP = 20000,
     ID_NODE_LEVELUP_LABEL,
     ID_NODE_LEVELUP_GRADE,
+};
+
+const string colorsCombo[] = {
+    "RED_LIGHT"
+    , "BLUE_LIGHT"
+    , "BLUE"
+    , "BLUE_DARK"
+    , "YELLOW_LIGHT"
+    , "YELLOW"
+    , "YELLOW_DARK"
+    , "ORANGE_LIGHT"
+    , "ORANGE"
+    , "ORANGE_DARK"
+    , "PURPLE_LIGHT"
+    , "PURPLE"
+    , "PURPLE_DARK"
+    , "GREEN_LIGHT"
+    , "GREEN"
+    , "GREEN_DARK"
+    , "PINK_LIGHT"
+    , "PINK"
+    , "PINK_DARK"
 };
 
 //static COLOR_RGB colors[5] = {
@@ -271,6 +293,10 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
     else if(id >= _BOARD_ID_L && id <= _BOARD_ID_R) {
         //동시 충돌 방지
         clock_t now = clock();
+        if(this->idx == _PLAYER_ID_ME)
+            CCLOG("id = %d, onBoard %lf", id, (double)now);
+        
+        combo = 0;
         if(now - latestCollisionWithBoard < 100) {
 //            CCLOG("%s %lf concurrent collision %d",name.c_str(), (double)latestCollisionWithBoard, id);
             return false;
@@ -282,7 +308,6 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
         if(ballPosition.y > board->getPosition().y + board->getContentSize().height * 2.f)
             return false;
         
-        combo = 0;
         Vec2 vel = layer->getContentSize();
         vel.y *= 1.5f;
         switch((_BOARD_ID)id) {
@@ -343,31 +368,32 @@ bool ScenePlay::PLAYER::onCombo(int id) {
     combo++;
     const Vec2 ballPosition = ball->getPosition();
     
-    string sz = (combo > 1) ? to_string(combo) + "COMBO" : "Cool";
-    string color;
+    string sz = (combo > 1) ? to_string(combo) + "COMBO" : "COOL";
+    
+    string color = colorsCombo[ combo % (sizeof(colorsCombo) / sizeof(colorsCombo[0])) ];
+    
     
     float fIncrease = 0.05;
+    
     if(combo == 1) {
-        color = "YELLOW";
     }
     else if(combo < 5) {
         fIncrease *= 2.f;
-        color = "ORANGE";
     }
     else if(combo < 8) {
         fIncrease *= 3.f;
-        color = "BLUE";
     }
-    else {
+    else if(combo < 16) {
         fIncrease *= 4.f;
-        color = "GREEN";
+    } else {
+        fIncrease *= 5.f;
     }
     
     auto label = gui::inst()->addLabelAutoDimension(0, 0, sz, layer, fontSizeCombo, ALIGNMENT_CENTER, ui_wizard_share::inst()->getPalette()->getColor3B(color));
     label->enableGlow(ui_wizard_share::inst()->getPalette()->getColor4B("BLACK"));
-    label->setOpacity(150);
     label->setPosition(ballPosition);
-    label->runAction( Sequence::create(ScaleBy::create(0.3, 1.5), RemoveSelf::create(), NULL) );
+    auto spawn = Spawn::create(ScaleBy::create(0.3, 1.5), FadeOut::create(0.3f), NULL);
+    label->runAction( Sequence::create(spawn, RemoveSelf::create(), NULL) );
     
     //brix vibration
     if(!brixEffectFlagMap[id]) {
