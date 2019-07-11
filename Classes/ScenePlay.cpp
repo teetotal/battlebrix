@@ -116,13 +116,12 @@ const string colorsCombo[] = {
 //    ui_wizard_share::inst()->getPalette()->getColor("PURPLE_LIGHT")
 //};
 // ----------------------------------------------------------------------------------------------------------------
-void ScenePlay::PLAYER::init(ScenePlay* p, int idx, const string& name, int layerId, int hpId, int mpId, int ballId, int alertId, int labelId, int fnId, float maxRandomDuration) {
+void ScenePlay::PLAYER::init(ScenePlay* p, int idx, const string& name, int layerId, int hpId, int mpId, int ballId, int alertId, int labelId, int fnId, int IQ) {
     this->idx = idx;
     this->name = name;
     pScene = p;
     this->ballId = ballId;
-    this->maxRandomDuration = maxRandomDuration;
-    
+    this->IQ = IQ;
     
     //layer 비율을 똑같이 맞출것인가
 //    if(p->mBrixLayerRatio == -1.f)
@@ -249,7 +248,7 @@ void ScenePlay::PLAYER::createSkill() {
     const Vec2 innerMargin = Vec2(0, 1);
     Size sizeGrid = gui::inst()->getGridSize(layer->getContentSize(), grid, margin, innerMargin);
     
-    for(int n=0; n<PLAY_ITEM_CNT; n++) {
+    for(int n=0; n < battleBrix::inst()->getMyGrade().skillQuantity; n++) {
         skills[n] = ui_icon::create();
         skills[n]->addCircle(layer
                             , sizeGrid
@@ -299,6 +298,7 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
         hp->setValueDecrese(0.1);
         hp->blink();
         vibrate();
+        CCLOG("%lf BOTTOM %s", (double)getNow(), name.c_str());
     }
     else if(id >= _BOARD_ID_L && id <= _BOARD_ID_R) {
         //동시 충돌 방지
@@ -463,32 +463,48 @@ bool ScenePlay::PLAYER::onCombo(int id) {
     return false;
 }
 // onBomb ===========================================================================
-void ScenePlay::PLAYER::onBomb(const string from, const string img) {
+void ScenePlay::PLAYER::onBomb(const string from, int itemIdx) {
     if(isEnd)
         return;
     
-    Vec2 pos = Vec2(layer->getContentSize().width / 2.f, layer->getContentSize().height * .75f);
-    guiExt::addScaleEffect(layer, img, from, ui_wizard_share::inst()->getPalette()->getColor("GRAY"), NULL, .4f, .4f, pos, true);
+    battleBrix::itemData item = battleBrix::inst()->mItems[itemIdx];
+    guiExt::addScaleEffect(layer
+                           , item.img
+                           , from
+                           , ui_wizard_share::inst()->getPalette()->getColor("GRAY")
+                           , CallFunc::create([=](){ this->decreseHP("", item.property.hpAttack); })
+                           , .4f
+                           , .4f
+                           , Vec2(layer->getContentSize().width / 2.f, layer->getContentSize().height * .75f)
+                           , true);
 }
 // setAutoPlay ===========================================================================
 void ScenePlay::PLAYER::onTimer(float f) {
     if(ball) {
+        float boardWidthHalf = board->getContentSize().width / 2.f;
         Vec2 pos = Vec2(ball->getPosition().x, board->getPosition().y);
-        pos.x -= board->getContentSize().width / 2.f;
+        pos.x -= boardWidthHalf;
 
-        //다양한 위치로 보내기 위해.
-        float rWidth = ((float)getRandValue((int)(board->getContentSize().width * 100.f)) / 100.f) -  (board->getContentSize().width / 2.f);
-        pos.x += rWidth;
+        // random
+        bool isMistake = (getRandValue(IQ) == 0) ? true : false;
+        float duration = f * 0.75;
+        Vec2 positionInit = gui::inst()->getPointVec2(2, BALL_INIT_POSITION_Y, ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+        if(preBallPosition.y > ball->getPosition().y && ball->getPosition().y <= positionInit.y) {
+            if(isMistake) {
+                CCLOG("%lf Mistake %s", (double)getNow(), name.c_str());
+                pos.x += ((float)getRandValue((int)(board->getContentSize().width * 200.f)) / 100.f) - boardWidthHalf;
+                duration = f * 3.f;
+            }
+        }
         
-        if(pos.x <= board->getContentSize().width / 2.f)
-            pos.x = board->getContentSize().width / 2.f;
+        preBallPosition = ball->getPosition();
+        
+        if(pos.x <= boardWidthHalf)
+            pos.x = boardWidthHalf;
         
         if(pos.x >= layerBrix->getContentSize().width - board->getContentSize().width)
             pos.x = layerBrix->getContentSize().width - board->getContentSize().width;
         
-        int r = maxRandomDuration * 100;
-        float randVal = (float)getRandValue(r) / 100.f;
-        float duration = fmax(f * randVal, 0.1f);
 //        CCLOG("Moving Speed: %s - %f (rWidth %f)", name.c_str(), duration, rWidth);
         board->runAction(MoveTo::create(duration, pos));
     }
@@ -652,10 +668,6 @@ void ScenePlay::PLAYER::addBrix(int idx) {
             int y = (brix.movements[n].path[i].y == -1) ? getRandValue(BALL_INIT_POSITION_Y) : brix.movements[n].path[i].y;
             
             Vec2 position = gui::inst()->getPointVec2(x, y, ALIGNMENT_CENTER, layerBrix->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
-            //anchor point가 0,0
-            position.x -= obstacleSize.width / 2;
-            position.y -= obstacleSize.height / 2;
-            
             auto move = MoveTo::create(f, position);
             arr.pushBack(move);
         }
@@ -744,7 +756,7 @@ bool ScenePlay::init()
             , ID_NODE_MY_ALERT
             , ID_NODE_MY_LABEL
             , fnId
-            , battleBrix::inst()->getMyGrade().maxRandomDelay);
+            , battleBrix::inst()->getMyGrade().IQ);
     mPlayers.push_back(me);
     
     Size s1 = mPlayers[_PLAYER_ID_ME].layer->getContentSize(); //193.3333, 208.247
@@ -764,7 +776,7 @@ bool ScenePlay::init()
         int areaId = id++;
         int alertId = id++;
         int labelId = id;
-        p.init(this, n+1, "CPU" + to_string(n+1), areaId, hpId, mpId, _BALL_ID[n+1], alertId, labelId, fnId, battleBrix::inst()->getMyGrade().maxRandomDelay);
+        p.init(this, n+1, "CPU" + to_string(n+1), areaId, hpId, mpId, _BALL_ID[n+1], alertId, labelId, fnId, battleBrix::inst()->getMyGrade().IQ);
         mPlayers.push_back(p);
     }
     
@@ -812,26 +824,24 @@ void ScenePlay::callback(Ref* pSender, int from, int link) {
 }
 // bomb ===========================================================================
 void ScenePlay::attack(int from, int itemIdx) {
-    
+    mLock.lock();
     for(int i = 0; i < battleBrix::inst()->mItems[itemIdx].property.attackTarget.size(); i++) {
+        
+        int target = battleBrix::inst()->mItems[itemIdx].property.attackTarget[i];
         
         for(int n = 0; n < mPlayers.size(); n++) {
             if(n == from)
                 continue;
             
-            int target = battleBrix::inst()->mItems[itemIdx].property.attackTarget[i];
-            
             if(target == -1 //전체
                || mPlayers[n].ranking == target)
             {
-                mPlayers[n].onBomb(mPlayers[from].name, battleBrix::inst()->mItems[itemIdx].img);
-                mPlayers[n].decreseHP("", battleBrix::inst()->mItems[itemIdx].property.hpAttack);
-                
-                if(target != -1)
-                    break;
+                mPlayers[n].onBomb(mPlayers[from].name, itemIdx);
+//                CCLOG("SKILL from: %d, target:%d, player:%d - ranking: %d", from, target, n, mPlayers[n].ranking);
             }
         }
     }
+    mLock.unlock();
 }
 // onSkill ===========================================================================
 void ScenePlay::onSkill(int idx, int from) {
@@ -939,6 +949,7 @@ bool ScenePlay::onContactBegin(PhysicsContact &contact) {
         }
     }
     //순위
+    mLock.lock();
     for(int n = 0; n < mPlayers.size(); n++) {
         int ranking = 1;
         float val = mPlayers[n].getHPValue();
@@ -949,6 +960,7 @@ bool ScenePlay::onContactBegin(PhysicsContact &contact) {
         }
         mPlayers[n].setRanking(ranking);
     }
+    mLock.unlock();
     //내가 끝나거나 다른게 모두 끝났거나
     bool isEndAll = true;
     for(int n=1; n<mPlayers.size(); n++){

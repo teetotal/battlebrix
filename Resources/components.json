@@ -94,31 +94,30 @@
         "color": 0,
         "objects": [
             {
-                "id": 12,
+                "id": 1,
                 "position": [ 0, 0 ],
                 "alignment": "left",
-                "type": "label",
-                "color": [ "YELLOW", "BLACK" ],
-                "text": "Lv.16",
-                "fontSize": 0
-            },
-            {
-                "id": 1,
-                "position": [ 1, 0 ],
-                "span": [2, 0],
-                "alignment": "center",
                 "type": "label",
                 "color": [ "GRAY", "BLACK" ],
                 "text": "teetotal",
                 "fontSize": 0
             },
             {
-                "id": 13,
+                "id": 12,
                 "position": [ 0, 1 ],
+                "alignment": "left_bottom",
+                "type": "label",
+                "color": [ "YELLOW", "BLACK" ],
+                "text": "Lv.16",
+                "fontSize": 0
+            },
+            {
+                "id": 13,
+                "position": [ 1, 1 ],
                 "alignment": "center",
                 "type": "progressbar",
                 "color": [ "BLUE", "GRAY" ],
-                "span": [ 3, 0 ],
+                "span": [ 2, 0 ],
                 "text": "ROYAL"
             },
             {

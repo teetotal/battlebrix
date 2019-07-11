@@ -232,7 +232,8 @@ bool battleBrix::init() {
         g.title = grades[rapidjson::SizeType(i)]["title"].GetString();
         
         g.delay = grades[rapidjson::SizeType(i)]["AI"]["delay"].GetFloat();
-        g.maxRandomDelay = grades[rapidjson::SizeType(i)]["AI"]["maxRandomDuration"].GetFloat();
+        g.IQ = grades[rapidjson::SizeType(i)]["AI"]["IQ"].GetFloat();
+        g.skillQuantity = grades[rapidjson::SizeType(i)]["AI"]["skills"].GetFloat();
         mGrades.push_back(g);
     }
     

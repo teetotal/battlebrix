@@ -228,7 +228,8 @@ public:
         string title;
         float speed;
         float delay;
-        float maxRandomDelay;
+        int IQ;
+        int skillQuantity;
     };
     
     const string getText(const string& defaultString, int id);

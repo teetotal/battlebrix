@@ -87,9 +87,10 @@ private:
         Node * alert;
         Label * label, * labelName;
         ui_icon * skills[PLAY_ITEM_CNT];
-        float maxRandomDuration;
+        int IQ;
         int ballId;
         int combo;
+        Vec2 preBallPosition;
         
         //map<int, Vec2> obstaclesPos;
         map<int, bool> brixEffectFlagMap;
@@ -116,8 +117,12 @@ private:
             alert = NULL;
             label = NULL;
             isEnd = false;
+            preBallPosition = Vec2(100, 100); //충분히 큰값으로 초기화
+            for(int n=0; n<PLAY_ITEM_CNT; n++)  {
+                skills[n] = NULL;
+            }
         };
-        void init(ScenePlay* p, int idx, const string& name, int layerId, int hpId, int mpId, int ballId, int alertId, int labelId, int fnId, float maxRandomDuration);
+        void init(ScenePlay* p, int idx, const string& name, int layerId, int hpId, int mpId, int ballId, int alertId, int labelId, int fnId, int IQ);
         void finish();
         void vibrate();
         bool onContact(int id, bool toRight = false);
@@ -144,7 +149,7 @@ private:
         void skill();
         bool onCombo(int id);
         void onTimer(float f);
-        void onBomb(const string from, const string img);
+        void onBomb(const string from, int itemIdx);
         void setRanking(int ranking);
         void createLayerBrix();
     };

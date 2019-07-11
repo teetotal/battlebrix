@@ -131,7 +131,7 @@
                     "alignment": "center_bottom",
                     "type": "label",
                     "color": ["PINK", "BLACK"],
-                    "text": "LEVEL UP",
+                    "text": "GRADE UP",
                     "fontSize": 0
                 },
                 {
