@@ -157,10 +157,10 @@
         "items": [
             {
                 "name": "Sniper",
-                "price": 100,
+                "price": 150,
                 "img": "icons8-center-of-gravity-80.png",
                 "property" : {
-                    "hpAttack": 0.1,
+                    "hpAttack": 0.2,
                     "attackTarget": [1],
                     "hpRecharge": 0
                 }
@@ -173,7 +173,7 @@
                 "property" : {
                     "hpAttack": 0,
                     "attackTarget": [],
-                    "hpRecharge": 0.1
+                    "hpRecharge": 0.35
                 }
             },
             {
@@ -182,7 +182,7 @@
                 "img": "icons8-atomic-bomb-96.png",
                 "target": [],
                 "property" : {
-                    "hpAttack": 0.05,
+                    "hpAttack": 0.15,
                     "attackTarget": [-1],
                     "hpRecharge": 0
                 }
