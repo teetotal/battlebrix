@@ -70,7 +70,7 @@ private:
     void onFinish();
     void onEnd();
     void onSkill(int idx, int from);
-    void bomb(int id, int val = DECREASE_HP);
+    void attack(int from, int itemIdx);
     
     struct OBSTACLE {
         DrawNode * pDrawNode;
@@ -86,6 +86,7 @@ private:
         Node * board;
         Node * alert;
         Label * label, * labelName;
+        ui_icon * skills[PLAY_ITEM_CNT];
         float maxRandomDuration;
         int ballId;
         int combo;
@@ -124,6 +125,7 @@ private:
         void createBall();
         void createBoard();
         void createBottom();
+        void createSkill();
         
         void addBrix(int idx);
         Node * createBrix(brixMap::position pos, int id);
@@ -139,9 +141,10 @@ private:
         const float getHPValue() {
             return hp->getValue();
         };
+        void skill();
         bool onCombo(int id);
         void onTimer(float f);
-        void onBomb(const string from = "BOMB");
+        void onBomb(const string from, const string img);
         void setRanking(int ranking);
         void createLayerBrix();
     };

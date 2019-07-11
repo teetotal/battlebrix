@@ -213,6 +213,11 @@ bool battleBrix::init() {
         float recharge = playItems[rapidjson::SizeType(i)]["property"]["hpRecharge"].GetFloat();
         item.property.set(attack, recharge);
         
+        const rapidjson::Value& targets = playItems[rapidjson::SizeType(i)]["property"]["attackTarget"];
+         for (rapidjson::SizeType j = 0; j < targets.Size(); j++) {
+             item.property.attackTarget.push_back(targets[rapidjson::SizeType(j)].GetInt());
+         }
+        
         mItems.push_back(item);
     }
     

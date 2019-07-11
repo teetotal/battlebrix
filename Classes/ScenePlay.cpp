@@ -133,14 +133,6 @@ void ScenePlay::PLAYER::init(ScenePlay* p, int idx, const string& name, int laye
 //        pLayer->addChild(layer);
 //    }
     layer = p->getNodeById(layerId);
-    
-    //enable skill
-    for(int n = 0; n < PLAY_ITEM_CNT; n++) {
-        if(!battleBrix::inst()->mItemSelected.isSelected[n])
-            ((ui_icon*)p->getNodeById(ID_NODE_SKILL_1 + n))->setEnabled(false);
-            
-    }
-    
     hp = (ui_progressbar*)p->getNodeById(hpId);
     mp = (ui_progressbar*)p->getNodeById(mpId);
     alert = p->getNodeById(alertId);
@@ -250,7 +242,25 @@ void ScenePlay::PLAYER::createBottom() {
                              , -1 //_PHYSICS_ID_MY_BALL
                              );
 }
-
+// createSkill ===========================================================================
+void ScenePlay::PLAYER::createSkill() {
+    const Vec2 grid = Vec2(1, 9);
+    const Vec2 margin = Vec2(layer->getContentSize().width * 0.05f, 1);
+    const Vec2 innerMargin = Vec2(0, 1);
+    Size sizeGrid = gui::inst()->getGridSize(layer->getContentSize(), grid, margin, innerMargin);
+    
+    for(int n=0; n<PLAY_ITEM_CNT; n++) {
+        skills[n] = ui_icon::create();
+        skills[n]->addCircle(layer
+                            , sizeGrid
+                            , gui::inst()->getPointVec2(0, 6 + n, ALIGNMENT_LEFT, layer->getContentSize(), grid, margin, innerMargin)
+                            , ALIGNMENT_CENTER
+                            , ui_wizard_share::inst()->getPalette()->getColor("BLUE")
+                            , ""
+                            , battleBrix::inst()->mItems[n].img
+                            );
+    }
+}
 // vibrate ===========================================================================
 void ScenePlay::PLAYER::vibrate() {
     if(lockShake)
@@ -269,7 +279,7 @@ void ScenePlay::PLAYER::decreseHP(const string from, float f) {
     
     if(from.size() > 0) {
         Vec2 pos = Vec2(layer->getContentSize().width / 2.f, layer->getContentSize().height * .75f);
-        guiExt::addScaleEffect(layer, "icons8-action-96.png", from, ui_wizard_share::inst()->getPalette()->getColor("GRAY"), NULL, .4f, .4f, pos, 150);
+        guiExt::addScaleEffect(layer, "icons8-action-96.png", from, ui_wizard_share::inst()->getPalette()->getColor("GRAY"), NULL, .4f, .4f, pos, true);
     }
     
     if(val <= 0.3f) {
@@ -326,10 +336,8 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
         }
         ball->getPhysicsBody()->setVelocity(vel);
         
-    } else if(id >= _ID_GIFT_START && id < _ID_TRAP_START) {
+    } else if(id >= _ID_GIFT_START && id < _ID_TRAP_START && layerBrix->getChildByTag(id)) {
         auto pGift = layerBrix->getChildByTag(id);
-        if(pGift == NULL)
-            return false;
         Vec2 pos = pGift->getPosition();
         auto p = createGiftOrTrapEffect(pos, brixMap::TYPE_GIFT, CallFunc::create([=](){
             pScene->onSkill(getRandValue((int)battleBrix::inst()->mItems.size()), this->idx);
@@ -337,7 +345,7 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
         //gift
         layerBrix->removeChildByTag(id);
         layerBrix->addChild(p);
-    } else if(id >= _ID_TRAP_START && id < _ID_BRIX_START) {
+    } else if(id >= _ID_TRAP_START && id < _ID_BRIX_START && layerBrix->getChildByTag(id)) {
         Vec2 pos = layerBrix->getChildByTag(id)->getPosition();
         auto p = createGiftOrTrapEffect(pos, brixMap::TYPE_TRAP, CallFunc::create([=](){
             this->decreseHP("");
@@ -352,6 +360,8 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
     
     return false;
 }
+
+//아이템을 충전해 주는 방식
 Sprite * ScenePlay::PLAYER::createGiftOrTrapEffect(Vec2 pos, brixMap::TYPE type, CallFunc * fn) {
     const string img = (type == brixMap::TYPE_GIFT) ? "icons8-wedding-gift-96.png" : "icons8-bomb-96.png";
     auto p = gui::inst()->getSprite(img);
@@ -360,6 +370,45 @@ Sprite * ScenePlay::PLAYER::createGiftOrTrapEffect(Vec2 pos, brixMap::TYPE type,
     guiExt::runScaleEffect(p, fn, 0.3f, true);
     
     return p;
+}
+// onCombo ===========================================================================
+void ScenePlay::PLAYER::skill() {
+    //fix me. 나중에 아이템이 다양해 지면 수정해야 함.
+    //0: combo
+    //1: potion
+    //2: bomb
+    
+    bool hasSkill = false;
+    for(int n=0; n < PLAY_ITEM_CNT; n++) {
+        if(skills[n] && skills[n]->isEnabled()) {
+            hasSkill = true;
+            break;
+        }
+    }
+    if(!hasSkill)
+        return;
+    
+    int idx = -1;
+    
+    if(getHPValue() > 0.5f) //50%이하로 체력이 남으면 스킬 개시
+        return;
+    
+    if(this->ranking >= 2 && this->ranking <= 3 && skills[0] && skills[0]->isEnabled()) { //2, 3등이면 sniper
+        idx = 0;
+    } else if(this->ranking >= 4 && skills[2] && skills[2]->isEnabled()) { // 4,5등이면 전체 공격
+        idx = 2;
+    } else if(skills[1] && skills[1]->isEnabled()) {
+        idx = 1;
+    }
+    
+    
+    if(idx != -1) {
+        skills[idx]->setEnabled(false);
+//        guiExt::runScaleEffect(skills[idx]); //효과 줘봤자 보이지도 않고 안그래도 화면 현란함.
+        pScene->onSkill(idx, this->idx);
+        return;
+    }
+    
 }
 // onCombo ===========================================================================
 bool ScenePlay::PLAYER::onCombo(int id) {
@@ -414,12 +463,12 @@ bool ScenePlay::PLAYER::onCombo(int id) {
     return false;
 }
 // onBomb ===========================================================================
-void ScenePlay::PLAYER::onBomb(const string from) {
+void ScenePlay::PLAYER::onBomb(const string from, const string img) {
     if(isEnd)
         return;
     
     Vec2 pos = Vec2(layer->getContentSize().width / 2.f, layer->getContentSize().height * .75f);
-    guiExt::addScaleEffect(layer, "icons8-atomic-bomb-96.png", from, ui_wizard_share::inst()->getPalette()->getColor("GRAY"), NULL, .4f, .4f, pos, 150);
+    guiExt::addScaleEffect(layer, img, from, ui_wizard_share::inst()->getPalette()->getColor("GRAY"), NULL, .4f, .4f, pos, true);
 }
 // setAutoPlay ===========================================================================
 void ScenePlay::PLAYER::onTimer(float f) {
@@ -617,8 +666,17 @@ void ScenePlay::PLAYER::addBrix(int idx) {
 /* ----------------------------------------------------------------------------------------------------------------
  
  
+ 
+ 
+ 
+ 
  ScenePlay
 
+ 
+ 
+ 
+ 
+ 
  
  ---------------------------------------------------------------------------------------------------------------- */
 bool ScenePlay::init()
@@ -653,10 +711,16 @@ bool ScenePlay::init()
     PHYSICS_CONTACT(ScenePlay);
     
     //skills
+    //enable skill
+    for(int n = 0; n < PLAY_ITEM_CNT; n++) {
+        if(!battleBrix::inst()->mItemSelected.isSelected[n])
+            ((ui_icon*)getNodeById(ID_NODE_SKILL_1 + n))->setEnabled(false);
+    }
     mSkillParentNode = getNodeById(ID_NODE_SKILL);
     mSkills.push_back((ui_icon*)getNodeById(ID_NODE_SKILL_1));
     mSkills.push_back((ui_icon*)getNodeById(ID_NODE_SKILL_2));
     mSkills.push_back((ui_icon*)getNodeById(ID_NODE_SKILL_3));
+    
     mControlBar = getNodeById(ID_NODE_CONTROLBAR);
     
     mIsEnd = false;
@@ -715,8 +779,11 @@ bool ScenePlay::init()
                             , 1.5f
                             , CallFunc::create([=]()
     {
-        for(int n=0; n < mPlayers.size(); n++)
+        for(int n=0; n < mPlayers.size(); n++) {
             mPlayers[n].createBall();
+            if(n != _PLAYER_ID_ME)
+                mPlayers[n].createSkill();
+        }
         
         this->schedule(schedule_selector(ScenePlay::timer), battleBrix::inst()->getMyGrade().delay);
     }));
@@ -726,8 +793,11 @@ bool ScenePlay::init()
 // timer ===========================================================================
 void ScenePlay::timer(float f) {
     for(int n = 1; n < mPlayers.size(); n++) {
-        if(!mPlayers[n].isEnd)
+        if(!mPlayers[n].isEnd) {
             mPlayers[n].onTimer(f);
+            //skill 사용.
+            mPlayers[n].skill();
+        }
     }
 }
 // callback ===========================================================================
@@ -740,12 +810,27 @@ void ScenePlay::callback(Ref* pSender, int from, int link) {
             break;
     }
 }
-void ScenePlay::bomb(int id, int val) {
-    for(int n = 0; n < mPlayers.size(); n++) {
-        if(n == id)
-            continue;
-        mPlayers[n].onBomb(mPlayers[id].name);
-        mPlayers[n].decreseHP("", val);
+// bomb ===========================================================================
+void ScenePlay::attack(int from, int itemIdx) {
+    
+    for(int i = 0; i < battleBrix::inst()->mItems[itemIdx].property.attackTarget.size(); i++) {
+        
+        for(int n = 0; n < mPlayers.size(); n++) {
+            if(n == from)
+                continue;
+            
+            int target = battleBrix::inst()->mItems[itemIdx].property.attackTarget[i];
+            
+            if(target == -1 //전체
+               || mPlayers[n].ranking == target)
+            {
+                mPlayers[n].onBomb(mPlayers[from].name, battleBrix::inst()->mItems[itemIdx].img);
+                mPlayers[n].decreseHP("", battleBrix::inst()->mItems[itemIdx].property.hpAttack);
+                
+                if(target != -1)
+                    break;
+            }
+        }
     }
 }
 // onSkill ===========================================================================
@@ -754,7 +839,7 @@ void ScenePlay::onSkill(int idx, int from) {
         return;
     
     float recharge = battleBrix::inst()->mItems[idx].property.hpRecharge;
-    float attack = battleBrix::inst()->mItems[idx].property.hpAttack;
+    float hpAttack = battleBrix::inst()->mItems[idx].property.hpAttack;
     
     //자신일 경우만
     if(from == _PLAYER_ID_ME) {
@@ -762,8 +847,8 @@ void ScenePlay::onSkill(int idx, int from) {
                                           {
                                               if(recharge > 0.f && !mPlayers[from].isEnd)
                                                   mPlayers[from].hp->setValueIncrese(recharge);
-                                              if(attack > 0.f && !mPlayers[from].isEnd)
-                                                  bomb(from, attack);
+                                              if(hpAttack > 0.f)
+                                                  attack(from, idx);
                                           });
         guiExt::addMovingEffect(this->getNodeById(0)
                                 , ui_wizard_share::inst()->getPalette()->getColor("WHITE_OPACITY_LIGHT2")
@@ -779,8 +864,8 @@ void ScenePlay::onSkill(int idx, int from) {
     else {
         if(recharge > 0.f)
             mPlayers[from].hp->setValueIncrese(recharge);
-        if(attack > 0.f)
-            bomb(from, attack);
+        if(hpAttack > 0.f)
+            attack(from, idx);
     }
 }
 // getText ===========================================================================

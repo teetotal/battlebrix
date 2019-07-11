@@ -177,6 +177,7 @@ public:
     
     struct itemProperty {
         float hpAttack; //공격 HP
+        vector<int> attackTarget; //공격 대상
         float hpRecharge; // 충전 HP
         
         void set(float attack, float recharge) {
