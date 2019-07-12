@@ -59,7 +59,7 @@
                 "span": [0, 1],
                 "alignment": "center",
                 "type": "roulette",
-                "color": [ "GREEN_DARK", "GREEN" ],
+                "color": [ "PINK_DARK", "PINK" ],
                 "text": "START"
             },
             {

@@ -67,6 +67,7 @@ private:
     };
     
     void timer(float f);
+    void timerLoose(float f);
     void onFinish();
     void onEnd();
     void onSkill(int idx, int from);
@@ -103,10 +104,11 @@ private:
         Size gridSize, obstacleSize;
         float fontSizeCombo;
         
-        bool isEnd;
+        bool isEnd, isDangerousStatus;
         int ranking;
         
-        PLAYER(){
+        PLAYER() {
+            isDangerousStatus = false;
             lockShake = false;
             latestCollisionWithBoard = 0;
             combo = 0;
@@ -137,16 +139,12 @@ private:
         
         Sprite * createBrixFromSprite(brixMap::position pos, int id, const string img);
         Sprite * createGiftOrTrapEffect(Vec2 pos, brixMap::TYPE type, CallFunc * fn);
-//        void addBrix0();
-//        void addBrix1();
-//        void addBrix2();
-//        void addBrix3();
-//        void addBrix4();
         
         const float getHPValue() {
             return hp->getValue();
         };
         void skill();
+        void setBackgroundStatus();
         bool onCombo(int id);
         void onTimer(float f);
         void onBomb(const string from, int itemIdx);

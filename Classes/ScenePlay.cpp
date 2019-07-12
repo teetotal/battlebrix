@@ -272,18 +272,13 @@ void ScenePlay::PLAYER::decreseHP(const string from, float f) {
     if(this->isEnd)
         return;
     
-    auto val = hp->setValueDecrese(f);
+    hp->setValueDecrese(f);
     hp->blink();
     vibrate();
     
     if(from.size() > 0) {
         Vec2 pos = Vec2(layer->getContentSize().width / 2.f, layer->getContentSize().height * .75f);
         guiExt::addScaleEffect(layer, "icons8-action-96.png", from, ui_wizard_share::inst()->getPalette()->getColor("GRAY"), NULL, .4f, .4f, pos, true);
-    }
-    
-    if(val <= 0.3f) {
-        alert->setVisible(true);
-        alert->runAction(RepeatForever::create(Blink::create(0.4f, 1)));
     }
 }
 // onContact ===========================================================================
@@ -299,6 +294,9 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
         hp->blink();
         vibrate();
         CCLOG("%lf BOTTOM %s", (double)getNow(), name.c_str());
+        alert->setOpacity(255);
+        alert->setVisible(true);
+        alert->runAction(Sequence::create(FadeOut::create(0.3f), CallFunc::create([=](){ alert->setVisible(false); }),NULL));
     }
     else if(id >= _BOARD_ID_L && id <= _BOARD_ID_R) {
         //동시 충돌 방지
@@ -373,6 +371,7 @@ Sprite * ScenePlay::PLAYER::createGiftOrTrapEffect(Vec2 pos, brixMap::TYPE type,
 }
 // onCombo ===========================================================================
 void ScenePlay::PLAYER::skill() {
+    
     //fix me. 나중에 아이템이 다양해 지면 수정해야 함.
     //0: combo
     //1: potion
@@ -389,16 +388,26 @@ void ScenePlay::PLAYER::skill() {
         return;
     
     int idx = -1;
+    float hp = getHPValue();
     
-    if(getHPValue() > 0.5f) //50%이하로 체력이 남으면 스킬 개시
+    //50%이하만 통과
+    if(hp > 0.5f)
+        return;
+    
+    //random
+    if(getRandValue(3) != 0)
         return;
     
     if(this->ranking >= 2 && this->ranking <= 3 && skills[0] && skills[0]->isEnabled()) { //2, 3등이면 sniper
         idx = 0;
     } else if(this->ranking >= 4 && skills[2] && skills[2]->isEnabled()) { // 4,5등이면 전체 공격
         idx = 2;
-    } else if(skills[1] && skills[1]->isEnabled()) {
+    } else if(skills[1] && skills[1]->isEnabled()) { //potion
         idx = 1;
+    } else if(hp < 0.2 && skills[0] && skills[0]->isEnabled()) { //hp 20% 이하면 닥치는 대로
+        idx = 0;
+    } else if(hp < 0.2 && skills[2] && skills[2]->isEnabled()) { //hp 20% 이하면 닥치는 대로
+        idx = 2;
     }
     
     
@@ -409,6 +418,18 @@ void ScenePlay::PLAYER::skill() {
         return;
     }
     
+}
+// setBackgroundStatus ===========================================================================
+void ScenePlay::PLAYER::setBackgroundStatus() {
+    //layer color 설정
+    float hp = getHPValue();
+    if(hp <= 0.2f && !isDangerousStatus) { //on
+        ((Layout*)layer)->setBackGroundColor(ui_wizard_share::inst()->getPalette()->getColor3B("DARKGRAY"));
+        isDangerousStatus = true;
+    } else if(hp > 0.2f && isDangerousStatus) { //off
+        ((Layout*)layer)->setBackGroundColor(ui_wizard_share::inst()->getPalette()->getColor3B("BLACK"));
+        isDangerousStatus = false;
+    }
 }
 // onCombo ===========================================================================
 bool ScenePlay::PLAYER::onCombo(int id) {
@@ -798,7 +819,9 @@ bool ScenePlay::init()
         }
         
         this->schedule(schedule_selector(ScenePlay::timer), battleBrix::inst()->getMyGrade().delay);
-    }));
+        this->schedule(schedule_selector(ScenePlay::timerLoose), 1);
+    })
+    );
    
     return true;
 }
@@ -807,9 +830,15 @@ void ScenePlay::timer(float f) {
     for(int n = 1; n < mPlayers.size(); n++) {
         if(!mPlayers[n].isEnd) {
             mPlayers[n].onTimer(f);
-            //skill 사용.
-            mPlayers[n].skill();
         }
+    }
+}
+// timerSkill ===========================================================================
+void ScenePlay::timerLoose(float f) {
+    for(int n = 0; n < mPlayers.size(); n++) {
+        if(n != _PLAYER_ID_ME)
+            mPlayers[n].skill();
+        mPlayers[n].setBackgroundStatus();
     }
 }
 // callback ===========================================================================

@@ -101,7 +101,9 @@ public:
         int point;
         int maxGrowth;
         int growth;
-        
+        int level;
+        int levelGrowth;
+        int levelMaxGrowth;
         
         int growthPerLevel;
         int rechargeTime;
@@ -159,7 +161,7 @@ public:
         
         bool increseGrowth(int val);
 
-        
+        void setCRC();
     } mUserData;
     
     // reward meta

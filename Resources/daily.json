@@ -26,7 +26,7 @@
                     "type": "label",
                     "link": 0,
                     "img": null,
-                    "color": "BLUE_LIGHT",
+                    "color": "GRAY",
                     "bgColor": "BLUE_DARK",
                     "text": "DAILY REWARD",
                     "fontSize": 0
@@ -263,7 +263,7 @@
                     "position": [ 0, 0 ],
                     "alignment": "center",
                     "type": "roulette",
-                    "color": [ "GREEN_DARK", "GREEN" ],
+                    "color": [ "PINK_DARK", "PINK" ],
                     "text": "START"
                 }
             ]

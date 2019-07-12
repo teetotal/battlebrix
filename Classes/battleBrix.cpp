@@ -90,8 +90,7 @@ void battleBrix::userData::increaseHeart(int n) {
     heart += n;
     int r = Sql::inst()->exec("UPDATE userData SET heart = " + to_string(heart));
     CCASSERT((r == 0), "sql failure");
-    r = Sql::inst()->exec("UPDATE userData SET crc = (heartTimerStart + grade + heart + heartMax + point + growth + maxGrowth + ranking) % 128");
-    CCASSERT((r == 0), "sql failure");
+    setCRC();
     lock.unlock();
 };
 
@@ -100,8 +99,7 @@ void battleBrix::userData::increasePoint(int n) {
     point += n;
     int r = Sql::inst()->exec("UPDATE userData SET point = " + to_string(point));
     CCASSERT((r == 0), "sql failure");
-    r = Sql::inst()->exec("UPDATE userData SET crc = (heartTimerStart + grade + heart + heartMax + point + growth + maxGrowth + ranking) % 128");
-    CCASSERT((r == 0), "sql failure");
+    setCRC();
     lock.unlock();
 };
 
@@ -110,8 +108,7 @@ void battleBrix::userData::setHeartTimerStart(time_t t) {
     heartTimerStart = t;
     int r = Sql::inst()->exec("UPDATE userData SET heartTimerStart = " + to_string(heartTimerStart));
     CCASSERT((r == 0), "sql failure");
-    r = Sql::inst()->exec("UPDATE userData SET crc = (heartTimerStart + grade + heart + heartMax + point + growth + maxGrowth + ranking) % 128");
-    CCASSERT((r == 0), "sql failure");
+    setCRC();
     lock.unlock();
 };
 
@@ -136,9 +133,13 @@ bool battleBrix::userData::increseGrowth(int val) {
     }
     int r = Sql::inst()->exec("UPDATE userData SET growth = " + to_string(growth) + " , maxGrowth = " + to_string(maxGrowth) + " ,grade = " + to_string(grade));
     CCASSERT((r == 0), "sql failure");
-    r = Sql::inst()->exec("UPDATE userData SET crc = (heartTimerStart + grade + heart + heartMax + point + growth + maxGrowth + ranking) % 128");
-    CCASSERT((r == 0), "sql failure");
+    setCRC();
     return ret;
+}
+void battleBrix::userData::setCRC() {
+    int crc = 128;
+    int r = Sql::inst()->exec("UPDATE userData SET crc = (heartTimerStart - (point * heartMax) + (heart * heartMax) - growth - (maxGrowth / grade) - ranking - levelGrowth - (levelMaxGrowth / level)) % " + to_string(crc));
+    CCASSERT((r == 0), "sql failure");
 }
 //===============================================================================
 bool battleBrix::init() {
@@ -153,8 +154,9 @@ bool battleBrix::init() {
         CCLOG("SQL FILE INIT FAILURE");
         return false;
     }
+    Sql::inst()->select("select (heartTimerStart - (point * heartMax) + (heart * heartMax) - growth - (maxGrowth / grade) - ranking - levelGrowth - (levelMaxGrowth / level))  % 128 from userData");
     
-    sqlite3_stmt * stmt = Sql::inst()->select("SELECT id, grade, heart, heartMax, heartTimerStart, point, growth, maxGrowth, ranking, crc FROM userData");
+    sqlite3_stmt * stmt = Sql::inst()->select("SELECT id, grade, heart, heartMax, heartTimerStart, point, growth, maxGrowth, ranking, level, levelGrowth, levelMaxGrowth, crc FROM userData");
     if (stmt == NULL)
         return false;
     
@@ -171,9 +173,12 @@ bool battleBrix::init() {
         mUserData.growth = sqlite3_column_int(stmt, idx++);
         mUserData.maxGrowth = sqlite3_column_int(stmt, idx++);
         mUserData.ranking = sqlite3_column_int(stmt, idx++);
+        mUserData.level = sqlite3_column_int(stmt, idx++);
+        mUserData.levelGrowth = sqlite3_column_int(stmt, idx++);
+        mUserData.levelMaxGrowth = sqlite3_column_int(stmt, idx++);
         
         int crc = sqlite3_column_int(stmt, idx++);
-        long crcCheck = mUserData.heartTimerStart + mUserData.grade + mUserData.heart + mUserData.heartMax + mUserData.point + mUserData.growth + mUserData.maxGrowth + mUserData.ranking;
+        long crcCheck = (mUserData.heartTimerStart - (mUserData.point * mUserData.heartMax) + (mUserData.heart * mUserData.heartMax) - mUserData.growth - (mUserData.maxGrowth / mUserData.grade) - mUserData.ranking - mUserData.levelGrowth - (mUserData.levelMaxGrowth / mUserData.level));
         crcCheck = (int)(crcCheck % 128);
         CCLOG("CRC %d - %d", crc, (int)crcCheck);
         if(crc != crcCheck) {
