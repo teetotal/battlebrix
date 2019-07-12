@@ -208,23 +208,7 @@
         ]
     },
     {
-        "visible": false,
-        "comment": "play image",
-        "dimension": [ 5, 1, 8, 6 ],
-        "margin": [ 10, 35 ],
-        "innerMargin": [ 0, 2 ],
-        "gridSize": [ 1, 1 ],
-        "img": null,
-        "color": 0,
-        "objects": [
-            {
-                "position": [ 0, 0 ],
-                "alignment": "center",
-                "type": "sprite_button",
-                "link": 0,
-                "img": "Daeko_400.png"
-            }
-        ]
+        "component": "levelup"
     }
   ]
 }

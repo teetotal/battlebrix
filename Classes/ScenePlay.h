@@ -104,11 +104,12 @@ private:
         Size gridSize, obstacleSize;
         float fontSizeCombo;
         
-        bool isEnd, isDangerousStatus;
+        bool isEnd;
+        int dangerousStatus;
         int ranking;
         
         PLAYER() {
-            isDangerousStatus = false;
+            dangerousStatus = 0;
             lockShake = false;
             latestCollisionWithBoard = 0;
             combo = 0;

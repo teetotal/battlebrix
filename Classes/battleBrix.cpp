@@ -118,7 +118,7 @@ bool battleBrix::userData::increseGrowth(int val) {
     if(growth >= maxGrowth) {
         growth = growth - maxGrowth;
         grade++;
-        maxGrowth = grade * growthPerLevel;
+        maxGrowth = grade * growthPerGrade;
         
         ret = true;
         
@@ -128,7 +128,7 @@ bool battleBrix::userData::increseGrowth(int val) {
             isReset = true;
         
         grade = max(1,  grade - 1);
-        maxGrowth = grade * growthPerLevel;
+        maxGrowth = grade * growthPerGrade;
         growth = isReset ? 0 : maxGrowth + growth;
     }
     int r = Sql::inst()->exec("UPDATE userData SET growth = " + to_string(growth) + " , maxGrowth = " + to_string(maxGrowth) + " ,grade = " + to_string(grade));
@@ -140,6 +140,29 @@ void battleBrix::userData::setCRC() {
     int crc = 128;
     int r = Sql::inst()->exec("UPDATE userData SET crc = (heartTimerStart - (point * heartMax) + (heart * heartMax) - growth - (maxGrowth / grade) - ranking - levelGrowth - (levelMaxGrowth / level)) % " + to_string(crc));
     CCASSERT((r == 0), "sql failure");
+}
+
+bool battleBrix::userData::increseExp(int val) {
+    bool ret = false;
+    if(levelMaxGrowth <= levelGrowth + val) { //level up
+        level++;
+        levelGrowth = (levelGrowth + val) - levelMaxGrowth;
+        levelMaxGrowth = level * growthPerLevel;
+        
+        //heart
+        if(heartMax > heart) {
+            increaseHeart(heartMax - heart);
+        }
+        
+        ret = true;
+    } else {
+        levelGrowth += val;
+    }
+    
+    int r = Sql::inst()->exec("UPDATE userData SET level = " + to_string(level) + " , levelGrowth = " + to_string(levelGrowth) + " ,levelMaxGrowth = " + to_string(levelMaxGrowth));
+    CCASSERT((r == 0), "sql failure");
+    setCRC();
+    return ret;
 }
 //===============================================================================
 bool battleBrix::init() {
@@ -193,6 +216,7 @@ bool battleBrix::init() {
     rapidjson::Document d = getJsonValue("config.json");
     
     mUserData.rechargeTime = d["rechargeInterval"].GetInt();
+    mUserData.growthPerGrade = d["growthPerGrade"].GetInt();
     mUserData.growthPerLevel = d["growthPerLevel"].GetInt();
     
     //reward
@@ -261,7 +285,7 @@ const string battleBrix::getText(const string& defaultString, int id) {
             return mUserData.getRechargeRemainTimeString();
             
         case _ID_NODE_LABEL_LEVEL:
-            return "Lv." + to_string(mUserData.grade);
+            return "Lv." + to_string(mUserData.level);
             
         case _ID_NODE_PROGRESSBAR:
             return getLevelString();

@@ -118,7 +118,7 @@
         {
             "id": 20000,
             "visible": false,
-            "comment": "for levelup",
+            "comment": "for grade up",
             "dimension": [ 0, 0, 9, 7 ],
             "margin": [ 0, 0 ],
             "innerMargin": [ 5, 5 ],

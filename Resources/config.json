@@ -1,5 +1,6 @@
 {
-    "growthPerLevel": 128,
+    "growthPerGrade": 128,
+    "growthPerLevel": 8,
     "rechargeInterval": 600,
     "grades": [
         {

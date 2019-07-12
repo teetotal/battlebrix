@@ -141,18 +141,40 @@ void SceneMain::runPlay() {
     // pay and change scene
     if(battleBrix::inst()->payForPlay(totalPoint))
     {
+        CallFunc * next;
+        if(battleBrix::inst()->mUserData.increseExp()) { //levelup
+            next = CallFunc::create([=](){
+                showLevelUp();
+            });
+        } else {
+            next = CallFunc::create([=]() { // go to playscene
+                this->replaceScene(ScenePlay::create());
+            });
+        }
         // 효과
         ((ui_icon*)getNodeById(_ID_NODE_LABEL_POINT))->setText(battleBrix::inst()->getText("", _ID_NODE_LABEL_POINT));
         guiExt::runScaleEffect(getNodeById(_ID_NODE_LABEL_POINT));
         
         ((ui_icon*)getNodeById(_ID_NODE_LABEL_HEART))->setText(battleBrix::inst()->getText("", _ID_NODE_LABEL_HEART));
-        guiExt::runScaleEffect(getNodeById(_ID_NODE_LABEL_HEART), CallFunc::create([=]() {
-            this->replaceScene(ScenePlay::create());
-//            this->replaceScene(SceneEnding::create());
-        } ));
+        guiExt::runScaleEffect(getNodeById(_ID_NODE_LABEL_HEART), next);
     }
 }
 
+void SceneMain::showLevelUp() {
+    //init bold
+    Node * layer = this->getNodeById(20000);
+    layer->setVisible(true);
+    layer->addChild(gui::inst()->createParticle("firework.plist", gui::inst()->getCenter(layer)));
+    Label * title = ((Label*)this->getNodeById(20001));
+    title->enableBold();
+    Label * level = ((Label*)this->getNodeById(20002));
+    level->enableBold();
+    level->setString(battleBrix::inst()->getText("", _ID_NODE_LABEL_LEVEL));
+    
+    guiExt::runScaleEffect(title, CallFunc::create([=]() {
+        this->replaceScene(ScenePlay::create());
+    }), 1.f, false);
+}
 //====================================================================
 bool SceneDaily::init()
 {

@@ -1,4 +1,33 @@
 {
+    "levelup": {
+        "id": 20000,
+        "visible": false,
+        "dimension": [ 0, 0, 9, 7 ],
+        "margin": [ 0, 0 ],
+        "innerMargin": [ 5, 5 ],
+        "gridSize": [ 3, 4 ],
+        "color": 200,
+        "objects": [
+            {
+                "id": 20001,
+                "position": [ 1, 1 ],
+                "alignment": "center_bottom",
+                "type": "label",
+                "color": ["PINK", "BLACK"],
+                "text": "LEVEL UP",
+                "fontSize": 0
+            },
+            {
+                "id": 20002,
+                "position": [ 1, 2 ],
+                "alignment": "center_top",
+                "type": "label",
+                "color": ["YELLOW", "BLACK"],
+                "text": "Lv.1",
+                "fontSize": -1
+            }
+        ]
+    },
     "daily_day_cash": {
         "dimension": [ 0, 0, 1, 1 ],
         "margin": [ 0, 0 ],

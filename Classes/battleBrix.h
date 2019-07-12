@@ -105,7 +105,7 @@ public:
         int levelGrowth;
         int levelMaxGrowth;
         
-        int growthPerLevel;
+        int growthPerGrade, growthPerLevel;
         int rechargeTime;
         std::mutex lock;
         
@@ -160,6 +160,7 @@ public:
         void setHeartTimerStart(time_t t);
         
         bool increseGrowth(int val);
+        bool increseExp(int val = 1); //level
 
         void setCRC();
     } mUserData;

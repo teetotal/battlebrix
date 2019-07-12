@@ -116,7 +116,7 @@
                 "position": [ 0, 2 ],
                 "alignment": "center",
                 "type": "layer",
-                "color": 150,
+                "color": 130,
                 "span": [0, 18]
             },
             {
@@ -178,7 +178,7 @@
                 "position": [ 0, 2 ],
                 "alignment": "center",
                 "type": "layer",
-                "color": 150,
+                "color": 130,
                 "span": [0, 18]
             },
             {
@@ -240,7 +240,7 @@
                 "position": [ 0, 2 ],
                 "alignment": "center",
                 "type": "layer",
-                "color": 150,
+                "color": 130,
                 "span": [0, 18]
             },
             {
@@ -302,7 +302,7 @@
                 "position": [ 0, 2 ],
                 "alignment": "center",
                 "type": "layer",
-                "color": 150,
+                "color": 130,
                 "span": [0, 18]
             },
             {
@@ -364,7 +364,7 @@
               "position": [ 0, 2 ],
               "alignment": "center",
               "type": "layer",
-              "color": 150,
+              "color": 130,
               "span": [0, 18]
           },
           {
@@ -427,7 +427,7 @@
               "position": [ 0, 2 ],
               "alignment": "center",
               "type": "layer",
-              "color": 150,
+              "color": 130,
               "span": [0, 18]
           },
           {

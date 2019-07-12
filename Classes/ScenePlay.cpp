@@ -423,12 +423,15 @@ void ScenePlay::PLAYER::skill() {
 void ScenePlay::PLAYER::setBackgroundStatus() {
     //layer color 설정
     float hp = getHPValue();
-    if(hp <= 0.2f && !isDangerousStatus) { //on
-        ((Layout*)layer)->setBackGroundColor(ui_wizard_share::inst()->getPalette()->getColor3B("DARKGRAY"));
-        isDangerousStatus = true;
-    } else if(hp > 0.2f && isDangerousStatus) { //off
-        ((Layout*)layer)->setBackGroundColor(ui_wizard_share::inst()->getPalette()->getColor3B("BLACK"));
-        isDangerousStatus = false;
+    if(hp <= 0.2f && dangerousStatus != 2) { //on level 2
+        ((Layout*)layer)->setOpacity(160);
+        dangerousStatus = 2;
+    } else if(hp <= 0.4f && hp > 0.2 && dangerousStatus != 1) { //on level 1
+        ((Layout*)layer)->setOpacity(145);
+        dangerousStatus = 1;
+    } else if(hp > 0.4f && dangerousStatus != 0) { //off level 0
+        ((Layout*)layer)->setOpacity(130);
+        dangerousStatus = 0;
     }
 }
 // onCombo ===========================================================================

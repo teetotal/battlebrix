@@ -77,6 +77,7 @@ private:
     
     void sumPrice();
     void runPlay();
+    void showLevelUp();
 };
 // SceneDaily ==================================
 class SceneDaily : public ui_wizard
