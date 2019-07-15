@@ -244,7 +244,7 @@ public:
     };
     // level up 이면 true
 //    bool increseGrowth(int val);
-    const string getLevelString();
+    const string getGradeString();
     //play 비용
     bool payForPlay(int point, int heart = 1);
     bool checkPayForPlay(int point, int heart = 1);

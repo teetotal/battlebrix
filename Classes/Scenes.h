@@ -115,4 +115,14 @@ class SceneShop : public ui_wizard
     virtual const string getText(const string& defaultString, int id);
     virtual const float getProgressValue(int id) { return battleBrix::inst()->getProgressValue(id); };
 };
+// macro
+#define LEVELUP_EVENT(callFunc) Node * layer = this->getNodeById(30000);\
+        layer->setVisible(true);\
+        layer->addChild(gui::inst()->createParticle("firework.plist", gui::inst()->getCenter(layer)));\
+        Label * title = ((Label*)this->getNodeById(30001));\
+        title->enableBold();\
+        Label * level = ((Label*)this->getNodeById(30002));\
+        level->enableBold();\
+        level->setString(battleBrix::inst()->getText("", _ID_NODE_LABEL_LEVEL));\
+        guiExt::runScaleEffect(title, callFunc, 1.f, false);
 #endif // __SCENES_H__

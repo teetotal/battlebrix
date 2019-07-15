@@ -82,6 +82,7 @@ enum ID_NODE {
     ID_NODE_ENDING_REWARD,
     ID_NODE_ENDING_REWARD_POINT,
     ID_NODE_ENDING_REWARD_HEART,
+    ID_NODE_ENDING_OK,
     ID_NODE_LEVELUP = 20000,
     ID_NODE_LEVELUP_LABEL,
     ID_NODE_LEVELUP_GRADE,
@@ -152,6 +153,11 @@ void ScenePlay::PLAYER::init(ScenePlay* p, int idx, const string& name, int laye
     obstacleSize.width *= RATIO_OBSTACLE_PER_GRID;
     obstacleSize.height *= RATIO_OBSTACLE_PER_GRID;
     fontSizeCombo = gui::inst()->getFontSize(gridSize) * 1.f;
+    
+    //skillThreshold
+    float thresholds[] = {0.7f, 0.5f, 0.3f, 0.2f};
+    skillThreshold = thresholds[getRandValue(4)];
+//    CCLOG("%s threshold = %f", name.c_str(), skillThreshold);
     
     // create board
     createBoard();
@@ -390,8 +396,8 @@ void ScenePlay::PLAYER::skill() {
     int idx = -1;
     float hp = getHPValue();
     
-    //50%이하만 통과
-    if(hp > 0.5f)
+    //skillThreshold 이하만 통과
+    if(hp > skillThreshold)
         return;
     
     //random
@@ -765,7 +771,7 @@ bool ScenePlay::init()
     int fnId = brixMap::inst()->getMapRandom();
     
     // grade
-    ((Label*)getNodeById(ID_NODE_TOP_GRADE))->setString(battleBrix::inst()->getLevelString());
+    ((Label*)getNodeById(ID_NODE_TOP_GRADE))->setString(battleBrix::inst()->getGradeString());
     // map type
     ((MenuItemLabel*)getNodeById(ID_NODE_TOP_MAP_TYPE))->setString(brixMap::inst()->getMap(fnId).title);
     
@@ -1112,7 +1118,7 @@ bool SceneEnding::init()
                                                     this->getNodeById(0)->addChild(gui::inst()->createParticle("firework.plist", gui::inst()->getCenter()));
                                                     this->getNodeById(ID_NODE_LEVELUP)->setVisible(true);
                                                     auto levelGrade = (Label *)this->getNodeById(ID_NODE_LEVELUP_GRADE);
-                                                    levelGrade->setString(battleBrix::inst()->getLevelString());
+                                                    levelGrade->setString(battleBrix::inst()->getGradeString());
                                                     guiExt::runScaleEffect(this->getNodeById(ID_NODE_LEVELUP_LABEL), CallFunc::create([=]() {
                                                         guiExt::runScaleEffect(levelGrade, CallFunc::create([=]() {
                                                             this->getNodeById(ID_NODE_LEVELUP)->setVisible(false);
@@ -1122,7 +1128,10 @@ bool SceneEnding::init()
                                                 }
                                                 // progressbar
                                                 ((ui_progressbar*)getNodeById(_ID_NODE_PROGRESSBAR))->setValue(battleBrix::inst()->getGrowthPercentage());
-                                                ((ui_progressbar*)getNodeById(_ID_NODE_PROGRESSBAR))->setText(battleBrix::inst()->getLevelString());
+                                                ((ui_progressbar*)getNodeById(_ID_NODE_PROGRESSBAR))->setText(battleBrix::inst()->getGradeString());
+                                                
+                                                getNodeById(ID_NODE_ENDING_AGAIN)->setVisible(true);
+                                                getNodeById(ID_NODE_ENDING_OK)->setVisible(true);
                                             })
                          , 1.f, (reward.growth < 0) ? true : false);
     
@@ -1162,7 +1171,14 @@ void SceneEnding::onAgain() {
         ((ui_icon*)this->getNodeById(_ID_NODE_LABEL_HEART))->setText(battleBrix::inst()->getText("", _ID_NODE_LABEL_HEART));
         guiExt::runScaleEffect(this->getNodeById(_ID_NODE_LABEL_POINT));
         guiExt::runScaleEffect(this->getNodeById(_ID_NODE_LABEL_HEART), CallFunc::create([=](){
-            this->replaceScene(ScenePlay::create());
+            
+            if(battleBrix::inst()->mUserData.increseExp()) {
+                CallFunc * p = CallFunc::create([=]() { this->replaceScene(ScenePlay::create()); });
+                LEVELUP_EVENT(p)
+            } else {
+                this->replaceScene(ScenePlay::create());
+            }
+            
         }));
     } else {
         //alert

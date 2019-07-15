@@ -92,6 +92,7 @@ private:
         int ballId;
         int combo;
         Vec2 preBallPosition;
+        float skillThreshold;
         
         //map<int, Vec2> obstaclesPos;
         map<int, bool> brixEffectFlagMap;
@@ -109,6 +110,7 @@ private:
         int ranking;
         
         PLAYER() {
+            skillThreshold = 0.f;
             dangerousStatus = 0;
             lockShake = false;
             latestCollisionWithBoard = 0;

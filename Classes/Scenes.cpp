@@ -161,19 +161,9 @@ void SceneMain::runPlay() {
 }
 
 void SceneMain::showLevelUp() {
-    //init bold
-    Node * layer = this->getNodeById(20000);
-    layer->setVisible(true);
-    layer->addChild(gui::inst()->createParticle("firework.plist", gui::inst()->getCenter(layer)));
-    Label * title = ((Label*)this->getNodeById(20001));
-    title->enableBold();
-    Label * level = ((Label*)this->getNodeById(20002));
-    level->enableBold();
-    level->setString(battleBrix::inst()->getText("", _ID_NODE_LABEL_LEVEL));
     
-    guiExt::runScaleEffect(title, CallFunc::create([=]() {
-        this->replaceScene(ScenePlay::create());
-    }), 1.f, false);
+    CallFunc * p = CallFunc::create([=]() { this->replaceScene(ScenePlay::create()); });
+    LEVELUP_EVENT(p)
 }
 //====================================================================
 bool SceneDaily::init()

@@ -288,7 +288,7 @@ const string battleBrix::getText(const string& defaultString, int id) {
             return "Lv." + to_string(mUserData.level);
             
         case _ID_NODE_PROGRESSBAR:
-            return getLevelString();
+            return getGradeString();
             
         case _ID_NODE_LABEL_RANKING:
             return numberFormat(mUserData.ranking) + "th";
@@ -318,7 +318,7 @@ bool battleBrix::applyReward(int ranking) {
     return mUserData.increseGrowth(reward.growth);
 }
 
-const string battleBrix::getLevelString() {
+const string battleBrix::getGradeString() {
     return mGrades[mUserData.grade].title;
 }
 

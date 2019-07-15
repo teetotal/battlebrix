@@ -98,6 +98,7 @@
                 },
                 {
                     "id": 10002,
+                    "visible": false,
                     "position": [ 2, 6 ],
                     "alignment": "center",
                     "type": "button_rectangle_circle_shadow_2",
@@ -106,6 +107,8 @@
                     "text": "AGAIN"
                 },
                 {
+                    "id": 10006,
+                    "visible": false,
                     "position": [ 3, 6 ],
                     "alignment": "center",
                     "type": "button_rectangle_circle_shadow_2",
@@ -144,6 +147,9 @@
                     "fontSize": -1
                 }
             ]
+        },
+        {
+            "component": "levelup"
         }
     ]
 }
