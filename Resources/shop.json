@@ -89,13 +89,13 @@
     {
         "comment": "scrollview",
         "id": -1,
-        "dimension": [ 0, 1, 9, 6 ],
-        "dimensionInner": [ 0, 1, 9, 6 ],
-        "margin": [ 15, 15 ],
+        "dimension": [ 0, 2, 9, 6 ],
+        "dimensionInner": [ 0, 2, 18, 6 ],
+        "margin": [ 20, 5 ],
         "innerMargin": [ 5, 10 ],
-        "gridSize": [ 4, 1 ],
+        "gridSize": [ 8, 1 ],
         "img": null,
-        "color": "BLUE",
+        "color": "WHITE_OPACITY_LIGHT2",
         "objects": [
             {
                 "id": 1000,
@@ -120,6 +120,82 @@
                 "position": [ 3, 0 ],
                 "type": "component",
                 "component": "shop_heart"
+            },
+            {
+                "id": 1003,
+                "position": [ 4, 0 ],
+                "type": "component",
+                "component": "shop_ad"
+            },
+            {
+                "id": 1004,
+                "position": [ 5, 0 ],
+                "type": "component",
+                "component": "shop_point"
+            },
+            {
+                "id": 1005,
+                "position": [ 6, 0 ],
+                "type": "component",
+                "component": "shop_heart_ad"
+            },
+            {
+                "id": 1006,
+                "position": [ 7, 0 ],
+                "type": "component",
+                "component": "shop_heart"
+            }
+        ]
+    },
+    {
+        "comment": "scrollview top",
+        "id": -1,
+        "dimension": [ 0, 1, 6, 2 ],
+        "margin": [ 20, 5 ],
+        "innerMargin": [ 3, 5 ],
+        "gridSize": [ 5, 1 ],
+        "img": null,
+        "color": 30,
+        "objects": [
+            {
+                "position": [ 0, 0 ],
+                "alignment": "center",
+                "type": "button_rectangle_round_shadow",
+                "link": 0,
+                "color": [ "YELLOW", "BLUE_DARK" ],
+                "text": "ALL"
+            },
+            {
+                "position": [ 1, 0 ],
+                "alignment": "center",
+                "type": "button_rectangle_round_shadow",
+                "link": 0,
+                "color": [ "GRAY", "BLUE_DARK" ],
+                "text": "HEART"
+            },
+            {
+                "position": [ 2, 0 ],
+                "alignment": "center",
+                "type": "button_rectangle_round_shadow",
+                "link": 0,
+                "color": [ "GRAY", "BLUE_DARK" ],
+                "text": "CASH"
+            },
+            {
+                "position": [ 3, 0 ],
+                "alignment": "center",
+                "type": "button_rectangle_round_shadow",
+                "link": 0,
+                "color": [ "GRAY", "BLUE_DARK" ],
+                "text": "SKIN"
+            },
+            {
+                "position": [ 4, 0 ],
+                "alignment": "center",
+                "type": "button_rectangle_round_shadow",
+                "link": 0,
+                "color": [ "GRAY", "BLUE_DARK" ],
+                "text": "GEAR"
             }
         ]
     }

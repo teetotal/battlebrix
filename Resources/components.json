@@ -200,7 +200,7 @@
                 "alignment": "center",
                 "type": "label",
                 "color": "GRAY",
-                "bgColor": "BLUE_DARK",
+                "bgColor": "DARKGRAY",
                 "text": "POINT",
                 "fontSize": 0
             },
@@ -208,7 +208,7 @@
                 "position": [ 0, 0 ],
                 "alignment": "left_bottom",
                 "type": "line",
-                "color": "BLUE_LIGHT"
+                "color": "DARKGRAY_LIGHT"
             },
             {
                 "id": 1,
@@ -232,7 +232,7 @@
                 "position": [ 0, 4 ],
                 "alignment": "center",
                 "type": "button_rectangle_round_shadow",
-                "color": [ "WHITE", "GREEN" ],
+                "color": [ "WHITE", "BLUE" ],
                 "img": "icons8-video-100.png"
             }
         ]
@@ -251,7 +251,7 @@
                 "alignment": "center",
                 "type": "label",
                 "color": "GRAY",
-                "bgColor": "BLUE_DARK",
+                "bgColor": "DARKGRAY",
                 "text": "POINT",
                 "fontSize": 0
             },
@@ -259,7 +259,7 @@
                 "position": [ 0, 0 ],
                 "alignment": "left_bottom",
                 "type": "line",
-                "color": "BLUE_LIGHT"
+                "color": "DARKGRAY_LIGHT"
             },
             {
                 "id": 1,
@@ -283,7 +283,7 @@
                 "position": [ 0, 4 ],
                 "alignment": "center",
                 "type": "button_rectangle_round_shadow",
-                "color": [ "WHITE", "GREEN" ],
+                "color": [ "WHITE", "BLUE" ],
                 "text": "₩1,000",
                 "fontSize": 0
             }
@@ -303,7 +303,7 @@
                 "alignment": "center",
                 "type": "label",
                 "color": [ "GRAY", "BLACK"],
-                "bgColor": "BLUE_DARK",
+                "bgColor": "DARKGRAY",
                 "text": "HEART",
                 "fontSize": 0
             },
@@ -311,7 +311,7 @@
                 "position": [ 0, 0 ],
                 "alignment": "left_bottom",
                 "type": "line",
-                "color": "BLUE_LIGHT"
+                "color": "DARKGRAY_LIGHT"
             },
             {
                 "id": 1,
@@ -334,7 +334,7 @@
                 "position": [ 0, 4 ],
                 "alignment": "center",
                 "type": "button_rectangle_round_shadow",
-                "color": [ "WHITE", "GREEN" ],
+                "color": [ "WHITE", "BLUE" ],
                 "img": "icons8-video-100.png"
             }
         ]
@@ -353,7 +353,7 @@
                 "alignment": "center",
                 "type": "label",
                 "color": [ "GRAY", "BLACK"],
-                "bgColor": "BLUE_DARK",
+                "bgColor": "DARKGRAY",
                 "text": "HEART",
                 "fontSize": 0
             },
@@ -361,7 +361,7 @@
                 "position": [ 0, 0 ],
                 "alignment": "left_bottom",
                 "type": "line",
-                "color": "BLUE_LIGHT"
+                "color": "DARKGRAY_LIGHT"
             },
             {
                 "id": 1,
@@ -384,7 +384,7 @@
                 "position": [ 0, 4 ],
                 "alignment": "center",
                 "type": "button_rectangle_round_shadow",
-                "color": [ "WHITE", "GREEN" ],
+                "color": [ "WHITE", "BLUE" ],
                 "text": "₩5,000",
                 "fontSize": 0
             }
