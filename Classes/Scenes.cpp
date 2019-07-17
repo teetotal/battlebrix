@@ -324,6 +324,28 @@ void SceneDaily::actionFinished() {
 bool SceneShop::init()
 {
     this->loadFromJson("shop", "shop.json");
+    
+    //scrollview
+    Vec2 gridSize = Vec2(10, 1);
+    auto scrollView = (ScrollView*)getNodeById(1000);
+    Vec2 innerMargin = Vec2(5, 5);
+    Size size = Size(scrollView->getInnerContainerSize().width / gridSize.x - innerMargin.x * 2, scrollView->getInnerContainerSize().height - innerMargin.y * 2);
+    for(int n=0; n<(int)gridSize.x; n++) {
+        auto component = ui_wizard_share::inst()->getComponent("shop_point");
+        auto pObj = createNode(size, Vec2::ZERO, Vec2(1.f, 1.f), component, 10000 + 1000 * (n + 1));
+        Vec2 pos = gui::inst()->getPointVec2(n
+                                             , 0
+                                             , ALIGNMENT_LEFT_BOTTOM
+                                             , scrollView->getInnerContainerSize()
+                                             , gridSize
+                                             , Vec2::ZERO
+                                             , Vec2::ZERO
+                                             , innerMargin
+                                             , Vec2::ZERO);
+        pObj->setPosition(pos);
+        scrollView->addChild(pObj);
+    }
+    
     //timer
     HEART_TIMER
     return true;

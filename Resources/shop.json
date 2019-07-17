@@ -88,64 +88,14 @@
     },
     {
         "comment": "scrollview",
-        "id": -1,
+        "id": 1000,
         "dimension": [ 0, 2, 9, 6 ],
         "dimensionInner": [ 0, 2, 18, 6 ],
         "margin": [ 20, 5 ],
         "innerMargin": [ 5, 10 ],
         "gridSize": [ 8, 1 ],
-        "img": null,
-        "color": "WHITE_OPACITY_LIGHT2",
-        "objects": [
-            {
-                "id": 1000,
-                "position": [ 0, 0 ],
-                "type": "component",
-                "component": "shop_ad"
-            },
-            {
-                "id": 1000,
-                "position": [ 1, 0 ],
-                "type": "component",
-                "component": "shop_point"
-            },
-            {
-                "id": 1001,
-                "position": [ 2, 0 ],
-                "type": "component",
-                "component": "shop_heart_ad"
-            },
-            {
-                "id": 1002,
-                "position": [ 3, 0 ],
-                "type": "component",
-                "component": "shop_heart"
-            },
-            {
-                "id": 1003,
-                "position": [ 4, 0 ],
-                "type": "component",
-                "component": "shop_ad"
-            },
-            {
-                "id": 1004,
-                "position": [ 5, 0 ],
-                "type": "component",
-                "component": "shop_point"
-            },
-            {
-                "id": 1005,
-                "position": [ 6, 0 ],
-                "type": "component",
-                "component": "shop_heart_ad"
-            },
-            {
-                "id": 1006,
-                "position": [ 7, 0 ],
-                "type": "component",
-                "component": "shop_heart"
-            }
-        ]
+        "color": 0,
+        "objects": []
     },
     {
         "comment": "scrollview top",
@@ -154,7 +104,6 @@
         "margin": [ 20, 5 ],
         "innerMargin": [ 3, 5 ],
         "gridSize": [ 5, 1 ],
-        "img": null,
         "color": 30,
         "objects": [
             {
