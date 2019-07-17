@@ -48,6 +48,7 @@
 		4D1BB95A228FA34800F51D57 /* icons8-play-button-circled-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D1BB93F228FA34800F51D57 /* icons8-play-button-circled-100.png */; };
 		4D1BB95B228FA34800F51D57 /* icons8-alarm-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D1BB940228FA34800F51D57 /* icons8-alarm-100.png */; };
 		4D1BB95F228FC9D500F51D57 /* ui_progressbar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D1BB95D228FC9D500F51D57 /* ui_progressbar.cpp */; };
+		4D1E567A22DEB10E00770DC9 /* ui_effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D1E567822DEB10E00770DC9 /* ui_effect.cpp */; };
 		4D2563252294FDE400421986 /* ui_roulette.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D2563222294FDE300421986 /* ui_roulette.cpp */; };
 		4D2563272295012D00421986 /* ending.json in Resources */ = {isa = PBXBuildFile; fileRef = 4D2563262295012D00421986 /* ending.json */; };
 		4D3F129022C0946F00535D07 /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = 4D3F128E22C0946F00535D07 /* config.json */; };
@@ -206,6 +207,8 @@
 		4D1BB940228FA34800F51D57 /* icons8-alarm-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-alarm-100.png"; sourceTree = "<group>"; };
 		4D1BB95D228FC9D500F51D57 /* ui_progressbar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ui_progressbar.cpp; path = ../../library/ui/ui_progressbar.cpp; sourceTree = "<group>"; };
 		4D1BB95E228FC9D500F51D57 /* ui_progressbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ui_progressbar.h; path = ../../library/ui/ui_progressbar.h; sourceTree = "<group>"; };
+		4D1E567822DEB10E00770DC9 /* ui_effect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ui_effect.cpp; path = ../../library/ui/ui_effect.cpp; sourceTree = "<group>"; };
+		4D1E567922DEB10E00770DC9 /* ui_effect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_effect.h; path = ../../library/ui/ui_effect.h; sourceTree = "<group>"; };
 		4D2563222294FDE300421986 /* ui_roulette.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ui_roulette.cpp; path = ../../library/ui/ui_roulette.cpp; sourceTree = "<group>"; };
 		4D2563242294FDE400421986 /* ui_roulette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ui_roulette.h; path = ../../library/ui/ui_roulette.h; sourceTree = "<group>"; };
 		4D2563262295012D00421986 /* ending.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ending.json; sourceTree = "<group>"; };
@@ -505,6 +508,7 @@
 				4D1BB95E228FC9D500F51D57 /* ui_progressbar.h */,
 				4D574B0B228D71C8001B8F7F /* ui_color.h */,
 				4D574B06228CFCCC001B8F7F /* ui_ext.h */,
+				4D574B04228CFCCC001B8F7F /* ui_ext.cpp */,
 				4D69BC802283E7C7009B4F5A /* ui.h */,
 				4D48098C227A9E370046472F /* ui.cpp */,
 				4D48098D227A9E370046472F /* ui_bgText.cpp */,
@@ -514,13 +518,14 @@
 				4D480990227A9E370046472F /* ui_gacha.cpp */,
 				4D69BC822283FA26009B4F5A /* ui_wizard.h */,
 				4D48098B227A9E370046472F /* ui_wizard.cpp */,
-				4D574B04228CFCCC001B8F7F /* ui_ext.cpp */,
 				4D693AC122BA04DA0014D0B9 /* ui_icon.cpp */,
 				4D693AC222BA04DA0014D0B9 /* ui_icon.h */,
 				4D01227522BC851600AAAF2F /* ui_button.cpp */,
 				4D01227622BC851600AAAF2F /* ui_button.h */,
 				4D7F6CC922C4C1C800355AC5 /* ui_character_animal.cpp */,
 				4D7F6CCA22C4C1C800355AC5 /* ui_character_animal.h */,
+				4D1E567822DEB10E00770DC9 /* ui_effect.cpp */,
+				4D1E567922DEB10E00770DC9 /* ui_effect.h */,
 			);
 			name = ui;
 			sourceTree = "<group>";
@@ -776,6 +781,7 @@
 				4D01227722BC851600AAAF2F /* ui_button.cpp in Sources */,
 				4D7F6CCB22C4C1C800355AC5 /* ui_character_animal.cpp in Sources */,
 				4D480992227A9E370046472F /* ui_wizard.cpp in Sources */,
+				4D1E567A22DEB10E00770DC9 /* ui_effect.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* Scenes.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -27,7 +27,8 @@
 #include "ScenePlay.h"
 #include "ui/ui_ext.h"
 #include "library/pch.h"
-#include "ui/ui_character_animal.h"
+#include "ui/ui_effect.h"
+
 
 #define HEART_TIMER     this->schedule([=](float f){\
 if(battleBrix::inst()->mUserData.recharge()){\
@@ -168,25 +169,6 @@ void SceneMain::showLevelUp() {
 //====================================================================
 bool SceneDaily::init()
 {
-    //animal
-//    ui_character_animal * ani = ui_character_animal::create();
-//    ani->addRectangle(Size(300, 200)
-//                   , ui_wizard_share::inst()->getPalette()->getColor3B("BLUE")
-//                   , ui_wizard_share::inst()->getPalette()->getColor4F("YELLOW")
-//                   , ui_wizard_share::inst()->getPalette()->getColor4F("DARKGRAY")
-//                   , ui_wizard_share::inst()->getPalette()->getColor4F("PINK")
-//                   );
-//    ani->addCircle(Size(125, 125)
-//                   , ui_wizard_share::inst()->getPalette()->getColor3B("BLUE")
-//                   , ui_wizard_share::inst()->getPalette()->getColor4F("YELLOW")
-//                   , ui_wizard_share::inst()->getPalette()->getColor4F("DARKGRAY")
-//                   , ui_wizard_share::inst()->getPalette()->getColor4F("PINK")
-//                   );
-//    ani->setAnchorPoint(Vec2(0.5, 0.5));
-//    ani->setPosition(gui::inst()->getCenter());
-//    this->addChild(ani);
-//    return true;
-    
     mTodayIdx = 2;
    
     gui::inst()->initDefaultWithSpriteCache("fonts/SDSwaggerTTF.ttf");
@@ -251,9 +233,13 @@ bool SceneDaily::init()
 
 void SceneDaily::callbackRoulette(Ref* pSender) {
     ui_roulette * roulette = (ui_roulette *)(pSender);
-    
+    getNodeById(1000)->setVisible(false);
     roulette->setVisible(false);
+    
     getNodeById(3000)->setVisible(true);
+    //bg effect
+    ((ui_effect*)getNodeById(3003))->runBGRotate();
+    
     int val = mRewards[roulette->getResultIdx()];
     ui_icon * p;
     if(val > 0) {
@@ -268,6 +254,7 @@ void SceneDaily::callbackRoulette(Ref* pSender) {
     }
     
     p->setVisible(true);
+    guiExt::addBlinkStar(p);
     
     p->runAction(Sequence::create(DelayTime::create(.2f)
                                  , ScaleBy::create(.3f, 1.2f)

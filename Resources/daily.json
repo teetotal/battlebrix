@@ -1,6 +1,6 @@
 {
     "background": {
-        "id": 0,
+        "id": 99,
         "img": null,
         "bgColor": "BG_MAIN_DARK",
         "tile": {
@@ -272,31 +272,20 @@
             "comment": "reward",
             "id": 3000,
             "visible": false,
-            "dimension": [ 2, 0, 7, 7 ],
-            "margin": [ 20, 25 ],
+            "dimension": [ 0, 0, 9, 8 ],
+            "margin": [ 0, 0 ],
             "innerMargin": [ 5, 5 ],
             "gridSize": [ 1, 5 ],
             "img": null,
             "color": 0,
             "objects": [
                 {
+                    "id": 3003,
                     "position": [ 0, 0 ],
+                    "span": [0, 4],
                     "alignment": "center",
-                    "type": "label",
-                    "link": 0,
-                    "img": null,
-                    "color": "GRAY",
-                    "bgColor": "BG_TOP",
-                    "text": "REWARD",
-                    "fontSize": -1,
-                    "visible": false
-                },
-                {
-                    "position": [ 0, 0 ],
-                    "alignment": "left_bottom",
-                    "type": "line",
-                    "color": "BLACK",
-                    "visible": false
+                    "type": "lighting",
+                    "color": "BLUE_DARK"
                 },
                 {
                     "id": 3001,

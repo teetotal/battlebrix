@@ -189,103 +189,85 @@
     "shop_ad": {
         "dimension": [ 0, 0, 1, 1 ],
         "margin": [ 0, 0 ],
-        "innerMargin": [ 2, 4 ],
-        "gridSize": [ 1, 5 ],
+        "innerMargin": [ 5, 5 ],
+        "gridSize": [ 1, 4 ],
         "link": 1,
-        "color": "GRAY",
+        "color": [ "BLUE_DARK", "BLUE_LIGHT" ],
         "objects": [
             {
                 "id": 1,
                 "position": [ 0, 0 ],
                 "alignment": "center",
                 "type": "label",
-                "color": "GRAY",
-                "bgColor": "DARKGRAY",
-                "text": "POINT",
-                "fontSize": 0
-            },
-            {
-                "position": [ 0, 0 ],
-                "alignment": "left_bottom",
-                "type": "line",
-                "color": "DARKGRAY_LIGHT"
-            },
-            {
-                "id": 1,
-                "position": [ 0, 1 ],
-                "alignment": "center_bottom",
-                "type": "label",
-                "color": "BLACK",
+                "color": ["GRAY", "BLACK"],
                 "text": "x10,000",
                 "fontSize": -1
             },
             {
                 "id": 2,
-                "position": [ 0, 2 ],
+                "position": [ 0, 1 ],
                 "span": [0, 1],
                 "alignment": "center",
-                "type": "icon_point",
-                "color": "YELLOW"
+                "type": "sprite",
+                "img": "icons8-atomic-bomb-96.png"
             },
             {
                 "id": 3,
-                "position": [ 0, 4 ],
+                "position": [ 0, 3 ],
                 "alignment": "center",
                 "type": "button_rectangle_round_shadow",
-                "color": [ "WHITE", "BLUE" ],
+                "color": [ "GRAY", "BLUE" ],
                 "img": "icons8-video-100.png"
+            },
+            {
+                "position": [0, 0],
+                "span": [ 0, 3],
+                "alignment": "center",
+                "type": "rectangle_line",
+                "color": "BLACK"
             }
         ]
     },
     "shop_point": {
         "dimension": [ 0, 0, 1, 1 ],
         "margin": [ 0, 0 ],
-        "innerMargin": [ 2, 4 ],
-        "gridSize": [ 1, 5 ],
-        "link": 2,
-        "color": "GRAY",
+        "innerMargin": [ 5, 5 ],
+        "gridSize": [ 1, 4 ],
+        "link": 1,
+        "color": [ "BLUE_DARK", "BLUE_LIGHT" ],
         "objects": [
             {
                 "id": 1,
                 "position": [ 0, 0 ],
                 "alignment": "center",
                 "type": "label",
-                "color": "GRAY",
-                "bgColor": "DARKGRAY",
-                "text": "POINT",
-                "fontSize": 0
-            },
-            {
-                "position": [ 0, 0 ],
-                "alignment": "left_bottom",
-                "type": "line",
-                "color": "DARKGRAY_LIGHT"
-            },
-            {
-                "id": 1,
-                "position": [ 0, 1 ],
-                "alignment": "center_bottom",
-                "type": "label",
-                "color": "BLACK",
+                "color": ["GRAY", "BLACK"],
                 "text": "x10,000",
                 "fontSize": -1
             },
             {
                 "id": 2,
-                "position": [ 0, 2 ],
+                "position": [ 0, 1 ],
                 "span": [0, 1],
                 "alignment": "center",
-                "type": "icon_point",
-                "color": "YELLOW"
+                "type": "sprite",
+                "img": "icons8-atomic-bomb-96.png"
             },
             {
                 "id": 3,
-                "position": [ 0, 4 ],
+                "position": [ 0, 3 ],
                 "alignment": "center",
                 "type": "button_rectangle_round_shadow",
-                "color": [ "WHITE", "BLUE" ],
+                "color": [ "GRAY", "BLUE" ],
                 "text": "₩1,000",
                 "fontSize": 0
+            },
+            {
+                "position": [0, 0],
+                "span": [ 0, 3],
+                "alignment": "center",
+                "type": "rectangle_line",
+                "color": "BLACK"
             }
         ]
     },
