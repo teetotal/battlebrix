@@ -24,6 +24,15 @@ protected:
     virtual void callback(Ref* pSender, int from, int link);
     virtual const string getText(const string& defaultString, int id);
     virtual const float getProgressValue(int id) { return battleBrix::inst()->getProgressValue(id); };
+    
+private:
+    bool onTouchBegan(Touch* touch, Event* event);
+    bool onTouchEnded(Touch* touch, Event* event);
+    void onTouchMoved(Touch *touch, Event *event);
+    
+    Vec2 mTouchStart;
+    Node * mLayer;
+    float mMoveMin, mMoveMax;
 };
 
 #endif /* SceneArcade_h */

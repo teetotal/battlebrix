@@ -430,13 +430,13 @@ void ScenePlay::PLAYER::setBackgroundStatus() {
     //layer color 설정
     float hp = getHPValue();
     if(hp <= 0.2f && dangerousStatus != 2) { //on level 2
-        ((Layout*)layer)->setOpacity(160);
+        ((Layout*)layer)->setOpacity(175);
         dangerousStatus = 2;
     } else if(hp <= 0.4f && hp > 0.2 && dangerousStatus != 1) { //on level 1
-        ((Layout*)layer)->setOpacity(145);
+        ((Layout*)layer)->setOpacity(160);
         dangerousStatus = 1;
     } else if(hp > 0.4f && dangerousStatus != 0) { //off level 0
-        ((Layout*)layer)->setOpacity(130);
+        ((Layout*)layer)->setOpacity(145);
         dangerousStatus = 0;
     }
 }

@@ -51,7 +51,7 @@ protected:
     virtual const string getText(const string& defaultString, int id);
     virtual const float getProgressValue(int id) { return 0; };
 private:
-    bool onTouchBegan(Touch* touch, Event* event) ;
+    bool onTouchBegan(Touch* touch, Event* event);
     bool onTouchEnded(Touch* touch, Event* event);
     void onTouchMoved(Touch *touch, Event *event);
     bool onContactBegin(PhysicsContact &contact);

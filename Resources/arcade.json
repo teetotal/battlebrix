@@ -21,6 +21,137 @@
         },
         {
             "component": "levelup"
+        },
+        {
+            "id": 100,
+            "comment": "road map",
+            "dimension": [ 0, 1, 18, 6 ],
+            "margin": [ 0, 0 ],
+            "innerMargin": [ 0, 10 ],
+            "gridSize": [ 20, 5 ],
+            "color": 30,
+            "objects": [
+                {
+                    "position": [ 0, 1 ],
+                    "alignment": "centr",
+                    "type": "circle",
+                    "color": "DARKGRAY"
+                },
+                {
+                    "position": [ 1, 0 ],
+                    "alignment": "centr",
+                    "type": "circle",
+                    "color": "DARKGRAY"
+                },
+                {
+                    "position": [ 2, 2 ],
+                    "alignment": "centr",
+                    "type": "circle",
+                    "color": "DARKGRAY"
+                },
+                {
+                    "position": [ 3, 3 ],
+                    "alignment": "centr",
+                    "type": "circle",
+                    "color": "DARKGRAY"
+                },
+                {
+                    "position": [ 4, 2 ],
+                    "alignment": "centr",
+                    "type": "circle",
+                    "color": "DARKGRAY"
+                },
+                {
+                    "position": [ 5, 1 ],
+                    "alignment": "centr",
+                    "type": "circle",
+                    "color": "DARKGRAY"
+                },
+                {
+                    "position": [ 6, 2 ],
+                    "alignment": "centr",
+                    "type": "circle",
+                    "color": "DARKGRAY"
+                },
+                {
+                    "position": [ 7, 4 ],
+                    "alignment": "centr",
+                    "type": "circle",
+                    "color": "DARKGRAY"
+                },
+                {
+                    "position": [ 8, 3 ],
+                    "alignment": "centr",
+                    "type": "circle",
+                    "color": "DARKGRAY"
+                },
+                {
+                    "position": [ 9, 2 ],
+                    "alignment": "centr",
+                    "type": "circle",
+                    "color": "DARKGRAY"
+                },
+                {
+                    "position": [ 10, 1 ],
+                    "alignment": "centr",
+                    "type": "circle",
+                    "color": "DARKGRAY"
+                },
+                {
+                    "position": [ 11, 0 ],
+                    "alignment": "centr",
+                    "type": "circle",
+                    "color": "DARKGRAY"
+                },
+                {
+                    "position": [ 12, 2 ],
+                    "alignment": "centr",
+                    "type": "circle",
+                    "color": "DARKGRAY"
+                },
+                {
+                    "position": [ 13, 3 ],
+                    "alignment": "centr",
+                    "type": "circle",
+                    "color": "DARKGRAY"
+                },
+                {
+                    "position": [ 14, 2 ],
+                    "alignment": "centr",
+                    "type": "circle",
+                    "color": "DARKGRAY"
+                },
+                {
+                    "position": [ 15, 1 ],
+                    "alignment": "centr",
+                    "type": "circle",
+                    "color": "DARKGRAY"
+                },
+                {
+                    "position": [ 16, 2 ],
+                    "alignment": "centr",
+                    "type": "circle",
+                    "color": "DARKGRAY"
+                },
+                {
+                    "position": [ 17, 4 ],
+                    "alignment": "centr",
+                    "type": "circle",
+                    "color": "DARKGRAY"
+                },
+                {
+                    "position": [ 18, 3 ],
+                    "alignment": "centr",
+                    "type": "circle",
+                    "color": "DARKGRAY"
+                },
+                {
+                    "position": [ 19, 2 ],
+                    "alignment": "centr",
+                    "type": "circle",
+                    "color": "DARKGRAY"
+                }
+            ]
         }
     ]
 }
