@@ -25,24 +25,17 @@
 #include "Scenes.h"
 #include "SimpleAudioEngine.h"
 #include "ScenePlay.h"
-#include "ui/ui_ext.h"
-#include "library/pch.h"
-#include "ui/ui_effect.h"
-
-
-#define HEART_TIMER     this->schedule([=](float f){\
-if(battleBrix::inst()->mUserData.recharge()){\
-    auto p = ((ui_icon*)getNodeById(_ID_NODE_LABEL_HEART));\
-    p->setText(battleBrix::inst()->getText("", _ID_NODE_LABEL_HEART));\
-    guiExt::runScaleEffect(p);\
-}\
-((ui_button*)getNodeById(_ID_NODE_TIMER_HEART))->setText(battleBrix::inst()->mUserData.getRechargeRemainTimeString());\
-}, 1.f, "heartTimer");
+#include "SceneArcade.h"
 
 bool SceneMain::init()
 {
     gui::inst()->initDefaultWithSpriteCache("fonts/SDSwaggerTTF.ttf");
 	this->loadFromJson("main", "main.json");
+    
+    //bottom disable
+    getNodeById(_ID_NODE_BOTTOM_MULTI)->setVisible(false);
+    getNodeById(_ID_NODE_BOTTOM_SELECTED_MULTI)->setVisible(true);
+    
     
     for(int n = 0; n < PLAY_ITEM_CNT; n++) {
         battleBrix::itemData item = battleBrix::inst()->mItems[n];
@@ -78,21 +71,15 @@ void SceneMain::callback(Ref* pSender, int from, int link) {
         sumPrice();
         return;
     }
+    
     switch(link) {
-        case eLINK_PLAY:
+        case 10:
             return runPlay();
-        case eLINK_SHOP:
-            this->replaceScene(SceneShop::create());
-            break;
-        case eLINK_LEADERBOARD:
-            break;
-        case eLINK_FRIENDS:
-            break;
-        case eLINK_BAG:
-            break;
         default:
             break;
     }
+    
+    LINK
 }
 
 const string SceneMain::getText(const string& defaultString, int id) {
@@ -256,24 +243,27 @@ void SceneDaily::callbackRoulette(Ref* pSender) {
     p->setVisible(true);
     guiExt::addBlinkStar(p);
     
-    p->runAction(Sequence::create(DelayTime::create(.2f)
-                                 , ScaleBy::create(.3f, 1.2f)
-                                 , ScaleBy::create(.2f, (1.f / 1.2f))
-                                 , DelayTime::create(0.5f)
-                                 , CallFunc::create([=]() {
-        this->replaceScene(SceneMain::create());
-    })
-                                         , NULL));
+    guiExt::runScaleEffect(p);
 }
 
 void SceneDaily::callback(Ref* pSender, int from, int link) {
-    getNodeById(1000)->setVisible(true);
-    auto roulette = (ui_roulette*)getNodeById(2000);
-    roulette->setVisible(true);
-    
-    gui::inst()->setModal(roulette);
-    
-    
+    switch(link) {
+        case 0: {
+            getNodeById(1000)->setVisible(true);
+            auto roulette = (ui_roulette*)getNodeById(2000);
+            roulette->setVisible(true);
+            
+            gui::inst()->setModal(roulette);
+            break;
+        }
+        case 1: {
+            this->replaceScene(SceneMain::create());
+            break;
+        }
+        default:
+            break;
+    }
+   
     
     /*
     auto todayImg = getNodeById(1001);
@@ -325,8 +315,11 @@ bool SceneShop::init()
 {
     this->loadFromJson("shop", "shop.json");
     
+    //bottom disable
+    getNodeById(_ID_NODE_BOTTOM_SHOP)->setVisible(false);
+    getNodeById(_ID_NODE_BOTTOM_SELECTED_SHOP)->setVisible(true);
     //scrollview
-    Vec2 gridSize = Vec2(10, 1);
+    Vec2 gridSize = Vec2(8, 1);
     auto scrollView = (ScrollView*)getNodeById(1000);
     Vec2 innerMargin = Vec2(5, 5);
     Size size = Size(scrollView->getInnerContainerSize().width / gridSize.x - innerMargin.x * 2, scrollView->getInnerContainerSize().height - innerMargin.y * 2);
@@ -353,7 +346,7 @@ bool SceneShop::init()
 
 void SceneShop::callback(Ref* pSender, int from, int link) {
     CCLOG("from = %d, link = %d", from, link);
-    this->replaceScene(SceneMain::create());
+    LINK
 }
 
 const string SceneShop::getText(const string& defaultString, int id) {

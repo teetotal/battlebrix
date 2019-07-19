@@ -186,6 +186,102 @@
             }
         ]
     },
+    "bottom": {
+        "comment": "bottom menu",
+        "dimension": [ 0, 6, 9, 7 ],
+        "margin": [ 0, 0 ],
+        "innerMargin": [ 5, 5 ],
+        "gridSize": [ 5, 1 ],
+        "img": null,
+        "color": "BG_BOTTOM",
+        "objects": [
+            {
+                "id": 21,
+                "position": [ 0, 0 ],
+                "alignment": "center",
+                "type": "sprite_button",
+                "link": 0,
+                "img": [ "icons8-shopping-cart-100.png", "icons8-shopping-cart-filled-100.png" ]
+            },
+            {
+                "id": 22,
+                "position": [ 1, 0 ],
+                "alignment": "center",
+                "type": "sprite_button",
+                "link": 1,
+                "img": [ "icons8-leaderboard-100.png", "icons8-leaderboard-filled-100.png"]
+            },
+            {
+                "id": 23,
+                "position": [ 2, 0 ],
+                "alignment": "center",
+                "type": "sprite_button",
+                "link": 2,
+                "img": [ "icons8-play-button-circled-100.png", "icons8-play-button-circled-filled-100.png"]
+            },
+            {
+                "id": 24,
+                "position": [ 3, 0 ],
+                "alignment": "center",
+                "type": "sprite_button",
+                "link": 3,
+                "img": ["icons8-find-user-male-100.png", "icons8-find-user-male-filled-100.png"]
+            },
+            {
+                "id": 25,
+                "position": [ 4, 0 ],
+                "alignment": "center",
+                "type": "sprite_button",
+                "link": 4,
+                "img": ["icons8-shopping-bag-100.png", "icons8-shopping-bag-filled-100.png"]
+            },
+            {
+                "id": 31,
+                "position": [ 0, 0 ],
+                "alignment": "center",
+                "type": "sprite",
+                "img": "icons8-shopping-cart-filled-100.png",
+                "bgColor": "GRAY",
+                "visible": false
+            },
+            {
+                "id": 32,
+                "position": [ 1, 0 ],
+                "alignment": "center",
+                "type": "sprite",
+                "img": "icons8-leaderboard-filled-100.png",
+                "bgColor": "GRAY",
+                "visible": false
+            },
+            {
+                "id": 33,
+                "position": [ 2, 0 ],
+                "alignment": "center",
+                "type": "sprite",
+                "img": "icons8-play-button-circled-filled-100.png",
+                "bgColor": "GRAY",
+                "visible": false
+            },
+            {
+                "id": 34,
+                "position": [ 3, 0 ],
+                "alignment": "center",
+                "type": "sprite",
+                "img": "icons8-find-user-male-filled-100.png",
+                "bgColor": "GRAY",
+                "visible": false
+            },
+            {
+                "id": 35,
+                "position": [ 4, 0 ],
+                "alignment": "center",
+                "type": "sprite",
+                "img": "icons8-shopping-bag-filled-100.png",
+                "bgColor": "GRAY",
+                "visible": false
+            }
+        ]
+    },
     "shop_ad": {
         "dimension": [ 0, 0, 1, 1 ],
         "margin": [ 0, 0 ],
@@ -240,22 +336,39 @@
     "shop_point": {
         "dimension": [ 0, 0, 1, 1 ],
         "margin": [ 0, 0 ],
-        "innerMargin": [ 5, 5 ],
-        "gridSize": [ 1, 8 ],
+        "innerMargin": [ 3, 5 ],
+        "gridSize": [ 2, 5 ],
         "color": [ "GRAY_DARK", "GRAY" ],
         "objects": [
             {
+                "position": [ 0, 0 ],
+                "span": [1, 0],
+                "alignment": "center",
+                "type": "rectangle_round",
+                "color": "DARKGRAY_LIGHT"
+            },
+            {
+                "id": 1,
+                "position": [ 0, 0 ],
+                "span": [1, 0],
+                "alignment": "center",
+                "type": "label",
+                "color": "GRAY",
+                "text": "₩1,000",
+                "fontSize": -1
+            },
+            {
                 "id": 2,
                 "position": [ 0, 1 ],
-                "span": [0, 2],
+                "span": [1, 1],
                 "alignment": "center",
                 "type": "sprite",
                 "img": "icons8-atomic-bomb-96.png"
             },
             {
-                "id": 1,
-                "position": [ 0, 4 ],
-                "span": [ 0, 1 ],
+                "id": 3,
+                "position": [ 0, 3 ],
+                "span": [ 1, 0 ],
                 "alignment": "right",
                 "type": "label",
                 "color": "BLACK",
@@ -263,26 +376,36 @@
                 "fontSize": -2
             },
             {
-                "position": [ 0, 5 ],
+                "position": [ 0, 3 ],
+                "span": [1, 0],
                 "alignment": "left_bottom",
                 "type": "line",
                 "color": "GRAY"
                 
             },
             {
-                "id": 3,
+                "id": 4,
                 "link": 0,
-                "position": [ 0, 6 ],
-                "span": [ 0, 1 ],
+                "position": [ 0, 4 ],
                 "alignment": "center",
                 "type": "button_rectangle_round_shadow",
                 "color": [ "GRAY", "BLUE" ],
-                "text": "₩1,000",
+                "text": "BUY",
+                "fontSize": 0
+            },
+            {
+                "id": 5,
+                "link": 0,
+                "position": [ 1, 4 ],
+                "alignment": "center",
+                "type": "button_rectangle_round_shadow",
+                "color": [ "GRAY", "YELLOW" ],
+                "text": "GIFT",
                 "fontSize": 0
             },
             {
                 "position": [0, 0],
-                "span": [ 0, 7],
+                "span": [ 1, 4],
                 "alignment": "center",
                 "type": "rectangle_line",
                 "color": "BLACK"

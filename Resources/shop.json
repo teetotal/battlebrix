@@ -11,101 +11,34 @@
     },
     "nodes": [
         {
-          "component": "top_bg"
+            "component": "top_bg"
         },
         {
-          "component": "top"
+            "component": "top"
         },
         {
-        "comment": "bottom menu",
-        "id": -1,
-        "dimension": [ 0, 6, 9, 7 ],
-        "margin": [ 0, 0 ],
-        "innerMargin": [ 5, 5 ],
-        "gridSize": [ 5, 1 ],
-        "img": null,
-        "color": [ 255, 255, 255, 200 ],
-        "objects": [
-            {
-                "id": -1,
-                "position": [ 1, 0 ],
-                "alignment": "center",
-                "type": "sprite_button",
-                "link": 2,
-                "img": [ "icons8-leaderboard-100.png", "icons8-leaderboard-filled-100.png"]
-            },
-            {
-                "id": -1,
-                "position": [ 2, 0 ],
-                "alignment": "center",
-                "type": "sprite_button",
-                "link": 0,
-                "img": [ "icons8-play-button-circled-100.png", "icons8-play-button-circled-filled-100.png"]
-            },
-            {
-                "id": -1,
-                "position": [ 3, 0 ],
-                "alignment": "center",
-                "type": "sprite_button",
-                "link": 3,
-                "img": ["icons8-find-user-male-100.png", "icons8-find-user-male-filled-100.png"]
-            },
-            {
-                "id": -1,
-                "position": [ 4, 0 ],
-                "alignment": "center",
-                "type": "sprite_button",
-                "link": 4,
-                "img": ["icons8-shopping-bag-100.png", "icons8-shopping-bag-filled-100.png"]
-            }
-        ]
-    },
-    {
-        "comment": "selected",
-        "id": -1,
-        "dimension": [ 0, 6, 9, 7 ],
-        "margin": [ 0, 0 ],
-        "innerMargin": [ 0, 0 ],
-        "gridSize": [ 5, 1 ],
-        "img": null,
-        "color": 0,
-        "objects": [
-            {
-                "id": -1,
-                "position": [ 0, 0 ],
-                "alignment": "center",
-                "type": "rectangle",
-                "color": [ 255, 255, 255, 255 ]
-            },
-            {
-                "id": -1,
-                "position": [ 0, 0 ],
-                "alignment": "center",
-                "type": "sprite",
-                "img": "icons8-shopping-cart-filled-100.png"
-            }
-        ]
-    },
-    {
-        "comment": "scrollview",
-        "id": 1000,
-        "dimension": [ 0, 2, 9, 6 ],
-        "dimensionInner": [ 0, 2, 18, 6 ],
-        "margin": [ 20, 5 ],
-        "innerMargin": [ 5, 10 ],
-        "gridSize": [ 8, 1 ],
-        "color": 0,
-        "objects": []
-    },
-    {
-        "comment": "scrollview top",
-        "id": -1,
-        "dimension": [ 0, 1, 6, 2 ],
-        "margin": [ 20, 5 ],
-        "innerMargin": [ 3, 5 ],
-        "gridSize": [ 5, 1 ],
-        "color": 30,
-        "objects": [
+            "component": "bottom"
+        },
+        {
+            "comment": "scrollview",
+            "id": 1000,
+            "dimension": [ 0, 2, 9, 6 ],
+            "dimensionInner": [ 0, 2, 18, 6 ],
+            "margin": [ 20, 5 ],
+            "innerMargin": [ 5, 10 ],
+            "gridSize": [ 8, 1 ],
+            "color": 0,
+            "objects": []
+        },
+        {
+            "comment": "scrollview top",
+            "id": -1,
+            "dimension": [ 0, 1, 6, 2 ],
+            "margin": [ 20, 5 ],
+            "innerMargin": [ 3, 5 ],
+            "gridSize": [ 5, 1 ],
+            "color": 30,
+            "objects": [
             {
                 "position": [ 0, 0 ],
                 "alignment": "center",
@@ -147,6 +80,9 @@
                 "text": "GEAR"
             }
         ]
-    }
+        },
+        {
+            "component": "levelup"
+        }
   ]
 }

@@ -97,6 +97,8 @@
 		4DC8757922B8D91F007CF701 /* firework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4DC8757622B8D91F007CF701 /* firework.plist */; };
 		4DC8757A22B8D91F007CF701 /* firework.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DC8757822B8D91F007CF701 /* firework.png */; };
 		4DC8EEE922B39C03005101A9 /* icons8-wedding-gift-96.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DC8EEE822B39C03005101A9 /* icons8-wedding-gift-96.png */; };
+		4DE9C00322E18814000C1E3B /* arcade.json in Resources */ = {isa = PBXBuildFile; fileRef = 4DE9C00122E18814000C1E3B /* arcade.json */; };
+		4DE9C00622E188A6000C1E3B /* SceneArcade.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DE9C00422E188A6000C1E3B /* SceneArcade.cpp */; };
 		4DFF8D0C228C16FB0098B187 /* ScenePlay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DFF8D09228C16FB0098B187 /* ScenePlay.cpp */; };
 		503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 503AE0F617EB97AB00D1A890 /* Icon.icns */; };
 		503AE10517EB98FF00D1A890 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 503AE10317EB98FF00D1A890 /* main.cpp */; };
@@ -276,6 +278,9 @@
 		4DC8757622B8D91F007CF701 /* firework.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = firework.plist; sourceTree = "<group>"; };
 		4DC8757822B8D91F007CF701 /* firework.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = firework.png; sourceTree = "<group>"; };
 		4DC8EEE822B39C03005101A9 /* icons8-wedding-gift-96.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-wedding-gift-96.png"; sourceTree = "<group>"; };
+		4DE9C00122E18814000C1E3B /* arcade.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = arcade.json; sourceTree = "<group>"; };
+		4DE9C00422E188A6000C1E3B /* SceneArcade.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneArcade.cpp; sourceTree = "<group>"; };
+		4DE9C00522E188A6000C1E3B /* SceneArcade.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneArcade.h; sourceTree = "<group>"; };
 		4DFF8D09228C16FB0098B187 /* ScenePlay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScenePlay.cpp; sourceTree = "<group>"; };
 		4DFF8D0B228C16FB0098B187 /* ScenePlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScenePlay.h; sourceTree = "<group>"; };
 		503AE0F617EB97AB00D1A890 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
@@ -451,6 +456,7 @@
 				4D4EDBD4229160B400F375BF /* icons8-defense-80.png */,
 				4D4809B1227AA4070046472F /* palette.json */,
 				4D2563262295012D00421986 /* ending.json */,
+				4DE9C00122E18814000C1E3B /* arcade.json */,
 				4DB682AC228AC490007A1E22 /* shop.json */,
 				4D7EFBF7227C22A300E19181 /* play.json */,
 				4D4809B2227AA4070046472F /* main.json */,
@@ -493,6 +499,8 @@
 				46880B8719C43A87006E1F66 /* Scenes.h */,
 				4D7778C022B2352800CA2BC4 /* battleBrix.cpp */,
 				4D7778C122B2352800CA2BC4 /* battleBrix.h */,
+				4DE9C00422E188A6000C1E3B /* SceneArcade.cpp */,
+				4DE9C00522E188A6000C1E3B /* SceneArcade.h */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -729,6 +737,7 @@
 				4D4809B4227AA4070046472F /* main.json in Resources */,
 				4D68FA80229D1BCA00900F5E /* icons8-video-100.png in Resources */,
 				4D1BB94D228FA34800F51D57 /* icons8-shopping-cart-100.png in Resources */,
+				4DE9C00322E18814000C1E3B /* arcade.json in Resources */,
 				1AF87B881F6F781D007BE51C /* LaunchScreen.storyboard in Resources */,
 				4D1BB95A228FA34800F51D57 /* icons8-play-button-circled-100.png in Resources */,
 			);
@@ -756,6 +765,7 @@
 			files = (
 				4D480995227A9E370046472F /* ui_deco.cpp in Sources */,
 				4D574B07228CFCCD001B8F7F /* ui_ext.cpp in Sources */,
+				4DE9C00622E188A6000C1E3B /* SceneArcade.cpp in Sources */,
 				4D480994227A9E370046472F /* ui_bgText.cpp in Sources */,
 				4D4809AD227A9E9F0046472F /* sql.cpp in Sources */,
 				4D1BB95F228FC9D500F51D57 /* ui_progressbar.cpp in Sources */,

@@ -275,14 +275,14 @@
             "dimension": [ 0, 0, 9, 8 ],
             "margin": [ 0, 0 ],
             "innerMargin": [ 5, 5 ],
-            "gridSize": [ 1, 5 ],
+            "gridSize": [ 3, 8 ],
             "img": null,
             "color": 0,
             "objects": [
                 {
                     "id": 3003,
                     "position": [ 0, 0 ],
-                    "span": [0, 4],
+                    "span": [2, 4],
                     "alignment": "center",
                     "type": "lighting",
                     "color": "BLUE_DARK"
@@ -290,7 +290,8 @@
                 {
                     "id": 3001,
                     "visible": false,
-                    "position": [ 0, 2 ],
+                    "position": [ 1, 2 ],
+                    "span": [ 0, 1 ],
                     "alignment": "center",
                     "type": "icon_point",
                     "color": "GRAY",
@@ -299,11 +300,21 @@
                 {
                     "id": 3002,
                     "visible": false,
-                    "position": [ 0, 2 ],
+                    "position": [ 1, 2 ],
+                    "span": [ 0, 1 ],
                     "alignment": "center",
                     "type": "icon_heart",
                     "text": "x1",
                     "color": "GRAY"
+                },
+                {
+                    "link": 1,
+                    "position": [ 1, 5 ],
+                    "alignment": "center",
+                    "type": "button_rectangle_circle_shadow_1",
+                    "text": "OK",
+                    "color": [ "GRAY", "YELLOW" ],
+                    "fontSize": 0
                 }
             ]
         }

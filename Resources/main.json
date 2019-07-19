@@ -17,69 +17,7 @@
         "component": "top"
     },
     {
-        "comment": "bottom menu",
-        "id": -1,
-        "dimension": [ 0, 6, 9, 7 ],
-        "margin": [ 0, 0 ],
-        "innerMargin": [ 5, 5 ],
-        "gridSize": [ 5, 1 ],
-        "img": null,
-        "color": "BG_BOTTOM",
-        "objects": [
-            {
-                "position": [ 0, 0 ],
-                "alignment": "center",
-                "type": "sprite_button",
-                "link": 1,
-                "img": [ "icons8-shopping-cart-100.png", "icons8-shopping-cart-filled-100.png" ]
-            },
-            {
-                "position": [ 1, 0 ],
-                "alignment": "center",
-                "type": "sprite_button",
-                "link": 2,
-                "img": [ "icons8-leaderboard-100.png", "icons8-leaderboard-filled-100.png"]
-            },
-            {
-                "position": [ 3, 0 ],
-                "alignment": "center",
-                "type": "sprite_button",
-                "link": 3,
-                "img": ["icons8-find-user-male-100.png", "icons8-find-user-male-filled-100.png"]
-            },
-            {
-                "position": [ 4, 0 ],
-                "alignment": "center",
-                "type": "sprite_button",
-                "link": 4,
-                "img": ["icons8-shopping-bag-100.png", "icons8-shopping-bag-filled-100.png"]
-            }
-        ]
-    },
-    {
-        "comment": "selected",
-        "dimension": [ 0, 6, 9, 7 ],
-        "margin": [ 0, 0 ],
-        "innerMargin": [ 0, 0 ],
-        "gridSize": [ 5, 1 ],
-        "img": null,
-        "color": 0,
-        "objects": [
-            {
-                "id": -1,
-                "position": [ 2, 0 ],
-                "alignment": "center",
-                "type": "rectangle",
-                "color": "WHITE"
-            },
-            {
-                "id": -1,
-                "position": [ 2, 0 ],
-                "alignment": "center",
-                "type": "sprite",
-                "img": "icons8-play-button-circled-filled-100.png"
-            }
-        ]
+        "component": "bottom"
     },
     {
         "comment": "play bg",
@@ -201,7 +139,7 @@
                 "position": [ 3, 4 ],
                 "alignment": "center",
                 "type": "button_rectangle_round_shadow",
-                "link": 0,
+                "link": 10,
                 "color": [ "GRAY", "YELLOW" ],
                 "text": "PLAY"
             }

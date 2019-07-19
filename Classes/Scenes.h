@@ -28,13 +28,17 @@
 #include "ui/ui_wizard.h"
 #include "ui/ui_roulette.h"
 #include "ui/ui_button.h"
+#include "ui/ui_ext.h"
+#include "library/pch.h"
+#include "ui/ui_effect.h"
+
 #include "battleBrix.h"
 USING_NS_CC;
 
 enum eLINK {
-    eLINK_PLAY = 0,
-    eLINK_SHOP,
-    eLINK_LEADERBOARD,
+    eLINK_SHOP = 0,
+    eLINK_ARCADE,
+    eLINK_MULTI,
     eLINK_FRIENDS,
     eLINK_BAG
 };
@@ -125,4 +129,32 @@ class SceneShop : public ui_wizard
         level->enableBold();\
         level->setString(battleBrix::inst()->getText("", _ID_NODE_LABEL_LEVEL));\
         guiExt::runScaleEffect(title, callFunc, 1.f, false);
+
+#define HEART_TIMER     this->schedule([=](float f){\
+        if(battleBrix::inst()->mUserData.recharge()){\
+            auto p = ((ui_icon*)getNodeById(_ID_NODE_LABEL_HEART));\
+            p->setText(battleBrix::inst()->getText("", _ID_NODE_LABEL_HEART));\
+            guiExt::runScaleEffect(p);\
+        }\
+        ((ui_button*)getNodeById(_ID_NODE_TIMER_HEART))->setText(battleBrix::inst()->mUserData.getRechargeRemainTimeString());\
+        }, 1.f, "heartTimer");
+
+#define LINK switch(link) {\
+        case eLINK_SHOP:\
+            this->replaceScene(SceneShop::create());\
+            break;\
+        case eLINK_ARCADE:\
+            this->replaceScene(SceneArcade::create());\
+            break;\
+        case eLINK_MULTI:\
+            this->replaceScene(SceneMain::create());\
+            break;\
+        case eLINK_FRIENDS:\
+            break;\
+        case eLINK_BAG:\
+            break;\
+        default:\
+            break;\
+    }
+
 #endif // __SCENES_H__

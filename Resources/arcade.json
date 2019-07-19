@@ -1,0 +1,26 @@
+{
+    "background": {
+        "id": 0,
+        "img": null,
+        "bgColor": "BG_MAIN_DARK",
+        "tile": {
+            "color": "BG_MAIN_PATTERN_DARK",
+            "num": [ 14, 10 ]
+        },
+        "isDrawGrid": false
+    },
+    "nodes": [
+        {
+            "component": "top_bg"
+        },
+        {
+            "component": "top"
+        },
+        {
+            "component": "bottom"
+        },
+        {
+            "component": "levelup"
+        }
+    ]
+}
