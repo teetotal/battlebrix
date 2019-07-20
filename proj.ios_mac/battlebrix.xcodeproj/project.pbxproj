@@ -32,6 +32,7 @@
 		46880B8A19C43A87006E1F66 /* Scenes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8619C43A87006E1F66 /* Scenes.cpp */; };
 		46880B8B19C43A87006E1F66 /* Scenes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8619C43A87006E1F66 /* Scenes.cpp */; };
 		4D01227722BC851600AAAF2F /* ui_button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D01227522BC851600AAAF2F /* ui_button.cpp */; };
+		4D037E4922E32DF6008EC6EF /* bg_temp.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D037E4722E32DF5008EC6EF /* bg_temp.png */; };
 		4D1BB911228FA27000F51D57 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 4D1BB8F6228FA26D00F51D57 /* .gitkeep */; };
 		4D1BB942228FA34800F51D57 /* icons8-leaderboard-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D1BB927228FA34700F51D57 /* icons8-leaderboard-100.png */; };
 		4D1BB944228FA34800F51D57 /* icons8-shopping-bag-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D1BB929228FA34700F51D57 /* icons8-shopping-bag-100.png */; };
@@ -192,6 +193,7 @@
 		46880B8719C43A87006E1F66 /* Scenes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scenes.h; sourceTree = "<group>"; };
 		4D01227522BC851600AAAF2F /* ui_button.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ui_button.cpp; path = ../../library/ui/ui_button.cpp; sourceTree = "<group>"; };
 		4D01227622BC851600AAAF2F /* ui_button.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_button.h; path = ../../library/ui/ui_button.h; sourceTree = "<group>"; };
+		4D037E4722E32DF5008EC6EF /* bg_temp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_temp.png; sourceTree = "<group>"; };
 		4D1BB8F6228FA26D00F51D57 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = .gitkeep; path = res/.gitkeep; sourceTree = "<group>"; };
 		4D1BB927228FA34700F51D57 /* icons8-leaderboard-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-leaderboard-100.png"; sourceTree = "<group>"; };
 		4D1BB929228FA34700F51D57 /* icons8-shopping-bag-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-shopping-bag-100.png"; sourceTree = "<group>"; };
@@ -435,6 +437,7 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4D037E4722E32DF5008EC6EF /* bg_temp.png */,
 				4D441B1E22D6F74000BFAF6F /* icons8-center-of-gravity-80.png */,
 				4D94242A22C5AA560071A476 /* battleBrix.s3db */,
 				4D7F6CC322C4724E00355AC5 /* icons8-bomb-96.png */,
@@ -725,6 +728,7 @@
 				4DAE09A822C1B618005E9560 /* brix.json in Resources */,
 				4D68FA82229D230600900F5E /* icons8-crown-480.png in Resources */,
 				4D7EFBF8227C22A300E19181 /* play.json in Resources */,
+				4D037E4922E32DF6008EC6EF /* bg_temp.png in Resources */,
 				4DC8EEE922B39C03005101A9 /* icons8-wedding-gift-96.png in Resources */,
 				4DB85BCE2285613F001C541A /* daily.json in Resources */,
 				4D441B2022D6F74000BFAF6F /* icons8-center-of-gravity-80.png in Resources */,

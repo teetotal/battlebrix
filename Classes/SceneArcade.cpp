@@ -8,9 +8,11 @@
 #include "Scenes.h"
 #include "ui/ui_ext.h"
 #include "ui/ui_icon.h"
+#include "ui/ui_character_animal.h"
 
 bool SceneArcade::init()
 {
+    gui::inst()->initDefaultWithSpriteCache("fonts/SDSwaggerTTF.ttf");
     this->loadFromJson("arcade", "arcade.json");
     
     TOUCH_INIT(SceneArcade);
@@ -24,6 +26,36 @@ bool SceneArcade::init()
     mLayer = getNodeById(100);
     mMoveMin = (mLayer->getContentSize().width * -1) + (gui::inst()->mVisibleSize.width / 2.f);
     mMoveMax = gui::inst()->mVisibleSize.width / 2.f;
+    
+    //init map
+    for(int n=101; n <= 120; n++) {
+        Layer * layer = (Layer*)getNodeById(n);
+        
+        if(n == 105) {
+            ui_character_animal * animal = ui_character_animal::create(layer
+                                                                       , layer->getContentSize()
+                                                                       , Vec2::ZERO
+                                                                       , ALIGNMENT_LEFT_BOTTOM
+                                                                       , ui_wizard_share::inst()->getPalette()->getColor("YELLOW")
+                                                                       , ui_wizard_share::inst()->getPalette()->getColor("DARKGRAY")
+                                                                       , ui_wizard_share::inst()->getPalette()->getColor("PINK")
+                                                                       , ui_wizard_share::inst()->getPalette()->getColor("TRANSPARENT"));
+            animal->addCircle();
+            animal->runAction(RepeatForever::create(
+                                                    Sequence::create(ScaleTo::create(0.5, 1.2), ScaleTo::create(0.5, 1), NULL)
+                              ));
+        }
+        else {
+            const string szColor = (n > 105) ? "GRAY" : "YELLOW";
+            ui_icon::create()->addCircle(layer
+                                         , gui::inst()->getGridSize(layer->getContentSize(), Vec2(1, 1), Vec2::ZERO, Vec2::ZERO)
+                                         , gui::inst()->getPointVec2(0, 0, ALIGNMENT_CENTER, layer->getContentSize(), Vec2(1, 1), Vec2::ZERO, Vec2::ZERO)
+                                         , ALIGNMENT_CENTER
+                                         , ui_wizard_share::inst()->getPalette()->getColor(szColor)
+                                         , to_string(n - 100));
+        }
+    }
+    
     return true;
 }
 
