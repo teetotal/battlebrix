@@ -24,18 +24,32 @@ bool SceneArcade::init()
     HEART_TIMER
     //
     mLayer = getNodeById(100);
-    mMoveMin = (mLayer->getContentSize().width * -1) + (gui::inst()->mVisibleSize.width / 2.f);
-    mMoveMax = gui::inst()->mVisibleSize.width / 2.f;
+    mMoveMin = (mLayer->getContentSize().width * -1) + (gui::inst()->mVisibleSize.width);
+    mMoveMax = 0;//gui::inst()->mVisibleSize.width / 2;
     
+    auto layerLine = getNodeById(99);
     //init map
-    for(int n=101; n <= 120; n++) {
+    Vec2 lastPos = Vec2::ZERO;
+    for(int n=101; n <= 114; n++) {
         Layer * layer = (Layer*)getNodeById(n);
+        Vec2 pos = layer->getPosition();
+        pos.x += layer->getContentSize().width / 2;
+        pos.y -= layer->getContentSize().height / 2;
+        if(lastPos != Vec2::ZERO) {
+            gui::inst()->drawLine(layerLine
+                                  , lastPos
+                                  , pos
+                                  , ui_wizard_share::inst()->getPalette()->getColor4F("WHITE_OPACITY_DEEP")
+                                  , 4.f
+                                  );
+        }
+        lastPos = pos;
         
         if(n == 105) {
             ui_character_animal * animal = ui_character_animal::create(layer
                                                                        , layer->getContentSize()
-                                                                       , Vec2::ZERO
-                                                                       , ALIGNMENT_LEFT_BOTTOM
+                                                                       , gui::inst()->getCenter(layer)
+                                                                       , ALIGNMENT_CENTER
                                                                        , ui_wizard_share::inst()->getPalette()->getColor("YELLOW")
                                                                        , ui_wizard_share::inst()->getPalette()->getColor("DARKGRAY")
                                                                        , ui_wizard_share::inst()->getPalette()->getColor("PINK")
@@ -46,13 +60,26 @@ bool SceneArcade::init()
                               ));
         }
         else {
-            const string szColor = (n > 105) ? "GRAY" : "YELLOW";
+            const string szColor = (n > 105) ? "DARKGRAY_LIGHT" : "BLUE";
+            const string szStar = "★☆☆";
             ui_icon::create()->addCircle(layer
                                          , gui::inst()->getGridSize(layer->getContentSize(), Vec2(1, 1), Vec2::ZERO, Vec2::ZERO)
-                                         , gui::inst()->getPointVec2(0, 0, ALIGNMENT_CENTER, layer->getContentSize(), Vec2(1, 1), Vec2::ZERO, Vec2::ZERO)
+                                         , gui::inst()->getPointVec2(0, 0, ALIGNMENT_CENTER, layer->getContentSize(), Vec2(1, 1), Vec2::ZERO, Vec2::ZERO, Vec2::ZERO)
                                          , ALIGNMENT_CENTER
                                          , ui_wizard_share::inst()->getPalette()->getColor(szColor)
                                          , to_string(n - 100));
+            if(n < 105) {
+                gui::inst()->addLabelAutoDimension(0
+                                                   , -1
+                                                   , szStar
+                                                   , layer
+                                                   , -1
+                                                   , ALIGNMENT_CENTER_BOTTOM
+                                                   , ui_wizard_share::inst()->getPalette()->getColor3B("YELLOW")
+                                                   , Vec2(1, 2), Vec2::ZERO, Vec2::ZERO, Vec2::ZERO
+                                                   );
+            }
+            
         }
     }
     

@@ -98,6 +98,7 @@
 		4DC8757922B8D91F007CF701 /* firework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4DC8757622B8D91F007CF701 /* firework.plist */; };
 		4DC8757A22B8D91F007CF701 /* firework.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DC8757822B8D91F007CF701 /* firework.png */; };
 		4DC8EEE922B39C03005101A9 /* icons8-wedding-gift-96.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DC8EEE822B39C03005101A9 /* icons8-wedding-gift-96.png */; };
+		4DD9FD2022E359BD00A6A489 /* bg_arcade.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DD9FD1E22E359BD00A6A489 /* bg_arcade.png */; };
 		4DE9C00322E18814000C1E3B /* arcade.json in Resources */ = {isa = PBXBuildFile; fileRef = 4DE9C00122E18814000C1E3B /* arcade.json */; };
 		4DE9C00622E188A6000C1E3B /* SceneArcade.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DE9C00422E188A6000C1E3B /* SceneArcade.cpp */; };
 		4DFF8D0C228C16FB0098B187 /* ScenePlay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DFF8D09228C16FB0098B187 /* ScenePlay.cpp */; };
@@ -280,6 +281,7 @@
 		4DC8757622B8D91F007CF701 /* firework.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = firework.plist; sourceTree = "<group>"; };
 		4DC8757822B8D91F007CF701 /* firework.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = firework.png; sourceTree = "<group>"; };
 		4DC8EEE822B39C03005101A9 /* icons8-wedding-gift-96.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-wedding-gift-96.png"; sourceTree = "<group>"; };
+		4DD9FD1E22E359BD00A6A489 /* bg_arcade.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_arcade.png; sourceTree = "<group>"; };
 		4DE9C00122E18814000C1E3B /* arcade.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = arcade.json; sourceTree = "<group>"; };
 		4DE9C00422E188A6000C1E3B /* SceneArcade.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneArcade.cpp; sourceTree = "<group>"; };
 		4DE9C00522E188A6000C1E3B /* SceneArcade.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneArcade.h; sourceTree = "<group>"; };
@@ -437,6 +439,7 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4DD9FD1E22E359BD00A6A489 /* bg_arcade.png */,
 				4D037E4722E32DF5008EC6EF /* bg_temp.png */,
 				4D441B1E22D6F74000BFAF6F /* icons8-center-of-gravity-80.png */,
 				4D94242A22C5AA560071A476 /* battleBrix.s3db */,
@@ -712,6 +715,7 @@
 				4DC8757A22B8D91F007CF701 /* firework.png in Resources */,
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
 				4D7F6CC522C4724E00355AC5 /* icons8-bomb-96.png in Resources */,
+				4DD9FD2022E359BD00A6A489 /* bg_arcade.png in Resources */,
 				4D1BB951228FA34800F51D57 /* icons8-settings-100.png in Resources */,
 				4D1BB911228FA27000F51D57 /* .gitkeep in Resources */,
 				4D4EDBD022915B0200F375BF /* Daeko_400.png in Resources */,

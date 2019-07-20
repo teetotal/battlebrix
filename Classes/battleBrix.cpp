@@ -285,9 +285,10 @@ const string battleBrix::getText(const string& defaultString, int id) {
             return mUserData.getRechargeRemainTimeString();
             
         case _ID_NODE_LABEL_LEVEL:
-            return "Lv." + to_string(mUserData.level);
+            return "LV." + to_string(mUserData.level);
             
         case _ID_NODE_PROGRESSBAR:
+        case _ID_NODE_LABEL_GRADE:
             return getGradeString();
             
         case _ID_NODE_LABEL_RANKING:
