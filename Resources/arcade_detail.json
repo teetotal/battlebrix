@@ -1,0 +1,89 @@
+{
+    "background": {
+        "id": 0,
+        "img": null,
+        "bgColor": "BG_MAIN_DARK",
+        "tile": {
+            "color": "BG_MAIN_PATTERN_DARK",
+            "num": [ 14, 10 ]
+        },
+        "isDrawGrid": false
+    },
+    "nodes": [
+        {
+            "component": "top_bg"
+        },
+        {
+            "component": "top"
+        },
+        {
+            "comment": "title",
+            "dimension": [ 0, 1, 9, 7 ],
+            "margin": [ 20, 10 ],
+            "innerMargin": [ 5, 2 ],
+            "gridSize": [ 3, 8 ],
+            "color": 10,
+            "objects": [
+                {
+                    "position": [0, 0],
+                    "type": "label",
+                    "alignment": "left",
+                    "text": "STAGE 5",
+                    "color": "GRAY",
+                    "fontSize": 0
+                },
+                {
+                    "position": [0, 1],
+                    "type": "label",
+                    "alignment": "left",
+                    "text": "★☆☆",
+                    "color": "YELLOW",
+                    "fontSize": 0
+                },
+                {
+                    "link": 1,
+                    "position": [2, 0],
+                    "type": "button",
+                    "alignment": "right",
+                    "text": "< BACK",
+                    "color": "GRAY",
+                    "fontSize": -1
+                },
+                {
+                    "position": [1, 2],
+                    "type": "rectangle",
+                    "alignment": "center",
+                    "color": "DARKGRAY"
+                },
+                {
+                    "position": [1, 2],
+                    "type": "label",
+                    "alignment": "center",
+                    "text": "Take 1st place",
+                    "color": "GRAY",
+                    "fontSize": -1
+                },
+                {
+                    "position": [1, 3],
+                    "type": "icon_point",
+                    "alignment": "center",
+                    "text": "150",
+                    "color": "GRAY",
+                    "fontSize": -1
+                },
+                {
+                    "link": 10,
+                    "position": [ 1, 7 ],
+                    "alignment": "center",
+                    "type": "button_rectangle_circle_shadow_1",
+                    "text": "PLAY",
+                    "color": [ "GRAY", "YELLOW" ],
+                    "fontSize": 0
+                }
+            ]
+        },
+        {
+            "component": "levelup"
+        }
+    ]
+}

@@ -30,7 +30,9 @@ bool SceneArcade::init()
     auto layerLine = getNodeById(99);
     //init map
     Vec2 lastPos = Vec2::ZERO;
+    int current = 105;
     for(int n=101; n <= 114; n++) {
+        bool isLink = false;
         Layer * layer = (Layer*)getNodeById(n);
         Vec2 pos = layer->getPosition();
         pos.x += layer->getContentSize().width / 2;
@@ -45,7 +47,8 @@ bool SceneArcade::init()
         }
         lastPos = pos;
         
-        if(n == 105) {
+        if(n == current) {
+            isLink = true;
             ui_character_animal * animal = ui_character_animal::create(layer
                                                                        , layer->getContentSize()
                                                                        , gui::inst()->getCenter(layer)
@@ -60,7 +63,11 @@ bool SceneArcade::init()
                               ));
         }
         else {
-            const string szColor = (n > 105) ? "DARKGRAY_LIGHT" : "BLUE";
+            string szColor = "DARKGRAY_LIGHT";
+            if(n < 105) {
+                szColor = "BLUE";
+                isLink = true;
+            }
             const string szStar = "★☆☆";
             ui_icon::create()->addCircle(layer
                                          , gui::inst()->getGridSize(layer->getContentSize(), Vec2(1, 1), Vec2::ZERO, Vec2::ZERO)
@@ -68,7 +75,7 @@ bool SceneArcade::init()
                                          , ALIGNMENT_CENTER
                                          , ui_wizard_share::inst()->getPalette()->getColor(szColor)
                                          , to_string(n - 100));
-            if(n < 105) {
+            if(n < current) {
                 gui::inst()->addLabelAutoDimension(0
                                                    , -1
                                                    , szStar
@@ -81,12 +88,30 @@ bool SceneArcade::init()
             }
             
         }
+        //link
+        if(isLink)
+            gui::inst()->addTextButtonAutoDimension(0, 0, "M", layer
+                                                    , CC_CALLBACK_1(SceneArcade::callback, this, n - 100, 100)
+                                                    , 0
+                                                    , ALIGNMENT_CENTER
+                                                    , Color3B::BLACK
+                                                    , Vec2(1, 1)
+                                                    , Vec2::ZERO
+                                                    , Vec2::ZERO
+                                                    , Vec2::ZERO
+                                                    , Vec2::ZERO)->setOpacity(0);
     }
     
     return true;
 }
 
 void SceneArcade::callback(Ref* pSender, int from, int link) {
+    if(link == 100) {
+        CCLOG("from %d", from);
+        battleBrix::inst()->mSelectedStage = from;
+        replaceScene(SceneArcadeDetail::create());
+    }
+    
     LINK
 }
 
@@ -117,4 +142,26 @@ void SceneArcade::onTouchMoved(Touch *touch, Event *event) {
     mLayer->setPosition(to);
     
     mTouchStart = touch->getLocation();
+}
+
+//=============================================================================
+bool SceneArcadeDetail::init()
+{
+    this->loadFromJson("arcadeDetail", "arcade_detail.json");
+    
+    //timer
+    HEART_TIMER
+    //
+    return true;
+}
+
+void SceneArcadeDetail::callback(Ref* pSender, int from, int link) {
+    LINK
+}
+
+const string SceneArcadeDetail::getText(const string& defaultString, int id) {
+    switch(id) {
+        default:
+            return battleBrix::inst()->getText(defaultString, id);
+    }
 }

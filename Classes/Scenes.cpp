@@ -257,27 +257,12 @@ void SceneDaily::callback(Ref* pSender, int from, int link) {
             break;
         }
         case 1: {
-            this->replaceScene(SceneMain::create());
+            this->replaceScene(SceneArcade::create());
             break;
         }
         default:
             break;
     }
-   
-    
-    /*
-    auto todayImg = getNodeById(1001);
-//    std::function<void()> callFn = [=]() {
-//        this->replaceScene(SceneMain::create());
-//    };
-    std::function<void()> callFn = std::bind(&SceneDaily::actionFinished, this);
-    todayImg->runAction(Sequence::create(DelayTime::create(0.2f)
-                                         , ScaleBy::create(.3f, 1.2f)
-                                         , ScaleBy::create(.2f, (1.f / 1.2f))
-                                         , DelayTime::create(0.2f)
-                                         , CallFunc::create(callFn)
-                                         , NULL));
-     */
 }
 
 const string SceneDaily::getText(const string& defaultString, int id) {
@@ -307,9 +292,6 @@ const string SceneDaily::getText(const string& defaultString, int id) {
     return defaultString;
 }
 
-void SceneDaily::actionFinished() {
-    this->replaceScene(SceneMain::create());
-}
 //====================================================================
 bool SceneShop::init()
 {

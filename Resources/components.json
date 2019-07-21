@@ -143,7 +143,7 @@
             {
                 "id": 12,
                 "position": [ 1, 1 ],
-                "alignment": "center",
+                "alignment": "left",
                 "type": "label",
                 "color": [ "YELLOW", "BLACK" ],
                 "text": "ROYAL"
@@ -178,7 +178,7 @@
                 "position": [ 14, 0 ],
                 "alignment": "right",
                 "type": "sprite_button_circle",
-                "link": 10,
+                "link": 5,
                 "img": [ "icons8-settings-100.png", "icons8-settings-filled-100.png" ],
                 "color": "GREEN_LIGHT",
                 "span": [0, 1]

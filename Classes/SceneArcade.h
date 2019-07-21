@@ -34,5 +34,22 @@ private:
     Node * mLayer;
     float mMoveMin, mMoveMax;
 };
+//============================================================================================
+class SceneArcadeDetail : public ui_wizard
+{
+public:
+    static Scene* createScene() {
+        return SceneArcadeDetail::create();
+    };
+    virtual bool init();
+    CREATE_FUNC(SceneArcadeDetail);
+    
+protected:
+    virtual void callback(Ref* pSender, int from, int link);
+    virtual const string getText(const string& defaultString, int id);
+    virtual const float getProgressValue(int id) { return battleBrix::inst()->getProgressValue(id); };
+    
+private:
+};
 
 #endif /* SceneArcade_h */

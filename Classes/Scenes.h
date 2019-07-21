@@ -40,7 +40,8 @@ enum eLINK {
     eLINK_ARCADE,
     eLINK_MULTI,
     eLINK_FRIENDS,
-    eLINK_BAG
+    eLINK_BAG,
+    eLINK_SETUP
 };
 
 class SceneMain : public ui_wizard

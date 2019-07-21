@@ -268,6 +268,7 @@ public:
     vector<itemData> mItems;
     vector<grade> mGrades;
     int mLastRanking;
+    int mSelectedStage;
     
 private:
     static battleBrix * hInstance;

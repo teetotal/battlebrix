@@ -20,9 +20,6 @@
             "component": "bottom"
         },
         {
-            "component": "levelup"
-        },
-        {
             "id": 100,
             "comment": "road map",
             "dimension": [ 0, 1, 18, 6 ],
@@ -127,21 +124,33 @@
         },
         {
             "comment": "title",
-            "dimension": [ 0, 1, 1, 3 ],
+            "dimension": [ 0, 1, 9, 3 ],
             "margin": [ 20, 20 ],
             "innerMargin": [ 0, 0 ],
-            "gridSize": [ 1, 1 ],
+            "gridSize": [ 1, 4 ],
             "color": 0,
             "objects": [
                 {
                     "position": [0, 0],
+                    "span": [0, 2],
                     "type": "label",
                     "alignment": "left",
                     "text": "ARCADE MODE",
                     "color": "WHITE_OPACITY_DEEP",
-                    "fontSize": -2
+                    "fontSize": -1
+                },
+                {
+                    "position": [0, 3],
+                    "type": "label",
+                    "alignment": "left",
+                    "text": "Course 1",
+                    "color": "WHITE_OPACITY_DEEP",
+                    "fontSize": -1
                 }
             ]
+        },
+        {
+            "component": "levelup"
         }
     ]
 }
