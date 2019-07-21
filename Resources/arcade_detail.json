@@ -19,30 +19,30 @@
         {
             "comment": "title",
             "dimension": [ 0, 1, 9, 7 ],
-            "margin": [ 20, 10 ],
+            "margin": [ 15, 10 ],
             "innerMargin": [ 5, 2 ],
-            "gridSize": [ 3, 8 ],
-            "color": 10,
+            "gridSize": [ 7, 10 ],
+            "color": ["BLUE_DARK", "PURPLE"],
             "objects": [
                 {
                     "position": [0, 0],
                     "type": "label",
                     "alignment": "left",
                     "text": "STAGE 5",
-                    "color": "GRAY",
+                    "color": ["GRAY", "BLACK"],
                     "fontSize": 0
                 },
                 {
                     "position": [0, 1],
                     "type": "label",
-                    "alignment": "left",
+                    "alignment": "left_top",
                     "text": "★☆☆",
-                    "color": "YELLOW",
+                    "color": ["YELLOW", "BLACK"],
                     "fontSize": 0
                 },
                 {
                     "link": 1,
-                    "position": [2, 0],
+                    "position": [6, 0],
                     "type": "button",
                     "alignment": "right",
                     "text": "< BACK",
@@ -50,13 +50,15 @@
                     "fontSize": -1
                 },
                 {
-                    "position": [1, 2],
+                    "visible": false,
+                    "position": [2, 0],
+                    "span": [2, 0],
                     "type": "rectangle",
                     "alignment": "center",
                     "color": "DARKGRAY"
                 },
                 {
-                    "position": [1, 2],
+                    "position": [3, 2],
                     "type": "label",
                     "alignment": "center",
                     "text": "Take 1st place",
@@ -64,21 +66,60 @@
                     "fontSize": -1
                 },
                 {
-                    "position": [1, 3],
+                    "position": [3, 0],
+                    "span": [0, 1],
                     "type": "icon_point",
                     "alignment": "center",
                     "text": "150",
                     "color": "GRAY",
-                    "fontSize": -1
+                    "fontSize": -2
+                },
+                {
+                    "position": [3, 7],
+                    "type": "label",
+                    "alignment": "center",
+                    "text": "Choose up to three",
+                    "color": "GRAY",
+                    "fontSize": -2
                 },
                 {
                     "link": 10,
-                    "position": [ 1, 7 ],
+                    "position": [ 3, 8 ],
                     "alignment": "center",
                     "type": "button_rectangle_circle_shadow_1",
                     "text": "PLAY",
-                    "color": [ "GRAY", "YELLOW" ],
+                    "color": [ "GRAY", "BLUE" ],
                     "fontSize": 0
+                },
+                {
+                    "position": [1, 3],
+                    "span": [0, 3],
+                    "type": "component",
+                    "component": "play_item"
+                },
+                {
+                    "position": [2, 3],
+                    "span": [0, 3],
+                    "type": "component",
+                    "component": "play_item"
+                },
+                {
+                    "position": [3, 3],
+                    "span": [0, 3],
+                    "type": "component",
+                    "component": "play_item"
+                },
+                {
+                    "position": [4, 3],
+                    "span": [0, 3],
+                    "type": "component",
+                    "component": "play_item"
+                },
+                {
+                    "position": [5, 3],
+                    "span": [0, 3],
+                    "type": "component",
+                    "component": "play_item"
                 }
             ]
         },
