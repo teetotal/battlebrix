@@ -66,7 +66,7 @@ void SceneMain::callback(Ref* pSender, int from, int link) {
     if(link >= ID_NODE_ITEM_1 && link <= ID_NODE_ITEM_3) {
         auto p = (ui_checkbox*)getNodeById(link+1);
         p->setToggle();
-        ((ui_checkbox*)getNodeById(link+4))->setVisible(p->isChecked());
+        getNodeById(link+4)->setVisible(p->isChecked());
         
         sumPrice();
         return;

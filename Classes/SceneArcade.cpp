@@ -30,7 +30,7 @@ bool SceneArcade::init()
     auto layerLine = getNodeById(99);
     //init map
     Vec2 lastPos = Vec2::ZERO;
-    int current = 105;
+    int current = 114;
     for(int n=101; n <= 114; n++) {
         bool isLink = false;
         Layer * layer = (Layer*)getNodeById(n);
@@ -61,10 +61,16 @@ bool SceneArcade::init()
             animal->runAction(RepeatForever::create(
                                                     Sequence::create(ScaleTo::create(0.5, 1.2), ScaleTo::create(0.5, 1), NULL)
                               ));
+            float x = (getNodeById(0)->getContentSize().width / 2) - layer->getPosition().x;
+            if(x > mMoveMax) x = mMoveMax;
+            else if(x < mMoveMin) x = mMoveMin;
+            
+            mLayer->setPosition(Vec2(x, mLayer->getPosition().y));
+            
         }
         else {
             string szColor = "DARKGRAY_LIGHT";
-            if(n < 105) {
+            if(n < current) {
                 szColor = "BLUE";
                 isLink = true;
             }
@@ -149,6 +155,21 @@ bool SceneArcadeDetail::init()
 {
     this->loadFromJson("arcadeDetail", "arcade_detail.json");
     
+    for(int n = 0; n < battleBrix::inst()->mItems.size(); n++) {
+        battleBrix::itemData item = battleBrix::inst()->mItems[n];
+        auto sprite = gui::inst()->getSprite(item.img);
+        
+        int id = 100 + (n*10);
+        
+        auto checkBox = ((ui_checkbox*)getNodeById(id+1));
+        checkBox->setText(item.name);
+        bool isChecked = battleBrix::inst()->mItemSelected.isSelected[n];
+        checkBox->setChecked(isChecked);
+        getNodeById(id+4)->setVisible(isChecked);
+        
+        ((Sprite*)getNodeById(id+2))->setTexture(sprite->getTexture());
+        ((ui_icon*)getNodeById(id+3))->setText(numberFormat(item.price));
+    }
     //timer
     HEART_TIMER
     //
@@ -156,6 +177,13 @@ bool SceneArcadeDetail::init()
 }
 
 void SceneArcadeDetail::callback(Ref* pSender, int from, int link) {
+    CCLOG("link %d, from %d", link, from);
+    if(link >= 100) {
+        auto checkBox = ((ui_checkbox*)getNodeById(link+1));
+        checkBox->setToggle();
+        getNodeById(link+4)->setVisible(checkBox->isChecked());
+    }
+    
     LINK
 }
 

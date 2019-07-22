@@ -84,7 +84,8 @@
                 },
                 {
                     "link": 10,
-                    "position": [ 3, 8 ],
+                    "position": [ 2, 8 ],
+                    "span": [2, 0],
                     "alignment": "center",
                     "type": "button_rectangle_circle_shadow_1",
                     "text": "PLAY",
@@ -92,34 +93,84 @@
                     "fontSize": 0
                 },
                 {
+                    "id": 100,
                     "position": [1, 3],
                     "span": [0, 3],
                     "type": "component",
                     "component": "play_item"
                 },
                 {
+                    "position": [ 1, 3 ],
+                    "span": [0, 3],
+                    "type": "button",
+                    "text": "M",
+                    "link": 100,
+                    "color": 0,
+                    "fontSize": 0
+                },
+                {
+                    "id": 110,
                     "position": [2, 3],
                     "span": [0, 3],
                     "type": "component",
                     "component": "play_item"
                 },
                 {
+                    "position": [ 2, 3 ],
+                    "span": [0, 3],
+                    "type": "button",
+                    "text": "M",
+                    "link": 110,
+                    "color": 0,
+                    "fontSize": 0
+                },
+                {
+                    "id": 120,
                     "position": [3, 3],
                     "span": [0, 3],
                     "type": "component",
                     "component": "play_item"
                 },
                 {
+                    "position": [ 3, 3 ],
+                    "span": [0, 3],
+                    "type": "button",
+                    "text": "M",
+                    "link": 120,
+                    "color": 0,
+                    "fontSize": 0
+                },
+                {
+                    "id": 130,
                     "position": [4, 3],
                     "span": [0, 3],
                     "type": "component",
                     "component": "play_item"
                 },
                 {
+                    "position": [ 4, 3 ],
+                    "span": [0, 3],
+                    "type": "button",
+                    "text": "M",
+                    "link": 130,
+                    "color": 0,
+                    "fontSize": 0
+                },
+                {
+                    "id": 140,
                     "position": [5, 3],
                     "span": [0, 3],
                     "type": "component",
                     "component": "play_item"
+                },
+                {
+                    "position": [ 5, 3 ],
+                    "span": [0, 3],
+                    "type": "button",
+                    "text": "M",
+                    "link": 140,
+                    "color": 0,
+                    "fontSize": 0
                 }
             ]
         },

@@ -163,7 +163,9 @@
                 "property" : {
                     "hpAttack": 0.2,
                     "attackTarget": [1],
-                    "hpRecharge": 0
+                    "hpRecharge": 0,
+                    "shieldTime": 0,
+                    "revenge": false
                 }
             },
             {
@@ -174,7 +176,9 @@
                 "property" : {
                     "hpAttack": 0,
                     "attackTarget": [],
-                    "hpRecharge": 0.35
+                    "hpRecharge": 0.35,
+                    "shieldTime": 0,
+                    "revenge": false
                 }
             },
             {
@@ -185,7 +189,35 @@
                 "property" : {
                     "hpAttack": 0.15,
                     "attackTarget": [-1],
-                    "hpRecharge": 0
+                    "hpRecharge": 0,
+                    "shieldTime": 0,
+                    "revenge": false
+                }
+            },
+            {
+                "name": "Sheild",
+                "price": 150,
+                "img": "icons8-defense-80.png",
+                "target": [],
+                "property" : {
+                    "hpAttack": 0,
+                    "attackTarget": [],
+                    "hpRecharge": 0,
+                    "shieldTime": 3,
+                    "revenge": false
+                }
+            },
+            {
+                "name": "Revenge",
+                "price": 150,
+                "img": "icons8-synchronize-480.png",
+                "target": [],
+                "property" : {
+                    "hpAttack": 0,
+                    "attackTarget": [],
+                    "hpRecharge": 0,
+                    "shieldTime": 0,
+                    "revenge": true
                 }
             }
         ],

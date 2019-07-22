@@ -240,7 +240,9 @@ bool battleBrix::init() {
         //property
         float attack = playItems[rapidjson::SizeType(i)]["property"]["hpAttack"].GetFloat();
         float recharge = playItems[rapidjson::SizeType(i)]["property"]["hpRecharge"].GetFloat();
-        item.property.set(attack, recharge);
+        float shieldTime = playItems[rapidjson::SizeType(i)]["property"]["shieldTime"].GetFloat();
+        bool isRevenge = playItems[rapidjson::SizeType(i)]["property"]["revenge"].GetBool();
+        item.property.set(attack, recharge, shieldTime, isRevenge);
         
         const rapidjson::Value& targets = playItems[rapidjson::SizeType(i)]["property"]["attackTarget"];
          for (rapidjson::SizeType j = 0; j < targets.Size(); j++) {
