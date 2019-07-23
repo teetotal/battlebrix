@@ -50,6 +50,8 @@ protected:
     virtual const float getProgressValue(int id) { return battleBrix::inst()->getProgressValue(id); };
     
 private:
+    void displayPointChanged();
+    int getPrice();
 };
 
 #endif /* SceneArcade_h */

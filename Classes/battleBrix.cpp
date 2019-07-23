@@ -16,16 +16,30 @@ void brixMap::init() {
     const rapidjson::Value& brix = d["brix"];
     for (rapidjson::SizeType i = 0; i < brix.Size(); i++)
     {
-        brixPosition b;
+        brixStage b;
         b.load(d["brix"][rapidjson::SizeType(i)]);
         mBrixMap.push_back(b);
     }
 }
 //-------------------------------------------------------------------------------
-void brixMap::brixPosition::load(rapidjson::Value &p) {
+void brixMap::brixStage::load(rapidjson::Value &p) {
     this->title = p["title"].GetString();
     this->minGrade = p["minGrade"].GetInt();
     this->maxGrade = p["maxGrade"].GetInt();
+    //mission
+    this->mission.message = p["mission"]["message"].GetString();
+    this->mission.ranking = p["mission"]["ranking"].GetInt();
+    
+    //prize
+    this->prize.point = p["prize"]["point"].GetInt();
+    this->prize.heart = p["prize"]["heart"].GetInt();
+    this->prize.item = p["prize"]["item"].GetInt();
+    //enableItem
+    const rapidjson::Value& enableItemIdx = p["enableItemIdx"];
+    for (rapidjson::SizeType i = 0; i < enableItemIdx.Size(); i++)
+    {
+        this->enableItemIdx.push_back(enableItemIdx[rapidjson::SizeType(i)].GetInt());
+    }
     //statics
     const rapidjson::Value& statics = p["static"];
     for (rapidjson::SizeType i = 0; i < statics.Size(); i++)

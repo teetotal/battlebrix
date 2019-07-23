@@ -60,6 +60,17 @@ public:
         int x;
         int y;
     };
+    //brix mission
+    struct brixMission {
+        string message;
+        int ranking;
+    };
+    //brix prize
+    struct brixPrize {
+        int point;
+        int heart;
+        int item;
+    };
     //brixMovement
     struct brixMovement {
         TYPE type;
@@ -67,21 +78,24 @@ public:
         void load(rapidjson::Value &p);
     };
     //brix brixPosition
-    struct brixPosition {
+    struct brixStage {
         int minGrade;
         int maxGrade;
         string title;
+        brixPrize prize;
+        brixMission mission;
+        vector<int> enableItemIdx;
         vector<position> statics;
         vector<brixMovement> movements;
         
         void load(rapidjson::Value &p);
     };
     
-    vector<brixPosition> mBrixMap;
+    vector<brixStage> mBrixMap;
     
     int getMapRandom();
     
-    inline const brixPosition getMap(int idx) {
+    inline const brixStage getMap(int idx) {
         return mBrixMap[idx];
     };
     

@@ -157,18 +157,6 @@
     "play": {
         "items": [
             {
-                "name": "Sniper",
-                "price": 150,
-                "img": "icons8-center-of-gravity-80.png",
-                "property" : {
-                    "hpAttack": 0.2,
-                    "attackTarget": [1],
-                    "hpRecharge": 0,
-                    "shieldTime": 0,
-                    "revenge": false
-                }
-            },
-            {
                 "name": "Potion",
                 "price": 150,
                 "img": "icons8-hyper-potion-96.png",
@@ -189,6 +177,18 @@
                 "property" : {
                     "hpAttack": 0.15,
                     "attackTarget": [-1],
+                    "hpRecharge": 0,
+                    "shieldTime": 0,
+                    "revenge": false
+                }
+            },
+            {
+                "name": "Sniper",
+                "price": 150,
+                "img": "icons8-center-of-gravity-80.png",
+                "property" : {
+                    "hpAttack": 0.2,
+                    "attackTarget": [1],
                     "hpRecharge": 0,
                     "shieldTime": 0,
                     "revenge": false

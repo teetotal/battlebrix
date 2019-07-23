@@ -627,7 +627,7 @@ Node * ScenePlay::PLAYER::createBrix(brixMap::position pos, int id)
 }
 // addBrix ===========================================================================
 void ScenePlay::PLAYER::addBrix(int idx) {
-    brixMap::brixPosition brix = brixMap::inst()->getMap(idx);
+    brixMap::brixStage brix = brixMap::inst()->getMap(idx);
     int brixId = _ID_BRIX_START;
     int giftId = _ID_GIFT_START;
     int trapId = _ID_TRAP_START;

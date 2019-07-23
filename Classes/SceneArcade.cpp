@@ -97,7 +97,7 @@ bool SceneArcade::init()
         //link
         if(isLink)
             gui::inst()->addTextButtonAutoDimension(0, 0, "M", layer
-                                                    , CC_CALLBACK_1(SceneArcade::callback, this, n - 100, 100)
+                                                    , CC_CALLBACK_1(SceneArcade::callback, this, n - 101, 100)
                                                     , 0
                                                     , ALIGNMENT_CENTER
                                                     , Color3B::BLACK
@@ -154,7 +154,56 @@ void SceneArcade::onTouchMoved(Touch *touch, Event *event) {
 bool SceneArcadeDetail::init()
 {
     this->loadFromJson("arcadeDetail", "arcade_detail.json");
+    int stage = battleBrix::inst()->mSelectedStage;
+    brixMap::brixStage info = brixMap::inst()->getMap(stage);
     
+    ((Label*)getNodeById(40))->setString(info.title);
+    //50 -> prize
+    auto layerPrize = getNodeById(50);
+    int n = 0;
+    Vec2 gridSize = Vec2(1, 0);
+    Vec2 innerMargin = Vec2(0, 0);
+    if(info.prize.point > 0) gridSize.y += 1;
+    if(info.prize.heart > 0) gridSize.y += 1;
+    if(info.prize.item >= 0) gridSize.y += 1;
+    
+    if(info.prize.point > 0){
+        auto p = ui_icon::create();
+        p->addCircle(layerPrize
+                     , gui::inst()->getGridSize(layerPrize->getContentSize(), gridSize, Vec2::ZERO, innerMargin)
+                     , gui::inst()->getPointVec2(0, n++, ALIGNMENT_CENTER, layerPrize->getContentSize(), gridSize, Vec2::ZERO, Vec2::ZERO, innerMargin)
+                     , ALIGNMENT_CENTER
+                     , ui_wizard_share::inst()->getPalette()->getColor("YELLOW")
+                     , "P"
+                     , ""
+                     , to_string(info.prize.point)
+                     , ui_wizard_share::inst()->getPalette()->getColor("GRAY")
+                     , -1
+                     );
+    }
+    if(info.prize.heart > 0) {
+        auto p = ui_icon::create();
+        p->addHeart(layerPrize
+                    , gui::inst()->getGridSize(layerPrize->getContentSize(), gridSize, Vec2::ZERO, innerMargin)
+                    , gui::inst()->getPointVec2(0, n++, ALIGNMENT_CENTER, layerPrize->getContentSize(), gridSize, Vec2::ZERO, Vec2::ZERO, innerMargin)
+                    , ALIGNMENT_CENTER
+                    , to_string(info.prize.heart)
+                    , ui_wizard_share::inst()->getPalette()->getColor("GRAY")
+                    , -1
+                    );
+    }
+    if(info.prize.item >= 0) {
+        gui::inst()->addLabelAutoDimension(0, n++, battleBrix::inst()->mItems[info.prize.item].name, layerPrize, -1, ALIGNMENT_CENTER
+                                           , ui_wizard_share::inst()->getPalette()->getColor3B("GRAY")
+                                           , gridSize, Vec2::ZERO, Vec2::ZERO, innerMargin
+                                           );
+    }
+    
+    //51 -> mission
+    ((Label*)getNodeById(51))->setString(info.mission.message);
+    
+    
+    int checkedCnt = 0;
     for(int n = 0; n < battleBrix::inst()->mItems.size(); n++) {
         battleBrix::itemData item = battleBrix::inst()->mItems[n];
         auto sprite = gui::inst()->getSprite(item.img);
@@ -163,13 +212,32 @@ bool SceneArcadeDetail::init()
         
         auto checkBox = ((ui_checkbox*)getNodeById(id+1));
         checkBox->setText(item.name);
-        bool isChecked = battleBrix::inst()->mItemSelected.isSelected[n];
-        checkBox->setChecked(isChecked);
-        getNodeById(id+4)->setVisible(isChecked);
+        battleBrix::inst()->mItemSelected.isSelected[n] = false;
+        checkBox->setChecked(false);
+        getNodeById(id+4)->setVisible(false); //select rect
+        getNodeById(id+8)->setVisible(false); //link
+        getNodeById(id+9)->setVisible(true); //disable
         
         ((Sprite*)getNodeById(id+2))->setTexture(sprite->getTexture());
         ((ui_icon*)getNodeById(id+3))->setText(numberFormat(item.price));
+        
+        //enableItems
+        for(int i=0; i < info.enableItemIdx.size(); i++) {
+            if(info.enableItemIdx[i] == n) {
+                if(checkedCnt < PLAY_ITEM_CNT) {
+                    battleBrix::inst()->mItemSelected.isSelected[n] = true;
+                    checkBox->setChecked(true);
+                    getNodeById(id+4)->setVisible(true);
+                    checkedCnt++;
+                }
+                getNodeById(id+8)->setVisible(true);
+                getNodeById(id+9)->setVisible(false);
+                
+            }
+        }
     }
+    displayPointChanged();
+    
     //timer
     HEART_TIMER
     //
@@ -177,11 +245,26 @@ bool SceneArcadeDetail::init()
 }
 
 void SceneArcadeDetail::callback(Ref* pSender, int from, int link) {
-    CCLOG("link %d, from %d", link, from);
     if(link >= 100) {
+        int cnt = 0;
+        for(int n=0; n < battleBrix::inst()->mItemSelected.isSelected.size(); n++) {
+            if(battleBrix::inst()->mItemSelected.isSelected[n])
+                cnt++;
+        }
         auto checkBox = ((ui_checkbox*)getNodeById(link+1));
-        checkBox->setToggle();
-        getNodeById(link+4)->setVisible(checkBox->isChecked());
+        if(!checkBox->isChecked() && cnt >= PLAY_ITEM_CNT) {
+            //alert
+            guiExt::runScaleEffect(getNodeById(52));
+        }
+        else {
+            checkBox->setToggle();
+            getNodeById(link+4)->setVisible(checkBox->isChecked());
+            int idx = (link-100) / 10;
+            battleBrix::inst()->mItemSelected.isSelected[idx] = checkBox->isChecked();
+            
+            //point effect
+            displayPointChanged();
+        }
     }
     
     LINK
@@ -192,4 +275,23 @@ const string SceneArcadeDetail::getText(const string& defaultString, int id) {
         default:
             return battleBrix::inst()->getText(defaultString, id);
     }
+}
+
+void SceneArcadeDetail::displayPointChanged() {
+    
+    auto p = ((ui_icon*)getNodeById(_ID_NODE_LABEL_POINT));
+    
+    guiExt::runScaleEffect(p, CallFunc::create([=]() {
+        p->setText(numberFormat(battleBrix::inst()->mUserData.point - getPrice()));
+                                                   }));
+}
+
+int SceneArcadeDetail::getPrice() {
+    int price = 0;
+    for(int n=0; n < battleBrix::inst()->mItemSelected.isSelected.size(); n++) {
+        if(battleBrix::inst()->mItemSelected.isSelected[n]) {
+            price += battleBrix::inst()->mItems[n].price;
+        }
+    }
+    return price;
 }

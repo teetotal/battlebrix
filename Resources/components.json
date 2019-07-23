@@ -515,7 +515,7 @@
     "play_item": {
         "dimension": [ 0, 0, 1, 1 ],
         "margin": [ 0, 0 ],
-        "innerMargin": [ 2, 4 ],
+        "innerMargin": [ 2, 1 ],
         "gridSize": [ 1, 4 ],
         "color": [ "BLUE_LIGHT", "GRAY"],
         "objects": [
@@ -524,15 +524,15 @@
                 "position": [ 0, 0 ],
                 "alignment": "center",
                 "type": "checkbox",
-                "color": [ "DARKGRAY", "BLACK"],
+                "color": [ "DARKGRAY", "DARKGRAY"],
                 "text": "BOMB",
-                "fontSize": -1
+                "fontSize": -2
             },
             {
                 "position": [ 0, 0 ],
                 "alignment": "left_bottom",
                 "type": "line",
-                "color": "DARKGRAY"
+                "color": "BLUE_LIGHT"
             },
             {
                 "id": 2,
@@ -547,9 +547,9 @@
                 "position": [ 0, 3 ],
                 "alignment": "center",
                 "type": "icon_point2",
-                "color": [ "BLACK", "YELLOW" ],
+                "color": [ "DARKGRAY", "YELLOW" ],
                 "text": "100",
-                "fontSize": -1
+                "fontSize": -2
             },
             {
                 "id": 4,
