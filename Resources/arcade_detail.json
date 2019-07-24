@@ -17,22 +17,23 @@
             "component": "top"
         },
         {
-            "comment": "stage",
+            "comment": "main bg",
             "dimension": [ 0, 1, 9, 7 ],
             "margin": [ 10, 10 ],
             "innerMargin": [ 5, 2 ],
-            "gridSize": [ 7, 10 ],
+            "gridSize": [ 1, 1 ],
             "color": ["BLUE_DARK", "PURPLE"],
             "objects": [
-                {
-                    "link": 1,
-                    "position": [6, 0],
-                    "type": "button",
-                    "alignment": "right",
-                    "text": "< BACK",
-                    "color": "GRAY",
-                    "fontSize": -1
-                },
+                ]
+        },
+        {
+            "comment": "stage",
+            "dimension": [ 0, 1, 9, 7 ],
+            "margin": [ 10, 20 ],
+            "innerMargin": [ 5, 2 ],
+            "gridSize": [ 7, 9 ],
+            "color": 0,
+            "objects": [
                 {
                     "id": 50,
                     "position": [3, 1],
@@ -199,7 +200,7 @@
         {
             "comment": "title",
             "dimension": [ 0, 1, 9, 7 ],
-            "margin": [ 20, 15 ],
+            "margin": [ 15, 15 ],
             "innerMargin": [ 5, 0 ],
             "gridSize": [ 7, 10 ],
             "color": 0,
@@ -220,6 +221,15 @@
                     "alignment": "left_top",
                     "text": "★☆☆",
                     "color": ["YELLOW", "BLACK"],
+                    "fontSize": -1
+                },
+                {
+                    "link": 1,
+                    "position": [6, 0],
+                    "type": "button",
+                    "alignment": "right",
+                    "text": "< BACK",
+                    "color": "GRAY",
                     "fontSize": -1
                 }
             ]
