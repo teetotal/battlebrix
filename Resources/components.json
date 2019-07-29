@@ -526,7 +526,7 @@
                 "type": "checkbox",
                 "color": [ "DARKGRAY", "DARKGRAY"],
                 "text": "BOMB",
-                "fontSize": -2
+                "fontSize": -1
             },
             {
                 "position": [ 0, 0 ],

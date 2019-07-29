@@ -161,17 +161,17 @@ bool SceneArcadeDetail::init()
     //50 -> prize
     auto layerPrize = getNodeById(50);
     int n = 0;
-    Vec2 gridSize = Vec2(1, 0);
+    Vec2 gridSize = Vec2(2, 2);
     Vec2 innerMargin = Vec2(0, 0);
-    if(info.prize.point > 0) gridSize.y += 1;
-    if(info.prize.heart > 0) gridSize.y += 1;
-    if(info.prize.item >= 0) gridSize.y += 1;
+//    if(info.prize.point > 0) gridSize.y += 1;
+//    if(info.prize.heart > 0) gridSize.y += 1;
+//    if(info.prize.item >= 0) gridSize.y += 1;
     
     if(info.prize.point > 0){
         auto p = ui_icon::create();
         p->addCircle(layerPrize
                      , gui::inst()->getGridSize(layerPrize->getContentSize(), gridSize, Vec2::ZERO, innerMargin)
-                     , gui::inst()->getPointVec2(0, n++, ALIGNMENT_CENTER, layerPrize->getContentSize(), gridSize, Vec2::ZERO, Vec2::ZERO, innerMargin)
+                     , gui::inst()->getPointVec2(n++, 0, ALIGNMENT_CENTER, layerPrize->getContentSize(), gridSize, Vec2::ZERO, Vec2::ZERO, innerMargin)
                      , ALIGNMENT_CENTER
                      , ui_wizard_share::inst()->getPalette()->getColor("YELLOW")
                      , "P"
@@ -185,7 +185,7 @@ bool SceneArcadeDetail::init()
         auto p = ui_icon::create();
         p->addHeart(layerPrize
                     , gui::inst()->getGridSize(layerPrize->getContentSize(), gridSize, Vec2::ZERO, innerMargin)
-                    , gui::inst()->getPointVec2(0, n++, ALIGNMENT_CENTER, layerPrize->getContentSize(), gridSize, Vec2::ZERO, Vec2::ZERO, innerMargin)
+                    , gui::inst()->getPointVec2(n++, 0, ALIGNMENT_CENTER, layerPrize->getContentSize(), gridSize, Vec2::ZERO, Vec2::ZERO, innerMargin)
                     , ALIGNMENT_CENTER
                     , to_string(info.prize.heart)
                     , ui_wizard_share::inst()->getPalette()->getColor("GRAY")
@@ -193,9 +193,9 @@ bool SceneArcadeDetail::init()
                     );
     }
     if(info.prize.item >= 0) {
-        gui::inst()->addLabelAutoDimension(0, n++, battleBrix::inst()->mItems[info.prize.item].name, layerPrize, -1, ALIGNMENT_CENTER
+        gui::inst()->addLabelAutoDimension(0, 1, battleBrix::inst()->mItems[info.prize.item].name, layerPrize, -1, ALIGNMENT_CENTER
                                            , ui_wizard_share::inst()->getPalette()->getColor3B("GRAY")
-                                           , gridSize, Vec2::ZERO, Vec2::ZERO, innerMargin
+                                           , gridSize, Vec2::ZERO, Vec2::ZERO, innerMargin, Vec2(1, 0)
                                            );
     }
     
