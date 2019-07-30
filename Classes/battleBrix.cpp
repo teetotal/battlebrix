@@ -26,6 +26,8 @@ void brixMap::brixStage::load(rapidjson::Value &p) {
     this->title = p["title"].GetString();
     this->minGrade = p["minGrade"].GetInt();
     this->maxGrade = p["maxGrade"].GetInt();
+    //speed
+    this->speed = p["speed"].GetFloat();
     //mission
     this->mission.message = p["mission"]["message"].GetString();
     this->mission.ranking = p["mission"]["ranking"].GetInt();
@@ -266,7 +268,7 @@ bool battleBrix::init() {
         mItems.push_back(item);
     }
     
-    mItemSelected.set((int)mItems.size());
+    mStageInfo.set((int)mItems.size());
     
     //Grade titles
     const rapidjson::Value& grades = d["grades"];
@@ -327,6 +329,8 @@ battleBrix::rewardData battleBrix::getReward(int ranking) {
     return mRewards[ranking];
 }
 bool battleBrix::applyReward(int ranking) {
+    //arcade mode 적용
+    
     rewardData reward = getReward(ranking);
     
     mUserData.increaseHeart(reward.heart);

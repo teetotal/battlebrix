@@ -81,6 +81,7 @@ public:
     struct brixStage {
         int minGrade;
         int maxGrade;
+        float speed;
         string title;
         brixPrize prize;
         brixMission mission;
@@ -235,14 +236,25 @@ public:
     };
     
     // selected
-    struct itemSelected {
+    struct stageInfo {
         vector<bool> isSelected;
+        bool isArcadeMode;
+        int arcadeStage;
         
         void set(int cnt) {
             for(int n = 0; n < cnt; n++) {
                 isSelected.push_back(true);
             }
         };
+        
+        void setArcade(int stage) {
+            this->isArcadeMode = true;
+            this->arcadeStage = stage;
+        };
+        
+        void setPvP() {
+            this->isArcadeMode = false;
+        }
         
         int getTotalPoint() {
             int total = 0;
@@ -252,7 +264,7 @@ public:
             }
             return total;
         };
-    } mItemSelected;
+    } mStageInfo;
     
     //grade
     struct grade {
@@ -286,7 +298,6 @@ public:
     vector<itemData> mItems;
     vector<grade> mGrades;
     int mLastRanking;
-    int mSelectedStage;
     
 private:
     static battleBrix * hInstance;

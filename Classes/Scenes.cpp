@@ -45,7 +45,7 @@ bool SceneMain::init()
         
         auto checkBox = ((ui_checkbox*)getNodeById(id+1));
         checkBox->setText(item.name);
-        bool isChecked = battleBrix::inst()->mItemSelected.isSelected[n];
+        bool isChecked = battleBrix::inst()->mStageInfo.isSelected[n];
         checkBox->setChecked(isChecked);
         getNodeById(id+4)->setVisible(isChecked);
             
@@ -96,13 +96,13 @@ const string SceneMain::getText(const string& defaultString, int id) {
 void SceneMain::sumPrice() {
     //맘에 안드는 코드일세
     for(int n = 0; n < PLAY_ITEM_CNT; n++) {
-        battleBrix::inst()->mItemSelected.isSelected[n] = false;
+        battleBrix::inst()->mStageInfo.isSelected[n] = false;
         int id = ID_NODE_ITEM_1 + (n * 1000);
         if(((ui_checkbox*)getNodeById(id+1))->isChecked())
-            battleBrix::inst()->mItemSelected.isSelected[n] = true;
+            battleBrix::inst()->mStageInfo.isSelected[n] = true;
     }
     
-    int price = battleBrix::inst()->mItemSelected.getTotalPoint();
+    int price = battleBrix::inst()->mStageInfo.getTotalPoint();
     
     ((Label*)getNodeById(ID_NODE_POINT_SUBTRACT))->setString("- " + numberFormat(price));
     int remain = battleBrix::inst()->mUserData.point - price;
@@ -117,7 +117,7 @@ void SceneMain::sumPrice() {
 }
 
 void SceneMain::runPlay() {
-    int totalPoint = battleBrix::inst()->mItemSelected.getTotalPoint();
+    int totalPoint = battleBrix::inst()->mStageInfo.getTotalPoint();
     // check validation
     if(battleBrix::inst()->mUserData.heart < 1) {
         //alert

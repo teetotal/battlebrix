@@ -1,6 +1,7 @@
 
 #include "ScenePlay.h"
 #include "Scenes.h"
+#include "SceneArcade.h"
 #include "ui/ui_ext.h"
 #include "library/pch.h"
 #include "ui/ui_character_animal.h"
@@ -145,7 +146,12 @@ void ScenePlay::PLAYER::init(ScenePlay* p, int idx, const string& name, int laye
     mp->setValue(0.f);
     
     //speed
-    float speed = battleBrix::inst()->getMyGrade().speed;
+    float speed;
+    if(battleBrix::inst()->mStageInfo.isArcadeMode)
+        speed = brixMap::inst()->getMap(fnId).speed;
+    else
+        speed = battleBrix::inst()->getMyGrade().speed;
+    
     p->initPhysicsBody(layer, PHYSICSMATERIAL_OBSTACLE, false, speed);
     
     gridSize   = gui::inst()->getGridSize(layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO);
@@ -755,7 +761,7 @@ bool ScenePlay::init()
     //skills
     //enable skill
     for(int n = 0; n < PLAY_ITEM_CNT; n++) {
-        if(!battleBrix::inst()->mItemSelected.isSelected[n])
+        if(!battleBrix::inst()->mStageInfo.isSelected[n])
             ((ui_icon*)getNodeById(ID_NODE_SKILL_1 + n))->setEnabled(false);
     }
     mSkillParentNode = getNodeById(ID_NODE_SKILL);
@@ -768,12 +774,16 @@ bool ScenePlay::init()
     mIsEnd = false;
     mBrixLayerRatio = -1;
     
-    int fnId = brixMap::inst()->getMapRandom();
+    int stage;
+    if(battleBrix::inst()->mStageInfo.isArcadeMode)
+        stage = battleBrix::inst()->mStageInfo.arcadeStage;
+    else
+        stage = brixMap::inst()->getMapRandom();
     
     // grade
     ((Label*)getNodeById(ID_NODE_TOP_GRADE))->setString(battleBrix::inst()->getGradeString());
     // map type
-    ((MenuItemLabel*)getNodeById(ID_NODE_TOP_MAP_TYPE))->setString(brixMap::inst()->getMap(fnId).title);
+    ((MenuItemLabel*)getNodeById(ID_NODE_TOP_MAP_TYPE))->setString(brixMap::inst()->getMap(stage).title);
     
     PLAYER me;
     me.init(this
@@ -785,7 +795,7 @@ bool ScenePlay::init()
             , _BALL_ID[0]
             , ID_NODE_MY_ALERT
             , ID_NODE_MY_LABEL
-            , fnId
+            , stage
             , battleBrix::inst()->getMyGrade().IQ);
     mPlayers.push_back(me);
     
@@ -806,7 +816,7 @@ bool ScenePlay::init()
         int areaId = id++;
         int alertId = id++;
         int labelId = id;
-        p.init(this, n+1, "CPU" + to_string(n+1), areaId, hpId, mpId, _BALL_ID[n+1], alertId, labelId, fnId, battleBrix::inst()->getMyGrade().IQ);
+        p.init(this, n+1, "CPU" + to_string(n+1), areaId, hpId, mpId, _BALL_ID[n+1], alertId, labelId, stage, battleBrix::inst()->getMyGrade().IQ);
         mPlayers.push_back(p);
     }
     
@@ -854,7 +864,10 @@ void ScenePlay::timerLoose(float f) {
 void ScenePlay::callback(Ref* pSender, int from, int link) {
     switch(link) {
         case 999:
-            this->replaceScene(SceneMain::create());
+            if(battleBrix::inst()->mStageInfo.isArcadeMode)
+                this->replaceScene(SceneArcade::create());
+            else
+                this->replaceScene(SceneMain::create());
             break;
         default:
             break;
@@ -1103,8 +1116,9 @@ bool SceneEnding::init()
     pHeart->setString((reward.heart >= 0) ? "+" + to_string(reward.heart) : to_string(reward.heart));
     
     bool isLevelup = battleBrix::inst()->applyReward(nRanking);
+    
     //다시하기 활성화 체크
-    if(!battleBrix::inst()->checkPayForPlay(battleBrix::inst()->mItemSelected.getTotalPoint())) {
+    if(!battleBrix::inst()->checkPayForPlay(battleBrix::inst()->mStageInfo.getTotalPoint())) {
         ((ui_button*)getNodeById(ID_NODE_ENDING_AGAIN))->setEnabled(false);
     }
     
@@ -1156,7 +1170,10 @@ bool SceneEnding::init()
 void SceneEnding::callback(Ref* pSender, int from, int link) {
     switch(link) {
         case 0:
-            this->replaceScene(SceneMain::create());
+            if(battleBrix::inst()->mStageInfo.isArcadeMode)
+                this->replaceScene(SceneArcade::create());
+            else
+                this->replaceScene(SceneMain::create());
             break;
         case 1:
             onAgain();
@@ -1166,14 +1183,19 @@ void SceneEnding::callback(Ref* pSender, int from, int link) {
 
 void SceneEnding::onAgain() {
     ((ui_icon*)this->getNodeById(_ID_NODE_LABEL_HEART))->setText(battleBrix::inst()->getText("", _ID_NODE_LABEL_HEART));
-    if(battleBrix::inst()->payForPlay(battleBrix::inst()->mItemSelected.getTotalPoint())) {
+    if(battleBrix::inst()->payForPlay(battleBrix::inst()->mStageInfo.getTotalPoint())) {
         ((ui_icon*)this->getNodeById(_ID_NODE_LABEL_POINT))->setText(battleBrix::inst()->getText("", _ID_NODE_LABEL_POINT));
         ((ui_icon*)this->getNodeById(_ID_NODE_LABEL_HEART))->setText(battleBrix::inst()->getText("", _ID_NODE_LABEL_HEART));
         guiExt::runScaleEffect(this->getNodeById(_ID_NODE_LABEL_POINT));
         guiExt::runScaleEffect(this->getNodeById(_ID_NODE_LABEL_HEART), CallFunc::create([=](){
             
             if(battleBrix::inst()->mUserData.increseExp()) {
-                CallFunc * p = CallFunc::create([=]() { this->replaceScene(ScenePlay::create()); });
+                CallFunc * p = CallFunc::create([=]() {
+                    if(battleBrix::inst()->mStageInfo.isArcadeMode)
+                        this->replaceScene(SceneArcade::create());
+                    else
+                        this->replaceScene(SceneMain::create());
+                });
                 LEVELUP_EVENT(p)
             } else {
                 this->replaceScene(ScenePlay::create());

@@ -3,6 +3,7 @@
         {
             "minGrade": 1,
             "maxGrade": 4,
+            "speed": 0.55,
             "title": "BEGINNER",
             "mission": {
                 "message": "Take 1st place",
@@ -30,6 +31,7 @@
         {
             "minGrade": 1,
             "maxGrade": 4,
+            "speed": 0.6,
             "title": "EASY 1",
             "mission": {
                 "message": "Take 1st place",
@@ -64,6 +66,7 @@
         {
             "minGrade": 1,
             "maxGrade": 4,
+            "speed": 0.6,
             "title": "EASY 2",
             "mission": {
                 "message": "Take 1st place",
@@ -111,6 +114,7 @@
         {
             "minGrade": 2,
             "maxGrade": 5,
+            "speed": 0.6,
             "title": "EASY 3",
             "mission": {
                 "message": "Take 1st place",
@@ -157,6 +161,7 @@
         {
             "minGrade": 2,
             "maxGrade": 5,
+            "speed": 0.6,
             "title": "EASY 4",
             "mission": {
                 "message": "Take 1st place",
@@ -197,6 +202,7 @@
         {
             "minGrade": 3,
             "maxGrade": 6,
+            "speed": 0.6,
             "title": "EASY 5",
             "mission": {
                 "message": "Take 1st place",
@@ -243,6 +249,7 @@
         {
             "minGrade": 3,
             "maxGrade": 6,
+            "speed": 0.6,
             "title": "EASY 6",
             "mission": {
                 "message": "Take 1st place",
@@ -283,6 +290,7 @@
         {
             "minGrade": 4,
             "maxGrade": -1,
+            "speed": 0.6,
             "title": "MEDIUM 1",
             "mission": {
                 "message": "Take 1st place",
@@ -314,6 +322,7 @@
         {
             "minGrade": 4,
             "maxGrade": -1,
+            "speed": 0.6,
             "title": "MEDIUM 2",
             "mission": {
                 "message": "Take 1st place",
@@ -358,6 +367,7 @@
         {
             "minGrade": 5,
             "maxGrade": -1,
+            "speed": 0.6,
             "title": "MEDIUM 3",
             "mission": {
                 "message": "Take 1st place",
@@ -403,6 +413,7 @@
         {
             "minGrade": 5,
             "maxGrade": -1,
+            "speed": 0.6,
             "title": "MEDIUM 4",
             "mission": {
                 "message": "Take 1st place",
@@ -442,6 +453,7 @@
         {
             "minGrade": 6,
             "maxGrade": -1,
+            "speed": 0.6,
             "title": "MEDIUM 5",
             "mission": {
                 "message": "Take 1st place",
@@ -488,6 +500,7 @@
         {
             "minGrade": 6,
             "maxGrade": -1,
+            "speed": 0.6,
             "title": "MEDIUM 6",
             "mission": {
                 "message": "Take 1st place",
@@ -526,6 +539,7 @@
         {
             "minGrade": 6,
             "maxGrade": -1,
+            "speed": 0.6,
             "title": "HARD 1",
             "mission": {
                 "message": "Take 1st place",

@@ -6,6 +6,7 @@
 
 #include "SceneArcade.h"
 #include "Scenes.h"
+#include "ScenePlay.h"
 #include "ui/ui_ext.h"
 #include "ui/ui_icon.h"
 #include "ui/ui_character_animal.h"
@@ -114,7 +115,7 @@ bool SceneArcade::init()
 void SceneArcade::callback(Ref* pSender, int from, int link) {
     if(link == 100) {
         CCLOG("from %d", from);
-        battleBrix::inst()->mSelectedStage = from;
+        battleBrix::inst()->mStageInfo.setArcade(from);
         replaceScene(SceneArcadeDetail::create());
     }
     
@@ -154,7 +155,7 @@ void SceneArcade::onTouchMoved(Touch *touch, Event *event) {
 bool SceneArcadeDetail::init()
 {
     this->loadFromJson("arcadeDetail", "arcade_detail.json");
-    int stage = battleBrix::inst()->mSelectedStage;
+    int stage = battleBrix::inst()->mStageInfo.arcadeStage;
     brixMap::brixStage info = brixMap::inst()->getMap(stage);
     
     ((Label*)getNodeById(40))->setString(info.title);
@@ -212,7 +213,7 @@ bool SceneArcadeDetail::init()
         
         auto checkBox = ((ui_checkbox*)getNodeById(id+1));
         checkBox->setText(item.name);
-        battleBrix::inst()->mItemSelected.isSelected[n] = false;
+        battleBrix::inst()->mStageInfo.isSelected[n] = false;
         checkBox->setChecked(false);
         getNodeById(id+4)->setVisible(false); //select rect
         getNodeById(id+8)->setVisible(false); //link
@@ -225,7 +226,7 @@ bool SceneArcadeDetail::init()
         for(int i=0; i < info.enableItemIdx.size(); i++) {
             if(info.enableItemIdx[i] == n) {
                 if(checkedCnt < PLAY_ITEM_CNT) {
-                    battleBrix::inst()->mItemSelected.isSelected[n] = true;
+                    battleBrix::inst()->mStageInfo.isSelected[n] = true;
                     checkBox->setChecked(true);
                     getNodeById(id+4)->setVisible(true);
                     checkedCnt++;
@@ -247,8 +248,8 @@ bool SceneArcadeDetail::init()
 void SceneArcadeDetail::callback(Ref* pSender, int from, int link) {
     if(link >= 100) {
         int cnt = 0;
-        for(int n=0; n < battleBrix::inst()->mItemSelected.isSelected.size(); n++) {
-            if(battleBrix::inst()->mItemSelected.isSelected[n])
+        for(int n=0; n < battleBrix::inst()->mStageInfo.isSelected.size(); n++) {
+            if(battleBrix::inst()->mStageInfo.isSelected[n])
                 cnt++;
         }
         auto checkBox = ((ui_checkbox*)getNodeById(link+1));
@@ -260,10 +261,40 @@ void SceneArcadeDetail::callback(Ref* pSender, int from, int link) {
             checkBox->setToggle();
             getNodeById(link+4)->setVisible(checkBox->isChecked());
             int idx = (link-100) / 10;
-            battleBrix::inst()->mItemSelected.isSelected[idx] = checkBox->isChecked();
+            battleBrix::inst()->mStageInfo.isSelected[idx] = checkBox->isChecked();
             
             //point effect
             displayPointChanged();
+        }
+    } else if(link == 10) {
+        int totalPoint = battleBrix::inst()->mStageInfo.getTotalPoint();
+        // check validation
+        if(battleBrix::inst()->mUserData.heart < 1) {
+            //alert
+        }
+        
+        // pay and change scene
+        if(battleBrix::inst()->payForPlay(totalPoint))
+        {
+            CallFunc * next;
+            if(battleBrix::inst()->mUserData.increseExp()) { //levelup
+                next = CallFunc::create([=](){
+                    CallFunc * p = CallFunc::create([=]() { this->replaceScene(ScenePlay::create()); });
+                    LEVELUP_EVENT(p)
+                });
+            } else {
+                next = CallFunc::create([=]() { // go to playscene
+                    this->replaceScene(ScenePlay::create());
+                });
+            }
+            // 효과
+//            ((ui_icon*)getNodeById(_ID_NODE_LABEL_POINT))->setText(battleBrix::inst()->getText("", _ID_NODE_LABEL_POINT));
+//            guiExt::runScaleEffect(getNodeById(_ID_NODE_LABEL_POINT));
+            
+            ((ui_icon*)getNodeById(_ID_NODE_LABEL_HEART))->setText(battleBrix::inst()->getText("", _ID_NODE_LABEL_HEART));
+            guiExt::runScaleEffect(getNodeById(_ID_NODE_LABEL_HEART), next);
+        } else {
+            // not enough point
         }
     }
     
@@ -288,8 +319,8 @@ void SceneArcadeDetail::displayPointChanged() {
 
 int SceneArcadeDetail::getPrice() {
     int price = 0;
-    for(int n=0; n < battleBrix::inst()->mItemSelected.isSelected.size(); n++) {
-        if(battleBrix::inst()->mItemSelected.isSelected[n]) {
+    for(int n=0; n < battleBrix::inst()->mStageInfo.isSelected.size(); n++) {
+        if(battleBrix::inst()->mStageInfo.isSelected[n]) {
             price += battleBrix::inst()->mItems[n].price;
         }
     }
