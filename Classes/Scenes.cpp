@@ -117,6 +117,7 @@ void SceneMain::sumPrice() {
 }
 
 void SceneMain::runPlay() {
+    battleBrix::inst()->mStageInfo.setPvP();
     int totalPoint = battleBrix::inst()->mStageInfo.getTotalPoint();
     // check validation
     if(battleBrix::inst()->mUserData.heart < 1) {

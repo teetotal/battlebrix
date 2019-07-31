@@ -401,7 +401,7 @@
               "alignment": "center",
               "type": "label",
               "fontSize": -1,
-              "color": ["WHITE", "BLACK"],
+              "color": "WHITE",
               "span": [0, 3]
           },
           {
@@ -410,7 +410,7 @@
               "alignment": "center",
               "type": "label",
               "fontSize": -1,
-              "color": ["WHITE", "BLACK"],
+              "color": "WHITE",
               "span": [0, 14]
           },
           {

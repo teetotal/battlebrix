@@ -193,7 +193,7 @@ bool battleBrix::init() {
         CCLOG("SQL FILE INIT FAILURE");
         return false;
     }
-    Sql::inst()->select("select (heartTimerStart - (point * heartMax) + (heart * heartMax) - growth - (maxGrowth / grade) - ranking - levelGrowth - (levelMaxGrowth / level))  % 128 from userData");
+    //Sql::inst()->select("select (heartTimerStart - (point * heartMax) + (heart * heartMax) - growth - (maxGrowth / grade) - ranking - levelGrowth - (levelMaxGrowth / level))  % 128 from userData");
     
     sqlite3_stmt * stmt = Sql::inst()->select("SELECT id, grade, heart, heartMax, heartTimerStart, point, growth, maxGrowth, ranking, level, levelGrowth, levelMaxGrowth, crc FROM userData");
     if (stmt == NULL)
@@ -326,16 +326,31 @@ const float battleBrix::getProgressValue(int id) {
 }
 
 battleBrix::rewardData battleBrix::getReward(int ranking) {
-    return mRewards[ranking];
+    if(mStageInfo.isArcadeMode) {
+        battleBrix::rewardData reward;
+        brixMap::brixStage s = brixMap::inst()->getMap(mStageInfo.arcadeStage);
+        if(s.mission.ranking >= ranking) {
+            reward.init(s.prize);
+        }
+        return reward;
+    } else {
+        return mRewards[ranking];
+    }
 }
 bool battleBrix::applyReward(int ranking) {
-    //arcade mode 적용
-    
     rewardData reward = getReward(ranking);
+    if(mStageInfo.isArcadeMode && (reward.heart > 0 || reward.point > 0 || reward.item >= 0)) {
+        //db upsert
+        int r = Sql::inst()->exec("INSERT INTO stage(stageId, cnt) VALUES(" + to_string(mStageInfo.arcadeStage) + ", 1) ON CONFLICT(stageId) DO UPDATE SET cnt = cnt + 1 WHERE stageId = " + to_string(mStageInfo.arcadeStage) + ";");
+        CCASSERT((r == 0), "sql failure");
+    }
     
     mUserData.increaseHeart(reward.heart);
     mUserData.increasePoint(reward.point);
-    
+    //item
+    if (reward.item >= 0) {
+        //fix me. item 지급
+    }
     return mUserData.increseGrowth(reward.growth);
 }
 
@@ -361,4 +376,22 @@ bool battleBrix::checkPayForPlay(int point, int heart) {
         return false;
     }
     return true;
+}
+
+vector<battleBrix::intPair> battleBrix::getStageStatus() {
+    vector<battleBrix::intPair> vec;
+    sqlite3_stmt * stmt = Sql::inst()->select("SELECT stageId, cnt FROM stage ORDER BY stageId;");
+    CCASSERT((stmt != NULL), "sql failure");
+    
+    while (sqlite3_step(stmt) == SQLITE_ROW) {
+        battleBrix::intPair pair;
+        pair.k = sqlite3_column_int(stmt, 0);
+        pair.v = sqlite3_column_int(stmt, 1);
+        vec.push_back(pair);
+    }
+    
+    sqlite3_reset(stmt);
+    sqlite3_finalize(stmt);
+    
+    return vec;
 }

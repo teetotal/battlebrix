@@ -6,8 +6,8 @@
             "speed": 0.55,
             "title": "BEGINNER",
             "mission": {
-                "message": "Take 1st place",
-                "ranking": 1
+                "message": "Take 4th or over place",
+                "ranking": 4
             },
             "prize": {
                 "point": 150,
@@ -34,8 +34,8 @@
             "speed": 0.6,
             "title": "EASY 1",
             "mission": {
-                "message": "Take 1st place",
-                "ranking": 1
+                "message": "Take 3rd or over place",
+                "ranking": 3
             },
             "prize": {
                 "point": 150,

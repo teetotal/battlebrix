@@ -30,9 +30,15 @@ bool SceneArcade::init()
     
     auto layerLine = getNodeById(99);
     //init map
+    vector<battleBrix::intPair> vec = battleBrix::inst()->getStageStatus();
     Vec2 lastPos = Vec2::ZERO;
-    int current = 114;
-    for(int n=101; n <= 114; n++) {
+    int current = 0;
+    if(vec.size() > 0) current = vec[vec.size() - 1].k + 1;
+    
+    const int idxStart = 101;
+    for(int n=idxStart; n < idxStart + 14; n++) {
+        const int stageId = n - idxStart;
+        
         bool isLink = false;
         Layer * layer = (Layer*)getNodeById(n);
         Vec2 pos = layer->getPosition();
@@ -48,7 +54,7 @@ bool SceneArcade::init()
         }
         lastPos = pos;
         
-        if(n == current) {
+        if(stageId == current) {
             isLink = true;
             ui_character_animal * animal = ui_character_animal::create(layer
                                                                        , layer->getContentSize()
@@ -71,18 +77,23 @@ bool SceneArcade::init()
         }
         else {
             string szColor = "DARKGRAY_LIGHT";
-            if(n < current) {
+            if(stageId < current) {
                 szColor = "BLUE";
-                isLink = true;
-            }
-            const string szStar = "★☆☆";
-            ui_icon::create()->addCircle(layer
-                                         , gui::inst()->getGridSize(layer->getContentSize(), Vec2(1, 1), Vec2::ZERO, Vec2::ZERO)
-                                         , gui::inst()->getPointVec2(0, 0, ALIGNMENT_CENTER, layer->getContentSize(), Vec2(1, 1), Vec2::ZERO, Vec2::ZERO, Vec2::ZERO)
-                                         , ALIGNMENT_CENTER
-                                         , ui_wizard_share::inst()->getPalette()->getColor(szColor)
-                                         , to_string(n - 100));
-            if(n < current) {
+                string szStar;
+                switch(vec[stageId].v) {
+                    case 1: szStar = "★☆☆";
+                        isLink = true;
+                        break;
+                    case 2: szStar = "★★☆";
+                        isLink = true;
+                        break;
+                    default: szStar = "★★★";
+                        isLink = false;
+                        szColor = "BLUE_DARK";
+                        break;
+                        
+                }
+                
                 gui::inst()->addLabelAutoDimension(0
                                                    , -1
                                                    , szStar
@@ -94,11 +105,17 @@ bool SceneArcade::init()
                                                    );
             }
             
+            ui_icon::create()->addCircle(layer
+                                         , gui::inst()->getGridSize(layer->getContentSize(), Vec2(1, 1), Vec2::ZERO, Vec2::ZERO)
+                                         , gui::inst()->getPointVec2(0, 0, ALIGNMENT_CENTER, layer->getContentSize(), Vec2(1, 1), Vec2::ZERO, Vec2::ZERO, Vec2::ZERO)
+                                         , ALIGNMENT_CENTER
+                                         , ui_wizard_share::inst()->getPalette()->getColor(szColor)
+                                         , to_string(stageId + 1));
         }
         //link
         if(isLink)
             gui::inst()->addTextButtonAutoDimension(0, 0, "M", layer
-                                                    , CC_CALLBACK_1(SceneArcade::callback, this, n - 101, 100)
+                                                    , CC_CALLBACK_1(SceneArcade::callback, this, stageId, 100)
                                                     , 0
                                                     , ALIGNMENT_CENTER
                                                     , Color3B::BLACK

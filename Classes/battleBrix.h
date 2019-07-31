@@ -115,7 +115,10 @@ public:
         return hInstance;
     };
     bool init();
-    
+    struct intPair {
+        int k;
+        int v;
+    };
     //user data
     struct userData {
         string id;
@@ -192,16 +195,23 @@ public:
     } mUserData;
     
     // reward meta
-    struct rewardData {
+    struct rewardData : brixMap::brixPrize {
         int growth;
-        int point;
-        int heart;
         
-        void init(int nGrowth, int nPoint, int nHeart) {
+        rewardData() {
+            init(0, 0, 0);
+        };
+        
+        void init(int nGrowth, int nPoint, int nHeart, int itemId = -1) {
             growth = nGrowth;
             point = nPoint;
             heart = nHeart;
-        }
+            item = itemId;
+        };
+        
+        void init(brixMap::brixPrize & p) {
+            init(0, p.point, p.heart, p.item);
+        };
     };
     
     struct itemProperty {
@@ -293,6 +303,8 @@ public:
     grade getMyGrade() {
         return mGrades[mUserData.grade];
     };
+    //arcade stage 달성 상황
+    vector<intPair> getStageStatus();
     
     rewardData mRewards[6];
     vector<itemData> mItems;

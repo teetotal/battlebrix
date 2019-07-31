@@ -779,9 +779,6 @@ bool ScenePlay::init()
         stage = battleBrix::inst()->mStageInfo.arcadeStage;
     else
         stage = brixMap::inst()->getMapRandom();
-    
-    // grade
-    ((Label*)getNodeById(ID_NODE_TOP_GRADE))->setString(battleBrix::inst()->getGradeString());
     // map type
     ((MenuItemLabel*)getNodeById(ID_NODE_TOP_MAP_TYPE))->setString(brixMap::inst()->getMap(stage).title);
     
@@ -931,7 +928,16 @@ void ScenePlay::onSkill(int idx, int from) {
 }
 // getText ===========================================================================
 const string ScenePlay::getText(const string& defaultString, int id) {
-    return defaultString;
+    switch (id) {
+        case ID_NODE_TOP_GRADE:
+            if(battleBrix::inst()->mStageInfo.isArcadeMode) {
+                return brixMap::inst()->getMap(battleBrix::inst()->mStageInfo.arcadeStage).mission.message;
+            } else {
+                return battleBrix::inst()->getGradeString();
+            }
+        default:
+            return defaultString;
+    }
 }
 
 // touch ===========================================================================
