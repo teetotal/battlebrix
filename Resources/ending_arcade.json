@@ -1,0 +1,155 @@
+{
+    "background": {
+        "id": 0,
+        "img": null,
+        "bgColor": "BG_MAIN_DARK",
+        "tile": {
+            "color": "BG_MAIN_PATTERN_DARK",
+            "num": [ 14, 10 ]
+        },
+        "isDrawGrid": false
+    },
+    "nodes": [
+        {
+            "id": 10000,
+            "visible": true,
+            "comment": "for ending",
+            "dimension": [ 0, 0, 9, 7 ],
+            "margin": [ 0, 0 ],
+            "innerMargin": [ 5, 5 ],
+            "gridSize": [ 6, 8 ],
+            "color": 0,
+            "objects": [
+                {
+                    "id": 10001,
+                    "position": [ 0, 0 ],
+                    "alignment": "center",
+                    "type": "label",
+                    "color": ["GRAY", "BLACK"],
+                    "bgColor": "BG_TOP",
+                    "text": "1st",
+                    "fontSize": -1,
+                    "span": [ 5, 1 ]
+                },
+                {
+                    "position": [ 0, 1 ],
+                    "alignment": "left_bottom",
+                    "type": "line",
+                    "color": "GRAY",
+                    "span": [ 5, 0 ]
+                },
+                {
+                    "id": 13,
+                    "position": [ 2, 4 ],
+                    "alignment": "center",
+                    "type": "progressbar",
+                    "color": ["BLUE", "GRAY"],
+                    "span": [ 1, 0 ],
+                    "text": "ROYAL"
+                },
+                {
+                    "id": 10003,
+                    "position": [ 3, 4 ],
+                    "alignment": "right",
+                    "type": "label",
+                    "color": ["BLUE_LIGHT", "BLACK"],
+                    "text": "+150",
+                    "fontSize": -1
+                },
+                {
+                    "id": 4,
+                    "position": [ 2, 2 ],
+                    "alignment": "center",
+                    "type": "icon_heart",
+                    "color": "GRAY",
+                    "fontSize": -1,
+                    "text": "+1",
+                    "span": [ 1, 0 ]
+                },
+                {
+                    "id": 10005,
+                    "visible": false,
+                    "position": [ 2, 2 ],
+                    "alignment": "right",
+                    "type": "label",
+                    "color": [ "BLUE_LIGHT", "BLACK"],
+                    "text": "+1",
+                    "fontSize": -2
+                },
+                {
+                    "id": 3,
+                    "position": [ 2, 3 ],
+                    "alignment": "center",
+                    "type": "icon_point",
+                    "color": "GRAY",
+                    "text": "100",
+                    "fontSize": -1,
+                    "span": [ 1, 0 ]
+                },
+                {
+                    "id": 10004,
+                    "visible": false,
+                    "position": [ 2, 3 ],
+                    "alignment": "right",
+                    "type": "label",
+                    "color": [ "BLUE_LIGHT", "BLACK" ],
+                    "text": "+100",
+                    "fontSize": -2
+                },
+                {
+                    "id": 10002,
+                    "visible": false,
+                    "position": [ 2, 6 ],
+                    "alignment": "center",
+                    "type": "button_rectangle_circle_shadow_2",
+                    "link": 1,
+                    "color": [ "GRAY", "YELLOW" ],
+                    "text": "AGAIN"
+                },
+                {
+                    "id": 10006,
+                    "visible": false,
+                    "position": [ 3, 6 ],
+                    "alignment": "center",
+                    "type": "button_rectangle_circle_shadow_2",
+                    "link": 0,
+                    "color": [ "GRAY", "BLUE" ],
+                    "text": "OK"
+                }
+            ]
+        },
+        {
+            "id": 20000,
+            "visible": false,
+            "comment": "for grade up",
+            "dimension": [ 0, 0, 9, 7 ],
+            "margin": [ 0, 0 ],
+            "innerMargin": [ 5, 5 ],
+            "gridSize": [ 3, 4 ],
+            "color": 0,
+            "objects": [
+                {
+                    "id": 20001,
+                    "position": [ 1, 1 ],
+                    "alignment": "center_bottom",
+                    "type": "label",
+                    "color": ["PINK", "BLACK"],
+                    "text": "GRADE UP",
+                    "fontSize": 0
+                },
+                {
+                    "id": 20002,
+                    "position": [ 1, 2 ],
+                    "alignment": "center_top",
+                    "type": "label",
+                    "color": ["YELLOW", "BLACK"],
+                    "text": "BRONZE",
+                    "fontSize": -1
+                }
+            ]
+        },
+        {
+            "component": "levelup"
+        }
+    ]
+}

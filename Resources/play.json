@@ -448,7 +448,7 @@
           "alignment": "right",
           "type": "icon_circle",
           "link": 1,
-          "img": "icons8-center-of-gravity-80.png",
+          "img": "star.png",
           "color": "BLUE"
         },
         {
@@ -457,7 +457,7 @@
           "alignment": "right",
           "type": "icon_circle",
           "link": 2,
-          "img": "icons8-hyper-potion-96.png",
+          "img": "star.png",
           "color": "BLUE"
         },
         {
@@ -466,7 +466,7 @@
           "alignment": "right",
           "type": "icon_circle",
           "link": 3,
-          "img": "icons8-atomic-bomb-96.png",
+          "img": "star.png",
           "color": "BLUE"
         }
       ]

@@ -761,13 +761,24 @@ bool ScenePlay::init()
     //skills
     //enable skill
     for(int n = 0; n < PLAY_ITEM_CNT; n++) {
-        if(!battleBrix::inst()->mStageInfo.isSelected[n])
-            ((ui_icon*)getNodeById(ID_NODE_SKILL_1 + n))->setEnabled(false);
+        ((ui_icon*)getNodeById(ID_NODE_SKILL_1 + n))->setEnabled(false);
     }
     mSkillParentNode = getNodeById(ID_NODE_SKILL);
     mSkills.push_back((ui_icon*)getNodeById(ID_NODE_SKILL_1));
     mSkills.push_back((ui_icon*)getNodeById(ID_NODE_SKILL_2));
     mSkills.push_back((ui_icon*)getNodeById(ID_NODE_SKILL_3));
+    
+    int cntSelectedItem = (int)battleBrix::inst()->mStageInfo.isSelected.size();
+    int idx = 0;
+    for(int n = 0; n < cntSelectedItem; n++) {
+        if(battleBrix::inst()->mStageInfo.isSelected[n]){
+            mSkills[idx]->setEnabled(true);
+            mSkills[idx]->setTag(n);
+            mSkills[idx++]->replaceImg(battleBrix::inst()->mItems[n].img);
+            
+        }
+        
+    }
     
     mControlBar = getNodeById(ID_NODE_CONTROLBAR);
     
@@ -949,7 +960,7 @@ bool ScenePlay::onTouchEnded(Touch* touch, Event* event) {
         if(mSkills[n]->getBoundingBox().containsPoint(mSkillParentNode->convertTouchToNodeSpace(touch))) {
             if(mSkills[n]->isEnabled()) {
                 mSkills[n]->runScaleAndDisable();
-                onSkill(n, _PLAYER_ID_ME);
+                onSkill(mSkills[n]->getTag(), _PLAYER_ID_ME);
             }
             return false;
         }
@@ -1081,6 +1092,8 @@ void ScenePlay::onEnd()
 //====================================================================
 bool SceneEnding::init()
 {
+    //fix me 손봐야함.
+    
     this->loadFromJson("ending", "ending.json");
     //결과 화면에서도 타이머
     this->schedule([=](float f){
@@ -1123,8 +1136,10 @@ bool SceneEnding::init()
     
     bool isLevelup = battleBrix::inst()->applyReward(nRanking);
     
-    //다시하기 활성화 체크
-    if(!battleBrix::inst()->checkPayForPlay(battleBrix::inst()->mStageInfo.getTotalPoint())) {
+    //arcade mode 시 getNodeById(_ID_NODE_PROGRESSBAR)) disable
+    if(battleBrix::inst()->mStageInfo.isArcadeMode) {
+        getNodeById(_ID_NODE_PROGRESSBAR)->setVisible(false);
+    } else if(!battleBrix::inst()->checkPayForPlay(battleBrix::inst()->mStageInfo.getTotalPoint())) { //다시하기
         ((ui_button*)getNodeById(ID_NODE_ENDING_AGAIN))->setEnabled(false);
     }
     
@@ -1150,7 +1165,9 @@ bool SceneEnding::init()
                                                 ((ui_progressbar*)getNodeById(_ID_NODE_PROGRESSBAR))->setValue(battleBrix::inst()->getGrowthPercentage());
                                                 ((ui_progressbar*)getNodeById(_ID_NODE_PROGRESSBAR))->setText(battleBrix::inst()->getGradeString());
                                                 
-                                                getNodeById(ID_NODE_ENDING_AGAIN)->setVisible(true);
+                                                if(!battleBrix::inst()->mStageInfo.isArcadeMode)
+                                                    getNodeById(ID_NODE_ENDING_AGAIN)->setVisible(true);
+                                                
                                                 getNodeById(ID_NODE_ENDING_OK)->setVisible(true);
                                             })
                          , 1.f, (reward.growth < 0) ? true : false);

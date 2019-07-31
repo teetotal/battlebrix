@@ -110,6 +110,7 @@ private:
         int ranking;
         
         PLAYER() {
+            ranking = -1;
             skillThreshold = 0.f;
             dangerousStatus = 0;
             lockShake = false;

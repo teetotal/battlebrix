@@ -253,7 +253,7 @@ public:
         
         void set(int cnt) {
             for(int n = 0; n < cnt; n++) {
-                isSelected.push_back(true);
+                isSelected.push_back(false);
             }
         };
         
