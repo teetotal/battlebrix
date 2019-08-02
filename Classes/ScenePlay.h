@@ -136,7 +136,7 @@ private:
         void createBall();
         void createBoard();
         void createBottom();
-        void createSkill();
+        void createSkill(int skillQuantity);
         
         void addBrix(int idx);
         Node * createBrix(brixMap::position pos, int id);

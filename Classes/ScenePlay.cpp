@@ -254,13 +254,13 @@ void ScenePlay::PLAYER::createBottom() {
                              );
 }
 // createSkill ===========================================================================
-void ScenePlay::PLAYER::createSkill() {
+void ScenePlay::PLAYER::createSkill(int skillQuantity) {
     const Vec2 grid = Vec2(1, 9);
     const Vec2 margin = Vec2(layer->getContentSize().width * 0.05f, 1);
     const Vec2 innerMargin = Vec2(0, 1);
     Size sizeGrid = gui::inst()->getGridSize(layer->getContentSize(), grid, margin, innerMargin);
     
-    for(int n=0; n < battleBrix::inst()->getMyGrade().skillQuantity; n++) {
+    for(int n=0; n < skillQuantity; n++) {
         skills[n] = ui_icon::create();
         skills[n]->addCircle(layer
                             , sizeGrid
@@ -793,6 +793,11 @@ bool ScenePlay::init()
     // map type
     ((MenuItemLabel*)getNodeById(ID_NODE_TOP_MAP_TYPE))->setString(brixMap::inst()->getMap(stage).title);
     
+    //AI 설정
+    int IQ = (battleBrix::inst()->mStageInfo.isArcadeMode) ? brixMap::inst()->getMap(stage).AI.IQ : battleBrix::inst()->getMyGrade().IQ;
+    int skillQuantity = (battleBrix::inst()->mStageInfo.isArcadeMode) ? brixMap::inst()->getMap(stage).AI.skillQuantity : battleBrix::inst()->getMyGrade().skillQuantity;
+    float delay = (battleBrix::inst()->mStageInfo.isArcadeMode) ? brixMap::inst()->getMap(stage).AI.delay : battleBrix::inst()->getMyGrade().delay;
+    
     PLAYER me;
     me.init(this
             , _PLAYER_ID_ME
@@ -804,7 +809,7 @@ bool ScenePlay::init()
             , ID_NODE_MY_ALERT
             , ID_NODE_MY_LABEL
             , stage
-            , battleBrix::inst()->getMyGrade().IQ);
+            , IQ);
     mPlayers.push_back(me);
     
     Size s1 = mPlayers[_PLAYER_ID_ME].layer->getContentSize(); //193.3333, 208.247
@@ -814,7 +819,7 @@ bool ScenePlay::init()
     mBrixLayerRatio = s1.width / s1.height;
     
     
-    for(int n=0; n<4; n++) {
+    for(int n = 0; n < 4; n++) {
         PLAYER p;
         int id = ((n  + 1) * 10) + 11;
         getNodeById(id++)->setVisible(true);
@@ -824,7 +829,7 @@ bool ScenePlay::init()
         int areaId = id++;
         int alertId = id++;
         int labelId = id;
-        p.init(this, n+1, "CPU" + to_string(n+1), areaId, hpId, mpId, _BALL_ID[n+1], alertId, labelId, stage, battleBrix::inst()->getMyGrade().IQ);
+        p.init(this, n+1, "CPU" + to_string(n+1), areaId, hpId, mpId, _BALL_ID[n+1], alertId, labelId, stage, IQ);
         mPlayers.push_back(p);
     }
     
@@ -842,10 +847,10 @@ bool ScenePlay::init()
         for(int n=0; n < mPlayers.size(); n++) {
             mPlayers[n].createBall();
             if(n != _PLAYER_ID_ME)
-                mPlayers[n].createSkill();
+                mPlayers[n].createSkill(skillQuantity);
         }
         
-        this->schedule(schedule_selector(ScenePlay::timer), battleBrix::inst()->getMyGrade().delay);
+        this->schedule(schedule_selector(ScenePlay::timer), delay);
         this->schedule(schedule_selector(ScenePlay::timerLoose), 1);
     })
     );
@@ -1139,6 +1144,8 @@ bool SceneEnding::init()
     //arcade mode 시 getNodeById(_ID_NODE_PROGRESSBAR)) disable
     if(battleBrix::inst()->mStageInfo.isArcadeMode) {
         getNodeById(_ID_NODE_PROGRESSBAR)->setVisible(false);
+        ((ui_button*)getNodeById(ID_NODE_ENDING_AGAIN))->setEnabled(false);
+        
     } else if(!battleBrix::inst()->checkPayForPlay(battleBrix::inst()->mStageInfo.getTotalPoint())) { //다시하기
         ((ui_button*)getNodeById(ID_NODE_ENDING_AGAIN))->setEnabled(false);
     }
@@ -1165,9 +1172,8 @@ bool SceneEnding::init()
                                                 ((ui_progressbar*)getNodeById(_ID_NODE_PROGRESSBAR))->setValue(battleBrix::inst()->getGrowthPercentage());
                                                 ((ui_progressbar*)getNodeById(_ID_NODE_PROGRESSBAR))->setText(battleBrix::inst()->getGradeString());
                                                 
-                                                if(!battleBrix::inst()->mStageInfo.isArcadeMode)
-                                                    getNodeById(ID_NODE_ENDING_AGAIN)->setVisible(true);
                                                 
+                                                getNodeById(ID_NODE_ENDING_AGAIN)->setVisible(true);
                                                 getNodeById(ID_NODE_ENDING_OK)->setVisible(true);
                                             })
                          , 1.f, (reward.growth < 0) ? true : false);

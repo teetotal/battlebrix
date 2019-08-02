@@ -14,6 +14,11 @@
                 "heart": 1,
                 "item": -1
             },
+            "AI": {
+                "delay": 0.2,
+                "IQ": 3,
+                "skills": 1
+            },
             "enableItemIdx": [ 0, 1 ],
             "static": [
                 [-1, -1],
@@ -42,6 +47,11 @@
                 "heart": 1,
                 "item": -1
             },
+            "AI": {
+                "delay": 0.2,
+                "IQ": 3,
+                "skills": 1
+            },
             "enableItemIdx": [ 0, 1 ],
             "static": [
                 [-1, 0],
@@ -69,13 +79,18 @@
             "speed": 0.6,
             "title": "EASY 2",
             "mission": {
-                "message": "Take 1st place",
-                "ranking": 1
+                "message": "Take 3rd or over place",
+                "ranking": 3
             },
             "prize": {
                 "point": 150,
                 "heart": 1,
                 "item": -1
+            },
+            "AI": {
+                "delay": 0.2,
+                "IQ": 3,
+                "skills": 1
             },
             "enableItemIdx": [ 0, 1 ],
             "static": [
@@ -117,13 +132,18 @@
             "speed": 0.6,
             "title": "EASY 3",
             "mission": {
-                "message": "Take 1st place",
-                "ranking": 1
+                "message": "Take 3rd or over place",
+                "ranking": 3
             },
             "prize": {
                 "point": 150,
                 "heart": 1,
                 "item": -1
+            },
+            "AI": {
+                "delay": 0.2,
+                "IQ": 3,
+                "skills": 1
             },
             "enableItemIdx": [ 0, 1 ],
             "static": [
@@ -164,13 +184,18 @@
             "speed": 0.6,
             "title": "EASY 4",
             "mission": {
-                "message": "Take 1st place",
-                "ranking": 1
+                "message": "Take 3rd or over place",
+                "ranking": 3
             },
             "prize": {
                 "point": 150,
                 "heart": 1,
                 "item": -1
+            },
+            "AI": {
+                "delay": 0.2,
+                "IQ": 3,
+                "skills": 1
             },
             "enableItemIdx": [ 0, 1, 2 ],
             "static": [
@@ -205,13 +230,18 @@
             "speed": 0.6,
             "title": "EASY 5",
             "mission": {
-                "message": "Take 1st place",
-                "ranking": 1
+                "message": "Take 3rd or over place",
+                "ranking": 3
             },
             "prize": {
                 "point": 150,
                 "heart": 1,
                 "item": -1
+            },
+            "AI": {
+                "delay": 0.2,
+                "IQ": 3,
+                "skills": 1
             },
             "enableItemIdx": [ 0, 1, 2 ],
             "static": [
@@ -252,13 +282,18 @@
             "speed": 0.6,
             "title": "EASY 6",
             "mission": {
-                "message": "Take 1st place",
-                "ranking": 1
+                "message": "Take 3rd or over place",
+                "ranking": 3
             },
             "prize": {
                 "point": 150,
                 "heart": 1,
                 "item": -1
+            },
+            "AI": {
+                "delay": 0.2,
+                "IQ": 3,
+                "skills": 1
             },
             "enableItemIdx": [ 0, 1, 2 ],
             "static": [
@@ -293,13 +328,18 @@
             "speed": 0.6,
             "title": "MEDIUM 1",
             "mission": {
-                "message": "Take 1st place",
-                "ranking": 1
+                "message": "Take 3rd or over place",
+                "ranking": 3
             },
             "prize": {
                 "point": 150,
                 "heart": 1,
                 "item": -1
+            },
+            "AI": {
+                "delay": 0.2,
+                "IQ": 3,
+                "skills": 1
             },
             "enableItemIdx": [ 0, 1, 2, 3 ],
             "static": [
@@ -325,13 +365,18 @@
             "speed": 0.6,
             "title": "MEDIUM 2",
             "mission": {
-                "message": "Take 1st place",
-                "ranking": 1
+                "message": "Take 3rd or over place",
+                "ranking": 3
             },
             "prize": {
                 "point": 150,
                 "heart": 1,
                 "item": -1
+            },
+            "AI": {
+                "delay": 0.2,
+                "IQ": 3,
+                "skills": 1
             },
             "enableItemIdx": [ 0, 1, 2, 3 ],
             "static": [
@@ -370,13 +415,18 @@
             "speed": 0.6,
             "title": "MEDIUM 3",
             "mission": {
-                "message": "Take 1st place",
-                "ranking": 1
+                "message": "Take 3rd or over place",
+                "ranking": 3
             },
             "prize": {
                 "point": 150,
                 "heart": 1,
                 "item": -1
+            },
+            "AI": {
+                "delay": 0.2,
+                "IQ": 3,
+                "skills": 1
             },
             "enableItemIdx": [ 0, 1, 2, 3 ],
             "static": [
@@ -416,13 +466,18 @@
             "speed": 0.6,
             "title": "MEDIUM 4",
             "mission": {
-                "message": "Take 1st place",
-                "ranking": 1
+                "message": "Take 3rd or over place",
+                "ranking": 3
             },
             "prize": {
                 "point": 150,
                 "heart": 1,
                 "item": -1
+            },
+            "AI": {
+                "delay": 0.2,
+                "IQ": 3,
+                "skills": 1
             },
             "enableItemIdx": [ 0, 1, 2, 3, 4 ],
             "static": [
@@ -456,13 +511,18 @@
             "speed": 0.6,
             "title": "MEDIUM 5",
             "mission": {
-                "message": "Take 1st place",
-                "ranking": 1
+                "message": "Take 3rd or over place",
+                "ranking": 3
             },
             "prize": {
                 "point": 150,
                 "heart": 1,
                 "item": -1
+            },
+            "AI": {
+                "delay": 0.2,
+                "IQ": 3,
+                "skills": 1
             },
             "enableItemIdx": [ 0, 1, 2, 3, 4 ],
             "static": [
@@ -503,13 +563,18 @@
             "speed": 0.6,
             "title": "MEDIUM 6",
             "mission": {
-                "message": "Take 1st place",
-                "ranking": 1
+                "message": "Take 3rd or over place",
+                "ranking": 3
             },
             "prize": {
                 "point": 150,
                 "heart": 1,
                 "item": -1
+            },
+            "AI": {
+                "delay": 0.2,
+                "IQ": 3,
+                "skills": 1
             },
             "enableItemIdx": [ 0, 1, 2, 3, 4 ],
             "static": [
@@ -549,6 +614,11 @@
                 "point": 150,
                 "heart": 1,
                 "item": 0
+            },
+            "AI": {
+                "delay": 0.2,
+                "IQ": 3,
+                "skills": 1
             },
             "enableItemIdx": [ 0, 1, 2, 3, 4 ],
             "static": [

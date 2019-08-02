@@ -71,6 +71,12 @@ public:
         int heart;
         int item;
     };
+    //AI
+    struct brixAI {
+        float delay;
+        int IQ;
+        int skillQuantity;
+    };
     //brixMovement
     struct brixMovement {
         TYPE type;
@@ -84,6 +90,7 @@ public:
         float speed;
         string title;
         brixPrize prize;
+        brixAI AI;
         brixMission mission;
         vector<int> enableItemIdx;
         vector<position> statics;

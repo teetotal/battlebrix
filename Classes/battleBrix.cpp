@@ -36,6 +36,12 @@ void brixMap::brixStage::load(rapidjson::Value &p) {
     this->prize.point = p["prize"]["point"].GetInt();
     this->prize.heart = p["prize"]["heart"].GetInt();
     this->prize.item = p["prize"]["item"].GetInt();
+    
+    //AI
+    this->AI.delay = p["AI"]["delay"].GetFloat();
+    this->AI.IQ = p["AI"]["IQ"].GetInt();
+    this->AI.skillQuantity = p["AI"]["skills"].GetInt();
+    
     //enableItem
     const rapidjson::Value& enableItemIdx = p["enableItemIdx"];
     for (rapidjson::SizeType i = 0; i < enableItemIdx.Size(); i++)
