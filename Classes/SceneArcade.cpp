@@ -36,6 +36,7 @@ bool SceneArcade::init()
     if(vec.size() > 0) current = vec[vec.size() - 1].k + 1;
     
     const int idxStart = 101;
+    Vec2 posPreCurrent = Vec2::ZERO;
     for(int n=idxStart; n < idxStart + 14; n++) {
         const int stageId = n - idxStart;
         
@@ -54,6 +55,10 @@ bool SceneArcade::init()
         }
         lastPos = pos;
         
+        //이동 모션
+        if(current > 0 && stageId == current -1 /*&& battleBrix::inst()->mStageInfo.arcadeStageCleared != -1*/) {
+            posPreCurrent = layer->getPosition();
+        }
         if(stageId == current) {
             isLink = true;
             ui_character_animal * animal = ui_character_animal::create(layer
@@ -73,6 +78,12 @@ bool SceneArcade::init()
             else if(x < mMoveMin) x = mMoveMin;
             
             mLayer->setPosition(Vec2(x, mLayer->getPosition().y));
+            
+            if(posPreCurrent != Vec2::ZERO) { //현재위치 이동
+                Vec2 posLast = layer->getPosition();
+                layer->setPosition(posPreCurrent);
+                layer->runAction(MoveTo::create(1, posLast));
+            }
             
         }
         else {

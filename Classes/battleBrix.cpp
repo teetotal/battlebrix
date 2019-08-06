@@ -401,3 +401,22 @@ vector<battleBrix::intPair> battleBrix::getStageStatus() {
     
     return vec;
 }
+
+battleBrix::intPair battleBrix::getMaxStageId() {
+    battleBrix::intPair pair;
+    pair.k = -1;
+    pair.v = 0;
+    
+    sqlite3_stmt * stmt = Sql::inst()->select("SELECT stageId, cnt FROM stage ORDER BY stageId LIMIT 1;");
+    CCASSERT((stmt != NULL), "sql failure");
+    
+    if (sqlite3_step(stmt) == SQLITE_ROW) {
+        pair.k = sqlite3_column_int(stmt, 0);
+        pair.v = sqlite3_column_int(stmt, 1);
+    }
+    
+    sqlite3_reset(stmt);
+    sqlite3_finalize(stmt);
+    
+    return pair;
+}

@@ -12,7 +12,7 @@
 #define PHYSICSMATERIAL_OBSTACLE    PhysicsMaterial(0.f, 1.f, 0.f)
 #define PHYSICSMATERIAL_BOARD    PhysicsMaterial(0.f, 1.f, 0.f)
 //#define GRID_AREA Vec2(8.f, 13.f)
-#define GRID_AREA Vec2(8.f, 11.f)
+#define GRID_AREA Vec2(7.f, 10.f)
 #define RATIO_OBSTACLE_PER_GRID 0.65f
 #define _ID_BOTTOM 0
 #define _ID_BRIX_START 101
@@ -1143,6 +1143,11 @@ bool SceneEnding::init()
     
     //arcade mode 시 getNodeById(_ID_NODE_PROGRESSBAR)) disable
     if(battleBrix::inst()->mStageInfo.isArcadeMode) {
+        //새로운 stage를 꺴을때
+        battleBrix::intPair pair = battleBrix::inst()->getMaxStageId();
+        if((reward.point + reward.heart > 0 || reward.item >= 0) && pair.k == battleBrix::inst()->mStageInfo.arcadeStage && pair.v == 1) {
+            battleBrix::inst()->mStageInfo.setStageCleared();
+        }
         getNodeById(_ID_NODE_PROGRESSBAR)->setVisible(false);
         ((ui_button*)getNodeById(ID_NODE_ENDING_AGAIN))->setEnabled(false);
         

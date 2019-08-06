@@ -257,6 +257,7 @@ public:
         vector<bool> isSelected;
         bool isArcadeMode;
         int arcadeStage;
+        int arcadeStageCleared; //clear한 stage
         
         void set(int cnt) {
             for(int n = 0; n < cnt; n++) {
@@ -267,10 +268,16 @@ public:
         void setArcade(int stage) {
             this->isArcadeMode = true;
             this->arcadeStage = stage;
+            this->arcadeStageCleared = -1;
         };
         
         void setPvP() {
             this->isArcadeMode = false;
+            this->arcadeStageCleared = -1;
+        }
+        
+        void setStageCleared() {
+            this->arcadeStageCleared = this->arcadeStage;
         }
         
         int getTotalPoint() {
@@ -312,6 +319,7 @@ public:
     };
     //arcade stage 달성 상황
     vector<intPair> getStageStatus();
+    battleBrix::intPair getMaxStageId();
     
     rewardData mRewards[6];
     vector<itemData> mItems;
