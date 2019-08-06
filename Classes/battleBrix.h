@@ -257,9 +257,10 @@ public:
         vector<bool> isSelected;
         bool isArcadeMode;
         int arcadeStage;
-        int arcadeStageCleared; //clear한 stage
+        bool isArcadeStageCleared; //clear한 stage
         
         void set(int cnt) {
+            isArcadeStageCleared = false;
             for(int n = 0; n < cnt; n++) {
                 isSelected.push_back(false);
             }
@@ -268,16 +269,16 @@ public:
         void setArcade(int stage) {
             this->isArcadeMode = true;
             this->arcadeStage = stage;
-            this->arcadeStageCleared = -1;
+            this->isArcadeStageCleared = false;
         };
         
         void setPvP() {
             this->isArcadeMode = false;
-            this->arcadeStageCleared = -1;
+            this->isArcadeStageCleared = false;
         }
         
         void setStageCleared() {
-            this->arcadeStageCleared = this->arcadeStage;
+            this->isArcadeStageCleared = true;
         }
         
         int getTotalPoint() {

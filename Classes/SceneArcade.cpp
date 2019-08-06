@@ -56,7 +56,7 @@ bool SceneArcade::init()
         lastPos = pos;
         
         //이동 모션
-        if(current > 0 && stageId == current -1 /*&& battleBrix::inst()->mStageInfo.arcadeStageCleared != -1*/) {
+        if(current > 0 && stageId == current -1 && battleBrix::inst()->mStageInfo.isArcadeStageCleared) {
             posPreCurrent = layer->getPosition();
         }
         if(stageId == current) {
