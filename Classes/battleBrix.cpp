@@ -407,7 +407,7 @@ battleBrix::intPair battleBrix::getMaxStageId() {
     pair.k = -1;
     pair.v = 0;
     
-    sqlite3_stmt * stmt = Sql::inst()->select("SELECT stageId, cnt FROM stage ORDER BY stageId LIMIT 1;");
+    sqlite3_stmt * stmt = Sql::inst()->select("SELECT stageId, cnt FROM stage ORDER BY stageId DESC LIMIT 1;");
     CCASSERT((stmt != NULL), "sql failure");
     
     if (sqlite3_step(stmt) == SQLITE_ROW) {
