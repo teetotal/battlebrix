@@ -387,18 +387,17 @@ bool battleBrix::checkPayForPlay(int point, int heart) {
 vector<battleBrix::intPair> battleBrix::getStageStatus() {
     vector<battleBrix::intPair> vec;
     sqlite3_stmt * stmt = Sql::inst()->select("SELECT stageId, cnt FROM stage ORDER BY stageId;");
-    CCASSERT((stmt != NULL), "sql failure");
-    
-    while (sqlite3_step(stmt) == SQLITE_ROW) {
-        battleBrix::intPair pair;
-        pair.k = sqlite3_column_int(stmt, 0);
-        pair.v = sqlite3_column_int(stmt, 1);
-        vec.push_back(pair);
+    if(stmt) {
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+            battleBrix::intPair pair;
+            pair.k = sqlite3_column_int(stmt, 0);
+            pair.v = sqlite3_column_int(stmt, 1);
+            vec.push_back(pair);
+        }
+        
+        sqlite3_reset(stmt);
+        sqlite3_finalize(stmt);
     }
-    
-    sqlite3_reset(stmt);
-    sqlite3_finalize(stmt);
-    
     return vec;
 }
 

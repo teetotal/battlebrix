@@ -114,14 +114,13 @@ bool SceneArcade::init()
                                                    , ui_wizard_share::inst()->getPalette()->getColor3B("YELLOW")
                                                    , Vec2(1, 2), Vec2::ZERO, Vec2::ZERO, Vec2::ZERO
                                                    );
+                ui_icon::create()->addCircle(layer
+                                             , gui::inst()->getGridSize(layer->getContentSize(), Vec2(1, 1), Vec2::ZERO, Vec2::ZERO)
+                                             , gui::inst()->getPointVec2(0, 0, ALIGNMENT_CENTER, layer->getContentSize(), Vec2(1, 1), Vec2::ZERO, Vec2::ZERO, Vec2::ZERO)
+                                             , ALIGNMENT_CENTER
+                                             , ui_wizard_share::inst()->getPalette()->getColor(szColor)
+                                             , to_string(stageId + 1));
             }
-            
-            ui_icon::create()->addCircle(layer
-                                         , gui::inst()->getGridSize(layer->getContentSize(), Vec2(1, 1), Vec2::ZERO, Vec2::ZERO)
-                                         , gui::inst()->getPointVec2(0, 0, ALIGNMENT_CENTER, layer->getContentSize(), Vec2(1, 1), Vec2::ZERO, Vec2::ZERO, Vec2::ZERO)
-                                         , ALIGNMENT_CENTER
-                                         , ui_wizard_share::inst()->getPalette()->getColor(szColor)
-                                         , to_string(stageId + 1));
         }
         //link
         if(isLink)
