@@ -376,7 +376,7 @@
       "margin": [ 10, 5 ],
       "innerMargin": [ 0, 1 ],
       "gridSize": [ 1, 20 ],
-      "img": "Daeko_400.png",
+      "_img": "Daeko_400.png",
       "color": 0,
       "objects": [
           {

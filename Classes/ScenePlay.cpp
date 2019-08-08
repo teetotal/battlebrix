@@ -12,7 +12,7 @@
 #define PHYSICSMATERIAL_OBSTACLE    PhysicsMaterial(0.f, 1.f, 0.f)
 #define PHYSICSMATERIAL_BOARD    PhysicsMaterial(0.f, 1.f, 0.f)
 //#define GRID_AREA Vec2(8.f, 13.f)
-#define GRID_AREA Vec2(7.f, 10.f)
+#define GRID_AREA Vec2(6.f, 9.f)
 #define RATIO_OBSTACLE_PER_GRID 0.65f
 #define _ID_BOTTOM 0
 #define _ID_BRIX_START 101
@@ -20,7 +20,7 @@
 #define _ID_GIFT_START 51
 #define _ID_TRAP_START 61
 
-#define BALL_INIT_POSITION_Y 8
+#define BALL_INIT_POSITION_Y 7
 
 enum _PLAYER_ID {
     _PLAYER_ID_ME = 0,
@@ -209,7 +209,7 @@ void ScenePlay::PLAYER::createBall() {
 //createBoard ===========================================================================
 void ScenePlay::PLAYER::createBoard() {
     board = LayerColor::create(Color4B::RED);
-    board->setContentSize(Size(gridSize.width * 2.f, gridSize.width * .2f));
+    board->setContentSize(Size(gridSize.width * 2.f, gridSize.width * .1f));
     Vec2 pos = gui::inst()->getPointVec2(1, GRID_AREA.y - 1, ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
     pos.x -= board->getContentSize().width / 2.f;
     pos.y -= board->getContentSize().height / 2.f;
@@ -383,7 +383,8 @@ Sprite * ScenePlay::PLAYER::createGiftOrTrapEffect(Vec2 pos, brixMap::TYPE type,
 }
 // onCombo ===========================================================================
 void ScenePlay::PLAYER::skill() {
-    
+    if(this->isEnd)
+        return;
     //fix me. 나중에 아이템이 다양해 지면 수정해야 함.
     //0: combo
     //1: potion
@@ -516,6 +517,9 @@ void ScenePlay::PLAYER::onBomb(const string from, int itemIdx) {
 }
 // setAutoPlay ===========================================================================
 void ScenePlay::PLAYER::onTimer(float f) {
+    if(this->isEnd)
+        return;
+    
     if(ball) {
         float boardWidthHalf = board->getContentSize().width / 2.f;
         Vec2 pos = Vec2(ball->getPosition().x, board->getPosition().y);
@@ -849,27 +853,83 @@ bool ScenePlay::init()
             if(n != _PLAYER_ID_ME)
                 mPlayers[n].createSkill(skillQuantity);
         }
-        
-        this->schedule(schedule_selector(ScenePlay::timer), delay);
-        this->schedule(schedule_selector(ScenePlay::timerLoose), 1);
+        this->scheduleUpdate();
+        this->schedule(schedule_selector(ScenePlay::timerMoving), delay);
+        this->schedule(schedule_selector(ScenePlay::timerSkill), 1);
     })
     );
    
     return true;
 }
+//update
+void ScenePlay::update(float f) {
+    if(mIsEnd)
+        return;
+    
+    mLock.lock();
+    //순위
+    for(int n = 0; n < mPlayers.size(); n++) {
+        int ranking = 1;
+        float val = mPlayers[n].getHPValue();
+        for(int i = 0; i < mPlayers.size(); i++) {
+            if(n != i && val < mPlayers[i].getHPValue()) {
+                ranking ++;
+            }
+        }
+        mPlayers[n].setRanking(ranking);
+    }
+    
+    //내가 끝나거나 다른게 모두 끝났거나
+    bool isEndAll = true;
+    for(int n=1; n<mPlayers.size(); n++){
+        if(!mPlayers[n].isEnd) {
+            isEndAll = false;
+            break;
+        }
+    }
+    
+    if(isEndAll || mPlayers[_PLAYER_ID_ME].isEnd) {
+        mIsEnd = true;
+        this->unscheduleUpdate();
+    }
+    
+    if(mIsEnd) {
+        //각 player에서 해야됨.
+        for(int n=0; n < mPlayers.size(); n++) {
+            mPlayers[n].finish();
+        }
+        //        this->getPhysicsWorld()->setAutoStep(false);
+        //        this->getPhysicsWorld()->step(0.0f);
+        this->getNodeById(99)->setVisible(true);
+        
+        guiExt::addMovingEffect(this->getNodeById(0)
+                                , ui_wizard_share::inst()->getPalette()->getColor("WHITE_OPACITY_DEEP")
+                                , ""
+                                , "FINISH"
+                                , ui_wizard_share::inst()->getPalette()->getColor("DARKGRAY")
+                                , false
+                                , 1.5f
+                                , CallFunc::create([=](){ this->onFinish(); })
+                                );
+    }
+    
+    mLock.unlock();
+    
+}
 // timer ===========================================================================
-void ScenePlay::timer(float f) {
-    for(int n = 1; n < mPlayers.size(); n++) {
+void ScenePlay::timerMoving(float f) {
+    for(int n = _PLAYER_ID_ME + 1; n < mPlayers.size(); n++) {
         if(!mPlayers[n].isEnd) {
             mPlayers[n].onTimer(f);
         }
     }
 }
 // timerSkill ===========================================================================
-void ScenePlay::timerLoose(float f) {
+void ScenePlay::timerSkill(float f) {
     for(int n = 0; n < mPlayers.size(); n++) {
-        if(n != _PLAYER_ID_ME)
+        if(n != _PLAYER_ID_ME && !mPlayers[n].isEnd) {
             mPlayers[n].skill();
+        }
         mPlayers[n].setBackgroundStatus();
     }
 }
@@ -1021,51 +1081,7 @@ bool ScenePlay::onContactBegin(PhysicsContact &contact) {
             }
         }
     }
-    //순위
-    mLock.lock();
-    for(int n = 0; n < mPlayers.size(); n++) {
-        int ranking = 1;
-        float val = mPlayers[n].getHPValue();
-        for(int i = 0; i < mPlayers.size(); i++) {
-            if(n != i && val < mPlayers[i].getHPValue()) {
-                ranking ++;
-            }
-        }
-        mPlayers[n].setRanking(ranking);
-    }
-    mLock.unlock();
-    //내가 끝나거나 다른게 모두 끝났거나
-    bool isEndAll = true;
-    for(int n=1; n<mPlayers.size(); n++){
-        if(!mPlayers[n].isEnd) {
-            isEndAll = false;
-            break;
-        }
-    }
     
-    if(isEndAll || mPlayers[_PLAYER_ID_ME].isEnd)
-        mIsEnd = true;
-    
-    if(mIsEnd) {
-        //각 player에서 해야됨.
-        for(int n=0; n < mPlayers.size(); n++) {
-            mPlayers[n].finish();
-        }
-//        this->getPhysicsWorld()->setAutoStep(false);
-//        this->getPhysicsWorld()->step(0.0f);
-        this->getNodeById(99)->setVisible(true);
-        
-        guiExt::addMovingEffect(this->getNodeById(0)
-                                , ui_wizard_share::inst()->getPalette()->getColor("WHITE_OPACITY_DEEP")
-                                , ""
-                                , "FINISH"
-                                , ui_wizard_share::inst()->getPalette()->getColor("DARKGRAY")
-                                , false
-                                , 1.5f
-                                , CallFunc::create([=](){ this->onFinish(); })
-                                );
-    }
-//    mLock.unlock();
     return true;
 }
 
@@ -1143,14 +1159,19 @@ bool SceneEnding::init()
     
     //arcade mode 시 getNodeById(_ID_NODE_PROGRESSBAR)) disable
     if(battleBrix::inst()->mStageInfo.isArcadeMode) {
-        //새로운 stage를 꺴을때
-        battleBrix::intPair pair = battleBrix::inst()->getMaxStageId();
-        if((reward.point + reward.heart > 0 || reward.item >= 0) && pair.k == battleBrix::inst()->mStageInfo.arcadeStage && pair.v == 1) {
-            battleBrix::inst()->mStageInfo.setStageCleared();
-        }
         getNodeById(_ID_NODE_PROGRESSBAR)->setVisible(false);
-        ((ui_button*)getNodeById(ID_NODE_ENDING_AGAIN))->setEnabled(false);
         
+        if(reward.point + reward.heart > 0 || reward.item >= 0) {
+            ((ui_button*)getNodeById(ID_NODE_ENDING_AGAIN))->setEnabled(false);
+            battleBrix::intPair pair = battleBrix::inst()->getMaxStageId();
+            //새로운 stage를 꺴을때
+            if(pair.k == battleBrix::inst()->mStageInfo.arcadeStage && pair.v == 1) {
+                battleBrix::inst()->mStageInfo.setStageCleared();
+            }
+        } else {
+            //reward가 없으면 등수안에 못든거고 그럼 again
+            ((ui_button*)getNodeById(ID_NODE_ENDING_AGAIN))->setEnabled(true);
+        }
     } else if(!battleBrix::inst()->checkPayForPlay(battleBrix::inst()->mStageInfo.getTotalPoint())) { //다시하기
         ((ui_button*)getNodeById(ID_NODE_ENDING_AGAIN))->setEnabled(false);
     }

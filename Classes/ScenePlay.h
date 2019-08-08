@@ -66,8 +66,9 @@ private:
         for(int n=0; n<touches.size(); n++) onTouchMoved(touches[n], event);
     };
     
-    void timer(float f);
-    void timerLoose(float f);
+    void update(float f);
+    void timerMoving(float f);
+    void timerSkill(float f);
     void onFinish();
     void onEnd();
     void onSkill(int idx, int from);
