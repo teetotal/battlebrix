@@ -234,6 +234,9 @@ bool SceneArcadeDetail::init()
     int checkedCnt = 0;
     for(int n = 0; n < battleBrix::inst()->mItems.size(); n++) {
         battleBrix::itemData item = battleBrix::inst()->mItems[n];
+        if(!item.isSkill)
+            continue;
+        
         auto sprite = gui::inst()->getSprite(item.img);
         
         int id = 100 + (n*10);

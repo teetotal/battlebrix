@@ -255,14 +255,15 @@ bool battleBrix::init() {
     const rapidjson::Value& playItems = d["play"]["items"];
     for (rapidjson::SizeType i = 0; i < playItems.Size(); i++) {
         const string name = playItems[rapidjson::SizeType(i)]["name"].GetString();
+        bool isSkill = playItems[rapidjson::SizeType(i)]["isSkill"].GetBool();
         const string img = playItems[rapidjson::SizeType(i)]["img"].GetString();
         int price = playItems[rapidjson::SizeType(i)]["price"].GetInt();
         itemData item;
-        item.set(name, price, img);
+        item.set(name, isSkill, price, img);
         //property
         float attack = playItems[rapidjson::SizeType(i)]["property"]["hpAttack"].GetFloat();
         float recharge = playItems[rapidjson::SizeType(i)]["property"]["hpRecharge"].GetFloat();
-        float shieldTime = playItems[rapidjson::SizeType(i)]["property"]["shieldTime"].GetFloat();
+        int shieldTime = playItems[rapidjson::SizeType(i)]["property"]["shieldTime"].GetInt();
         bool isRevenge = playItems[rapidjson::SizeType(i)]["property"]["revenge"].GetBool();
         item.property.set(attack, recharge, shieldTime, isRevenge);
         

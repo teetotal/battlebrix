@@ -43,6 +43,8 @@ public:
     virtual bool init();
     CREATE_FUNC_PHYSICS(ScenePlay);
     
+    const string getPlayerName(int idx);
+    
     vector<COLOR_RGB> mColors;
     float mBrixLayerRatio;
     
@@ -72,7 +74,10 @@ private:
     void onFinish();
     void onEnd();
     void onSkill(int idx, int from);
+    
+    void getSkillTarget(int from, int itemIdx, queue<int>* targetQ);
     void attack(int from, int itemIdx);
+    void attack(int from, int to, int itemIdx);
     
     struct OBSTACLE {
         DrawNode * pDrawNode;
@@ -97,6 +102,21 @@ private:
         
         //map<int, Vec2> obstaclesPos;
         map<int, bool> brixEffectFlagMap;
+        
+        //attack
+        struct stAttack {
+            int from;
+            int itemId;
+        };
+        //shield
+        struct stShied {
+            int shieldCnt;
+            int revengeCnt;
+            
+            stShied() : shieldCnt(0), revengeCnt(0) {};
+        } defenseQ;
+        //attack시 이리로
+        queue<stAttack> attackReadyQ, attackQ;
         
         ui_progressbar * hp, * mp;
         bool lockShake;
@@ -133,7 +153,7 @@ private:
         void finish();
         void vibrate();
         bool onContact(int id, bool toRight = false);
-        void decreseHP(const string from, float val = DECREASE_HP);
+        void decreseHP(float val = DECREASE_HP);
         void createBall();
         void createBoard();
         void createBottom();
@@ -152,7 +172,17 @@ private:
         void setBackgroundStatus();
         bool onCombo(int id);
         void onTimer(float f);
+        void onTimerItem();
         void onBomb(const string from, int itemIdx);
+        
+        void insertAttack(int from, int itemId);
+        void insertShield(int itemId);
+        
+        void showAttacks();
+        void showRevenges();
+        void showShields();
+        Node * getAttacks();
+        
         void setRanking(int ranking);
         void createLayerBrix();
     };

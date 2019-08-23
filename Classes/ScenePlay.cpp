@@ -7,6 +7,7 @@
 #include "ui/ui_character_animal.h"
 #include <functional>
 
+#define SKILL_INTERVAL 1.0f
 #define SPEED_BASE .55f
 #define PHYSICSMATERIAL             PhysicsMaterial(0.5f, 1.f, 0.f)
 #define PHYSICSMATERIAL_OBSTACLE    PhysicsMaterial(0.f, 1.f, 0.f)
@@ -280,7 +281,7 @@ void ScenePlay::PLAYER::vibrate() {
     guiExt::addVibrateEffect(layer, CallFunc::create([=]() { lockShake = false; }));
 }
 // decreseHP ===========================================================================
-void ScenePlay::PLAYER::decreseHP(const string from, float f) {
+void ScenePlay::PLAYER::decreseHP(float f) {
     if(this->isEnd)
         return;
     
@@ -288,10 +289,11 @@ void ScenePlay::PLAYER::decreseHP(const string from, float f) {
     hp->blink();
     vibrate();
     
-    if(from.size() > 0) {
-        Vec2 pos = Vec2(layer->getContentSize().width / 2.f, layer->getContentSize().height * .75f);
-        guiExt::addScaleEffect(layer, "icons8-action-96.png", from, ui_wizard_share::inst()->getPalette()->getColor("GRAY"), NULL, .4f, .4f, pos, true);
-    }
+    //fix me. 삭제할 코드
+//    if(from.size() > 0) {
+//        Vec2 pos = Vec2(layer->getContentSize().width / 2.f, layer->getContentSize().height * .75f);
+//        guiExt::addScaleEffect(layer, "icons8-action-96.png", from, ui_wizard_share::inst()->getPalette()->getColor("GRAY"), NULL, .4f, .4f, pos, true);
+//    }
 }
 // onContact ===========================================================================
 bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
@@ -358,7 +360,7 @@ bool ScenePlay::PLAYER::onContact(int id, bool toRight) {
     } else if(id >= _ID_TRAP_START && id < _ID_BRIX_START && layerBrix->getChildByTag(id)) {
         Vec2 pos = layerBrix->getChildByTag(id)->getPosition();
         auto p = createGiftOrTrapEffect(pos, brixMap::TYPE_TRAP, CallFunc::create([=](){
-            this->decreseHP("");
+            this->decreseHP();
         }));
         //gift
         layerBrix->removeChildByTag(id);
@@ -499,6 +501,21 @@ bool ScenePlay::PLAYER::onCombo(int id) {
     }
     return false;
 }
+// insertAttack ===========================================================================
+void ScenePlay::PLAYER::insertAttack(int from, int itemId) {
+    stAttack st;
+    st.from = from;
+    st.itemId = itemId;
+    attackReadyQ.push(st);
+}
+// insertShield ===========================================================================
+void ScenePlay::PLAYER::insertShield(int itemId) {
+    if(battleBrix::inst()->mItems[itemId].property.isRevenge) {
+        defenseQ.revengeCnt += battleBrix::inst()->mItems[itemId].property.shieldCnt;
+    } else {
+        defenseQ.shieldCnt += battleBrix::inst()->mItems[itemId].property.shieldCnt;
+    }
+}
 // onBomb ===========================================================================
 void ScenePlay::PLAYER::onBomb(const string from, int itemIdx) {
     if(isEnd)
@@ -509,11 +526,68 @@ void ScenePlay::PLAYER::onBomb(const string from, int itemIdx) {
                            , item.img
                            , from
                            , ui_wizard_share::inst()->getPalette()->getColor("GRAY")
-                           , CallFunc::create([=](){ this->decreseHP("", item.property.hpAttack); })
+                           , CallFunc::create([=](){ this->decreseHP(item.property.hpAttack); })
                            , .4f
                            , .4f
                            , Vec2(layer->getContentSize().width / 2.f, layer->getContentSize().height * .75f)
                            , true);
+}
+// tick about item ===========================================================================
+void ScenePlay::PLAYER::onTimerItem() {
+    //revenge 적용
+    if(defenseQ.revengeCnt > 0) {
+        if(attackQ.size() > 0) {
+            //효과
+            showRevenges();
+            
+            while(attackQ.size() > 0) {
+                stAttack st = attackQ.front();
+                //revenge
+                pScene->attack(this->idx, st.from, st.itemId);
+                attackQ.pop();
+            }
+        }
+        defenseQ.revengeCnt--;
+    }
+    //shield적용
+    if(defenseQ.shieldCnt > 0) {
+        if(attackQ.size() > 0) {
+            //효과
+            showShields();
+            
+            while(attackQ.size() > 0) {
+                //stAttack st = attackQ.front();
+                //shield
+                attackQ.pop();
+            }
+        }
+        
+        defenseQ.shieldCnt--;
+    }
+    
+    //main 적용
+    float totalDamage = 0.f;
+    while(attackQ.size() > 0) {
+        stAttack st = attackQ.front();
+        //st적용
+        totalDamage += battleBrix::inst()->mItems[st.itemId].property.hpAttack;
+        attackQ.pop();
+    }
+    
+    //화면 출력 attackReadyQ
+    showAttacks();
+    //ready에서 main으로 이동
+    while(attackReadyQ.size() > 0) {
+        stAttack stReady = attackReadyQ.front();
+        stAttack stMain;
+        stMain.from = stReady.from;
+        stMain.itemId = stReady.itemId;
+        attackQ.push(stMain);
+        attackReadyQ.pop();
+    }
+    
+    if(totalDamage > 0)
+        decreseHP(totalDamage);
 }
 // setAutoPlay ===========================================================================
 void ScenePlay::PLAYER::onTimer(float f) {
@@ -715,6 +789,57 @@ void ScenePlay::PLAYER::addBrix(int idx) {
         rect->runAction(RepeatForever::create(seq));
     }
 }
+void ScenePlay::PLAYER::showAttacks() {
+    auto l = getAttacks();
+    if(l)
+        guiExt::runScaleEffect(l, NULL, SKILL_INTERVAL, true);
+}
+void ScenePlay::PLAYER::showRevenges() {
+    auto l = getAttacks();
+    
+    if(l)
+        guiExt::addVibrateEffect(l, CallFunc::create([=]() { this->layer->removeChild(layer); }), SKILL_INTERVAL);
+}
+void ScenePlay::PLAYER::showShields() {
+    auto l = getAttacks();
+    if(l)
+        guiExt::runFlyEffect(l, NULL, SKILL_INTERVAL, true);
+}
+Node * ScenePlay::PLAYER::getAttacks() {
+    if(attackReadyQ.size() == 0)
+        return NULL;
+    
+    queue<ScenePlay::PLAYER::stAttack> q(attackReadyQ);
+    
+    Size sizeElement = Size(layer->getContentSize().width / 5, layer->getContentSize().height / 10);
+    Size size = Size(sizeElement.width * q.size(), sizeElement.height);
+    const Vec2 grid = Vec2(q.size(), 1);
+    Node * l = gui::inst()->createLayout(size);
+    gui::inst()->setAnchorPoint(l, ALIGNMENT_CENTER);
+    l->setPosition(Vec2(layer->getContentSize().width / 2.f, layer->getContentSize().height * .75f));
+    this->layer->addChild(l);
+    
+    int cnt = 0;
+    while(q.size() > 0) {
+        stAttack st = q.front();
+        battleBrix::itemData item = battleBrix::inst()->mItems[st.itemId];
+        
+        auto element = gui::inst()->createLayout(sizeElement);
+        gui::inst()->addSpriteAutoDimension(0, 0, item.img, element, ALIGNMENT_CENTER, Vec2(1,1), Vec2::ZERO, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+        gui::inst()->addLabelAutoDimension(0, 0, pScene->getPlayerName(st.from), element, -2, ALIGNMENT_CENTER
+                                           , ui_wizard_share::inst()->getPalette()->getColor3B("GRAY")
+                                           , Vec2(1,1), Vec2::ZERO, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+        
+        Vec2 pos = gui::inst()->getPointVec2(cnt, 0, ALIGNMENT_LEFT_BOTTOM, size, grid, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+        element->setPosition(pos);
+        l->addChild(element);
+        
+        cnt++;
+        q.pop();
+    }
+    
+    return l;
+}
 /* ----------------------------------------------------------------------------------------------------------------
  
  
@@ -861,6 +986,12 @@ bool ScenePlay::init()
    
     return true;
 }
+const string ScenePlay::getPlayerName(int idx) {
+    if(mPlayers.size() -1 < idx)
+        return "error";
+    
+    return mPlayers[idx].name;
+}
 //update
 void ScenePlay::update(float f) {
     if(mIsEnd)
@@ -928,8 +1059,9 @@ void ScenePlay::timerMoving(float f) {
 void ScenePlay::timerSkill(float f) {
     for(int n = 0; n < mPlayers.size(); n++) {
         if(n != _PLAYER_ID_ME && !mPlayers[n].isEnd) {
-            mPlayers[n].skill();
+            mPlayers[n].skill(); //스킬 사용
         }
+        mPlayers[n].onTimerItem(); //스킬 표현
         mPlayers[n].setBackgroundStatus();
     }
 }
@@ -946,8 +1078,33 @@ void ScenePlay::callback(Ref* pSender, int from, int link) {
             break;
     }
 }
-// bomb ===========================================================================
+void ScenePlay::getSkillTarget(int from, int itemIdx, queue<int>* targetQ) {
+    for(int i = 0; i < battleBrix::inst()->mItems[itemIdx].property.attackTarget.size(); i++) {
+        
+        int target = battleBrix::inst()->mItems[itemIdx].property.attackTarget[i];
+        
+        for(int n = 0; n < mPlayers.size(); n++) {
+            if(n == from)
+                continue;
+            
+            if(target == -1 //전체
+               || mPlayers[n].ranking == target)
+            {
+                targetQ->push(n);
+            }
+        }
+    }
+}
+// attack ===========================================================================
 void ScenePlay::attack(int from, int itemIdx) {
+    queue<int> q;
+    getSkillTarget(from, itemIdx, &q);
+    while(q.size() >0){
+        int to = q.front();
+        mPlayers[to].onBomb(mPlayers[from].name, itemIdx);
+        q.pop();
+    }
+    /*
     mLock.lock();
     for(int i = 0; i < battleBrix::inst()->mItems[itemIdx].property.attackTarget.size(); i++) {
         
@@ -961,10 +1118,16 @@ void ScenePlay::attack(int from, int itemIdx) {
                || mPlayers[n].ranking == target)
             {
                 mPlayers[n].onBomb(mPlayers[from].name, itemIdx);
-//                CCLOG("SKILL from: %d, target:%d, player:%d - ranking: %d", from, target, n, mPlayers[n].ranking);
             }
         }
     }
+    mLock.unlock();
+    */
+}
+//revenge
+void ScenePlay::attack(int from, int to, int itemIdx) {
+    mLock.lock();
+    mPlayers[to].onBomb(mPlayers[from].name, itemIdx);
     mLock.unlock();
 }
 // onSkill ===========================================================================
@@ -996,10 +1159,18 @@ void ScenePlay::onSkill(int idx, int from) {
                                 );
     }
     else {
-        if(recharge > 0.f)
+        if(recharge > 0.f) {
             mPlayers[from].hp->setValueIncrese(recharge);
-        if(hpAttack > 0.f)
-            attack(from, idx);
+        }
+        if(hpAttack > 0.f) {
+            queue<int> q;
+            getSkillTarget(from, idx, &q);
+            while(q.size() >0) {
+                int to = q.front();
+                mPlayers[to].insertAttack(from, idx);
+                q.pop();
+            }
+        }
     }
 }
 // getText ===========================================================================
@@ -1075,8 +1246,11 @@ bool ScenePlay::onContactBegin(PhysicsContact &contact) {
             if(mPlayers[n].onContact(other)) {
                 
                 for(int i=0; i< mPlayers.size(); i++) {
-                    if(i != n)
-                        mPlayers[i].decreseHP(mPlayers[n].name);
+                    if(i != n) {
+                        //mPlayers[i].decreseHP(mPlayers[n].name);
+                        mPlayers[i].insertAttack(n, 5);
+                        //queue에 insert
+                    }
                 }
             }
         }

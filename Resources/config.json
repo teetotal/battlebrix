@@ -157,7 +157,9 @@
     "play": {
         "items": [
             {
+                "idx": 0,
                 "name": "Potion",
+                "isSkill": true,
                 "price": 150,
                 "img": "icons8-hyper-potion-96.png",
                 "target": [],
@@ -170,7 +172,9 @@
                 }
             },
             {
+                "idx": 1,
                 "name": "Bomb",
+                "isSkill": true,
                 "price": 150,
                 "img": "icons8-atomic-bomb-96.png",
                 "target": [],
@@ -183,7 +187,9 @@
                 }
             },
             {
+                "idx": 2,
                 "name": "Sniper",
+                "isSkill": true,
                 "price": 150,
                 "img": "icons8-center-of-gravity-80.png",
                 "property" : {
@@ -195,7 +201,9 @@
                 }
             },
             {
+                "idx": 3,
                 "name": "Sheild",
+                "isSkill": true,
                 "price": 150,
                 "img": "icons8-defense-80.png",
                 "target": [],
@@ -208,7 +216,9 @@
                 }
             },
             {
+                "idx": 4,
                 "name": "Revenge",
+                "isSkill": true,
                 "price": 150,
                 "img": "icons8-synchronize-480.png",
                 "target": [],
@@ -216,8 +226,24 @@
                     "hpAttack": 0,
                     "attackTarget": [],
                     "hpRecharge": 0,
-                    "shieldTime": 0,
+                    "shieldTime": 3,
                     "revenge": true
+                }
+            },
+            {
+                "comment": "skill이 아닌 item은 뒷부분에 추가를 해야 ui에서 안죽는다.",
+                "idx": 5,
+                "name": "MP",
+                "isSkill": false,
+                "price": 0,
+                "img": "icons8-action-96.png",
+                "target": [],
+                "property" : {
+                    "hpAttack": 0.07,
+                    "attackTarget": [-1],
+                    "hpRecharge": 0,
+                    "shieldTime": 0,
+                    "revenge": false
                 }
             }
         ],

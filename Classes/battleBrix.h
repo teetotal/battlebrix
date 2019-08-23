@@ -225,13 +225,13 @@ public:
         float hpAttack; //공격 HP
         vector<int> attackTarget; //공격 대상
         float hpRecharge; // 충전 HP
-        float shieldTime; //shield time
+        float shieldCnt; //shield time. 쉴드 카운트
         bool isRevenge;
         
-        void set(float attack, float recharge, float shield, bool revenge) {
+        void set(float attack, float recharge, int shield, bool revenge) {
             hpAttack = attack;
             hpRecharge = recharge;
-            shieldTime = shield;
+            shieldCnt = shield;
             isRevenge = revenge;
         };
     };
@@ -239,14 +239,16 @@ public:
     // item meta
     struct itemData {
         int price;
+        bool isSkill;
         string img;
         string name;
         
         //property
         itemProperty property;
         
-        void set(const string name, int price, const string img) {
+        void set(const string name, bool isSkill, int price, const string img) {
             this->name = name;
+            this->isSkill = isSkill;
             this->price = price;
             this->img = img;
         };
