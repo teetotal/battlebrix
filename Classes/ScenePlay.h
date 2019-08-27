@@ -178,10 +178,12 @@ private:
         void insertAttack(int from, int itemId);
         void insertShield(int itemId);
         
-        void showAttacks();
-        void showRevenges();
-        void showShields();
+        Node * showAttacks();
+        void showRevenges(Node * p);
+        void showShields(Node * p);
         Node * getAttacks();
+        
+        Node * mAttackLayer;
         
         void setRanking(int ranking);
         void createLayerBrix();

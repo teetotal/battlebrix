@@ -226,7 +226,7 @@
                     "hpAttack": 0,
                     "attackTarget": [],
                     "hpRecharge": 0,
-                    "shieldTime": 3,
+                    "shieldTime": 300,
                     "revenge": true
                 }
             },
