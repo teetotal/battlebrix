@@ -22,6 +22,7 @@
 #define _ID_TRAP_START 61
 
 #define BALL_INIT_POSITION_Y 7
+#define ITEM_REVENGE_ID 4
 
 enum _PLAYER_ID {
     _PLAYER_ID_ME = 0,
@@ -146,7 +147,10 @@ void ScenePlay::PLAYER::init(ScenePlay* p, int idx, const string& name, int laye
     labelName = (Label*)p->getNodeById(labelId+1);
     labelName->setString(name);
     
-    mAttackLayer = NULL;
+    mAttackLayer = gui::inst()->createLayout(Size(1,1));
+    layer->addChild(mAttackLayer);
+    mShieldLayer = gui::inst()->createLayout(Size(1,1));
+    layer->addChild(mShieldLayer);
     
     //progressbar
     hp->setValue(1.f);
@@ -546,6 +550,22 @@ void ScenePlay::PLAYER::onBomb(const string from, int itemIdx) {
                            , Vec2(layer->getContentSize().width / 2.f, layer->getContentSize().height * .75f)
                            , true);
 }
+void ScenePlay::PLAYER::onRevengeAttack(const string from, int itemIdx) {
+    if(isEnd)
+        return;
+    
+    battleBrix::itemData itemRevenge = battleBrix::inst()->mItems[ITEM_REVENGE_ID];
+    battleBrix::itemData item = battleBrix::inst()->mItems[itemIdx];
+    guiExt::addScaleEffect(layer
+                           , itemRevenge.img
+                           , from
+                           , ui_wizard_share::inst()->getPalette()->getColor("GRAY")
+                           , CallFunc::create([=](){ this->decreseHP(item.property.hpAttack); })
+                           , .4f
+                           , .4f
+                           , Vec2(layer->getContentSize().width / 2.f, layer->getContentSize().height * .75f)
+                           , true);
+}
 // tick about item ===========================================================================
 void ScenePlay::PLAYER::onTimerItem() {
     if(this->isEnd)
@@ -556,14 +576,15 @@ void ScenePlay::PLAYER::onTimerItem() {
         
         if(attackQ.size() > 0) {
             //효과
-            showRevenges(this->mAttackLayer);
+            showRevenges();
             
-            while(attackQ.size() > 0) {
-                stAttack st = attackQ.front();
-                //revenge
-                pScene->attack(this->idx, st.from, st.itemId);
-                attackQ.pop();
+            for(int n=0; n<attackQ.size(); n++) {
+                stAttack st = attackQ[n];
+                pScene->revenge(this->idx, st.from, st.itemId); //revenge
             }
+            
+            attackQ.clear();
+            
         }
         defenseQ.revengeCnt--;
     } else {
@@ -575,13 +596,8 @@ void ScenePlay::PLAYER::onTimerItem() {
         
         if(attackQ.size() > 0) {
             //효과
-            showShields(this->mAttackLayer);
-            
-            while(attackQ.size() > 0) {
-                //stAttack st = attackQ.front();
-                //shield
-                attackQ.pop();
-            }
+            showShields();
+            attackQ.clear();
         }
         
         defenseQ.shieldCnt--;
@@ -591,24 +607,14 @@ void ScenePlay::PLAYER::onTimerItem() {
     
     //main 적용
     float totalDamage = 0.f;
-    while(attackQ.size() > 0) {
-        stAttack st = attackQ.front();
-        //st적용
+    for(int n=0; n<attackQ.size(); n++) {
+        stAttack st = attackQ[n];
         totalDamage += battleBrix::inst()->mItems[st.itemId].property.hpAttack;
-        attackQ.pop();
     }
+    attackQ.clear();
     
     //화면 출력 attackReadyQ
-    this->mAttackLayer = showAttacks();
-    //ready에서 main으로 이동
-    while(attackReadyQ.size() > 0) {
-        stAttack stReady = attackReadyQ.front();
-        stAttack stMain;
-        stMain.from = stReady.from;
-        stMain.itemId = stReady.itemId;
-        attackQ.push(stMain);
-        attackReadyQ.pop();
-    }
+    showAttacks();
     
     if(totalDamage > 0)
         decreseHP(totalDamage);
@@ -813,47 +819,65 @@ void ScenePlay::PLAYER::addBrix(int idx) {
         rect->runAction(RepeatForever::create(seq));
     }
 }
-Node * ScenePlay::PLAYER::showAttacks() {
-    auto l = getAttacks();
-    if(l)
-        guiExt::runScaleEffect(l, NULL, SKILL_INTERVAL / 2.f, true);
-    return l;
-}
-void ScenePlay::PLAYER::showRevenges(Node * p) {
-    if(p == NULL) {
-        p = getAttacks();
-    }
-    if(p) {
-        p->stopAllActions();
-        guiExt::addVibrateEffect(p, CallFunc::create([=]() { this->layer->removeChild(p); }), SKILL_INTERVAL / 10.f);
-    }
-}
-void ScenePlay::PLAYER::showShields(Node * p) {
-    if(p == NULL) {
-        p = getAttacks();
-    }
-    if(p) {
-        p->stopAllActions();
-        guiExt::runFlyEffect(p, NULL, SKILL_INTERVAL / 4.f, true);
-    }
-}
-Node * ScenePlay::PLAYER::getAttacks() {
+void ScenePlay::PLAYER::showAttacks() {
     if(attackReadyQ.size() == 0)
-        return NULL;
+        return;
     
-    queue<ScenePlay::PLAYER::stAttack> q(attackReadyQ);
+    //ready에서 main으로 이동
+    while(attackReadyQ.size() > 0) {
+        stAttack stReady = attackReadyQ.front();
+        stAttack stMain;
+        stMain.from = stReady.from;
+        stMain.itemId = stReady.itemId;
+        attackQ.push_back(stMain);
+        attackReadyQ.pop();
+    }
+    
+    auto p = getAttacks();
+    
+    if(p)
+        guiExt::runScaleEffect(p, CallFunc::create([=](){ mAttackLayer->setVisible(false); }), SKILL_INTERVAL / 2.f, false);
+}
+void ScenePlay::PLAYER::showRevenges() {
+    auto p = getAttacks(true);
+    
+    if(p) {
+        guiExt::addVibrateEffect(p, CallFunc::create([=]() { p->setVisible(false); }), SKILL_INTERVAL / 10.f);
+    }
+}
+void ScenePlay::PLAYER::showShields() {
+    auto p = getAttacks(true);
+    
+    if(p) {
+        guiExt::runFlyEffect(p, CallFunc::create([=](){ p->setVisible(false); }), SKILL_INTERVAL / 4.f, false);
+    }
+}
+Node * ScenePlay::PLAYER::getAttacks(bool isShield) {
+    if(attackQ.size() == 0) {
+        return NULL;
+    }
     
     Size sizeElement = Size(layer->getContentSize().width / 5, layer->getContentSize().height / 10);
-    Size size = Size(sizeElement.width * q.size(), sizeElement.height);
-    const Vec2 grid = Vec2(q.size(), 1);
-    Node * l = gui::inst()->createLayout(size);
-    gui::inst()->setAnchorPoint(l, ALIGNMENT_CENTER);
-    l->setPosition(Vec2(layer->getContentSize().width / 2.f, layer->getContentSize().height * .75f));
-    this->layer->addChild(l);
+    Size size = Size(sizeElement.width * attackQ.size(), sizeElement.height);
+    const Vec2 grid = Vec2(attackQ.size(), 1);
     
-    int cnt = 0;
-    while(q.size() > 0) {
-        stAttack st = q.front();
+    Node * p = (isShield) ? mShieldLayer : mAttackLayer;
+    if(isShield) {
+        p = mShieldLayer;
+        mAttackLayer->setVisible(false);
+    } else {
+        p = mAttackLayer;
+        mShieldLayer->setVisible(false);
+    }
+    p->setVisible(true);
+    
+    p->removeAllChildren();
+    p->setContentSize(size);
+    gui::inst()->setAnchorPoint(p, ALIGNMENT_CENTER);
+    p->setPosition(Vec2(layer->getContentSize().width / 2.f, layer->getContentSize().height * .75f));
+    
+    for(int n=0; n<attackQ.size(); n++) {
+        stAttack st = attackQ[n];
         battleBrix::itemData item = battleBrix::inst()->mItems[st.itemId];
         
         auto element = gui::inst()->createLayout(sizeElement);
@@ -862,15 +886,11 @@ Node * ScenePlay::PLAYER::getAttacks() {
                                            , ui_wizard_share::inst()->getPalette()->getColor3B("GRAY")
                                            , Vec2(1,1), Vec2::ZERO, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
         
-        Vec2 pos = gui::inst()->getPointVec2(cnt, 0, ALIGNMENT_LEFT_BOTTOM, size, grid, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
+        Vec2 pos = gui::inst()->getPointVec2(n, 0, ALIGNMENT_LEFT_BOTTOM, size, grid, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
         element->setPosition(pos);
-        l->addChild(element);
-        
-        cnt++;
-        q.pop();
+        p->addChild(element);
     }
-    
-    return l;
+    return p;
 }
 /* ----------------------------------------------------------------------------------------------------------------
  
@@ -1129,39 +1149,10 @@ void ScenePlay::getSkillTarget(int from, int itemIdx, queue<int>* targetQ) {
         }
     }
 }
-// attack ===========================================================================
-void ScenePlay::attack(int from, int itemIdx) {
-    queue<int> q;
-    getSkillTarget(from, itemIdx, &q);
-    while(q.size() >0){
-        int to = q.front();
-        mPlayers[to].onBomb(mPlayers[from].name, itemIdx);
-        q.pop();
-    }
-    /*
-    mLock.lock();
-    for(int i = 0; i < battleBrix::inst()->mItems[itemIdx].property.attackTarget.size(); i++) {
-        
-        int target = battleBrix::inst()->mItems[itemIdx].property.attackTarget[i];
-        
-        for(int n = 0; n < mPlayers.size(); n++) {
-            if(n == from)
-                continue;
-            
-            if(target == -1 //전체
-               || mPlayers[n].ranking == target)
-            {
-                mPlayers[n].onBomb(mPlayers[from].name, itemIdx);
-            }
-        }
-    }
-    mLock.unlock();
-    */
-}
 //revenge
-void ScenePlay::attack(int from, int to, int itemIdx) {
+void ScenePlay::revenge(int from, int to, int itemIdx) {
     mLock.lock();
-    mPlayers[to].onBomb(mPlayers[from].name, itemIdx);
+    mPlayers[to].onRevengeAttack(mPlayers[from].name, itemIdx);
     mLock.unlock();
 }
 // onSkill ===========================================================================

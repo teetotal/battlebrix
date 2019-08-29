@@ -76,8 +76,7 @@ private:
     void onSkill(int idx, int from);
     
     void getSkillTarget(int from, int itemIdx, queue<int>* targetQ);
-    void attack(int from, int itemIdx);
-    void attack(int from, int to, int itemIdx);
+    void revenge(int from, int to, int itemIdx);
     
     struct OBSTACLE {
         DrawNode * pDrawNode;
@@ -116,7 +115,8 @@ private:
             stShied() : shieldCnt(0), revengeCnt(0) {};
         } defenseQ;
         //attack시 이리로
-        queue<stAttack> attackReadyQ, attackQ;
+        queue<stAttack> attackReadyQ;
+        vector<stAttack> attackQ;
         
         ui_progressbar * hp, * mp;
         bool lockShake;
@@ -174,16 +174,17 @@ private:
         void onTimer(float f);
         void onTimerItem();
         void onBomb(const string from, int itemIdx);
+        void onRevengeAttack(const string from, int itemIdx);
         
         void insertAttack(int from, int itemId);
         void insertShield(int itemId);
         
-        Node * showAttacks();
-        void showRevenges(Node * p);
-        void showShields(Node * p);
-        Node * getAttacks();
+        void showAttacks();
+        void showRevenges();
+        void showShields();
+        Node * getAttacks(bool isShield = false);
         
-        Node * mAttackLayer;
+        Node * mAttackLayer, * mShieldLayer;
         
         void setRanking(int ranking);
         void createLayerBrix();
