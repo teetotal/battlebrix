@@ -850,14 +850,14 @@ void ScenePlay::PLAYER::showRevenges() {
     auto p = getAttacks(true);
     
     if(p) {
-        guiExt::addVibrateEffect(p, CallFunc::create([=]() { p->setVisible(false); }), SKILL_INTERVAL / 10.f);
+        guiExt::addVibrateEffect(p, CallFunc::create([=]() { p->setVisible(false); }), SKILL_INTERVAL * 0.09f);
     }
 }
 void ScenePlay::PLAYER::showShields() {
     auto p = getAttacks(true);
     
     if(p) {
-        guiExt::runFlyEffect(p, CallFunc::create([=](){ p->setVisible(false); }), SKILL_INTERVAL / 4.f, false);
+        guiExt::runFlyEffect(p, CallFunc::create([=](){ p->setVisible(false); }), SKILL_INTERVAL * 0.24f, false);
     }
 }
 Node * ScenePlay::PLAYER::getAttacks(bool isShield) {
