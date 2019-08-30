@@ -635,7 +635,7 @@ void ScenePlay::PLAYER::onTimer(float f) {
         Vec2 positionInit = gui::inst()->getPointVec2(2, BALL_INIT_POSITION_Y, ALIGNMENT_CENTER, layer->getContentSize(), GRID_AREA, Vec2::ZERO, Vec2::ZERO, Vec2::ZERO);
         if(preBallPosition.y > ball->getPosition().y && ball->getPosition().y <= positionInit.y) {
             if(isMistake) {
-                CCLOG("%lf Mistake %s", (double)getNow(), name.c_str());
+                //CCLOG("%lf Mistake %s", (double)getNow(), name.c_str());
                 pos.x += ((float)getRandValue((int)(board->getContentSize().width * 200.f)) / 100.f) - boardWidthHalf;
                 duration = f * 3.f;
             }
@@ -834,9 +834,17 @@ void ScenePlay::PLAYER::showAttacks() {
     }
     
     auto p = getAttacks();
+    refAttack++;
     
-    if(p)
-        guiExt::runScaleEffect(p, CallFunc::create([=](){ mAttackLayer->setVisible(false); }), SKILL_INTERVAL / 2.f, false);
+    if(p) {
+        guiExt::runScaleEffect(p, CallFunc::create([=](){
+            refAttack--;
+            if(refAttack != 0)
+                CCLOG("%d - ref %d", idx, refAttack);
+            if(refAttack <= 0)
+                mAttackLayer->setVisible(false);
+        }), SKILL_INTERVAL * 0.45f, false);
+    }
 }
 void ScenePlay::PLAYER::showRevenges() {
     auto p = getAttacks(true);
@@ -1109,6 +1117,9 @@ void ScenePlay::timerMoving(float f) {
 }
 // timerSkill ===========================================================================
 void ScenePlay::timerSkill(float f) {
+    CCLOG("%lf", (double)(getNow() - tmp));
+    tmp = getNow();
+    
     for(int n = 0; n < mPlayers.size(); n++) {
         if(n != _PLAYER_ID_ME && !mPlayers[n].isEnd) {
             mPlayers[n].skill(); //스킬 사용

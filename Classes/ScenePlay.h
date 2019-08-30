@@ -130,7 +130,11 @@ private:
         int dangerousStatus;
         int ranking;
         
+        Node * mAttackLayer, * mShieldLayer;
+        int refAttack;
+        
         PLAYER() {
+            refAttack = 0;
             ranking = -1;
             skillThreshold = 0.f;
             dangerousStatus = 0;
@@ -184,8 +188,6 @@ private:
         void showShields();
         Node * getAttacks(bool isShield = false);
         
-        Node * mAttackLayer, * mShieldLayer;
-        
         void setRanking(int ranking);
         void createLayerBrix();
     };
@@ -196,6 +198,8 @@ private:
     
     bool mIsEnd;
     mutex mLock;
+    
+    time_t tmp;
 };
 
 
